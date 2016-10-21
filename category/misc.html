@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Blog Project - misc</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Blog Project </a></h1>
+                <nav><ul>
+                    <li><a href="/category/diaries.html">Diaries</a></li>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html">如何写一个博客生成器</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-04-27T00:00:00-04:00">
+                Published: Mon 27 April 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">Python</a> </p>
+</footer><!-- /.post-info --><p>这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不久
+。所以写的第一篇博客就以生成我的博客站点的项目<code>mkblogs</code>说起，来说说如何写一个博
+客生成器吧。</p>
+<p>现在利用github架静态博客可真是烂大街，但是毕竟我也就能做做烂大街的东西，所以。。
+。额，首先还是简短的介绍一下<code>myblogs</code>脱胎自<code>mkdocs</code>项目，当时写<code>mkblogs</code>的原因是像看
+看怎么写博客生成器。于是从<a href="http://www.staticgen.com/">staticgen</a>找了一个比较简单
+的python项目出来，打算用一下顺便学习学习，结果玩了一会发现它不是一个博客生成器。
+纠结了一下感觉自己改一改吧，反正<code>mkdocs</code>才800多行代码。于是开始将一个文档站点生
+成器改成一个博客生成器。随着我改代码的过程，看看写一个博客生成器需要怎么做。</p>
+<p>一个博客生成器或者站点生成器的工作都是将人写的一个个markdown文件整合成一个有组织
+的列表，这样就牵扯到两件事：</p>
+<ul>
+<li>如何将单个markdown文件编译成html文件。当然这点不需要我们去做，好比说python的
+mardkown模块已经帮我们完成了这个工作。</li>
+</ul>
+<p>+如何将许多编译好的markdown文件组织成链表。这点需要我们去做。</p>
+<h3>处理Markdown到Html的转换</h3>
+<p>像Python-Markdown这样的库不会将源文件编译一个完整的html文件，就像这样：</p>
+<div class="highlight"><pre><span></span># 示例标题
+示例文本
+&gt; 示例引用
+
+1.  示例列表
+2.  示例列表
+3.  示例列表
+
+    这里有一个[链接](anothermd.md)
+</pre></div>
+<p>会转化成</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;h1&gt;</span>示例标题<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>示例文本<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;blockquote&gt;</span>
+<span class="nt">&lt;p&gt;</span>示例引用<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/blockquote&gt;</span>
+<span class="nt">&lt;ol&gt;</span>
+<span class="nt">&lt;li&gt;</span>示例列表<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;li&gt;</span>示例列表<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;li&gt;</span>示例列表<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ol&gt;</span>
+<span class="nt">&lt;p&gt;</span>这里有一个<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"anothermd.md"</span><span class="nt">&gt;</span>链接<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+</pre></div>
+<p>这里没有<code>&lt;html&gt;</code>tag，也没有<code>&lt;body&gt;</code>tag，这些可以借助Python-Jinja这样的库来完成，
+我们需要处理的问题是重定位markdown当中的链接，<code>anothermd.md</code>需要被重定位到
+<code>anothermd.html</code>，这样的工作需要我们写Python-Markdown的插件来完成。</p>
+<p>Python-Markdown的插件系统十分灵活，可以在编译前，编译时，编译后三个时间来添加
+Markdown插件，分别需要开发者继承<code>Preprocessor</code>, <code>Treeprocessor</code>和
+<code>Postprocessor</code>类，并重写<code>run</code>方法。具体可以参见
+<a href="https://pythonhosted.org/Markdown/extensions/api.html">Markdown-Extension-API</a>。
+当然你可以设计的更健壮一些，比如检查链接是否存在的问题。</p>
+<h3>构建HTML串来生成我们的完整站点</h3>
+<p>处理写完的MD按照分组构建出一串html，把他们联系起来就是博客生成器的主要工作啦。所
+以实际上，你都不需要懂html, javascript, css网页三大工具╮(￣▽￣)╭ 。唉，又扯远了。</p>
+<p>如何让用你生成器的人写博客完全看你心情，Jekyll貌似需要用户把写博客的时间加到
+Markdown的文件上，然后它会按照时间顺序来组织你的博客。你也可以允许用户添加子目录
+，把关于一个主题的文章添加到一个目录中去，用隐式的方法来组织用户的博客。 或者你
+可以支持Tag。</p>
+<p>Mkblogs要求用户根据主题用的方式来组织博客，所以我们就说说这个方式是怎么做。其实
+这又什么好说的呢，遍历一下文件树，逐个博客进行编译，最后生成一下主页，大功告成，
+oh year。是不是听起来很简单？但是说到细节，繁杂的事情就有一大堆了。但是话说回来
+，什么编程项目不是这样呢？</p>
+<p>为了不要烂尾，我在多说两句吧。为了能生成一个博客的站点，你总是需要在遍历文件树的
+时候保留一些信息：</p>
+<ol>
+<li>
+<p>如果你的主页是记录最新的一些博客，那么就需要维护一个最新博客的链表。</p>
+</li>
+<li>
+<p>如果你需要做归档目录，就需要维护每个主题目录的链表。</p>
+</li>
+<li>
+<p>如果你需要添加一下aboutme这样的东西的话，就需要单独构建一些html页面喽。</p>
+</li>
+</ol>
+<p>我写的像屎一样的博客就这样生成了╭。</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

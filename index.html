@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Blog Project</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Blog Project </a></h1>
+                <nav><ul>
+                    <li><a href="/category/diaries.html">Diaries</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/everything-you-do-i-can-do-it-with-a-double-pointer-in-c.html">Everything you do I can do it with a double pointer in C</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-08-21T00:00:00-04:00">
+                Published: Sun 21 August 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
+        </address>
+<p>In <a href="/category/diaries.html">Diaries</a>.</p>
+<p>tags: <a href="/tag/programming.html">programming</a> <a href="/tag/cc.html">C/C++</a> </p>
+</footer><!-- /.post-info --><p>It is 2016, low level coding is not needed anymore. We have programming
+languages like <code>javascript</code> and python. When people code everything with a class
+and related methods. But do you remember we have a programming language called
+C? When we had no class, templates, operator-override or implicit constructor at
+that time. You actually know what are doing with C, no magic!</p>
+<p>I claim no expert to programming, since I only have a four-year-old programming
+life. But even you are inexperienced like me, you should still be able to code
+some thing in C. IT IS fatigue to code in C, you have no standard containers to
+rely on, you spend 10 hours to build a perfect <code>deque</code> data type which works on
+amortized O(1) complexity and has no memory leaks before you are able to work on
+your project. Awesome!!! But why? Why try to build a huge robust data structure
+in a non-OOP language? Instead of trying simulate constructors and destructors,
+you could always use a double pointer to do the job. Have you ever seen Linus
+Torvalds's double pointer code? It removes on special case where you would make
+mistakes.</p>
+<p>But really? what can you do with a double pointer in C? Well, Suppose I have
+<code>vector</code> data structure and I didn't want to write the code like this:</p>
+<div class="highlight"><pre><span></span> struct vector {
+     size_t elem_size;
+     void *arr;
+}
+</pre></div>
+<p>we can actually just use a simple array to do the job. If you just pass the
+<code>void *</code> to insert function, how can I modify the size of the vector, or insert
+anything before header? This should not be a problem with this:</p>
+<div class="highlight"><pre><span></span>void insert(void **arr, void *elem, size_t *remain_size, size_t *size) {
+    size_t old_size = *size;
+    if (*remain_size == 0) {
+        *arr = realloc(*arr, 2 * *size);
+        *remain_size = *size;
+        *size = 2;
+    }
+    *remain_size -= 1;
+
+    //copy the elem to the end
+}
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/6-years-of-programming.html" rel="bookmark"
+                           title="Permalink to 6 years of programming">6 years of programming</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-08-08T00:00:00-04:00">
+                Published: Mon 08 August 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
+        </address>
+<p>In <a href="/category/diaries.html">Diaries</a>.</p>
+<p>tags: <a href="/tag/programming.html">programming</a> <a href="/tag/diary.html">diary</a> </p>
+</footer><!-- /.post-info -->                <p>I have been studying in programming for 6 years, since my first day of
+ undergrad life. I haven't realized it has been so long, this studying life
+ already took away most of my youth. I was a kid without knowing the toughness
+ of life, to a young man need ...</p>
+                <a class="readmore" href="/6-years-of-programming.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html" rel="bookmark"
+                           title="Permalink to 如何写一个博客生成器">如何写一个博客生成器</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-04-27T00:00:00-04:00">
+                Published: Mon 27 April 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/python.html">Python</a> </p>
+</footer><!-- /.post-info -->                <p>这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不久
+。所以写的第一篇博客就以生成我的博客站点的项目<code>mkblogs</code>说起，来说说如何写一个博
+客生成器吧。</p>
+<p>现在利用github架静态博客可真是烂大街，但是毕竟我也就能做做烂大街的东西，所以。。
+。额，首先还是简短的介绍一下<code>myblogs</code>脱胎自<code>mkdocs</code>项目，当时写<code>mkblogs</code>的原因是像看
+看怎么写博客生成器。于是从<a href="http://www.staticgen.com/">staticgen</a>找了一个比较简单
+的python项目出来，打算用一下顺便学习学习，结果玩了一会发现它不是一个博客生成器。
+纠结了一下感觉自己改一改吧，反正<code>mkdocs</code>才800多行代码。于是开始将一个文档站点生
+成器改成一个博客生成器。随着我改代码的过程，看看写一个博客生成器需要怎么做。</p>
+<p>一个博客生成器或者站点生成器的工作都是将人写的一个个markdown文件整合成一个有组织
+的列表，这样就牵扯到两件事：</p>
+<ul>
+<li>如何将单个markdown文件编译成html文件。当然这点不需要我们去做，好比说python的
+mardkown模块已经帮我们完成了这个工作。</li>
+</ul>
+<p>+如何将许多编译好的markdown文件组织成链表。这点需要我们去做。</p>
+<h3>处理Markdown到Html的转换</h3>
+<p>像Python-Markdown这样的库不会将源文件编译一个完整的html文件，就像这样：</p>
+<div class="highlight"><pre><span></span># 示例标题
+示例文本
+&gt; 示例引用 ...</pre></div>
+                <a class="readmore" href="/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

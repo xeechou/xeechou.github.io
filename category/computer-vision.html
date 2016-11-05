@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>Blog Project</title>
+        <title>Blog Project - Computer Vision</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -15,19 +15,50 @@
                 <h1><a href="/">Blog Project </a></h1>
                 <nav><ul>
                     <li><a href="/category/chinese.html">Chinese</a></li>
-                    <li><a href="/category/computer-vision.html">Computer Vision</a></li>
+                    <li class="active"><a href="/category/computer-vision.html">Computer Vision</a></li>
                     <li><a href="/category/diaries.html">Diaries</a></li>
                     <li><a href="/category/programming.html">Programming</a></li>
                     <li><a href="/category/technical.html">Technical</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/view-matrix-for-projection.html">View Matrix for projection</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-10-31T00:00:00-04:00">
+                Published: Mon 31 October 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
+        </address>
+<p>In <a href="/category/computer-vision.html">Computer Vision</a>.</p>
+<p>tags: <a href="/tag/cv.html">CV</a> </p>
+</footer><!-- /.post-info --><h2>How does View Matrix work?</h2>
+<blockquote>
+<p>The engines don't move the ship at all. The ship stays where it is and the
+engines move the universe around it.</p>
+</blockquote>
+<p>This simply means that the view matrix does nothing but remapping everything
+from (0,0,0) to the centre of the camera. By linear algebra, it is a linear
+transform that changes the basis. and one can use the <code>glm::lookAt()</code> generates
+the view matrix.</p>
+<p>So in the beginning, the camera sits at (0,0,0), and looking at (0,0,0). The
+normal is (0,1,0), since we don't know the direction, lets assume it is
+(0,0,-1). And imaging the universe is a huge Cube box that surround us.</p>
 <ul>
-    <li><a href="/category/chinese.html">Chinese</a></li>
-    <li><a href="/category/computer-vision.html">Computer Vision</a></li>
-    <li><a href="/category/diaries.html">Diaries</a></li>
-    <li><a href="/category/programming.html">Programming</a></li>
-    <li><a href="/category/technical.html">Technical</a></li>
+<li>If we want to move the camera to left by (-3, 0, 0), we can translate the cube
+  by (3,0,0).</li>
+<li>If we want to rotate the camera to left by 30 degree, we can rotate the cube
+  by 30 degree to the right.</li>
 </ul>
+<p>So the inefficient implementation is simply just <code>-translation * -rotation</code>,
+actually, about the rotation part, there are simple way to do it. Called
+<em>Gram-Schmidt</em> process. The essence is again, projection, if we want to retrieve
+the coordinates from one xyz coordinate system to our new coordinate system, we
+can simply projecting to that system by dot product to the new axies.</p>                </article>
+            </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

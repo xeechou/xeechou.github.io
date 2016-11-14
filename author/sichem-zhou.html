@@ -48,14 +48,10 @@ instead of overloading. The <code>sort</code> function from standard library is 
 example. It is usually defined as:</p>
 <div class="highlight"><pre><span></span>template&lt;class RandomIt&gt; void sort(RandomIt&amp; first, RandomIt&amp; last).
 </pre></div>
-
-
 <p>Then you can sort a <code>vector</code> by:</p>
 <div class="highlight"><pre><span></span><span class="nt">std</span><span class="o">:</span><span class="nd">:vector</span><span class="o">&lt;</span><span class="nt">float</span><span class="o">&gt;</span> <span class="nt">a</span> <span class="o">=</span> <span class="o">...;</span>
 <span class="nt">std</span><span class="o">:</span><span class="nd">:sort</span><span class="o">(</span><span class="nt">a</span><span class="nc">.begin</span><span class="o">(),</span> <span class="nt">a</span><span class="nc">.end</span><span class="o">())</span>
 </pre></div>
-
-
 <p>The compilers try to infer the template parameters from template functions'
 parameters. Sometimes compilers are not smart enough to deduce it out, then you
 have to specific it yourself. The deducing mechanism is a choice of
@@ -124,14 +120,69 @@ required), you can directly code with <code>int a[size];</code>. </p>
                 By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
         </address>
 <p>In <a href="/category/computer-vision.html">Computer Vision</a>.</p>
-<p>tags: <a href="/tag/cv.html">CV</a> </p>
-</footer><!-- /.post-info -->                <h2>How does View Matrix work?</h2>
-<blockquote>
-<p>The engines don't move the ship at all. The ship stays where it is and the
-engines move the universe around it.</p>
-</blockquote>
-<p>This simply means that the view matrix does nothing but remapping everything
-from (0,0,0) to the centre of the camera ...</p>
+<p>tags: <a href="/tag/computer-vision.html">Computer Vision</a> </p>
+</footer><!-- /.post-info -->                <h1>The <strong>MVP</strong> Matrix</h1>
+<p><span class="math">\(\text{Model} * \text{View} * \text{Projection}\)</span> is the "Magic" and first lesson
+to render objects in Computer Graphics, which transfer a 3D object in object
+space into, in the end, a UV plane. </p>
+<p>The Model matrix is simple and easy to understand, simply the translation, scale
+and ...</p><script type='text/javascript'>if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
                 <a class="readmore" href="/view-matrix-for-projection.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>

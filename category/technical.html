@@ -48,14 +48,10 @@ instead of overloading. The <code>sort</code> function from standard library is 
 example. It is usually defined as:</p>
 <div class="highlight"><pre><span></span>template&lt;class RandomIt&gt; void sort(RandomIt&amp; first, RandomIt&amp; last).
 </pre></div>
-
-
 <p>Then you can sort a <code>vector</code> by:</p>
 <div class="highlight"><pre><span></span><span class="nt">std</span><span class="o">:</span><span class="nd">:vector</span><span class="o">&lt;</span><span class="nt">float</span><span class="o">&gt;</span> <span class="nt">a</span> <span class="o">=</span> <span class="o">...;</span>
 <span class="nt">std</span><span class="o">:</span><span class="nd">:sort</span><span class="o">(</span><span class="nt">a</span><span class="nc">.begin</span><span class="o">(),</span> <span class="nt">a</span><span class="nc">.end</span><span class="o">())</span>
 </pre></div>
-
-
 <p>The compilers try to infer the template parameters from template functions'
 parameters. Sometimes compilers are not smart enough to deduce it out, then you
 have to specific it yourself. The deducing mechanism is a choice of

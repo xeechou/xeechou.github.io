@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>Sichem Zhou's Blog Project - cmake</title>
+        <title>Sichem Zhou's Blog Project - Technical</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -18,32 +18,43 @@
                     <li><a href="/category/computer-vision.html">Computer Vision</a></li>
                     <li><a href="/category/diaries.html">Diaries</a></li>
                     <li><a href="/category/programming.html">Programming</a></li>
-                    <li><a href="/category/technical.html">Technical</a></li>
+                    <li class="active"><a href="/category/technical.html">Technical</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/the-cmake-externalproject-module.html">The CMake ExternalProject module</a></h1>
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="0">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/alternative-usage-to-typedef-in-c.html" rel="bookmark"
+                           title="Permalink to Alternative usage to `typedef` in C">Alternative usage to `typedef` in C</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2016-10-21T00:00:00-04:00">
-                Published: Fri 21 October 2016
+        <abbr class="published" title="2016-10-31T00:00:00-04:00">
+                Published: Mon 31 October 2016
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
         </address>
-<p>In <a href="/category/programming.html">Programming</a>.</p>
-<p>tags: <a href="/tag/cmake.html">cmake</a> </p>
-</footer><!-- /.post-info --><h2>When you need a external project</h2>
-<p>Everyone knows not to write everything your own. But there are those you can
-install by <code>apt-get</code>, those you cannot. messing up with your <code>/usr/local/</code>
-directory is not a long term solution, especially when you just need to try a
-piece of shitty code. So here is the problem, I just need to compile the
-dependent project and link to them without modify their <em>Makefile</em>. CMake's
-ExternalProject module is what you looking for.</p>
-<h2>ExternalProject Module</h2>                </article>
-            </aside><!-- /#featured -->
+<p>In <a href="/category/technical.html">Technical</a>.</p>
+<p>tags: <a href="/tag/programming.html">programming</a> <a href="/tag/cc.html">C/C++</a> </p>
+</footer><!-- /.post-info -->                <h2>Variable length array(in runtime) and Typedef array type</h2>
+<p>GNU C's variable array declaration is very convenient, instead of <code>int *a;</code> then
+use <code>malloc(sizeof(int) * size)</code> then copy data with <code>memcpy</code>(3 steps
+required), you can directly code with <code>int a[size];</code>. </p>
+<p>There are another feature you may ...</p>
+                <a class="readmore" href="/alternative-usage-to-typedef-in-c.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/category/technical.html">&laquo;</a>
+    Page 2 / 2
+</p>
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

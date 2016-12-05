@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>View Matrix for projection</title>
+        <title>Sichem Zhou's Blog Project - Sichem Zhou</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -15,21 +15,22 @@
                 <h1><a href="/">Sichem Zhou's Blog Project </a></h1>
                 <nav><ul>
                     <li><a href="/category/chinese.html">Chinese</a></li>
-                    <li class="active"><a href="/category/computer-vision.html">Computer Vision</a></li>
+                    <li><a href="/category/computer-vision.html">Computer Vision</a></li>
                     <li><a href="/category/diaries.html">Diaries</a></li>
                     <li><a href="/category/programming.html">Programming</a></li>
                     <li><a href="/category/technical.html">Technical</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
-<section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="/view-matrix-for-projection.html" rel="bookmark"
-           title="Permalink to View Matrix for projection">View Matrix for projection</a></h1>
-    </header>
 
-    <div class="entry-content">
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="0">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/view-matrix-for-projection.html" rel="bookmark"
+                           title="Permalink to View Matrix for projection">View Matrix for projection</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-10-31T00:00:00-04:00">
                 Published: Mon 31 October 2016
@@ -40,152 +41,12 @@
         </address>
 <p>In <a href="/category/computer-vision.html">Computer Vision</a>.</p>
 <p>tags: <a href="/tag/computer-vision.html">Computer Vision</a> </p>
-</footer><!-- /.post-info -->      <h1>The <strong>MVP</strong> Matrix</h1>
+</footer><!-- /.post-info -->                <h1>The <strong>MVP</strong> Matrix</h1>
 <p><span class="math">\(\text{Model} * \text{View} * \text{Projection}\)</span> is the "Magic" and first lesson
 to render objects in Computer Graphics, which transfer a 3D object in object
 space into, in the end, a UV plane. </p>
 <p>The Model matrix is simple and easy to understand, simply the translation, scale
-and rotation, but View matrix and Camera matrix are not obvious(although you can
-get it for free by single call from <code>glm::lookAt()</code> and <code>glm::perspective()</code>).</p>
-<h1>How does View Matrix work?</h1>
-<p>Let's see the quote:</p>
-<blockquote>
-<p>The engines don't move the ship at all. The ship stays where it is and the
-engines move the universe around it.</p>
-</blockquote>
-<p>This simply means that the view matrix does nothing but remapping everything
-from $(0,0,0) to the centre of the camera. By linear algebra, it is a linear
-transform that changes the basis. and one can use the <code>glm::lookAt()</code> generates
-the view matrix.</p>
-<p>So in the beginning, the camera sits at <span class="math">\((0,0,0)\)</span>, and looking at <span class="math">\((0,0,0)\)</span>. The
-normal is <span class="math">\((0,1,0)\)</span>, since we don't know the direction, lets assume it is
-<span class="math">\((0,0,-1)\)</span>. And imaging the universe is a huge Cube box that surround us.</p>
-<ul>
-<li>If we want to move the camera to left by <span class="math">\((-3, 0, 0)\)</span>, we can translate the cube
-  by <span class="math">\((3,0,0)\)</span></li>
-<li>If we want to rotate the camera to left by 30 degree, we can rotate the cube
-  by 30 degree to the right.</li>
-</ul>
-<p>So the inefficient implementation is simply just <code>-translation * -rotation</code>,
-But about the rotation part, there are simple way to do it. Called
-<em>Gram-Schmidt</em> process. The essence is, again, projection, if we want to retrieve
-the coordinates from one xyz coordinate system to our new coordinate system, we
-can simply projecting to that system by dot product to the new axies.</p>
-<p>The complete View matrix format is:
-</p>
-<div class="math">$$
-M = 
-\begin{bmatrix}
-R_x &amp; R_y &amp; R_z &amp; 0 \\
-U_x &amp; U_y &amp; U_z &amp; 0 \\
-D_x &amp; D_y &amp; D_z &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\begin{bmatrix}
-1 &amp; 0 &amp; 0 &amp; -T_x \\
-0 &amp; 1 &amp; 0 &amp; -T_y \\
-0 &amp; 0 &amp; 1 &amp; -T_z \\
-0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-$$</div>
-<p><span class="math">\(R\)</span>, <span class="math">\(U\)</span>, <span class="math">\(D\)</span> is the new coordinate basis, the principle is super simple, simply
-by <strong>first</strong> reverse-translate the point and <strong>second</strong> projecting on the new
-coordinate system.</p>
-<h1>The persepective projection</h1>
-<p>Persepective projection, on the other hand, is a way to project 3d sences to 2d
-plane, as the way of human eyes and camera. Which means the object further from
-us looks smaller than the object closer to us.</p>
-<p>It sounds nature, but how does the computer implement it? Thats where Camera
-matrix were introduced.</p>
-<h2>Camera matrix</h2>
-<p>To finish projecting objects to our eyes, we need to follow the formula that
-make futher objects smaller. Given two points ([x_1, y_1, z_1] ) and ( [x_2,
-y_2, z_2 ]), they would project to the same position if ( x_1 / z_1 = x_2 /
-z_2 ) and ( y_1 / z_1  = y_2 / z_2 ). The projection is to project ([x,
-y, z] ) to ( [d\frac{x}{z}, d{y}{z}] ), the ( d ) there is the camera
-plane.</p>
-<p>Since there is now linear tranform to do that with 3d matrix, we have to use
-homogeneous coordinate.
-</p>
-<div class="math">$$
-\begin{bmatrix}
-1 &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; 1 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 1 &amp; 0\\
-0 &amp; 0 &amp; -1/d &amp; 0
-\end{bmatrix}
-\begin{bmatrix}
-x\\
-y\\
-z\\
-1\\
-\end{bmatrix}=
-\begin{bmatrix}
-x\\
-y\\
-z\\
--z/d\\
-\end{bmatrix}
-$$</div>
-<p>And as homogeneous coordinates, we should keep scale to keep last element to 1.
-</p>
-<div class="math">$$
-\begin{bmatrix}
-x\\
-y\\
-z\\
--z/d
-\end{bmatrix} \rightarrow
-\begin{bmatrix}
--d\frac{x}{z}\\
--d\frac{y}{z}\\
--d\frac{-d}\\
-1
-\end{bmatrix} \rightarrow
-\begin{bmatrix}
--d\frac{x}{z}\\
--d\frac{y}{z}\\
-\end{bmatrix}
-$$</div>
-<p>
-We can simply replace ( 1 ) with ( -d ) in the projection matrix to reach
-the same goal.</p>
-<div class="math">$$
-\begin{bmatrix}
--d &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; -d &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; -d &amp; 0\\
-0 &amp; 0 &amp; 1  &amp; 0
-\end{bmatrix}
-\begin{bmatrix}
-x\\
-y\\
-z\\
-1\\
-\end{bmatrix} \rightarrow
-\begin{bmatrix}
--dx\\
--dy\\
--dz\\
-z\\
-\end{bmatrix} \rightarrow
-\begin{bmatrix}
--d\frac{x}{z}\\
--d\frac{y}{z}\\
-\end{bmatrix}
-$$</div>
-<p>Finally, the camera matrix looks like this:
-</p>
-<div class="math">$$
-\begin{bmatrix}
--fs_x &amp;  0  &amp; x_c\\
- 0    &amp;  -fs_y &amp; y_c\\
- 0    &amp;  0  &amp; 1
-\end{bmatrix}
-$$</div>
-<p>
-Its little bit complex than what we have, but general idea stays the same.</p>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+and ...</p><script type='text/javascript'>if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
         linebreak = "false";
@@ -242,10 +103,16 @@ Its little bit complex than what we have, but general idea stays the same.</p>
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 </script>
-    </div><!-- /.entry-content -->
-
-  </article>
-</section>
+                <a class="readmore" href="/view-matrix-for-projection.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/author/sichem-zhou2.html">&laquo;</a>
+    Page 3 / 7
+        <a href="/author/sichem-zhou4.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

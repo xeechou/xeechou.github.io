@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>Blog Project</title>
+        <title>Sichem Zhou's Blog Project</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -12,7 +12,7 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">Blog Project </a></h1>
+                <h1><a href="/">Sichem Zhou's Blog Project </a></h1>
                 <nav><ul>
                     <li><a href="/category/chinese.html">Chinese</a></li>
                     <li><a href="/category/computer-vision.html">Computer Vision</a></li>
@@ -73,255 +73,26 @@ context participate into deduction, others does not. </p>
 </ul>
 <p>Looks like now, the deduction can only be done with direct type that list in code.</p>                </article>
             </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/alternative-usage-to-typedef-in-c.html" rel="bookmark"
-                           title="Permalink to Alternative usage to `typedef` in C">Alternative usage to `typedef` in C</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-10-31T00:00:00-04:00">
-                Published: Mon 31 October 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
-        </address>
-<p>In <a href="/category/technical.html">Technical</a>.</p>
-<p>tags: <a href="/tag/programming.html">programming</a> <a href="/tag/cc.html">C/C++</a> </p>
-</footer><!-- /.post-info -->                <h2>Variable length array(in runtime) and Typedef array type</h2>
-<p>GNU C's variable array declaration is very convenient, instead of <code>int *a;</code> then
-use <code>malloc(sizeof(int) * size)</code> then copy data with <code>memcpy</code>(3 steps
-required), you can directly code with <code>int a[size];</code>. </p>
-<p>There are another feature you may ...</p>
-                <a class="readmore" href="/alternative-usage-to-typedef-in-c.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/view-matrix-for-projection.html" rel="bookmark"
-                           title="Permalink to View Matrix for projection">View Matrix for projection</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-10-31T00:00:00-04:00">
-                Published: Mon 31 October 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
-        </address>
-<p>In <a href="/category/computer-vision.html">Computer Vision</a>.</p>
-<p>tags: <a href="/tag/computer-vision.html">Computer Vision</a> </p>
-</footer><!-- /.post-info -->                <h1>The <strong>MVP</strong> Matrix</h1>
-<p><span class="math">\(\text{Model} * \text{View} * \text{Projection}\)</span> is the "Magic" and first lesson
-to render objects in Computer Graphics, which transfer a 3D object in object
-space into, in the end, a UV plane. </p>
-<p>The Model matrix is simple and easy to understand, simply the translation, scale
-and ...</p><script type='text/javascript'>if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    var location_protocol = (false) ? 'https' : document.location.protocol;
-    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-</script>
-                <a class="readmore" href="/view-matrix-for-projection.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/the-cmake-externalproject-module.html" rel="bookmark"
-                           title="Permalink to The CMake ExternalProject module">The CMake ExternalProject module</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-10-21T00:00:00-04:00">
-                Published: Fri 21 October 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
-        </address>
-<p>In <a href="/category/programming.html">Programming</a>.</p>
-<p>tags: <a href="/tag/cmake.html">cmake</a> </p>
-</footer><!-- /.post-info -->                <h2>When you need a external project</h2>
-<p>Everyone knows not to write everything your own. But there are those you can
-install by <code>apt-get</code>, those you cannot. messing up with your <code>/usr/local/</code>
-directory is not a long term solution, especially when you just need to try a
-piece of shitty ...</p>
-                <a class="readmore" href="/the-cmake-externalproject-module.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/everything-you-do-i-can-do-it-with-a-double-pointer-in-c.html" rel="bookmark"
-                           title="Permalink to Everything you do I can do it with a double pointer in C">Everything you do I can do it with a double pointer in C</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-08-21T00:00:00-04:00">
-                Published: Sun 21 August 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
-        </address>
-<p>In <a href="/category/diaries.html">Diaries</a>.</p>
-<p>tags: <a href="/tag/programming.html">programming</a> <a href="/tag/cc.html">C/C++</a> </p>
-</footer><!-- /.post-info -->                <p>It is 2016, low level coding is not needed anymore. We have programming
-languages like <code>javascript</code> and python. When people code everything with a class
-and related methods. But do you remember we have a programming language called
-C? When we had no class, templates, operator-override or implicit constructor at ...</p>
-                <a class="readmore" href="/everything-you-do-i-can-do-it-with-a-double-pointer-in-c.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/6-years-of-programming.html" rel="bookmark"
-                           title="Permalink to 6 years of programming">6 years of programming</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-08-08T00:00:00-04:00">
-                Published: Mon 08 August 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
-        </address>
-<p>In <a href="/category/diaries.html">Diaries</a>.</p>
-<p>tags: <a href="/tag/programming.html">programming</a> <a href="/tag/diary.html">diary</a> </p>
-</footer><!-- /.post-info -->                <p>I have been studying in programming for 6 years, since my first day of
- undergrad life. I haven't realized it has been so long, this studying life
- already took away most of my youth. I was a kid without knowing the toughness
- of life, to a young man need ...</p>
-                <a class="readmore" href="/6-years-of-programming.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html" rel="bookmark"
-                           title="Permalink to 如何写一个博客生成器">如何写一个博客生成器</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-04-27T00:00:00-04:00">
-                Published: Mon 27 April 2015
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
-        </address>
-<p>In <a href="/category/chinese.html">Chinese</a>.</p>
-<p>tags: <a href="/tag/python.html">Python</a> <a href="/tag/chinese.html">Chinese</a> </p>
-</footer><!-- /.post-info -->                <p>这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不久
-。所以写的第一篇博客就以生成我的博客站点的项目<code>mkblogs</code>说起，来说说如何写一个博
-客生成器吧。</p>
-<p>现在利用github架静态博客可真是烂大街，但是毕竟我也就能做做烂大街的东西，所以。。
-。额，首先还是简短的介绍一下<code>myblogs</code>脱胎自<code>mkdocs</code>项目，当时写<code>mkblogs</code>的原因是像看
-看怎么写博客生成器。于是从<a href="http://www.staticgen.com/">staticgen</a>找了一个比较简单
-的python项目出来，打算用一下顺便学习学习，结果玩了一会发现它不是一个博客生成器。
-纠结了一下感觉自己改一改吧，反正<code>mkdocs</code>才800多行代码。于是开始将一个文档站点生
-成器改成一个博客生成器。随着我改代码的过程，看看写一个博客生成器需要怎么做。</p>
-<p>一个博客生成器或者站点生成器的工作都是将人写的一个个markdown文件整合成一个有组织
-的列表，这样就牵扯到两件事：</p>
-<ul>
-<li>如何将单个markdown文件编译成html文件。当然这点不需要我们去做，好比说python的
-mardkown模块已经帮我们完成了这个工作。</li>
-</ul>
-<p>+如何将许多编译好的markdown文件组织成链表。这点需要我们去做。</p>
-<h3>处理Markdown到Html的转换</h3>
-<p>像Python-Markdown这样的库不会将源文件编译一个完整的html文件，就像这样：</p>
-<div class="highlight"><pre><span></span># 示例标题
-示例文本
-&gt; 示例引用 ...</pre></div>
-                <a class="readmore" href="/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
+<p class="paginator">
+    Page 1 / 7
+        <a href="/index2.html">&raquo;</a>
+</p>
                 </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>
                         <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
+                            <li><a href="http://theictlab.org">theICTlab</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">
                         <h2>social</h2>
                         <ul>
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
+                            <li><a href="https://ca.linkedin.com/in/sichem-zhou-4b0113b9">Linkedin</a></li>
+                            <li><a href="https://github.com/xeechou">Github</a></li>
+                            <li><a href="https://xeechou.blogspot.ca">YAB</a></li>
                         </ul>
                 </div><!-- /.social -->
         </section><!-- /#extras -->

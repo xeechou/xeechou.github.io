@@ -1,41 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-        <meta charset="utf-8" />
-        <title>Sichem Zhou's Blog Project - Python</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+    <title>Python - Sichem Zhou's Blog Project</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+
+
+
+    <meta name="author" content="Sichem Zhou" />
+    <meta name="keywords" content="Python" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Sichem Zhou's Blog Project" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Sichem Zhou's Blog Project"/>
+        <meta property="og:url" content=""/>
+        <meta property="og:description" content="Sichem Zhou's Blog Project"/>
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
+
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">Sichem Zhou's Blog Project </a></h1>
-                <nav><ul>
-                    <li><a href="/category/chinese.html">Chinese</a></li>
-                    <li><a href="/category/computer-vision.html">Computer Vision</a></li>
-                    <li><a href="/category/diaries.html">Diaries</a></li>
-                    <li><a href="/category/programming.html">Programming</a></li>
-                    <li><a href="/category/technical.html">Technical</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html">如何写一个博客生成器</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2015-04-27T00:00:00-04:00">
-                Published: Mon 27 April 2015
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
-        </address>
-<p>In <a href="/category/chinese.html">Chinese</a>.</p>
-<p>tags: <a href="/tag/python.html">Python</a> <a href="/tag/chinese.html">Chinese</a> </p>
-</footer><!-- /.post-info --><p>这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不久
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Sichem Zhou's Blog Project            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="/category/chinese.html">Chinese</a>
+                        </li>
+                        <li >
+                            <a href="/category/computer-vision.html">Computer vision</a>
+                        </li>
+                        <li >
+                            <a href="/category/diaries.html">Diaries</a>
+                        </li>
+                        <li >
+                            <a href="/category/programming.html">Programming</a>
+                        </li>
+                        <li >
+                            <a href="/category/technical.html">Technical</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html">如何写一个博客生成器</a></h2>
+                <div class="summary"><p>这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不久
 。所以写的第一篇博客就以生成我的博客站点的项目<code>mkblogs</code>说起，来说说如何写一个博
 客生成器吧。</p>
 <p>现在利用github架静态博客可真是烂大街，但是毕竟我也就能做做烂大街的东西，所以。。
@@ -55,86 +104,65 @@ mardkown模块已经帮我们完成了这个工作。</li>
 <p>像Python-Markdown这样的库不会将源文件编译一个完整的html文件，就像这样：</p>
 <div class="highlight"><pre><span></span># 示例标题
 示例文本
-&gt; 示例引用
+&gt; 示例引用 ...</pre></div>
+                    <a class="btn btn-default btn-xs" href="/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
-1.  示例列表
-2.  示例列表
-3.  示例列表
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
 
-    这里有一个[链接](anothermd.md)
-</pre></div>
-<p>会转化成</p>
-<div class="highlight"><pre><span></span><span class="nt">&lt;h1&gt;</span>示例标题<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;p&gt;</span>示例文本<span class="nt">&lt;/p&gt;</span>
-<span class="nt">&lt;blockquote&gt;</span>
-<span class="nt">&lt;p&gt;</span>示例引用<span class="nt">&lt;/p&gt;</span>
-<span class="nt">&lt;/blockquote&gt;</span>
-<span class="nt">&lt;ol&gt;</span>
-<span class="nt">&lt;li&gt;</span>示例列表<span class="nt">&lt;/li&gt;</span>
-<span class="nt">&lt;li&gt;</span>示例列表<span class="nt">&lt;/li&gt;</span>
-<span class="nt">&lt;li&gt;</span>示例列表<span class="nt">&lt;/li&gt;</span>
-<span class="nt">&lt;/ol&gt;</span>
-<span class="nt">&lt;p&gt;</span>这里有一个<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"anothermd.md"</span><span class="nt">&gt;</span>链接<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
-</pre></div>
-<p>这里没有<code>&lt;html&gt;</code>tag，也没有<code>&lt;body&gt;</code>tag，这些可以借助Python-Jinja这样的库来完成，
-我们需要处理的问题是重定位markdown当中的链接，<code>anothermd.md</code>需要被重定位到
-<code>anothermd.html</code>，这样的工作需要我们写Python-Markdown的插件来完成。</p>
-<p>Python-Markdown的插件系统十分灵活，可以在编译前，编译时，编译后三个时间来添加
-Markdown插件，分别需要开发者继承<code>Preprocessor</code>, <code>Treeprocessor</code>和
-<code>Postprocessor</code>类，并重写<code>run</code>方法。具体可以参见
-<a href="https://pythonhosted.org/Markdown/extensions/api.html">Markdown-Extension-API</a>。
-当然你可以设计的更健壮一些，比如检查链接是否存在的问题。</p>
-<h3>构建HTML串来生成我们的完整站点</h3>
-<p>处理写完的MD按照分组构建出一串html，把他们联系起来就是博客生成器的主要工作啦。所
-以实际上，你都不需要懂html, javascript, css网页三大工具╮(￣▽￣)╭ 。唉，又扯远了。</p>
-<p>如何让用你生成器的人写博客完全看你心情，Jekyll貌似需要用户把写博客的时间加到
-Markdown的文件上，然后它会按照时间顺序来组织你的博客。你也可以允许用户添加子目录
-，把关于一个主题的文章添加到一个目录中去，用隐式的方法来组织用户的博客。 或者你
-可以支持Tag。</p>
-<p>Mkblogs要求用户根据主题用的方式来组织博客，所以我们就说说这个方式是怎么做。其实
-这又什么好说的呢，遍历一下文件树，逐个博客进行编译，最后生成一下主页，大功告成，
-oh year。是不是听起来很简单？但是说到细节，繁杂的事情就有一大堆了。但是话说回来
-，什么编程项目不是这样呢？</p>
-<p>为了不要烂尾，我在多说两句吧。为了能生成一个博客的站点，你总是需要在遍历文件树的
-时候保留一些信息：</p>
-<ol>
-<li>
-<p>如果你的主页是记录最新的一些博客，那么就需要维护一个最新博客的链表。</p>
-</li>
-<li>
-<p>如果你需要做归档目录，就需要维护每个主题目录的链表。</p>
-</li>
-<li>
-<p>如果你需要添加一下aboutme这样的东西的话，就需要单独构建一些html页面喽。</p>
-</li>
-</ol>
-<p>我写的像屎一样的博客就这样生成了╭。</p>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://theictlab.org">theICTlab</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://ca.linkedin.com/in/sichem-zhou-4b0113b9"><i class="fa fa-linkedin-square fa-lg"></i> Linkedin</a></li>
+                <li class="list-group-item"><a href="https://github.com/xeechou"><i class="fa fa-github-square fa-lg"></i> Github</a></li>
+                <li class="list-group-item"><a href="https://xeechou.blogspot.ca"><i class="fa fa-yab-square fa-lg"></i> YAB</a></li>
+              </ul>
+            </li>
 
-                            <li><a href="https://ca.linkedin.com/in/sichem-zhou-4b0113b9">Linkedin</a></li>
-                            <li><a href="https://github.com/xeechou">Github</a></li>
-                            <li><a href="https://xeechou.blogspot.ca">YAB</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://theictlab.org" target="_blank">
+                theICTlab
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Sichem Zhou
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
 
 </body>
 </html>

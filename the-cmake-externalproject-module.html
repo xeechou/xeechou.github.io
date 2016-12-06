@@ -1,46 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-        <meta charset="utf-8" />
-        <title>The CMake ExternalProject module</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+    <title>The CMake ExternalProject module - Sichem Zhou's Blog Project</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+
+
+<link rel="canonical" href="/the-cmake-externalproject-module.html">
+
+        <meta name="author" content="Sichem Zhou" />
+        <meta name="keywords" content="cmake" />
+        <meta name="description" content="When you need a external project Everyone knows not to write everything your own. But there are those you can install by apt-get, those you cannot. messing up with your /usr/local/ directory is not a long term solution, especially when you just need to try a piece of shitty ..." />
+
+        <meta property="og:site_name" content="Sichem Zhou's Blog Project" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="The CMake ExternalProject module"/>
+        <meta property="og:url" content="/the-cmake-externalproject-module.html"/>
+        <meta property="og:description" content="When you need a external project Everyone knows not to write everything your own. But there are those you can install by apt-get, those you cannot. messing up with your /usr/local/ directory is not a long term solution, especially when you just need to try a piece of shitty ..."/>
+        <meta property="article:published_time" content="2016-10-21" />
+            <meta property="article:section" content="Programming" />
+            <meta property="article:tag" content="cmake" />
+            <meta property="article:author" content="Sichem Zhou" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
+
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">Sichem Zhou's Blog Project </a></h1>
-                <nav><ul>
-                    <li><a href="/category/chinese.html">Chinese</a></li>
-                    <li><a href="/category/computer-vision.html">Computer Vision</a></li>
-                    <li><a href="/category/diaries.html">Diaries</a></li>
-                    <li class="active"><a href="/category/programming.html">Programming</a></li>
-                    <li><a href="/category/technical.html">Technical</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-<section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="/the-cmake-externalproject-module.html" rel="bookmark"
-           title="Permalink to The CMake ExternalProject module">The CMake ExternalProject module</a></h1>
-    </header>
-
-    <div class="entry-content">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Sichem Zhou's Blog Project            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="/category/chinese.html">Chinese</a>
+                        </li>
+                        <li >
+                            <a href="/category/computer-vision.html">Computer vision</a>
+                        </li>
+                        <li >
+                            <a href="/category/diaries.html">Diaries</a>
+                        </li>
+                        <li class="active">
+                            <a href="/category/programming.html">Programming</a>
+                        </li>
+                        <li >
+                            <a href="/category/technical.html">Technical</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/the-cmake-externalproject-module.html"
+                       rel="bookmark"
+                       title="Permalink to The CMake ExternalProject module">
+                        The CMake ExternalProject module
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
 <footer class="post-info">
-        <abbr class="published" title="2016-10-21T00:00:00-04:00">
-                Published: Fri 21 October 2016
-        </abbr>
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-10-21T00:00:00-04:00"> Fri 21 October 2016</time>
+    </span>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
-        </address>
-<p>In <a href="/category/programming.html">Programming</a>.</p>
-<p>tags: <a href="/tag/cmake.html">cmake</a> </p>
-</footer><!-- /.post-info -->      <h2>When you need a external project</h2>
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="/tag/cmake.html">cmake</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <h2>When you need a external project</h2>
 <p>Everyone knows not to write everything your own. But there are those you can
 install by <code>apt-get</code>, those you cannot. messing up with your <code>/usr/local/</code>
 directory is not a long term solution, especially when you just need to try a
@@ -48,35 +124,64 @@ piece of shitty code. So here is the problem, I just need to compile the
 dependent project and link to them without modify their <em>Makefile</em>. CMake's
 ExternalProject module is what you looking for.</p>
 <h2>ExternalProject Module</h2>
-    </div><!-- /.entry-content -->
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
 
-  </article>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://ca.linkedin.com/in/sichem-zhou-4b0113b9"><i class="fa fa-linkedin-square fa-lg"></i> Linkedin</a></li>
+                <li class="list-group-item"><a href="https://github.com/xeechou"><i class="fa fa-github-square fa-lg"></i> Github</a></li>
+                <li class="list-group-item"><a href="https://xeechou.blogspot.ca"><i class="fa fa-yab-square fa-lg"></i> YAB</a></li>
+              </ul>
+            </li>
+
+
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://theictlab.org" target="_blank">
+                theICTlab
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
 </section>
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://theictlab.org">theICTlab</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2016 Sichem Zhou
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
 
-                            <li><a href="https://ca.linkedin.com/in/sichem-zhou-4b0113b9">Linkedin</a></li>
-                            <li><a href="https://github.com/xeechou">Github</a></li>
-                            <li><a href="https://xeechou.blogspot.ca">YAB</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
 
 </body>
 </html>

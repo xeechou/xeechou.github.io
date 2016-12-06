@@ -1,186 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-        <meta charset="utf-8" />
-        <title>Sichem Zhou's Blog Project - Computer Vision</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+    <title>Computer Vision - Sichem Zhou's Blog Project</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+
+
+
+    <meta name="author" content="Sichem Zhou" />
+    <meta name="keywords" content="Computer Vision" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Sichem Zhou's Blog Project" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Sichem Zhou's Blog Project"/>
+        <meta property="og:url" content=""/>
+        <meta property="og:description" content="Sichem Zhou's Blog Project"/>
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
+
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">Sichem Zhou's Blog Project </a></h1>
-                <nav><ul>
-                    <li><a href="/category/chinese.html">Chinese</a></li>
-                    <li><a href="/category/computer-vision.html">Computer Vision</a></li>
-                    <li><a href="/category/diaries.html">Diaries</a></li>
-                    <li><a href="/category/programming.html">Programming</a></li>
-                    <li><a href="/category/technical.html">Technical</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/view-matrix-for-projection.html">View Matrix for projection</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2016-10-31T00:00:00-04:00">
-                Published: Mon 31 October 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/sichem-zhou.html">Sichem Zhou</a>
-        </address>
-<p>In <a href="/category/computer-vision.html">Computer Vision</a>.</p>
-<p>tags: <a href="/tag/computer-vision.html">Computer Vision</a> </p>
-</footer><!-- /.post-info --><h1>The <strong>MVP</strong> Matrix</h1>
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Sichem Zhou's Blog Project            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="/category/chinese.html">Chinese</a>
+                        </li>
+                        <li >
+                            <a href="/category/computer-vision.html">Computer vision</a>
+                        </li>
+                        <li >
+                            <a href="/category/diaries.html">Diaries</a>
+                        </li>
+                        <li >
+                            <a href="/category/programming.html">Programming</a>
+                        </li>
+                        <li >
+                            <a href="/category/technical.html">Technical</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="/view-matrix-for-projection.html">View Matrix for projection</a></h2>
+                <div class="summary"><h1>The <strong>MVP</strong> Matrix</h1>
 <p><span class="math">\(\text{Model} * \text{View} * \text{Projection}\)</span> is the "Magic" and first lesson
 to render objects in Computer Graphics, which transfer a 3D object in object
 space into, in the end, a UV plane. </p>
 <p>The Model matrix is simple and easy to understand, simply the translation, scale
-and rotation, but View matrix and Camera matrix are not obvious(although you can
-get it for free by single call from <code>glm::lookAt()</code> and <code>glm::perspective()</code>).</p>
-<h1>How does View Matrix work?</h1>
-<p>Let's see the quote:</p>
-<blockquote>
-<p>The engines don't move the ship at all. The ship stays where it is and the
-engines move the universe around it.</p>
-</blockquote>
-<p>This simply means that the view matrix does nothing but remapping everything
-from $(0,0,0) to the centre of the camera. By linear algebra, it is a linear
-transform that changes the basis. and one can use the <code>glm::lookAt()</code> generates
-the view matrix.</p>
-<p>So in the beginning, the camera sits at <span class="math">\((0,0,0)\)</span>, and looking at <span class="math">\((0,0,0)\)</span>. The
-normal is <span class="math">\((0,1,0)\)</span>, since we don't know the direction, lets assume it is
-<span class="math">\((0,0,-1)\)</span>. And imaging the universe is a huge Cube box that surround us.</p>
-<ul>
-<li>If we want to move the camera to left by <span class="math">\((-3, 0, 0)\)</span>, we can translate the cube
-  by <span class="math">\((3,0,0)\)</span></li>
-<li>If we want to rotate the camera to left by 30 degree, we can rotate the cube
-  by 30 degree to the right.</li>
-</ul>
-<p>So the inefficient implementation is simply just <code>-translation * -rotation</code>,
-But about the rotation part, there are simple way to do it. Called
-<em>Gram-Schmidt</em> process. The essence is, again, projection, if we want to retrieve
-the coordinates from one xyz coordinate system to our new coordinate system, we
-can simply projecting to that system by dot product to the new axies.</p>
-<p>The complete View matrix format is:
-</p>
-<div class="math">$$
-M = 
-\begin{bmatrix}
-R_x &amp; R_y &amp; R_z &amp; 0 \\
-U_x &amp; U_y &amp; U_z &amp; 0 \\
-D_x &amp; D_y &amp; D_z &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\begin{bmatrix}
-1 &amp; 0 &amp; 0 &amp; -T_x \\
-0 &amp; 1 &amp; 0 &amp; -T_y \\
-0 &amp; 0 &amp; 1 &amp; -T_z \\
-0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-$$</div>
-<p><span class="math">\(R\)</span>, <span class="math">\(U\)</span>, <span class="math">\(D\)</span> is the new coordinate basis, the principle is super simple, simply
-by <strong>first</strong> reverse-translate the point and <strong>second</strong> projecting on the new
-coordinate system.</p>
-<h1>The persepective projection</h1>
-<p>Persepective projection, on the other hand, is a way to project 3d sences to 2d
-plane, as the way of human eyes and camera. Which means the object further from
-us looks smaller than the object closer to us.</p>
-<p>It sounds nature, but how does the computer implement it? Thats where Camera
-matrix were introduced.</p>
-<h2>Camera matrix</h2>
-<p>To finish projecting objects to our eyes, we need to follow the formula that
-make futher objects smaller. Given two points ([x_1, y_1, z_1] ) and ( [x_2,
-y_2, z_2 ]), they would project to the same position if ( x_1 / z_1 = x_2 /
-z_2 ) and ( y_1 / z_1  = y_2 / z_2 ). The projection is to project ([x,
-y, z] ) to ( [d\frac{x}{z}, d{y}{z}] ), the ( d ) there is the camera
-plane.</p>
-<p>Since there is now linear tranform to do that with 3d matrix, we have to use
-homogeneous coordinate.
-</p>
-<div class="math">$$
-\begin{bmatrix}
-1 &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; 1 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 1 &amp; 0\\
-0 &amp; 0 &amp; -1/d &amp; 0
-\end{bmatrix}
-\begin{bmatrix}
-x\\
-y\\
-z\\
-1\\
-\end{bmatrix}=
-\begin{bmatrix}
-x\\
-y\\
-z\\
--z/d\\
-\end{bmatrix}
-$$</div>
-<p>And as homogeneous coordinates, we should keep scale to keep last element to 1.
-</p>
-<div class="math">$$
-\begin{bmatrix}
-x\\
-y\\
-z\\
--z/d
-\end{bmatrix} \rightarrow
-\begin{bmatrix}
--d\frac{x}{z}\\
--d\frac{y}{z}\\
--d\frac{-d}\\
-1
-\end{bmatrix} \rightarrow
-\begin{bmatrix}
--d\frac{x}{z}\\
--d\frac{y}{z}\\
-\end{bmatrix}
-$$</div>
-<p>
-We can simply replace ( 1 ) with ( -d ) in the projection matrix to reach
-the same goal.</p>
-<div class="math">$$
-\begin{bmatrix}
--d &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; -d &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; -d &amp; 0\\
-0 &amp; 0 &amp; 1  &amp; 0
-\end{bmatrix}
-\begin{bmatrix}
-x\\
-y\\
-z\\
-1\\
-\end{bmatrix} \rightarrow
-\begin{bmatrix}
--dx\\
--dy\\
--dz\\
-z\\
-\end{bmatrix} \rightarrow
-\begin{bmatrix}
--d\frac{x}{z}\\
--d\frac{y}{z}\\
-\end{bmatrix}
-$$</div>
-<p>Finally, the camera matrix looks like this:
-</p>
-<div class="math">$$
-\begin{bmatrix}
--fs_x &amp;  0  &amp; x_c\\
- 0    &amp;  -fs_y &amp; y_c\\
- 0    &amp;  0  &amp; 1
-\end{bmatrix}
-$$</div>
-<p>
-Its little bit complex than what we have, but general idea stays the same.</p>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+and ...</p><script type='text/javascript'>if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
         linebreak = "false";
@@ -236,33 +145,65 @@ Its little bit complex than what we have, but general idea stays the same.</p>
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-</script>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://theictlab.org">theICTlab</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
+</script>
+                    <a class="btn btn-default btn-xs" href="/view-matrix-for-projection.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
-                            <li><a href="https://ca.linkedin.com/in/sichem-zhou-4b0113b9">Linkedin</a></li>
-                            <li><a href="https://github.com/xeechou">Github</a></li>
-                            <li><a href="https://xeechou.blogspot.ca">YAB</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="https://ca.linkedin.com/in/sichem-zhou-4b0113b9"><i class="fa fa-linkedin-square fa-lg"></i> Linkedin</a></li>
+                <li class="list-group-item"><a href="https://github.com/xeechou"><i class="fa fa-github-square fa-lg"></i> Github</a></li>
+                <li class="list-group-item"><a href="https://xeechou.blogspot.ca"><i class="fa fa-yab-square fa-lg"></i> YAB</a></li>
+              </ul>
+            </li>
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://theictlab.org" target="_blank">
+                theICTlab
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2016 Sichem Zhou
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
 
 </body>
 </html>

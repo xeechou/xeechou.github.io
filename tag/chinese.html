@@ -1,168 +1,154 @@
 <!DOCTYPE html>
-<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<html lang="en">
+
 <head>
-    <title>Chinese - Sichem Zhou's Blog Project</title>
-    <!-- Using the latest rendering mode for IE -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>Sichem Zhou's Blog Project - Tag Chinese</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="xeechou.net/" rel="canonical" />
+
+  <!-- Feed -->
+
+  <link href="xeechou.net/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="xeechou.net/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
 
 
 
-    <meta name="author" content="Sichem Zhou" />
-    <meta name="keywords" content="Chinese" />
+<!-- Open Graph -->
+<meta property="og:site_name" content="Sichem Zhou's Blog Project"/>
+<meta property="og:type" content="blog"/>
+<meta property="og:title" content="Sichem Zhou's Blog Project"/>
+<meta property="og:description" content="View the blog."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="xeechou.net/"/>
+<meta property="og:image" content="xeechou.net/theme/images/home-bg.jpg">
 
-    <!-- Open Graph tags -->
-        <meta property="og:site_name" content="Sichem Zhou's Blog Project" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="Sichem Zhou's Blog Project"/>
-        <meta property="og:url" content=""/>
-        <meta property="og:description" content="Sichem Zhou's Blog Project"/>
+<!-- Twitter Card -->
 
-
-    <!-- Bootstrap -->
-        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
-    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
-
-    <link href="/theme/css/pygments/native.css" rel="stylesheet">
-    <link href="/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
-    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
-
-
-
-
-
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Website",
+  "name": " Sichem Zhou's Blog Project ",
+  "url" : "xeechou.net/",
+  "image": "xeechou.net/theme/images/home-bg.jpg",
+  "description": "View the blog."
+}
+</script>
 </head>
-<body>
+<!-- TODO : Body class -->
+<body class="home-template">
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="/" class="navbar-brand">
-Sichem Zhou's Blog Project            </a>
-        </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-                         <li><a href="/pages/about-me.html">
-                             About Me
-                          </a></li>
-                        <li >
-                            <a href="/category/chinese.html">Chinese</a>
-                        </li>
-                        <li >
-                            <a href="/category/computer-vision.html">Computer vision</a>
-                        </li>
-                        <li >
-                            <a href="/category/diaries.html">Diaries</a>
-                        </li>
-                        <li >
-                            <a href="/category/programming.html">Programming</a>
-                        </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><span>
-                <form class="navbar-search" action="/search.html">
-                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
-                </form></span>
-              </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-</div> <!-- /.navbar -->
-<!-- Banner -->
-<!-- End Banner -->
-<div class="container">
-    <div class="row">
-        <div class="col-sm-9">
-            <article>
-                <h2><a href="/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html">如何写一个博客生成器</a></h2>
-                <div class="summary"><p>这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不久
-。所以写的第一篇博客就以生成我的博客站点的项目<code>mkblogs</code>说起，来说说如何写一个博
-客生成器吧。</p>
-<p>现在利用github架静态博客可真是烂大街，但是毕竟我也就能做做烂大街的东西，所以。。
-。额，首先还是简短的介绍一下<code>myblogs</code>脱胎自<code>mkdocs</code>项目，当时写<code>mkblogs</code>的原因是像看
-看怎么写博客生成器。于是从<a href="http://www.staticgen.com/">staticgen</a>找了一个比较简单
-的python项目出来，打算用一下顺便学习学习，结果玩了一会发现它不是一个博客生成器。
-纠结了一下感觉自己改一改吧，反正<code>mkdocs</code>才800多行代码。于是开始将一个文档站点生
-成器改成一个博客生成器。随着我改代码的过程，看看写一个博客生成器需要怎么做。</p>
-<p>一个博客生成器或者站点生成器的工作都是将人写的一个个markdown文件整合成一个有组织
-的列表，这样就牵扯到两件事：</p>
-<ul>
-<li>如何将单个markdown文件编译成html文件。当然这点不需要我们去做，好比说python的
-mardkown模块已经帮我们完成了这个工作。</li>
-</ul>
-<p>+如何将许多编译好的markdown文件组织成链表。这点需要我们去做。</p>
-<h3>处理Markdown到Html的转换</h3>
-<p>像Python-Markdown这样的库不会将源文件编译一个完整的html文件，就像这样：</p>
-<div class="highlight"><pre><span></span># 示例标题
-示例文本
-&gt; 示例引用 ...</pre></div>
-                    <a class="btn btn-default btn-xs" href="/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
 
-        </div>
-        <div class="col-sm-3" id="sidebar">
-            <aside>
+              <li role="presentation"><a href="xeechou.net/pages/about-me.html">About Me</a></li>
 
-<section class="well well-sm">
-    <ul class="list-group list-group-flush">
-            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
-              <ul class="list-group" id="social">
-                <li class="list-group-item"><a href="https://ca.linkedin.com/in/sichem-zhou-4b0113b9"><i class="fa fa-linkedin-square fa-lg"></i> Linkedin</a></li>
-                <li class="list-group-item"><a href="https://github.com/xeechou"><i class="fa fa-github-square fa-lg"></i> Github</a></li>
-                <li class="list-group-item"><a href="https://xeechou.blogspot.ca"><i class="fa fa-yab-square fa-lg"></i> YAB</a></li>
-              </ul>
-            </li>
-
-
-
-
-
-    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
-      <ul class="list-group" id="links">
-        <li class="list-group-item">
-            <a href="http://theictlab.org" target="_blank">
-                theICTlab
-            </a>
-        </li>
-      </ul>
-    </li>
     </ul>
-</section>
-            </aside>
-        </div>
-    </div>
-</div>
-<footer>
-   <div class="container">
-      <hr>
-      <div class="row">
-         <div class="col-xs-10">&copy; 2015 Sichem Zhou
-            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
-            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
-            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
-         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+  </div>
+</nav>
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="blog-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="xeechou.net/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">Tag Chinese</h1>
+        <span class="blog-description">Posts: 1</span>
+            <div class="post-cover cover" style="background-image: url('xeechou.net/theme/images/post-bg.jpg')">
       </div>
-   </div>
-</footer>
-<script src="/theme/js/jquery.min.js"></script>
+    </header>
 
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="/theme/js/bootstrap.min.js"></script>
+  <section id="wrapper">
+    <a class="hidden-close"></a>
 
-<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="/theme/js/respond.min.js"></script>
+<div id="index" class="container">
+  <main class="content" role="main">
+    <div class="extra-pagination">
+<nav class="pagination" role="pagination">
+  <div class="inner">
+    <span class="pagination-info">Page 1 / 1</span>
+    <div class="clear"></div>
+  </div>
+</nav>
+    </div>
 
+        <article class="post">
+        <div class="inner">
+            <header class="post-header">         
+                <h2 class="post-title"><a href="xeechou.net/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html" rel="bookmark" title="Permalink to 如何写一个博客生成器">如何写一个博客生成器</a>
+                </h2>
+                <span class="post-meta">
+                        <a href="xeechou.net/author/sichem-zhou.html">Sichem Zhou</a>
+                     | <time datetime="Mon 27 April 2015">Mon 27 April 2015</time>
+                </span>
+                <div class="clear"></div>
+            </header>
+                <section class="post-excerpt">
+                    <p>
+                        这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不久 。所以写的第一篇博客就以生成我的博客站点的项目mkblogs说起，来说说如何写一个博 客生成器吧。 现在利用github架静态博客可真是烂大街，但是毕竟我也就能做做烂大街的东西，所以。。 。额，首先还是简短的介绍一下myblogs脱胎自mkdocs项目，当时写mkblogs的原因是像看 看怎么写博客生成器。于是从staticgen找了一个比较简单...
+                    </p>
+                </section>
+            </div>
+        </article>
+
+<nav class="pagination" role="pagination">
+  <div class="inner">
+    <span class="pagination-info">Page 1 / 1</span>
+    <div class="clear"></div>
+  </div>
+</nav>
+  </main>
+</div>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="xeechou.net/theme/js/script.js"></script>
 
 </body>
 </html>

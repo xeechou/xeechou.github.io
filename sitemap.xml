@@ -4,168 +4,168 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>xeechou.net/</loc>
-<lastmod>2017-11-11T11:45:29-00:00</lastmod>
+<loc>/</loc>
+<lastmod>2017-11-11T11:48:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/archives.html</loc>
-<lastmod>2017-11-11T11:45:29-00:00</lastmod>
+<loc>/archives.html</loc>
+<lastmod>2017-11-11T11:48:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/tags.html</loc>
-<lastmod>2017-11-11T11:45:29-00:00</lastmod>
+<loc>/tags.html</loc>
+<lastmod>2017-11-11T11:48:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/categories.html</loc>
-<lastmod>2017-11-11T11:45:29-00:00</lastmod>
+<loc>/categories.html</loc>
+<lastmod>2017-11-11T11:48:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/pages/about-me.html</loc>
-<lastmod>2017-11-11T11:45:29-00:00</lastmod>
+<loc>/pages/about-me.html</loc>
+<lastmod>2017-11-11T11:48:33-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/template-deduction-for-c.html</loc>
+<loc>/template-deduction-for-c.html</loc>
 <lastmod>2016-11-04T00:00:00-04:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/alternative-usage-to-typedef-in-c.html</loc>
+<loc>/alternative-usage-to-typedef-in-c.html</loc>
 <lastmod>2016-10-31T00:00:00-04:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/view-matrix-for-projection.html</loc>
+<loc>/view-matrix-for-projection.html</loc>
 <lastmod>2016-10-31T00:00:00-04:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/the-cmake-externalproject-module.html</loc>
+<loc>/the-cmake-externalproject-module.html</loc>
 <lastmod>2016-10-21T00:00:00-04:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/everything-you-do-i-can-do-it-with-a-double-pointer-in-c.html</loc>
+<loc>/everything-you-do-i-can-do-it-with-a-double-pointer-in-c.html</loc>
 <lastmod>2016-08-21T00:00:00-04:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/6-years-of-programming.html</loc>
+<loc>/6-years-of-programming.html</loc>
 <lastmod>2016-08-08T00:00:00-04:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html</loc>
+<loc>/ru-he-xie-yi-ge-bo-ke-sheng-cheng-qi.html</loc>
 <lastmod>2015-04-27T00:00:00-04:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/category/chinese.html</loc>
+<loc>/category/chinese.html</loc>
 <lastmod>2015-04-27T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/category/computer-vision.html</loc>
+<loc>/category/computer-vision.html</loc>
 <lastmod>2016-10-31T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/category/diaries.html</loc>
+<loc>/category/diaries.html</loc>
 <lastmod>2016-08-21T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/category/programming.html</loc>
+<loc>/category/programming.html</loc>
 <lastmod>2016-11-04T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/tag/programming.html</loc>
+<loc>/tag/programming.html</loc>
 <lastmod>2016-11-04T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/tag/cc.html</loc>
+<loc>/tag/cc.html</loc>
 <lastmod>2016-11-04T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/tag/cv.html</loc>
+<loc>/tag/cv.html</loc>
 <lastmod>2016-10-31T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/tag/cmake.html</loc>
+<loc>/tag/cmake.html</loc>
 <lastmod>2016-10-21T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/tag/diary.html</loc>
+<loc>/tag/diary.html</loc>
 <lastmod>2016-08-08T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/tag/python.html</loc>
+<loc>/tag/python.html</loc>
 <lastmod>2015-04-27T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/tag/chinese.html</loc>
+<loc>/tag/chinese.html</loc>
 <lastmod>2015-04-27T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>xeechou.net/author/sichem-zhou.html</loc>
+<loc>/author/sichem-zhou.html</loc>
 <lastmod>2016-11-04T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>

@@ -54,7 +54,7 @@
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="/rotations.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2017-11-16 00:00:00-05:00"/>
+<meta property="article:published_time" content="2017-11-26 00:00:00-05:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="/author/sichem-zhou.html">
 <meta property="article:section" content="Computer Vision"/>
@@ -69,7 +69,7 @@
   "@type": "Article",
   "name": "Rotations",
   "headline": "Rotations",
-  "datePublished": "2017-11-16 00:00:00-05:00",
+  "datePublished": "2017-11-26 00:00:00-05:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -117,7 +117,7 @@
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="/author/sichem-zhou.html">Sichem Zhou</a>
-            | <time datetime="Thu 16 November 2017">Thu 16 November 2017</time>
+            | <time datetime="Sun 26 November 2017">Sun 26 November 2017</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
@@ -138,10 +138,10 @@ somehow much more complicated than the other two transform, it is one really
 needs a matrix representation among all three. Representations and computation
 of it has been developed for years. We have systems like <strong>Axis-angle</strong>
 representation, <strong>matrix representation</strong>, <strong>euler angles</strong> and <strong>quaternions</strong>.
-Despite I have known it for a long time, when I forgot, it is still complicated.
-Here I am writing this again, as easily understanding as possible, for my
-future-self(or I can just travel through time to ask myself now).</p>
-<p>in 3D space, we think rotation is about an axis(in 2D you can also do it, but
+Despite I have known them for a long time, when I forgot, the rotation is still
+complicated. Here I am writing this again, as easily understanding as possible,
+for my future-self (or I can just travel through time to ask myself now).</p>
+<p>in 3D space, we think a rotation is about an axis(in 2D you can also do it, but
 the axis is out of the space, and yeah, higher dimension is out of my reach,
 just forget about those). This leads us to the <strong>rotation vector</strong>
 representation <span class="math">\((W, \theta)\)</span> where <span class="math">\(W\)</span> is the rotating axis, and <span class="math">\(\theta\)</span> is the
@@ -203,13 +203,27 @@ they are Bruce Banna in different forms of hulk(clear throat).</p>
 <p>Let's play the role of doctor, dive into the head of rotation and see which
 causes him to turn into different "hulks". The rotation matrix is the most
 common "hulk" we see, green, big and it smashes everyone with its
-multiplication. But what it really does with its gammar energy(okay, enough).
-What the matrix really does is projections, or in other words, changing basis.
-As the general definition of rotation said: "mapping a plane into itself".</p>
+multiplication. But what it really does with its gamma (okay, enough) what the
+matrix really does is projections, or in other words, changing basis. It is
+better to see with the example of a extrinsic matrix, if I rotate my camera -45
+degrees based around y axis, what we see in the camera is that my object rotate
+45 degree around y axis. Reversely, if I want to rotate the object 45 degree
+around y axis, I can rotate my camera -45 degree around y axis, same for the x
+and z axis. Then express the change sous la forme de change of basis. Then we
+re-project this new world with this new camera. Everything worked out fine.</p>
+<div class="math">$$
+M =
+\begin{bmatrix}
+R_x &amp; R_y &amp; R_z &amp; 0 \\
+U_x &amp; U_y &amp; U_z &amp; 0 \\
+D_x &amp; D_y &amp; D_z &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+$$</div>
 <table>
 <thead>
 <tr>
-<th>X</th>
+<th></th>
 <th>rotation matrix</th>
 <th>rotation vector</th>
 <th>euler angle</th>
@@ -221,32 +235,79 @@ As the general definition of rotation said: "mapping a plane into itself".</p>
 <td>rotation matrix</td>
 <td>x</td>
 <td>decompose</td>
-<td>x</td>
-<td>x</td>
+<td>solving equations</td>
+<td>solving equation</td>
 </tr>
 <tr>
 <td>rotation vector</td>
+<td><span class="math">\(RR_{2D}R^{-1}\)</span></td>
 <td>x</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
+<td></td>
+<td><span class="math">\((w,1/2\theta)\)</span></td>
 </tr>
 <tr>
 <td>euler angle</td>
-<td>x</td>
-<td>x</td>
+<td><span class="math">\(R_p R_y R_r\)</span></td>
+<td></td>
 <td>x</td>
 <td>x</td>
 </tr>
 <tr>
 <td>quaternions</td>
-<td>x</td>
-<td>x</td>
+<td>Matrix formula</td>
+<td><span class="math">\((w, 1/2\theta)\)</span></td>
 <td>x</td>
 <td>x</td>
 </tr>
 </tbody>
 </table>
+<p>So what is the relationship between rotation matrix and rotation vector?
+Remember that an axis-angle rotation is around an angle? So let us align our
+normal vector of the image plane of the camera to the rotating axis, this is the
+same as changing basis, let us call it the basis <span class="math">\(R\)</span>. Then we use a simple
+matrix for expressing an 2D rotation <span class="math">\(R_{2D}\)</span>. Finally after we are done, we
+need to rotate the camera back using a inverse matrix <span class="math">\(R^{-1}\)</span>, Parpait!</p>
+<p><img alt="euler angle" src="/imgs/eulerangles.png" style="float: right;width: 300px; height: auto;"/> As much
+as we love the rotation matrices, it is too heavy for many people. We can paint
+our world of rotations with only 3 numbers (yaw, pitch, roll). By the name of
+Euler, the angle is also called euler angle. Euler angle is the <strong>The Green
+Scar</strong> whom everyone likes, he waves a hammer and a shield, defeated everyone in
+the arena, years later, he became the story of legend. Words about him spread
+among young children's ears.</p>
+<p>Okay, pratically, <strong>euler-angle</strong> is cascading the transform on different
+axises. So if we rotate two of the axis so that the third axis became the
+rotating vector in the angle-rotation representation then we see our old friend
+in a different suit. Transforming to matrix is as easy as 3-product of 2D
+transform <span class="math">\(R_p R_y R_r\)</span>. It is harder to come back from the other end, but you
+can still do it by solving the matrix</p>
+<div class="math">$$
+R(\phi) R(\theta) R(\psi) = \\
+\begin{bmatrix}
+\cos \theta \cos \phi &amp; \sin \psi \sin \theta \cos \phi - \cos\psi \sin\phi &amp;
+\cos\psi \sin\theta \cos\phi + \sin\psi \sin\phi \\
+\cos\theta \cos\phi &amp; \sin\psi\sin\theta\sin\phi &amp; \cos\psi\sin\theta\sin\phi -
+\sin\psi\cos\phi \\
+-sin\theta &amp; sin\psi \cos\theta &amp; \cos\psi\cos\theta
+\end{bmatrix}
+$$</div>
+<p>The last bit of the story of euler angle here, we have to mention the gimbal
+lock, which is so elegantly designed to cause a dimension drop, a singularity
+that traps the earth to a 2D plane, no escape, thus brings the end of world
+(clear the throat). Okay, the gimbal lock lies in the second axis, when you turn
+90 degree, you will align the first and the third axis together. Then rotating
+on first and second axis is to the same axis. Okay, I finished.</p>
+<p>The last one of the family, is the <strong>Quaternion</strong>, he is the "perfect" hulk,
+with a face and intelligence of Bruce Banner and the strength of the hulk. The
+only problem is the difficulty to understand. The
+<a href="https://en.wikipedia.org/wiki/Quaternion">math</a> of quaternion is skipped here(I
+am too lazy, maybe one day I will come back to fill it up). We can note done in
+the mind that <span class="math">\(i^2=j^2=k^2=ijk\)</span> and <span class="math">\(q=(\cos\frac{1}{2\theta},
+n_x\frac{1}{2\theta}, n_y\frac{1}{2\theta}, n_z\frac{1}{2\theta})\)</span> without
+understand it. It is <span class="math">\(\frac{1}{2\theta}\)</span> not <span class="math">\(\theta\)</span>, why!!! Well, it because
+<span class="math">\(i^2=j^2=k^2=ijk=-1\)</span>. So you need to rotate 720 degree to get back to original
+state, sounds like there are some higher dimensions beneath. In the end, We can
+also successfully transfer a quaternion into rotation matrix without going
+though the rotation vector, which makes our lives easier.</p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",

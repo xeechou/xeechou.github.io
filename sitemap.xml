@@ -5,42 +5,42 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2018-06-08T22:48:18-00:00</lastmod>
+<lastmod>2018-06-19T13:13:25-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2018-06-08T22:48:18-00:00</lastmod>
+<lastmod>2018-06-19T13:13:25-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2018-06-08T22:48:18-00:00</lastmod>
+<lastmod>2018-06-19T13:13:25-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2018-06-08T22:48:18-00:00</lastmod>
+<lastmod>2018-06-19T13:13:25-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/pages/about-me.html</loc>
-<lastmod>2018-06-08T22:48:18-00:00</lastmod>
+<lastmod>2018-06-19T13:13:25-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/can-we-be-really-who-we-claimed.html</loc>
-<lastmod>2018-05-26T00:00:00-04:00</lastmod>
+<loc>/can-we-be-really-whom-we-claimed.html</loc>
+<lastmod>2018-06-19T00:00:00-04:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -131,7 +131,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/category/journal.html</loc>
-<lastmod>2018-05-26T00:00:00-05:18</lastmod>
+<lastmod>2018-06-19T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -151,22 +151,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>/tag/journal.html</loc>
-<lastmod>2018-05-26T00:00:00-05:18</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>/tag/graphics.html</loc>
-<lastmod>2017-11-26T00:00:00-05:18</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>/tag/programming.html</loc>
-<lastmod>2016-11-04T00:00:00-05:18</lastmod>
+<loc>/tag/cmake.html</loc>
+<lastmod>2016-10-21T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -179,15 +165,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>/tag/cv.html</loc>
-<lastmod>2016-10-31T00:00:00-05:18</lastmod>
+<loc>/tag/journal.html</loc>
+<lastmod>2018-06-19T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/cmake.html</loc>
-<lastmod>2016-10-21T00:00:00-05:18</lastmod>
+<loc>/tag/programming.html</loc>
+<lastmod>2016-11-04T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -200,8 +186,22 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>/tag/graphics.html</loc>
+<lastmod>2017-11-26T00:00:00-05:18</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/tag/cv.html</loc>
+<lastmod>2016-10-31T00:00:00-05:18</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>/author/sichem-zhou.html</loc>
-<lastmod>2018-05-26T00:00:00-05:18</lastmod>
+<lastmod>2018-06-19T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

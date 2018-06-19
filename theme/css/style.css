@@ -116,6 +116,13 @@ pre {
     overflow: auto
 }
 
+.centerimg {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+
+
 code,
 kbd,
 pre,
@@ -446,15 +453,15 @@ th {
 
 @supports ((-ms-flex-wrap: wrap) or (flex-wrap: wrap)) {
     body {
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        min-height: 100vh
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	min-height: 100vh
     }
     #wrapper {
-        -ms-flex: 1;
-        flex: 1
+	-ms-flex: 1;
+	flex: 1
     }
 }
 
@@ -789,10 +796,10 @@ img {
 
 @keyframes fadein {
     0% {
-        opacity: .2
+	opacity: .2
     }
     100% {
-        opacity: .9
+	opacity: .9
     }
 }
 
@@ -1805,105 +1812,105 @@ img {
 
 @media only screen and (max-width: 960px) {
     #wrapper {
-        transform: translate3d(0, 0, 0)
+	transform: translate3d(0, 0, 0)
     }
     .menu-active #wrapper {
-        padding-right: 0;
-        transform: translate3d(-16em, 0, 0)
+	padding-right: 0;
+	transform: translate3d(-16em, 0, 0)
     }
     .blog-logo,
     .nav-button {
-        position: absolute
+	position: absolute
     }
     #blog-author {
-        margin: auto
+	margin: auto
     }
 }
 
 @media only screen and (max-width: 640px) {
     html {
-        font-size: 50%
+	font-size: 50%
     }
     .post-share,
     .post-tags {
-        max-width: none;
-        float: none;
-        margin: 0 0 2em
+	max-width: none;
+	float: none;
+	margin: 0 0 2em
     }
     .post-share a {
-        margin-left: 0;
-        margin-right: 0.666em
+	margin-left: 0;
+	margin-right: 0.666em
     }
     .post-nav i {
-        font-size: 1.5em
+	font-size: 1.5em
     }
 }
 
 @media only screen and (max-width: 480px) {
     .inner {
-        padding: 0 16px
+	padding: 0 16px
     }
     .post-template #main-header {
-        padding: 16px 0
+	padding: 16px 0
     }
     #main-nav a {
-        margin: 16px
+	margin: 16px
     }
     .post-author-avatar {
-        margin: -0.25em 0 0 0.5em
+	margin: -0.25em 0 0 0.5em
     }
     .container .post.featured .post-title:after {
-        left: 0;
-        top: -1.75em
+	left: 0;
+	top: -1.75em
     }
     .post-content img,
     .post-content .fluid-width-video-wrapper {
-        width: 100%;
-        margin-left: auto
+	width: 100%;
+	margin-left: auto
     }
     .post-nav:after {
-        display: none
+	display: none
     }
     .post-nav-next,
     .post-nav-prev {
-        display: block;
-        width: 100%
+	display: block;
+	width: 100%
     }
     .post-nav-teaser {
-        position: relative;
-        min-height: 4em;
-        padding: 2em 0
+	position: relative;
+	min-height: 4em;
+	padding: 2em 0
     }
     .post-nav-next .post-nav-teaser:after {
-        position: absolute;
-        content: '';
-        width: 100%;
-        height: 1px;
-        left: 0;
-        bottom: 0;
-        margin-bottom: -1px;
-        background: #e5e4e1;
-        z-index: 2
+	position: absolute;
+	content: '';
+	width: 100%;
+	height: 1px;
+	left: 0;
+	bottom: 0;
+	margin-bottom: -1px;
+	background: #e5e4e1;
+	z-index: 2
     }
     .post-nav-next .post-nav-teaser {
-        padding-right: 0;
-        padding-left: 1.5em
+	padding-right: 0;
+	padding-left: 1.5em
     }
     .post-nav-prev .post-nav-teaser {
-        padding-left: 0;
-        padding-right: 1.5em
+	padding-left: 0;
+	padding-right: 1.5em
     }
     .post-nav-next i {
-        margin-left: -1em
+	margin-left: -1em
     }
     .post-nav-prev i {
-        margin-right: -1em
+	margin-right: -1em
     }
 }
 
 @media only screen and (max-width: 320px) {
     .pagination .pagination-label {
-        display: none
+	display: none
     }
 }
 

@@ -117,7 +117,7 @@
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="/author/sichem-zhou.html">Sichem Zhou</a>
-            | <time datetime="Sun 22 July 2018">Sun 22 July 2018</time>
+            | <time datetime="dim 22 juillet 2018">dim 22 juillet 2018</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
@@ -137,23 +137,23 @@
 window manager called <code>Awesome</code> (one of my friend introduced to me, I was
 enchanted by how he opened two terminals side-by-side, one for coding and one
 for compiling). A voice about next generation desktop was just raised in the
-linux community , a group of hackers demod the <code>weston</code> project, you can rotate
-the window. They also pointed out the existing problems in the x server
-architecture. It is cumbersome, too many components, easily dead after package
-upgrade.</p>
+linux community , a group of hackers demod the <code>weston</code> project, where you can
+rotate the application windows. They also pointed out the existing problems in
+the x server architecture(basically it is too old, let us just replace it). It
+is cumbersome, too many components, easily dead after package upgrade.</p>
 <p><img alt="wayland-vs-xorg" src="/imgs/x-vs-wayland.png" style="width: 876px; height: auto; max-width: 100%;"/>
 <center>Wayland vs x server architecture </center></p>
-<p>X did not die, it lives well even now. It did not stop me from starting a wayland
-window manager project though, it was only 3000 lines in the<code>DWM</code> (I still use
-it in my laptop) project, how hard can it be? Then I looked into the wayland
-protocol, and the only wayland client programming
+<p>X did not die, it lives well even now. It did not stop me from starting a
+wayland window manager project though, it was only 3000 lines in the <code>DWM</code> (I
+still use it in my laptop) project, how hard can it be? Then I looked into the
+wayland protocol and the only wayland client programming
 <a href="https://jan.newmarch.name/Wayland/index.html">tutorial</a> available online(except
-those examples from weston itself). It did not seemed that hard, altough I did not
-understand very much about how wayland double buffer works, what does the
+those examples from weston itself). It did not seemed that hard, altough I did
+not understand very much about how wayland double buffer works, what does the
 <code>wl_callback</code>. The client side programming seemed a bit complicated than <strong>SDL</strong>
-or <strong>Qt</strong>, but it was doable to write simple applications. But how do we create a
-wayland server? Could it be just 3000 lines as well(yeah actually it may be if I
-am really smart, it is 6000 lines now)? The first problem I had was
+or <strong>Qt</strong>, but it was doable to write simple applications. But how do we create
+a wayland server? Could it be just 3000 lines as well(yeah actually it may be if
+I am really smart, it is 6000 lines now)? The first problem I had was
 <code>mode-setting</code>, I did waste enormous time writing the <a href="https://github.com/dvdhrm/docs/blob/master/drm-howto/modeset.c">drm
 code</a>. It seemed
 will take forever. I did not know what it meant for a wayland server and what I
@@ -164,13 +164,15 @@ started trying to write the <strong>wayland compositor library</strong>, (I am n
 exact time, maybe there was a gap while I did nothing because of the lacking of
 compositor libraries) there was one that you can open a wayland server then have
 a small cursor on it, and that was it. Then there was
-<a href="https://github.com/michaelforney/swc"><strong>swc</strong></a>, it was designed to create
-simple compositors, it worked as well with Nvidia graphic cards (nvidia only has
-wayland support from last year I think, they do not give a shit about libdrm,
-when they finally supported libdrm, they came with a different solution). it is
-now completed deprecated, I think the developer stopped development even before
-I knew how to work with it. It was easy to start a wayland compositor though,
-but afterwards, it did nott have any documents about how to manage the windows.</p>
+<a href="https://github.com/michaelforney/swc"><strong>swc</strong></a>, the
+<a href="https://www.youtube.com/watch?v=5thcLnLHkjs">video</a> looks really nice, very
+responsive. It was designed to create simple compositors. It can work as well on
+Nvidia GPUs (nvidia only has wayland support from last year I think, they do not
+give a shit about libdrm, when they finally supported libdrm, they came with a
+different solution). it is now completed deprecated, I think the developer
+stopped development even before I knew how to work with it. It was easy to start
+a wayland compositor, but afterwards, it did not have any documents about how to
+manage the windows.</p>
 <p>Then after a few monthes, a appealing project called <strong>wlc</strong> started gaining
 attentions on github. I still rememeber the architecture, the first design was
 creating a structure and let user writes the callback to inject into it, they

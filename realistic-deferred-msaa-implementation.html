@@ -38,11 +38,11 @@
 
     <link href="/realistic-deferred-msaa-implementation.html" rel="canonical" />
 
-        <meta name="description" content="Deferred MSAA, always has been a good problem. In the spatial anti-aliasing domain, MSAA is still the swiss-army knife, handle almost...">
+	<meta name="description" content="Deferred MSAA, always has been a good problem. In the spatial anti-aliasing domain, MSAA is still the swiss-army knife, handle almost...">
 
-        <meta name="author" content="Sichem Zhou">
+	<meta name="author" content="Sichem Zhou">
 
-        <meta name="tags" content="graphics">
+	<meta name="tags" content="graphics">
 
 
 
@@ -91,36 +91,36 @@
     <p class="nav-label">Menu</p>
     <ul>
 
-              <li role="presentation"><a href="/pages/about-me.html">About Me</a></li>
+	      <li role="presentation"><a href="/pages/about-me.html">About Me</a></li>
 
     </ul>
   </div>
 </nav>
     <!-- Progressbar -->
     <div class="progress-container">
-        <span class="progress-bar"></span>
+	<span class="progress-bar"></span>
     </div>
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
     <header id="post-header" class="has-cover">
       <div class="inner">
-        <nav id="navigation">
-            <span id="home-button" class="nav-button">
-                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
-            </span>
-          <span id="menu-button" class="nav-button">
-            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
-          </span>
-        </nav>
-        <h1 class="post-title">Realistic Deferred MSAA implementation</h1>
-        <!-- TODO : Proper class for headline -->
-        <span class="post-meta">
-                <a href="/author/sichem-zhou.html">Sichem Zhou</a>
-            | <time datetime="lun 03 décembre 2018">lun 03 décembre 2018</time>
-        </span>
-        <!-- TODO : Modified check -->
-            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+	<nav id="navigation">
+	    <span id="home-button" class="nav-button">
+		<a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+	    </span>
+	  <span id="menu-button" class="nav-button">
+	    <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+	  </span>
+	</nav>
+	<h1 class="post-title">Realistic Deferred MSAA implementation</h1>
+	<!-- TODO : Proper class for headline -->
+	<span class="post-meta">
+		<a href="/author/sichem-zhou.html">Sichem Zhou</a>
+	    | <time datetime="lun 03 décembre 2018">lun 03 décembre 2018</time>
+	</span>
+	<!-- TODO : Modified check -->
+	    <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
       </div>
     </header>
 
@@ -129,10 +129,10 @@
 
     <!-- Post content -->
     <main class="content" role="main">
-        <article class="post">
-        <div class="inner">
-            <section class="post-content">
-                <p>Deferred MSAA, always has been a good problem. In the spatial anti-aliasing
+	<article class="post">
+	<div class="inner">
+	    <section class="post-content">
+		<p>Deferred MSAA, always has been a good problem. In the spatial anti-aliasing
 domain, MSAA is still the swiss-army knife, handle almost all the case.</p>
 <p>Some other post-processing methods like nvidia's FXAA, AMDs MLAA, or DLAA. FXAA
 is rather pleasing in many cases as well, especially if
@@ -170,62 +170,61 @@ came at the ground in the video game, there is still aliasing effect at the
 intersection of grass and terrian. To solve this, you apply apply a normal test
 on the samples, if the pixel locates on the intersection, the normal test fails
 and thus mark the pixel complex.</p>
-<p><img alt="intersect" src="/imgs/msaa-intersect.png" style="width: 776px; height: auto; max-width: 100%;"/>
-<center>This method works even at the intersection of triangles.</center></p>
+
 <p>Voilà, here is your deffered MSAA, it runs really fast for the lighting pass,
 and it works all the time, unless(there is always an exception), you have
 co-planar z-fighting problem, then you would have probably bigger problem to
 worry about than anti-aliasing.</p>
-            </section>
+	    </section>
 
-            <section class="post-info">
-                <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=Realistic Deferred MSAA implementation&amp;url=/realistic-deferred-msaa-implementation.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
-                    </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/realistic-deferred-msaa-implementation.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
-                    </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=/realistic-deferred-msaa-implementation.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
-                    </a>
-                    <div class="clear"></div>
-                </div>
+	    <section class="post-info">
+		<div class="post-share">
+		    <a class="twitter" href="https://twitter.com/share?text=Realistic Deferred MSAA implementation&amp;url=/realistic-deferred-msaa-implementation.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+		    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+		    </a>
+		    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/realistic-deferred-msaa-implementation.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+		    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+		    </a>
+		    <a class="googleplus" href="https://plus.google.com/share?url=/realistic-deferred-msaa-implementation.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+		    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+		    </a>
+		    <div class="clear"></div>
+		</div>
 
-                <aside class="post-tags">
+		<aside class="post-tags">
 <a href="/tag/graphics.html">graphics</a>                </aside>
 
-                <div class="clear"></div>
+		<div class="clear"></div>
 
 
-                </section>
+		</section>
 
 
-                <aside class="post-nav">
-                    <a class="post-nav-prev" href="/the-wayland-project-ii.html">
-                        <section class="post-nav-teaser">
-                            <i class="ic ic-arrow-right"></i>
-                                <h2 class="post-nav-title">The wayland project II</h2>
-                            <p class="post-nav-excerpt">The last post I laid out the story of me with wayland. Technology is fascinating isn't...</p>
-                        </section>
-                    </a>
-                    <div class="clear"></div>
-                </aside>
+		<aside class="post-nav">
+		    <a class="post-nav-prev" href="/the-wayland-project-ii.html">
+			<section class="post-nav-teaser">
+			    <i class="ic ic-arrow-right"></i>
+				<h2 class="post-nav-title">The wayland project II</h2>
+			    <p class="post-nav-excerpt">The last post I laid out the story of me with wayland. Technology is fascinating isn't...</p>
+			</section>
+		    </a>
+		    <div class="clear"></div>
+		</aside>
 
-            </div>
-        </article>
+	    </div>
+	</article>
     </main>
       <!-- TODO : Body class -->
     <div id="body-class" style="display: none;" class=""></div>
 
     <footer id="footer">
       <div class="inner">
-        <section class="credits">
+	<section class="credits">
 
 
-          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
-          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
-        </section>
+	  <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+	  <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+	</section>
       </div>
     </footer>
   </section>
@@ -237,9 +236,9 @@ worry about than anti-aliasing.</p>
     _gaq.push(['_setAccount', 'UA-119901699-1']);
     _gaq.push(['_trackPageview']);
     (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     </script>
 </body>

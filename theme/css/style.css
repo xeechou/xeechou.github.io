@@ -116,6 +116,13 @@ pre {
     overflow: auto
 }
 
+.centerimg {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+
+
 code,
 kbd,
 pre,
@@ -1428,10 +1435,16 @@ img {
     color: #f26a3d
 }
 
-.post-content img,
+.post-content img
+{
+    max-width: none;
+    width: 100%;
+}
+
 .post-content .fluid-width-video-wrapper {
     max-width: none;
     width: 110%;
+    margin-left: -5%
 }
 
 .post-info {

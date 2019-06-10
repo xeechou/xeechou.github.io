@@ -119,7 +119,7 @@
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="/author/sichem-zhou.html">Sichem Zhou</a>
-            | <time datetime="lun 27 avril 2015">lun 27 avril 2015</time>
+            | <time datetime="Mon 27 April 2015">Mon 27 April 2015</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
@@ -152,15 +152,15 @@ mardkown模块已经帮我们完成了这个工作。</li>
 <p>+如何将许多编译好的markdown文件组织成链表。这点需要我们去做。</p>
 <h3>处理Markdown到Html的转换</h3>
 <p>像Python-Markdown这样的库不会将源文件编译一个完整的html文件，就像这样：</p>
-<div class="highlight"><pre><span></span># 示例标题
-示例文本
-&gt; 示例引用
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="err">示例标题</span>
+<span class="err">示例文本</span>
+<span class="o">&gt;</span> <span class="err">示例引用</span>
 
-1.  示例列表
-2.  示例列表
-3.  示例列表
+<span class="mi">1</span><span class="p">.</span>  <span class="err">示例列表</span>
+<span class="mi">2</span><span class="p">.</span>  <span class="err">示例列表</span>
+<span class="mi">3</span><span class="p">.</span>  <span class="err">示例列表</span>
 
-    这里有一个[链接](anothermd.md)
+    <span class="err">这里有一个</span><span class="p">[</span><span class="err">链接</span><span class="p">](</span><span class="n">anothermd</span><span class="p">.</span><span class="n">md</span><span class="p">)</span>
 </pre></div>
 <p>会转化成</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;h1&gt;</span>示例标题<span class="nt">&lt;/h1&gt;</span>

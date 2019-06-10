@@ -119,7 +119,7 @@
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="/author/sichem-zhou.html">Sichem Zhou</a>
-            | <time datetime="dim 21 août 2016">dim 21 août 2016</time>
+            | <time datetime="Sun 21 August 2016">Sun 21 August 2016</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
@@ -151,24 +151,24 @@ Torvalds's double pointer code? It removes on special case where you would make
 mistakes.</p>
 <p>But really? what can you do with a double pointer in C? Well, Suppose I have
 <code>vector</code> data structure and I didn't want to write the code like this:</p>
-<div class="highlight"><pre><span></span> struct vector {
-     size_t elem_size;
-     void *arr;
-}
+<div class="highlight"><pre><span></span> <span class="n">struct</span> <span class="n">vector</span> <span class="err">{</span>
+     <span class="n">size_t</span> <span class="n">elem_size</span><span class="p">;</span>
+     <span class="n">void</span> <span class="o">*</span><span class="n">arr</span><span class="p">;</span>
+<span class="err">}</span>
 </pre></div>
 <p>we can actually just use a simple array to do the job. If you just pass the
 <code>void *</code> to insert function, how can I modify the size of the vector, or insert
 anything before header? This should not be a problem with this:</p>
-<div class="highlight"><pre><span></span>void insert(void **arr, void *elem, size_t *remain_size, size_t *size) {
-    size_t old_size = *size;
-    if (*remain_size == 0) {
-        *arr = realloc(*arr, 2 * *size);
-        *remain_size = *size;
-        *size = 2;
+<div class="highlight"><pre><span></span><span class="nv">void</span> <span class="nv">insert</span><span class="ss">(</span><span class="nv">void</span> <span class="o">**</span><span class="nv">arr</span>, <span class="nv">void</span> <span class="o">*</span><span class="nv">elem</span>, <span class="nv">size_t</span> <span class="o">*</span><span class="nv">remain_size</span>, <span class="nv">size_t</span> <span class="o">*</span><span class="nv">size</span><span class="ss">)</span> {
+    <span class="nv">size_t</span> <span class="nv">old_size</span> <span class="o">=</span> <span class="o">*</span><span class="nv">size</span><span class="c1">;</span>
+    <span class="k">if</span> <span class="ss">(</span><span class="o">*</span><span class="nv">remain_size</span> <span class="o">==</span> <span class="mi">0</span><span class="ss">)</span> {
+        <span class="o">*</span><span class="nv">arr</span> <span class="o">=</span> <span class="nv">realloc</span><span class="ss">(</span><span class="o">*</span><span class="nv">arr</span>, <span class="mi">2</span> <span class="o">*</span> <span class="o">*</span><span class="nv">size</span><span class="ss">)</span><span class="c1">;</span>
+        <span class="o">*</span><span class="nv">remain_size</span> <span class="o">=</span> <span class="o">*</span><span class="nv">size</span><span class="c1">;</span>
+        <span class="o">*</span><span class="nv">size</span> <span class="o">=</span> <span class="mi">2</span><span class="c1">;</span>
     }
-    *remain_size -= 1;
+    <span class="o">*</span><span class="nv">remain_size</span> <span class="o">-=</span> <span class="mi">1</span><span class="c1">;</span>
 
-    //copy the elem to the end
+    <span class="o">//</span><span class="nv">copy</span> <span class="nv">the</span> <span class="nv">elem</span> <span class="nv">to</span> <span class="nv">the</span> <span class="k">end</span>
 }
 </pre></div>
             </section>

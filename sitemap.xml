@@ -5,35 +5,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2019-06-10T16:14:59-00:00</lastmod>
+<lastmod>2020-01-15T22:30:24-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2019-06-10T16:14:59-00:00</lastmod>
+<lastmod>2020-01-15T22:30:24-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2019-06-10T16:14:59-00:00</lastmod>
+<lastmod>2020-01-15T22:30:24-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2019-06-10T16:14:59-00:00</lastmod>
+<lastmod>2020-01-15T22:30:24-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/pages/about-me.html</loc>
-<lastmod>2019-06-10T16:14:59-00:00</lastmod>
+<lastmod>2020-01-15T22:30:24-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -55,20 +55,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>/the-wayland-project.html</loc>
 <lastmod>2018-07-22T00:00:00-04:00</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>/can-we-be-really-whom-we-claimed.html</loc>
-<lastmod>2018-06-19T00:00:00-04:00</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>/some-thoughts-in-the-winter.html</loc>
-<lastmod>2018-01-14T00:00:00-05:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -186,13 +172,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>/tag/journal.html</loc>
-<lastmod>2018-06-19T00:00:00-05:18</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>/tag/cc.html</loc>
 <lastmod>2016-11-04T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
@@ -209,6 +188,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>/tag/cmake.html</loc>
 <lastmod>2016-10-21T00:00:00-05:18</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/tag/journal.html</loc>
+<lastmod>2016-08-08T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

@@ -119,7 +119,7 @@
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="/author/sichem-zhou.html">Sichem Zhou</a>
-            | <time datetime="ven 04 novembre 2016">ven 04 novembre 2016</time>
+            | <time datetime="Fri 04 November 2016">Fri 04 November 2016</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
@@ -145,12 +145,12 @@ from that.</p>
 <code>std::vector</code> and <code>std::map</code>. Soon later, they want to write template functions
 instead of overloading. The <code>sort</code> function from standard library is a good
 example. It is usually defined as:</p>
-<div class="highlight"><pre><span></span><span class="err">template&lt;class RandomIt&gt; void sort(RandomIt&amp; first, RandomIt&amp; last).</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">template&lt;class RandomIt&gt; void sort(RandomIt&amp; first, RandomIt&amp; last).</span>
+</code></pre></div>
 <p>Then you can sort a <code>vector</code> by:</p>
-<div class="highlight"><pre><span></span><span class="c">std::vector&lt;float&gt; a = ...;</span>
+<div class="highlight"><pre><span></span><code><span class="c">std::vector&lt;float&gt; a = ...;</span>
 <span class="c">std::sort(a.begin(), a.end())</span>
-</pre></div>
+</code></pre></div>
 <p>The compilers try to infer the template parameters from template functions'
 parameters. Sometimes compilers are not smart enough to deduce it out, then you
 have to specific it yourself. The deducing mechanism is a choice of

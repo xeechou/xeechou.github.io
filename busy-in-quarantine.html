@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>Alternative usage to `typedef` in C</title>
+  <title>Busy in quarantine</title>
 
 
   <meta name="HandheldFriendly" content="True" />
@@ -36,31 +36,29 @@
   <![endif]-->
 
 
-    <link href="/alternative-usage-to-typedef-in-c.html" rel="canonical" />
+    <link href="/busy-in-quarantine.html" rel="canonical" />
 
-        <meta name="description" content="Variable length array(in runtime) and Typedef array type GNU C's variable array declaration is very convenient, instead of int *a; then...">
+        <meta name="description" content="I update this blog less frequent than once per year, which sometimes makes me question why do I keep paying for this site. Be able to...">
 
         <meta name="author" content="Sichem Zhou">
 
-        <meta name="tags" content="programming">
-        <meta name="tags" content="C/C++">
+        <meta name="tags" content="Journal">
 
 
 
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="Insaturé"/>
-<meta property="og:title" content="Alternative usage to `typedef` in C"/>
-<meta property="og:description" content="Variable length array(in runtime) and Typedef array type GNU C's variable array declaration is very convenient, instead of int *a; then..."/>
+<meta property="og:title" content="Busy in quarantine"/>
+<meta property="og:description" content="I update this blog less frequent than once per year, which sometimes makes me question why do I keep paying for this site. Be able to..."/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="/alternative-usage-to-typedef-in-c.html"/>
+<meta property="og:url" content="/busy-in-quarantine.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2016-10-31 00:00:00-04:00"/>
+<meta property="article:published_time" content="2020-04-07 00:00:00-04:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="/author/sichem-zhou.html">
-<meta property="article:section" content="Programming"/>
-<meta property="article:tag" content="programming"/>
-<meta property="article:tag" content="C/C++"/>
+<meta property="article:section" content="misc"/>
+<meta property="article:tag" content="Journal"/>
 <meta property="og:image" content="/theme/images/post-bg.jpg">
 
 <!-- Twitter Card -->
@@ -69,9 +67,9 @@
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "Alternative usage to `typedef` in C",
-  "headline": "Alternative usage to `typedef` in C",
-  "datePublished": "2016-10-31 00:00:00-04:00",
+  "name": "Busy in quarantine",
+  "headline": "Busy in quarantine",
+  "datePublished": "2020-04-07 00:00:00-04:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -79,8 +77,8 @@
     "url": "/author/sichem-zhou.html"
   },
   "image": "/theme/images/post-bg.jpg",
-  "url": "/alternative-usage-to-typedef-in-c.html",
-  "description": "Variable length array(in runtime) and Typedef array type GNU C's variable array declaration is very convenient, instead of int *a; then..."
+  "url": "/busy-in-quarantine.html",
+  "description": "I update this blog less frequent than once per year, which sometimes makes me question why do I keep paying for this site. Be able to..."
 }
 </script>
 </head>
@@ -115,11 +113,11 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">Alternative usage to `typedef` in C</h1>
+        <h1 class="post-title">Busy in quarantine</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="/author/sichem-zhou.html">Sichem Zhou</a>
-            | <time datetime="Mon 31 October 2016">Mon 31 October 2016</time>
+            | <time datetime="Tue 07 April 2020">Tue 07 April 2020</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
@@ -134,34 +132,53 @@
         <article class="post">
         <div class="inner">
             <section class="post-content">
-                <h2>Variable length array(in runtime) and Typedef array type</h2>
-<p>GNU C's variable array declaration is very convenient, instead of <code>int *a;</code> then
-use <code>malloc(sizeof(int) * size)</code> then copy data with <code>memcpy</code>(3 steps
-required), you can directly code with <code>int a[size];</code>. </p>
-<p>There are another feature you may want to know, you can define a type at any
-size you want by <code>typedef char data_t[size]</code>, this feature is really good
-because it can be done in runtime, this provide a short cut for indexing <code>void
-*</code>. Instead using <code>(char *)init_ptr + ind * elem_size'</code> for indexing, we can
-replace it by <code>(data_t *)init_ptr[ind]</code>. This could save many indexing problems,
-but the bad news is that we need to define the type by the storage many times.</p>
+                <p>I update this blog less frequent than once per year, which sometimes makes me
+question why do I keep paying for this site. Be able to update blogs is always
+my pursuit, unfortunately there were always more code to write. It has been more
+than one year, last time I was still on how to MSAA on OpenGL 4, somehow it felt
+like a decade ago. The peaceful developing world took an interesting turn. A
+long run bull market is killed and NYSE triggered circuit break 4 times in 10
+days. People are joking they now have 75% of Warren Buffet's experience. Will
+this gonna be the story we told our grand children born after 2020? "You know
+back in 2020, it was a crazy year...". We just saw the quarter of it, I am kind
+of expecting the crazier in the rest, will it be massive unemployment and a
+scary recession will be waiting? This week the market has recovered a bit of its
+confidence somehow, despite the Covid-19 cases are surging. A friend used to
+tell me, it would be a point where many will be killed by the virus and people
+just don't care anymore, looks like the market is at that point.</p>
+<p>It is the third week I am at home quarantine, but it has been a busy ride. I
+never got the chance to actually have this much free time to work on my own
+interest. Well, I merged 4 branches for <a href="https://taiwins.org">taiwins</a> so far.
+shockingly, it actually has this much work to do, if not this quarantine time, I
+probably will never have this much progress. It was supposed be finished in 2018
+and I thought, "well, I should be finished soon", then 2019 passed, there I just
+finished a console feature for launching applications and I had the second time
+wishful thinking. Now in this year I had to add features like <strong>dbus</strong>,
+<strong>tw_theme</strong>, it looks like necessary. I did not think a <code>dbus</code> feature toke me
+a month to develop, nor did I think a <code>tw_theme</code> would cost 2 full weeks, not to
+mention I have not yet finishing patching weston in upstream. All those toke
+trumendous amount of time. At this point I feel lucky for the coronavirus
+outbreak in someway, I wouldn't be able to advance this much in progress. In am
+running out of time, in a few weeks I will be taking buses to work again. Then I
+would be back on track on my proprietary software job.</p>
             </section>
 
             <section class="post-info">
                 <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=Alternative usage to `typedef` in C&amp;url=/alternative-usage-to-typedef-in-c.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=Busy in quarantine&amp;url=/busy-in-quarantine.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/alternative-usage-to-typedef-in-c.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/busy-in-quarantine.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=/alternative-usage-to-typedef-in-c.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=/busy-in-quarantine.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>
                 </div>
 
                 <aside class="post-tags">
-<a href="/tag/programming.html">programming</a><a href="/tag/cc.html">C/C++</a>                </aside>
+<a href="/tag/journal.html">Journal</a>                </aside>
 
                 <div class="clear"></div>
 
@@ -170,18 +187,11 @@ but the bad news is that we need to define the type by the storage many times.</
 
 
                 <aside class="post-nav">
-                    <a class="post-nav-next" href="/template-deduction-for-c.html">
-                        <section class="post-nav-teaser">
-                            <i class="ic ic-arrow-left"></i>
-                                <h2 class="post-nav-title">Template Deduction for C++</h2>
-                            <p class="post-nav-excerpt">Template is a confusing and hard features in C++ if you want use it well, and I think...</p>
-                        </section>
-                    </a>
-                    <a class="post-nav-prev" href="/view-matrix-for-projection.html">
+                    <a class="post-nav-prev" href="/realistic-deferred-msaa-implementation.html">
                         <section class="post-nav-teaser">
                             <i class="ic ic-arrow-right"></i>
-                                <h2 class="post-nav-title">View Matrix for projection</h2>
-                            <p class="post-nav-excerpt">The MVP Matrix \(\text{Model} * \text{View} * \text{Projection}\) is the first lesson...</p>
+                                <h2 class="post-nav-title">Realistic Deferred MSAA implementation</h2>
+                            <p class="post-nav-excerpt">Deferred MSAA, always has been a good problem. In the spatial anti-aliasing domain,...</p>
                         </section>
                     </a>
                     <div class="clear"></div>

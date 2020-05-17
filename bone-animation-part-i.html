@@ -117,7 +117,7 @@
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="/author/sichem-zhou.html">Sichem Zhou</a>
-            | <time datetime="Fri 10 November 2017">Fri 10 November 2017</time>
+            | <time datetime="ven 10 novembre 2017">ven 10 novembre 2017</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
@@ -172,7 +172,7 @@ instance, <code>assimp</code> requires user to read bone lists from a mesh, wher
 read the bone weights. and also bones hierachy is stored as <code>aiNode</code>, where you
 read the cascaded transforming matrices.</p>
 <p>On the GPU part, our vertex shader program looks like this:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">//[Vertex Shader]</span>
+<div class="highlight"><pre><span></span><span class="c1">//[Vertex Shader]</span>
 <span class="cp">#version 330 core</span>
 <span class="n">layout</span> <span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">in</span> <span class="n">vec3</span> <span class="n">position</span><span class="p">;</span>
 <span class="n">layout</span> <span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="k">in</span> <span class="n">vec3</span> <span class="n">normal</span><span class="p">;</span>
@@ -215,7 +215,7 @@ read the cascaded transforming matrices.</p>
     <span class="n">fragPos</span> <span class="o">=</span> <span class="n">vec3</span><span class="p">(</span><span class="n">model</span> <span class="o">*</span> <span class="n">newVertex</span><span class="p">);</span>
     <span class="n">TexCoords</span> <span class="o">=</span> <span class="n">texCoords</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div>
+</pre></div>
 <p>Straightforward as it is, since we don't have the cascaded transform here. We
 just set all the boneMats into identity matrix. It looks as same as a rigid
 object shader program, we will come back with bone transform next time.</p>

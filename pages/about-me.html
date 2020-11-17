@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-  <link href="/" rel="canonical" />
+<link href="/pages/about-me.html" rel="canonical" />
 
   <!-- Feed -->
 
@@ -45,7 +45,7 @@
 <meta property="og:description" content="View the blog."/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="/"/>
-<meta property="og:image" content="/theme/images/home-bg.jpg">
+<meta property="og:image" content="/imgs/post-bg.jpg">
 
 <!-- Twitter Card -->
 
@@ -55,7 +55,7 @@
   "@type" : "Website",
   "name": " Insaturé ",
   "url" : "/",
-  "image": "/theme/images/home-bg.jpg",
+  "image": "/imgs/post-bg.jpg",
   "description": "View the blog."
 }
 </script>
@@ -87,7 +87,7 @@
           </span>
         </nav>
         <h1 class="post-title">About Me</h1>
-            <div class="post-cover cover" style="background-image: url('/theme/images/about-bg.jpg')">
+            <div class="post-cover cover" style="background-image: url('/imgs/home-bg.jpg')">
       </div>
     </header>
 
@@ -102,7 +102,7 @@
 <p>Hi, I am Sichem, a software developer working in the computer graphics industry
 à Montréal, Québec. Earlier I graduated from a master degree under computer
 science, targeting the research area of computer vision and computer graphics.</p>
-<p>I am also an active linux hacker, currently working on a <a class="reference external" href="https://github.com/xeechou/taiwins/">wayland project</a>. Aside from programming life, I enjoy
+<p>I am also an active linux hacker, currently working on a <a class="reference external" href="https://github.com/taiwins/taiwins/">wayland project</a>. Aside from programming life, I enjoy
 sports like basketball, ski, etc, and traveling if I coould find the time.</p>
 <p>You can find my résumé <a class="reference external" href="/pdfs/cv.pdf">here</a>.</p>
 
@@ -125,17 +125,16 @@ sports like basketball, ski, etc, and traveling if I coould find the time.</p>
     </footer>
   </section>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="/theme/js/script.js"></script>
 
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-119901699-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119901699-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-119901699-1', { 'anonymize_ip': true });
     </script>
 </body>
 </html>

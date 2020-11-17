@@ -5,42 +5,84 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2020-05-16T23:04:10-00:00</lastmod>
+<lastmod>2020-11-17T15:29:23-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2020-05-16T23:04:10-00:00</lastmod>
+<lastmod>2020-11-17T15:29:23-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2020-05-16T23:04:10-00:00</lastmod>
+<lastmod>2020-11-17T15:29:23-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/authors.html</loc>
-<lastmod>2020-05-16T23:04:10-00:00</lastmod>
+<lastmod>2020-11-17T15:29:23-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2020-05-16T23:04:10-00:00</lastmod>
+<lastmod>2020-11-17T15:29:23-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/pages/about-me.html</loc>
-<lastmod>2020-05-16T23:04:10-00:00</lastmod>
+<lastmod>2020-11-17T15:29:23-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/working-with-libdrm-part-i.html</loc>
+<lastmod>2020-11-13T00:00:00-05:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/august-2020-status-update.html</loc>
+<lastmod>2020-08-22T00:00:00-04:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/july-2020-status-update.html</loc>
+<lastmod>2020-07-18T00:00:00-04:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/june-2020-status-update.html</loc>
+<lastmod>2020-07-06T00:00:00-04:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/libweston-vs-wlroots.html</loc>
+<lastmod>2020-06-20T00:00:00-04:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/wl_data_device.html</loc>
+<lastmod>2020-06-12T00:00:00-04:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -166,7 +208,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/category/misc.html</loc>
-<lastmod>2020-05-16T00:00:00-05:18</lastmod>
+<lastmod>2020-11-13T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -179,8 +221,22 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>/tag/linux.html</loc>
+<lastmod>2020-11-13T00:00:00-05:18</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>/tag/journal.html</loc>
-<lastmod>2020-05-16T00:00:00-05:18</lastmod>
+<lastmod>2020-08-22T00:00:00-05:18</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/tag/wayland.html</loc>
+<lastmod>2020-06-20T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -194,7 +250,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/tag/programming.html</loc>
-<lastmod>2018-11-30T00:00:00-05:18</lastmod>
+<lastmod>2016-11-04T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -229,7 +285,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/author/sichem-zhou.html</loc>
-<lastmod>2020-05-16T00:00:00-05:18</lastmod>
+<lastmod>2020-11-13T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

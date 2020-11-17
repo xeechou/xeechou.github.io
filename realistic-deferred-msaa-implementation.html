@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-      <meta charset="utf-8">
+    <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
@@ -14,8 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-  <link href="/" rel="canonical" />
-
+<link href="/realistic-deferred-msaa-implementation.html" rel="canonical" />
   <!-- Feed -->
 
   <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
@@ -36,14 +35,12 @@
   <![endif]-->
 
 
-    <link href="/realistic-deferred-msaa-implementation.html" rel="canonical" />
 
-        <meta name="description" content="Deferred MSAA, always has been a good problem. In the spatial anti-aliasing domain, MSAA is still the swiss-army knife, handle almost...">
+    <meta name="description" content="Deferred MSAA, always has been a good problem. In the spatial anti-aliasing domain, MSAA is still the swiss-army knife, handle almost...">
 
-        <meta name="author" content="Sichem Zhou">
+    <meta name="author" content="Sichem Zhou">
 
-        <meta name="tags" content="graphics">
-
+    <meta name="tags" content="graphics">
 
 
 
@@ -59,7 +56,7 @@
 <meta property="article:author" content="/author/sichem-zhou.html">
 <meta property="article:section" content="misc"/>
 <meta property="article:tag" content="graphics"/>
-<meta property="og:image" content="/theme/images/post-bg.jpg">
+<meta property="og:image" content="/imgs/post-bg.jpg">
 
 <!-- Twitter Card -->
 
@@ -76,7 +73,7 @@
     "name": "Sichem Zhou",
     "url": "/author/sichem-zhou.html"
   },
-  "image": "/theme/images/post-bg.jpg",
+  "image": "/imgs/post-bg.jpg",
   "url": "/realistic-deferred-msaa-implementation.html",
   "description": "Deferred MSAA, always has been a good problem. In the spatial anti-aliasing domain, MSAA is still the swiss-army knife, handle almost..."
 }
@@ -117,10 +114,10 @@
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="/author/sichem-zhou.html">Sichem Zhou</a>
-            | <time datetime="lun 03 décembre 2018">lun 03 décembre 2018</time>
+            | <time datetime="Mon 03 December 2018">Mon 03 December 2018</time>
         </span>
         <!-- TODO : Modified check -->
-            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+            <div class="post-cover cover" style="background-image: url('/imgs/post-bg.jpg')">
       </div>
     </header>
 
@@ -198,6 +195,23 @@ worry about than anti-aliasing.</p>
 
                 </section>
 
+<section>
+  <div id="gitalk-container"></div>
+</section>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+const gitalk = new Gitalk({
+  clientID: '96a2109adc74546391d6',
+  clientSecret: '423453c46039d7e457b747ec455915642717836d',
+  repo: 'xeechou.github.io.comment',      // The repository of store comments,
+  owner: 'xeechou1',
+  admin: ['xeechou1'],
+  id: location.pathname,      // Ensure uniqueness and length less than 50
+  distractionFreeMode: false  // Facebook-like distraction free mode
+})
+gitalk.render('gitalk-container')
+</script>
 
                 <aside class="post-nav">
                     <a class="post-nav-next" href="/busy-in-quarantine.html">
@@ -235,17 +249,16 @@ worry about than anti-aliasing.</p>
     </footer>
   </section>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="/theme/js/script.js"></script>
 
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-119901699-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119901699-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-119901699-1', { 'anonymize_ip': true });
     </script>
 </body>
 </html>

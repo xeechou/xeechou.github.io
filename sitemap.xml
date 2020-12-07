@@ -5,48 +5,55 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2020-11-17T15:29:23-00:00</lastmod>
+<lastmod>2020-12-07T11:53:30-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2020-11-17T15:29:23-00:00</lastmod>
+<lastmod>2020-12-07T11:53:30-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2020-11-17T15:29:23-00:00</lastmod>
+<lastmod>2020-12-07T11:53:30-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/authors.html</loc>
-<lastmod>2020-11-17T15:29:23-00:00</lastmod>
+<lastmod>2020-12-07T11:53:30-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2020-11-17T15:29:23-00:00</lastmod>
+<lastmod>2020-12-07T11:53:30-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/pages/about-me.html</loc>
-<lastmod>2020-11-17T15:29:23-00:00</lastmod>
+<lastmod>2020-12-07T11:53:30-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/working-with-libdrm-part-i.html</loc>
+<loc>/working-with-libdrm-buffer-allocation.html</loc>
+<lastmod>2020-12-07T00:00:00-05:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/working-with-libdrm-repainting-timeline.html</loc>
 <lastmod>2020-11-13T00:00:00-05:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
@@ -208,7 +215,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/category/misc.html</loc>
-<lastmod>2020-11-13T00:00:00-05:18</lastmod>
+<lastmod>2020-12-07T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -222,7 +229,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/tag/linux.html</loc>
-<lastmod>2020-11-13T00:00:00-05:18</lastmod>
+<lastmod>2020-12-07T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -285,7 +292,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/author/sichem-zhou.html</loc>
-<lastmod>2020-11-13T00:00:00-05:18</lastmod>
+<lastmod>2020-12-07T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

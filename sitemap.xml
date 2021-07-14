@@ -5,42 +5,49 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2021-05-21T20:15:05-00:00</lastmod>
+<lastmod>2021-07-15T00:10:04-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2021-05-21T20:15:05-00:00</lastmod>
+<lastmod>2021-07-15T00:10:04-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2021-05-21T20:15:05-00:00</lastmod>
+<lastmod>2021-07-15T00:10:04-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/authors.html</loc>
-<lastmod>2021-05-21T20:15:05-00:00</lastmod>
+<lastmod>2021-07-15T00:10:04-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2021-05-21T20:15:05-00:00</lastmod>
+<lastmod>2021-07-15T00:10:04-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/pages/about-me.html</loc>
-<lastmod>2021-05-21T20:15:05-00:00</lastmod>
+<lastmod>2021-07-15T00:10:04-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>/july-2021-status-update.html</loc>
+<lastmod>2021-07-13T00:00:00-04:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -250,7 +257,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/category/misc.html</loc>
-<lastmod>2021-05-21T00:00:00-05:18</lastmod>
+<lastmod>2021-07-13T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -264,7 +271,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/tag/journal.html</loc>
-<lastmod>2021-05-21T00:00:00-05:18</lastmod>
+<lastmod>2021-07-13T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -327,7 +334,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/author/sichem-zhou.html</loc>
-<lastmod>2021-05-21T00:00:00-05:18</lastmod>
+<lastmod>2021-07-13T00:00:00-05:18</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

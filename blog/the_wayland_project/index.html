@@ -1,0 +1,267 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>The wayland project</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.1f322ff56c7a71677e312c6dd0e259c8cfc03817ae810b8de5980c57aa75a745.css" integrity="sha256-HzIv9Wx6cWd&#43;MSxt0OJZyM/AOBeugQuN5ZgMV6p1p0U=" />
+    
+    
+      
+    
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="ic ic-arrow-left"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="ic ic-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">The wayland project</h1>
+    <span class="post-meta">
+      
+      <time datetime="2018-07-22">22 Jul 2018</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content"><p>It was a good will.</p>
+<p>5 years ago, I read a blog about the future of linux desktop, I was using a
+window manager called <code>Awesome</code> (one of my friend introduced it to me, I was
+enchanted by how he opened two terminals side-by-side, one for coding and one
+for compiling). A voice about next generation desktop was just raised in the
+linux community , a group of hackers demod the <code>weston</code> project, where you can
+rotate the application windows. They also pointed out the existing problems in
+the x server architecture(basically it is too old, let us just replace it). It
+is cumbersome, too many components, easily dead after package upgrade.</p>
+<p><img src="/imgs/x-vs-wayland.png" alt="wayland-vs-xorg"></p>
+<!-- raw HTML omitted -->
+<p>X did not die, it lives well even now. It did not stop me from starting a
+wayland window manager project though, it was only 3000 lines in the <code>DWM</code> (I
+still use it in my laptop) project, how hard can it be? Then I looked into the
+wayland protocol and the only wayland client programming
+<a href="https://jan.newmarch.name/Wayland/index.html">tutorial</a> available online(except
+those examples from weston itself). It did not seemed that hard, altough I did
+not understand very much about how wayland double buffer works, what does the
+<code>wl_callback</code>. The client side programming seemed a bit complicated than <strong>SDL</strong>
+or <strong>Qt</strong>, but it was doable to write simple applications. But how do we create
+a wayland server? Could it be just 3000 lines as well(yeah actually it may be if
+I am really smart, it is 6000 lines now)? The first problem I had was
+<code>mode-setting</code>, I did waste enormous time writing the <a href="https://github.com/dvdhrm/docs/blob/master/drm-howto/modeset.c">drm
+code</a>. It seemed
+will take forever. I did not know what it meant for a wayland server and what I
+need to code for it.</p>
+<p>Spolier alert, It really takes very much for wayland compositor than a X window
+manager. Anyway, by the time I was familiared with <code>libdrm</code> code, some one
+started trying to write the <strong>wayland compositor library</strong>, (I am not sure the
+exact time, maybe there was a gap while I did nothing because of the lacking of
+compositor libraries) there was one that you can open a wayland server then have
+a small cursor on it, and that was it. Then there was
+<a href="https://github.com/michaelforney/swc"><strong>swc</strong></a>, the
+<a href="https://www.youtube.com/watch?v=5thcLnLHkjs">video</a> looks really nice, very
+responsive. It was designed to create simple compositors. It can work as well on
+Nvidia GPUs (nvidia only has wayland support from last year I think, they do not
+give a shit about libdrm, when they finally supported libdrm, they came with a
+different solution). it is now completed deprecated, I think the developer
+stopped development even before I knew how to work with it. It was easy to start
+a wayland compositor, but afterwards, it did not have any documents about how to
+manage the windows.</p>
+<p>Then after a few monthes, a appealing project called <strong>wlc</strong> started gaining
+attentions on github. I still rememeber the architecture, the first design was
+creating a structure and let user writes the callback to inject into it, they
+even have default ones if you do not want to implement the specific part. My
+first trial on wayland compositor was based on that. Another famous i3 compatible
+weston compositor called <strong>sway</strong> emerged from it. It worked but inadiquately,
+it seemed to be always laggy and consumed too much resources that I did not know
+how, <strong>sway</strong> still has these performance and resources consuming problems.</p>
+<p>Yes, I forgot to mention my project name. it is called
+<a href="https://github.com/xeechou/taiwins-weston"><strong>taiwins</strong></a>, while I was satisfied
+working on the wayland server without the need to start from <code>libdrm</code>. I somehow
+made it a <strong>C++</strong> project when I was note competent with it, without <strong>STL</strong>,
+because I thought template brings too large binaries and compositor has to be as
+light as possible. It was dumb idea, it could save a lot of time if I did not
+need to write containers like vector and hash tables. Anyway, without template
+and stand libraries, cplusplus are truly horrible, I cannot take bit of
+advantages from the power of cplusplus. Maybe just helping me learning
+cplusplus. That was the story ends in 2017.</p>
+<p>Then when <strong>weston-3</strong> released, the game changed a bit, for the first time,
+weston developers realized that it may be a better idea to make <strong>weston</strong> a
+library rather than just showing off what wayland can do. <strong>KDE</strong> starts to port
+their <strong>KWin</strong> to wayland, Gnome started a long time ago with <strong>mutter</strong> but
+finally usable, Fedora 26, I think, was the first linux distribution that came
+with wayland support. At the same time, wlc library stoped the development as
+well, the author mentioned that he had no time maintaining it so sway moved to
+its <strong>wlroot</strong> library. At that time, I switched to use libweston for the
+performance and likelihood of maintainance. Again, from the scratch this time,
+purely in C. Since I dislike the idea using a crippled cplusplus in a
+project.</p>
+</section>
+
+      <section class="post-info">
+        <div class="post-share">
+            <a class="twitter" href="https://twitter.com/share?text=The%20wayland%20project&url=https%3a%2f%2fxeechou.net%2fblog%2fthe_wayland_project%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+              <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+            </a>
+            <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fxeechou.net%2fblog%2fthe_wayland_project%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+              <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+            </a>
+            <a class="googleplus" href="https://plus.google.com/share?url=https%3a%2f%2fxeechou.net%2fblog%2fthe_wayland_project%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+            </a>
+            <div class="clear"></div>
+        </div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/wayland">wayland</a>
+          
+            
+            <a href="https://xeechou.net/tags/journal">Journal</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+      
+
+      
+      
+
+      <aside class="post-nav">
+        
+          <a class="post-nav-next" href="/blog/rotations/">
+            <section class="post-nav-teaser">
+              <i class="ic ic-arrow-left"></i>
+              <h2 class="post-nav-title">Rotations</h2>
+              <p class="post-nav-excerpt">Rotation, combined with translation and scaling, are the three affin transforms we do every day in the 3D nutshell universe. The rotation itself, however, is somehow much more complicated than the other two transform, it is one really needs a matrix representation among all three. Representations and computation of it has been developed for years. We have systems like Axis-angle representation, matrix representation, euler angles and quaternions. Despite I have known them for a long time, when I forgot, the rotation is still complicated.</p>
+            </section>
+          </a>
+        
+        
+          <a class="post-nav-prev" href="/blog/the_wayland_project_2/">
+            <section class="post-nav-teaser">
+              <i class="ic ic-arrow-right"></i>
+              <h2 class="post-nav-title">The wayland project II</h2>
+              <p class="post-nav-excerpt">The last post I laid out the story of me with wayland. Technology is fascinating isn&rsquo;t it? Every once a while, there are plenty of new projects that aim to start an revolution, getting people excited. Projects like systemd, Wayland, Vulkan make us think how come we did not think of those before, they seemed perfect at the moment. Technologies always work like a rush of hot wave, our sights are limited at the moment we are in, maybe 5 years from now, even vulkan is not sexy anymore.</p>
+            </section>
+          </a>
+        
+        <div class="clear"></div>
+      </aside>
+    </div>
+  </article>
+</main>
+
+
+
+      <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/vseventer/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://www.vseventer.com" rel="nofollow">vseventer</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

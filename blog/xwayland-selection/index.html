@@ -1,0 +1,266 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Xwayland Clipboard</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.1f322ff56c7a71677e312c6dd0e259c8cfc03817ae810b8de5980c57aa75a745.css" integrity="sha256-HzIv9Wx6cWd&#43;MSxt0OJZyM/AOBeugQuN5ZgMV6p1p0U=" />
+    
+    
+      
+    
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="ic ic-arrow-left"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="ic ic-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Xwayland Clipboard</h1>
+    <span class="post-meta">
+      
+      <time datetime="2021-02-15">15 Feb 2021</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content"><p>I hate every single line of xwayland code I wrote, it is ugly, long and hard to
+maintain. Now I know very well why there is wayland in the first place, sadly a
+complete wayland compositor has to bring a piece of crap of X with it. I just
+finished the selection handling in xwayland by mimicing weston code. After
+finally understand that 1000 lines of confusing code, I just found out I can&rsquo;t
+do any better.</p>
+<p>Handling X11 selection revolves around 4 events: <code>XSelectionNotify</code>,
+<code>XSelectionRequest</code>, <code>XPropertyNotify</code> and <code>XfixesSelectionNotify</code>. Their
+names are just as confusing as how they work. It gets more complicated when
+INCR protocol is involved.</p>
+<p>Our job in compositor, for xwayland, is a proxy. That means getting
+<code>wl_data_source</code> to X <code>data_offer</code>, and writing to <code>wl_data_offer</code> from a X
+<code>data_source</code> when there is no <code>data_offer</code> and <code>data_source</code> in X at all. In
+wayland, the protocol utilises PIPE for implementing clipboard. In X, it is
+implemented by writing to a property of a X window. If you have no idea about
+the properties in X. It is like a key value hash map, every window has a such
+hash map. Clients communicates by reading/writing properties. Here is catch,
+the developers ought to adher the specificiation, ICCCM for correctly
+implementing their clients or XWM. If anything goes wrong&hellip;</p>
+<p>Back to our topic, how do we work with those 4 events? Let&rsquo;s walk through the
+story. When a client press &ldquo;ctrl-c&rdquo;, it declares the <em>owner</em> of CLIPBOARD,
+which is a special atom in the X. Nothing happens at the moment, until another
+client, the <em>requestor</em> press &ldquo;ctrl-v&rdquo;, it then search for the <em>owner</em> of the
+CLIPBOARD and ask for data, it begins our first event <code>XSelectionRequest</code>,
+basically it says, &ldquo;hey, the owner, I would like you to convert what you have
+in the CLIPBOARD to the <em>target</em> I asked and write to my <em>property</em> that I tell
+you&rdquo;. Then the owner can use a function <code>XConvertSelection</code> for that
+purpose. When it finishes, the <em>owner</em> send <code>XSelectionNotify</code> event to the
+<em>requestor</em>. The <em>requestor</em> indicates the end of the transaction by deletes
+the property.</p>
+<p>We didn&rsquo;t mention the other two events. It has to do with our xwayland usage. I
+tried to summary the transaction as brief as possible, but we also omitted a
+lot of details. There are other playes, the wm(part of your wayland
+compositor), the CLIPBOARD_MANAGER and the role of xserver(xwayland in this
+case) in the story. Let me start by asking a few questions:</p>
+<ul>
+<li>How does the XWM know about the <em>onwer</em> of the CLIPBOARD?</li>
+<li>How does a <code>wl_data_source</code> becomes the <em>owner</em> of the CLIPBOARD?</li>
+<li>How do we copy the property to <code>wl_data_offer</code> or vice versa?</li>
+</ul>
+<p>When a <em>owner</em> of the CLIPBOARD annouces itself in Xwayland, the XWM need to
+make a <code>wl_data_source</code> out of it. This is done through the
+<code>XfixesSelectionNotify</code> event. In the event, we, the XWM, would ask for all the
+<em>targets</em> (or mimes in wayland terms) that owner has(not the data itself). With
+that, we have enough to create a proxy <code>wl_date_source</code>, if there is no
+<code>wl_client</code> ask for data, we do nothing more, otherwise, the XWM represents the
+<code>wl_client</code> asking data from X.</p>
+<p>On the other end, if a <code>wl_data_source</code> becomes available, the XWM gets
+notified and simply declares the <em>owner</em> of CLIPBOARD, if we are to process any
+<code>XSelectionRequests</code>, a PIPE need to create inside the XWM for reading from
+<code>wl_data_source</code> and writes the data to some X properties.</p>
+
+
+  
+    
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%0a%20%20digraph%20Xselection%20%7b%0a%20%20%20%20XSelectionOwner%20-%3e%20XWM%20%5blabel%3d%22Write%20Property%22%5d%0a%20%20%20%20XWM%20-%3e%20XSelectionRequestor%20%5blabel%3d%22Write%20from%20PIPE%22%5d%0a%20%20%20%20%22wl_data_source%22%20-%3e%20XWM%20%5blabel%3d%22write%20from%20PIPE%22%5d%0a%20%20%20%20XWM%20-%3e%20%22wl_data_offer%22%20%5blabel%3d%22Write%20from%20Property%22%5d%0a%20%20%7d%0a'
+    alt='Xselection'
+    />
+    <figcaption>Xselection</figcaption>
+</figure>
+
+<p>In the end, the selection data flows like this.</p>
+<p>The ugly part is when INCR protocol comes in. INCR is for the case when you
+could not read/write X properties in one shot. Basically the  <em>XRequestor</em> need
+to delete the property selection owner wrote to and wait for it to write
+again. For us xwayland case, we are in the akward situation for waiting on both
+<em>X client deleting property</em> and <em>PIPE fd becomes available for IO</em>.</p>
+</section>
+
+      <section class="post-info">
+        <div class="post-share">
+            <a class="twitter" href="https://twitter.com/share?text=Xwayland%20Clipboard&url=https%3a%2f%2fxeechou.net%2fblog%2fxwayland-selection%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+              <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+            </a>
+            <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fxeechou.net%2fblog%2fxwayland-selection%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+              <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+            </a>
+            <a class="googleplus" href="https://plus.google.com/share?url=https%3a%2f%2fxeechou.net%2fblog%2fxwayland-selection%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+            </a>
+            <div class="clear"></div>
+        </div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/wayland">wayland</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+      
+
+      
+      
+
+      <aside class="post-nav">
+        
+          <a class="post-nav-next" href="/blog/jan-update-2021/">
+            <section class="post-nav-teaser">
+              <i class="ic ic-arrow-left"></i>
+              <h2 class="post-nav-title">Jan 2021 Status Update</h2>
+              <p class="post-nav-excerpt">Folks, the Magical year of 2020 is behind us, and it wasn&rsquo;t a happy new chapter waiting us. Man, I still couldn&rsquo;t believe, once per 100 years, why it was us who have to face the coronavirus. Now I take a good look of my 2020, I went from trying to submit a xcbcommon handling patch to weston to writing a full wayland compositor from scratch. It was not my plan!</p>
+            </section>
+          </a>
+        
+        
+          <a class="post-nav-prev" href="/blog/back-with-org-mode/">
+            <section class="post-nav-teaser">
+              <i class="ic ic-arrow-right"></i>
+              <h2 class="post-nav-title">Back with Org Mode</h2>
+              <p class="post-nav-excerpt">If there is one thing I&rsquo;d like to commit it must be the my time mangement improvements. For that purpose, Emacs Org-mode is the ultimate tool for programmers. I can keep my notes nicely and I can track my tasks/errands all together. But all my notes are stored in my linux box, I lose access to them once I am away. From that reason, I was always on-and-off with using org-mode due to the portability.</p>
+            </section>
+          </a>
+        
+        <div class="clear"></div>
+      </aside>
+    </div>
+  </article>
+</main>
+
+
+
+      <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/vseventer/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://www.vseventer.com" rel="nofollow">vseventer</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

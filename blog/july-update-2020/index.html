@@ -1,0 +1,249 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>July 2020 Status Update</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.1f322ff56c7a71677e312c6dd0e259c8cfc03817ae810b8de5980c57aa75a745.css" integrity="sha256-HzIv9Wx6cWd&#43;MSxt0OJZyM/AOBeugQuN5ZgMV6p1p0U=" />
+    
+    
+      
+    
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="ic ic-arrow-left"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="ic ic-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">July 2020 Status Update</h1>
+    <span class="post-meta">
+      
+      <time datetime="2020-07-18">18 Jul 2020</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content"><p>July, the hottest month in Montreal every year. The heat wave rushes to you when
+you walk outside makes you wondering if you are in some tropical island, it sure
+doesn&rsquo;t look like living at 45 latitde northen hemisphere. Last month was a
+rapid leap towards wayland objects implementations and now I just hitted the
+wall of <code>xdg-shell</code> protocol. Today I&rsquo;d like to talk about what it is like to
+implement a wayland protocol.</p>
+<p>there are really two parts of the story, the client and the compositor. Here I
+am only elaborate on the compositor side, protocols are usually (and it should
+be designed) easier to use on client side, thus the compositors takes most the
+workload, which is fine, there are way more clients than compositors.</p>
+<p>A wayland protocol is a <code>wl_global</code>, so the first step is mostly the same.</p>
+<pre tabindex="0"><code>wl_global_create(display, interface, version, data, binding_functions).
+
+void
+binding_functions(struct wl_client *client, void *data, uint32_t version, 
+                  uint32_t id)
+{...}
+</code></pre><p>From this point on, you created a <code>wl_resource</code> object and work with its
+interface, which is a list of function calls. Then, you would probably run into
+two scenarios.</p>
+<ol>
+<li>
+<p>You found out the compositor already has most of the required functions, so
+implementing a protocol is a nature externsion.</p>
+</li>
+<li>
+<p>The compositor does not have the functions so you have to implement a
+protocol interface and complete that interface with the compositor later.</p>
+</li>
+</ol>
+<p>As for my case with taiwins. Most of the time I ran into scenario 2. Simple
+protocols like <em>wp_viewporter</em> is fine, they are usually works like <em>getter</em> and
+<em>setter</em> functions. That you know you probably would not make many
+mistakes. Depends on the number of client requests, the workload could be one to
+a few hours. The <strong>complex</strong> protocols, like <em>xdg_shell</em>, on the other hand, are
+usually compound. It may contains a few sub-protocols and interacts with each
+other. This is when things gets a bit tricky. You can implement the interface as
+far as you can go but you are never sure how correct the implementation is. For
+instance with <code>xdg_shell.xdg_surface</code>.  it can turn into either a <code>xdg_popup</code> or
+<code>xdg_toplevel</code>, Then <code>xdg_toplevel</code> and generate a <code>xdg_popup</code>, <code>xdg_popup</code> can
+later start a grab and you can have maintain the popup states. The implemenation
+is easily vunlerable for bugs. One tricky thing particularly is the object
+dependencies in <code>wl_resource</code>. The destruction of the objects does not follow
+the creation. Be careful you can easily end-up with a dangling pointer. The
+example here is <code>xdg_surface</code> and <code>wl_surface</code>, while you need a <code>wl_surface</code> to
+create a <code>xdg_surface</code> but the <code>wl_surface</code> could destruct before the
+<code>xdg_surface</code>. I&rsquo;ve bitten a few times already and it is surely an annoying
+thing.</p>
+<p>For <em>xdg_shell</em>, it took me a day or two to roughly fill up the request
+callbacks, it was like walking on thin air. Then another day to actually
+implement the compositor actual functions for testing. The day after I could
+finally grab a few real life applications for debugging, and it <strong>crashed&hellip;</strong>*
+This is the complex protocols, the stack of implementation is really long before
+actual tests can happen.</p>
+<p>I sincerely hope next time I can complain less.</p>
+</section>
+
+      <section class="post-info">
+        <div class="post-share">
+            <a class="twitter" href="https://twitter.com/share?text=July%202020%20Status%20Update&url=https%3a%2f%2fxeechou.net%2fblog%2fjuly-update-2020%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+              <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+            </a>
+            <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fxeechou.net%2fblog%2fjuly-update-2020%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+              <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+            </a>
+            <a class="googleplus" href="https://plus.google.com/share?url=https%3a%2f%2fxeechou.net%2fblog%2fjuly-update-2020%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+            </a>
+            <div class="clear"></div>
+        </div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/journal">Journal</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+      
+
+      
+      
+
+      <aside class="post-nav">
+        
+          <a class="post-nav-next" href="/blog/june-update/">
+            <section class="post-nav-teaser">
+              <i class="ic ic-arrow-left"></i>
+              <h2 class="post-nav-title">June 2020 Status Update</h2>
+              <p class="post-nav-excerpt">Montréal is hotter than ever in this month, under the broiling sun, it was an exhausting quarantine. The first month I remeber I was feeling fortunate I got this aleatory chance for advancement of taiwins in this global pandemic, right now all I felt was the painful experience converting all the Taiwins server code away from libweston. Implementating of server side wayland objects was indeed unpleasant experience. Without libweston, I have to implement every little thing and get it right, even the basics 2D homogenous matrix operations for coordinates transformations.</p>
+            </section>
+          </a>
+        
+        
+          <a class="post-nav-prev" href="/blog/aug-update-2020/">
+            <section class="post-nav-teaser">
+              <i class="ic ic-arrow-right"></i>
+              <h2 class="post-nav-title">August 2020 Status Update</h2>
+              <p class="post-nav-excerpt">It is a sunny day, somehow I got up early this morning. The cool, chilling breath of air reminded me we are at the tail of the summer. It felt so strange, this summer was like it was never here. Hiking, go swimming, taking a trips and night outs. all those experiences for a normal summer I would do, they are all absent, hope I don&rsquo;t regret too much for crunching code at home all these months.</p>
+            </section>
+          </a>
+        
+        <div class="clear"></div>
+      </aside>
+    </div>
+  </article>
+</main>
+
+
+
+      <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/vseventer/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://www.vseventer.com" rel="nofollow">vseventer</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

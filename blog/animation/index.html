@@ -1,0 +1,295 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Bone Animation [part I]</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.1f322ff56c7a71677e312c6dd0e259c8cfc03817ae810b8de5980c57aa75a745.css" integrity="sha256-HzIv9Wx6cWd&#43;MSxt0OJZyM/AOBeugQuN5ZgMV6p1p0U=" />
+    
+    
+      
+    
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="ic ic-arrow-left"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="ic ic-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Bone Animation [part I]</h1>
+    <span class="post-meta">
+      
+      <time datetime="2017-11-10">10 Nov 2017</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content"><p>I have been trying to create a animation system for my <a href="https://github.com/xeechou/gltutorial">OpenGL
+Project</a> for a long time, one of the
+reason is I have limited amount of time after starting the full-time job.
+Another problem was that, I mean, if I intend to keep it a clean project rather
+than just a school project, building a animation system is like a rabbit hole,
+30 lines of code got me another 100 lines of work, it only leaded me deeper and
+deeper. Well, it is a perfect opportunity for me to explain the story here. The
+amount of skeletal animation that I found online, especially good blogs are less
+than a dozen. Gladly, I would like to point it out here, there is a good youtube
+video <a href="https://www.youtube.com/watch?v=f3Cr8Yx3GGA">series</a> you can follow, it
+is in Java, the author provided the source code for reference. Khronos has a
+shader example <a href="https://www.khronos.org/opengl/wiki/Skeletal_Animation">here</a>
+and there are a few others.</p>
+<p>Well, before we can draw anything in a graphic program, we need to thank artists
+for the rigging part. Connecting the dots between bones and meshes in the
+blender is far from a easy task, I gotta say that from my personal experience, I
+gave up in the first step, leaving my ambition of replacing all the artists my
+programs in the code water, so machine learning programs will take their years
+to graduate from art school. While they doing that, we still need to make
+friends with artists and draw our mesh with opengl.</p>
+<p>Alright, back to topic. What do we need, for skeletal animation, exactly? Let&rsquo;s
+take a look of the diagram first.</p>
+
+
+  
+    
+  
+
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?%20%20%0agraph%20animation%20%7b%0a%20%20subgraph%20%7b%0a%20%20bone%20%5bshape%3dbox%2c%20color%3dlightblue%5d%3b%0a%20%20mesh%20%5bshape%3dtriangle%2c%20color%3dblue%5d%3b%0a%20%20bone%20--%20mesh%5blabel%3d%22skinning%22%5d%3b%0a%20%20%7d%0a%20%20subgraph%20%7b%0a%20%20rotation%3b%0a%20%20translation%3b%0a%20%20scaling%3b%0a%20%20%7d%0a%20%20rotation%20--%20bone%5blabel%3d%22transform%22%5d%3b%0a%20%20translation%20--%20bone%5blabel%3d%22transform%22%5d%3b%0a%20%20scaling%20--%20bone%5blabel%3d%22transform%22%5d%3b%0a%20%20subgraph%20%7b%0a%20%20parent_bones%20%5bshape%3dbox%2c%20color%3dlightblue%5d%3b%0a%20%20descedents_bones%20%5bshape%3dbox%2c%20color%3dlightblue%5d%3b%0a%20%20parent_bones%20--%20bone%20%5blabel%3d%22instance_of%22%5d%3b%0a%20%20descedents_bones%20--%20bone%20%5blabel%3d%22instance_of%22%5d%3b%0a%20%20parent_bones%20--%20descedents_bones%20%5blabel%3d%22hierachy%22%5d%3b%0a%20%20%7d%0a%20%20%7d%0a'
+    alt='animation'
+    />
+    <figcaption>animation</figcaption>
+</figure>
+
+<p>I hope this diagram is not missleading too much. <strong>Structure</strong>,
+<strong>transformations</strong> and <strong>skinning</strong> are the three parts we need to take care
+of. Well, from the history books you know that every charactor has a set of
+bones structured in a tree, and a bone has transformations which affects itself
+and its children which also affects the assosiate meshes and&hellip; Before we can
+start draw anything, hundreds lines of code just for logic need to be done. It
+is really against the practice. Alor, afin de dessiner en OpenGL, we need to
+feed the shader program the minimum amount of data it needs, apart from normal,
+vertex and texture, two extra <code>layouts</code> of bone and weight we need to give it to
+the shader. If you don&rsquo;t want to do any transform, we don&rsquo;t exactly need the
+real bone weights and transforms.</p>
+<p>On the CPU part, the work lies on assosiating the <code>bones</code> and <code>meshes</code>. Depend
+on the asset library using, the data is structured in different ways. For
+instance, <code>assimp</code> requires user to read bone lists from a mesh, where you can
+read the bone weights. and also bones hierachy is stored as <code>aiNode</code>, where you
+read the cascaded transforming matrices.</p>
+<p>On the GPU part, our vertex shader program looks like this:</p>
+<pre><code>//[Vertex Shader]
+#version 330 core
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normal;
+layout (location = 2) in vec2 texCoords;
+//we can also make a matrix4x2
+layout (location = 3) in vec2 bw0;
+layout (location = 4) in vec2 bw1;
+layout (location = 5) in vec2 bw2;
+layout (location = 6) in vec2 bw3;
+
+out vec2 TexCoords;
+out vec3 fragPos;
+out vec3 Normal;
+
+const int maxNbone = 100; //it has to be constant
+uniform mat4 MVP;
+uniform mat4 model;
+uniform mat4 boneMats[maxNbone];
+
+void main()
+{
+	vec4 v = vec4(position, 1.0);
+	vec4 n = vec4(normal, 1.0);
+	vec4 newVertex;
+	vec4 newNormal;
+
+	//updating vertex
+	newVertex = (v * boneMats[int(bw0.x)]) * bw0.y +
+				(v * boneMats[int(bw1.x)]) * bw1.y +
+				(v * boneMats[int(bw2.x)]) * bw2.y +
+				(v * boneMats[int(bw3.x)]) * bw3.y;
+	//updating normal
+	newNormal = (n * boneMats[int(bw0.x)]) * bw0.y +
+				(n * boneMats[int(bw1.x)]) * bw1.y +
+				(n * boneMats[int(bw2.x)]) * bw2.y +
+				(n * boneMats[int(bw3.x)]) * bw3.y;
+
+	gl_Position = MVP * newVertex;
+	Normal = newNormal;
+	fragPos = vec3(model * newVertex);
+	TexCoords = texCoords;
+}
+</code></pre>
+<p>Straightforward as it is, since we don&rsquo;t have the cascaded transform here. We
+just set all the boneMats into identity matrix. It looks as same as a rigid
+object shader program, we will come back with bone transform next time.</p>
+</section>
+
+      <section class="post-info">
+        <div class="post-share">
+            <a class="twitter" href="https://twitter.com/share?text=Bone%20Animation%20%5bpart%20I%5d&url=https%3a%2f%2fxeechou.net%2fblog%2fanimation%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+              <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+            </a>
+            <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fxeechou.net%2fblog%2fanimation%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+              <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+            </a>
+            <a class="googleplus" href="https://plus.google.com/share?url=https%3a%2f%2fxeechou.net%2fblog%2fanimation%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+            </a>
+            <div class="clear"></div>
+        </div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/graphics">graphics</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+      
+
+      
+      
+
+      <aside class="post-nav">
+        
+          <a class="post-nav-next" href="/blog/template_deduction/">
+            <section class="post-nav-teaser">
+              <i class="ic ic-arrow-left"></i>
+              <h2 class="post-nav-title">Template Deduction for C&#43;&#43;</h2>
+              <p class="post-nav-excerpt">Template is a confusing and hard features in C++ if you want use it well, and I think it is also one of the reason which causes c++ programmers cannot understand each other. Sometimes the Deduction rule for c++ is really confusing, you don&rsquo;t understand why you code doesn&rsquo;t work or why it works. And Since STL heavily uses nesting Templates, both your compiler and your mind suffers from that.</p>
+            </section>
+          </a>
+        
+        
+          <a class="post-nav-prev" href="/blog/rotations/">
+            <section class="post-nav-teaser">
+              <i class="ic ic-arrow-right"></i>
+              <h2 class="post-nav-title">Rotations</h2>
+              <p class="post-nav-excerpt">Rotation, combined with translation and scaling, are the three affin transforms we do every day in the 3D nutshell universe. The rotation itself, however, is somehow much more complicated than the other two transform, it is one really needs a matrix representation among all three. Representations and computation of it has been developed for years. We have systems like Axis-angle representation, matrix representation, euler angles and quaternions. Despite I have known them for a long time, when I forgot, the rotation is still complicated.</p>
+            </section>
+          </a>
+        
+        <div class="clear"></div>
+      </aside>
+    </div>
+  </article>
+</main>
+
+
+
+      <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/vseventer/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://www.vseventer.com" rel="nofollow">vseventer</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

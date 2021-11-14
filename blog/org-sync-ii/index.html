@@ -1,0 +1,253 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Scalable org file synchronization solution</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.1f322ff56c7a71677e312c6dd0e259c8cfc03817ae810b8de5980c57aa75a745.css" integrity="sha256-HzIv9Wx6cWd&#43;MSxt0OJZyM/AOBeugQuN5ZgMV6p1p0U=" />
+    
+    
+      
+    
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="ic ic-arrow-left"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="ic ic-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Scalable org file synchronization solution</h1>
+    <span class="post-meta">
+      
+      <time datetime="2021-05-21">21 May 2021</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content"><p>In my previous <code>post &lt;{filename}/back-with-org-mode.md&gt;</code>_, I&rsquo;ve somewhat found
+a way to synchronize my org files. I was pretty happy, I was having just around
+six org pages, coping them to a <strong>webdav</strong> server was not a huge hustle :P,
+util I started to use <a href="https://www.orgroam.com/manual.html">org-roam</a>. Suddenly
+I have to create org file for every new
+<a href="https://zettelkasten.de/posts/learn-faster-by-writing-zettel-notes/">zettle</a>,
+the performance quickly started to tank. This is probably the beauty and curse
+of using open source solutions &mdash; you have full control of your work and you
+have to solve problems you created yourself.</p>
+<p>An idea started to form in my brain (Maybe I should write a new zettle,
+lol). It is surely a waste of bandwidth to copy all the files which aren&rsquo;t
+changing, I merely need to copy those actually changed. So in my head, there
+are two seperate problems:</p>
+<ol>
+<li>I need to record the if any changes made to a file, which means checksum.</li>
+<li>I need compare the checksums between <em>local</em> and <em>remote</em> for coping</li>
+</ol>
+<p>Gladly it is possible to do both with only functions from emacs. For solving
+the first problem, means I will need to hash the file whenever I save:</p>
+<pre><code>  (defun org-msync-after-save-hook ()
+    (let ((fname (org-msync-local-entry (buffer-file-name (current-buffer))))
+    (chksum (secure-hash 'sha1 (current-buffer))))
+   (puthash fname chksum org-msync-checksums)
+   )
+ )
+</code></pre>
+<p>This little snippet gets the sha1 checksum every time we save and push it to a
+hash table <code>org-msync-checksums</code>. The <strong>key</strong> is the name of the file and value
+here is <strong>checksum</strong>. At some point, we would want to store it somewhere on a
+disk, we do it through another function <code>org-msync-flush-chksums</code>.</p>
+<pre><code>  (defun org-msync-flush-chksums ()
+  &quot;flush our checksums to the disk&quot;
+  (when (&gt; (hash-table-count org-msync-checksums) 0)
+    ;;1. get hash table from json
+    ;;2. push hash from org-msync-checksums to this json obj
+    ;;3. purge the org-msync-checksums
+    ;;4. encode this hash table to
+    (let* ((json-local (org-msync-local-json))
+	   (sums (org-msync-get-chksums json-local)))
+      (maphash (lambda (k v) (puthash k v sums))
+	       org-msync-checksums)
+      (clrhash org-msync-checksums)
+      (org-msync-write-chksums json-local sums)
+      (message &quot;flushed org checksums&quot;))))	  
+</code></pre>
+<p>This function runs on <code>auto-save-hook</code> so we don&rsquo;t overdo it. Emacs' Json
+implementation offers us a free beer here, we can load a json file into a hash
+table and vice-versa. This saves me a lot trouble and offers good performance.</p>
+<p>At last, I have two commands <code>org-msync-push</code> and <code>org-msync-pull</code>
+for explicit sychronization. The function is rather long but idea is simple,</p>
+<ol>
+<li>When pushing, compare every entry in my local hash to the remote, coping
+when not equal.</li>
+<li>When pulling, compare every entry in the remote hash to the local, coping
+when not equal.</li>
+</ol>
+<p>The result is a small elisp module:
+<a href="https://github.com/xeechou/dotemacs/blob/master/lisp/org-msync.el">org-msync.el</a>. Enjoy
+:P</p>
+</section>
+
+      <section class="post-info">
+        <div class="post-share">
+            <a class="twitter" href="https://twitter.com/share?text=Scalable%20org%20file%20synchronization%20solution&url=https%3a%2f%2fxeechou.net%2fblog%2forg-sync-ii%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+              <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+            </a>
+            <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fxeechou.net%2fblog%2forg-sync-ii%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+              <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+            </a>
+            <a class="googleplus" href="https://plus.google.com/share?url=https%3a%2f%2fxeechou.net%2fblog%2forg-sync-ii%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+            </a>
+            <div class="clear"></div>
+        </div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/emacs">emacs</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+      
+
+      
+      
+
+      <aside class="post-nav">
+        
+          <a class="post-nav-next" href="/blog/sphinx-website/">
+            <section class="post-nav-teaser">
+              <i class="ic ic-arrow-left"></i>
+              <h2 class="post-nav-title">The sphinx website for your project</h2>
+              <p class="post-nav-excerpt">Static site generator, I love and hate them at the sametime. They really render your markdowns into a beautiful website without need of knowing web technologies. Then there are the constant hustles once you try to customize it, change a theme, adding different functionalities or upgrade. It is YOUR website, you want it look different than others, right. At some point, whether you like it or not, the SSG users will take the role of website designers by tangling with CSS.</p>
+            </section>
+          </a>
+        
+        
+          <a class="post-nav-prev" href="/blog/june-2021/">
+            <section class="post-nav-teaser">
+              <i class="ic ic-arrow-right"></i>
+              <h2 class="post-nav-title">July 2021 Status Update</h2>
+              <p class="post-nav-excerpt">I am now back in Canada, quarantined again. There is much of internal struggle whether I should move back or stay in Shanghai? Working for tech company in Shanghai or many cities in China would be like endless crunching. Maybe I was not used to this high-paced lifestyle, long working hours. Didn&rsquo;t like javascript either. It is a pity that I didn&rsquo;t find a nicer job maybe opens to better opportunities.</p>
+            </section>
+          </a>
+        
+        <div class="clear"></div>
+      </aside>
+    </div>
+  </article>
+</main>
+
+
+
+      <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/vseventer/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://www.vseventer.com" rel="nofollow">vseventer</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

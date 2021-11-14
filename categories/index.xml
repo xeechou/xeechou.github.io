@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Insaturé</title>
+    <link>https://xeechou.net/categories/</link>
+    <description>Recent content in Categories on Insaturé</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 28 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>programming</title>
+      <link>https://xeechou.net/categories/programming/</link>
+      <pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://xeechou.net/categories/programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Journal</title>
+      <link>https://xeechou.net/categories/journal/</link>
+      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://xeechou.net/categories/journal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Computer Vision</title>
+      <link>https://xeechou.net/categories/computer-vision/</link>
+      <pubDate>Sun, 26 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://xeechou.net/categories/computer-vision/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

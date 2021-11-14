@@ -98,12 +98,12 @@ anymore, more often I need to track my TODOs from cellphone as well.</p>
 optimised for text tracking, and potentially we can use it for text
 merging. Mannually typing <code>git add *</code>, <code>git commit </code> all the time is annoying,
 luckly we can do that with a script.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># sync everything</span>
+<pre tabindex="0"><code># sync everything
 git pull;
 git add *;
-git commit -m <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>date<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+git commit -m &quot;$(date)&quot;
 git push
-</code></pre></div><p>While this is doable on the linux box, and it was my perferrable method when I
+</code></pre><p>While this is doable on the linux box, and it was my perferrable method when I
 was synchronizing notes among my desktops. On cellphones, however, it is not
 the most convenient way. I had to open <em>pocket-git</em>, pull, resolve conflicts,
 then on <em>Orgzly</em>, sync with git folder again. everytime I commit would have to
@@ -123,11 +123,11 @@ where I am, there is a free option, fast enough (only 10ms from me) but a
 little confusing to setup.</p>
 <p>The Webdav server used requires the following options to turn on for mounting
 davfs:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#sample from davfs2.conf</span>
-if_match_bug		<span style="color:#ae81ff">1</span> <span style="color:#75715e">#otherwise cannot write via davfs </span>
-ignore_dav_header	<span style="color:#ae81ff">1</span> <span style="color:#75715e">#otherwise davfs failing connect to the server</span>
+<pre tabindex="0"><code>#sample from davfs2.conf
+if_match_bug		1 #otherwise cannot write via davfs 
+ignore_dav_header	1 #otherwise davfs failing connect to the server
 
-</code></pre></div><p>At the first I could not mount the davfs. Based on what people posted online,
+</code></pre><p>At the first I could not mount the davfs. Based on what people posted online,
 this specific webdav server generates wrong capabilities and requires
 <code>ignore_dav_header</code> set for mounting. Then just when I was happy about finding
 a fast webdav server, I found out I cannot write to the davfs mount point. It
@@ -224,7 +224,7 @@ use but unfortunately not compatible with my current webdav server.</p>
               |
               
               
-              Theme <a href="https://github.com/vseventer/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://www.vseventer.com" rel="nofollow">vseventer</a>
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
             </span>
             <span class="credits-software">
               

@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.1f322ff56c7a71677e312c6dd0e259c8cfc03817ae810b8de5980c57aa75a745.css" integrity="sha256-HzIv9Wx6cWd&#43;MSxt0OJZyM/AOBeugQuN5ZgMV6p1p0U=" />
+    <link rel="stylesheet" href="/css/style.min.ca3d6c30f5ec6046ef3fb70e42f3f7cfc8bb74e9897de913b7f7472c51732a78.css" integrity="sha256-yj1sMPXsYEbvP7cOQvP3z8i7dOmJfekTt/dHLFFzKng=" />
     
     
       
@@ -123,18 +123,7 @@
       </header>
 
       <section class="post-excerpt">
-        这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不久 。所以写的第一篇博客就以生成我的博客站点的项目mkblogs说起，来说说如何写一个博 客生成器吧。
-现在利用github架静态博客可真是烂大街，但是毕竟我也就能做做烂大街的东西，所以。。 。额，首先还是简短的介绍一下myblogs脱胎自mkdocs项目，当时写mkblogs的原因是像看 看怎么写博客生成器。于是从staticgen找了一个比较简单 的python项目出来，打算用一下顺便学习学习，结果玩了一会发现它不是一个博客生成器。 纠结了一下感觉自己改一改吧，反正mkdocs才800多行代码。于是开始将一个文档站点生 成器改成一个博客生成器。随着我改代码的过程，看看写一个博客生成器需要怎么做。
-一个博客生成器或者站点生成器的工作都是将人写的一个个markdown文件整合成一个有组织 的列表，这样就牵扯到两件事：
- 如何将单个markdown文件编译成html文件。当然这点不需要我们去做，好比说python的 mardkown模块已经帮我们完成了这个工作。  +如何将许多编译好的markdown文件组织成链表。这点需要我们去做。
-###处理Markdown到Html的转换 像Python-Markdown这样的库不会将源文件编译一个完整的html文件，就像这样：
-# 示例标题 示例文本 &gt; 示例引用 1. 示例列表 2. 示例列表 3. 示例列表 这里有一个[链接](anothermd.md)  会转化成
-&lt;h1&gt;示例标题&lt;/h1&gt; &lt;p&gt;示例文本&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;示例引用&lt;/p&gt; &lt;/blockquote&gt; &lt;ol&gt; &lt;li&gt;示例列表&lt;/li&gt; &lt;li&gt;示例列表&lt;/li&gt; &lt;li&gt;示例列表&lt;/li&gt; &lt;/ol&gt; &lt;p&gt;这里有一个&lt;a href=&quot;anothermd.md&quot;&gt;链接&lt;/a&gt;&lt;/p&gt;  这里没有&lt;html&gt;tag，也没有&lt;body&gt;tag，这些可以借助Python-Jinja这样的库来完成， 我们需要处理的问题是重定位markdown当中的链接，anothermd.md需要被重定位到 anothermd.html，这样的工作需要我们写Python-Markdown的插件来完成。
-Python-Markdown的插件系统十分灵活，可以在编译前，编译时，编译后三个时间来添加 Markdown插件，分别需要开发者继承Preprocessor, Treeprocessor和 Postprocessor类，并重写run方法。具体可以参见 Markdown-Extension-API。 当然你可以设计的更健壮一些，比如检查链接是否存在的问题。
-###构建HTML串来生成我们的完整站点
-处理写完的MD按照分组构建出一串html，把他们联系起来就是博客生成器的主要工作啦。所 以实际上，你都不需要懂html, javascript, css网页三大工具╮(￣▽￣)╭ 。唉，又扯远了。
-如何让用你生成器的人写博客完全看你心情，Jekyll貌似需要用户把写博客的时间加到 Markdown的文件上，然后它会按照时间顺序来组织你的博客。你也可以允许用户添加子目录 ，把关于一个主题的文章添加到一个目录中去，用隐式的方法来组织用户的博客。 或者你 可以支持Tag。
-Mkblogs要求用户根据主题用的方式来组织博客，所以我们就说说这个方式是怎么做。其实 这又什么好说的呢，遍历一下文件树，逐个博客进行编译，最后生成一下主页，大功告成， oh year。是不是听起来很简单？但是说到细节，繁杂的事情就有一大堆了。但是话说回来 ，什么编程项目不是这样呢？
+        这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不 久。所以写的第一篇博客就以生成我的博客站点的项目mkbl
       </section>
     </div>
   </article>

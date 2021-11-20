@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.fbb1fafe19ec6da09dc74aa6742ff3f70d37a9312e6834e18edd82ba56d82ab7.css" integrity="sha256-&#43;7H6/hnsbaCdx0qmdC/z9w03qTEuaDThjt2CulbYKrc=" />
+    <link rel="stylesheet" href="/css/style.min.2575db56c629c29419c711ff5e241e83f4ce2ba9a4855e1ed7e7dd3c2a9c73d7.css" integrity="sha256-JXXbVsYpwpQZxxH/XiQeg/TOK6mkhV4e1&#43;fdPCqcc9c=" />
     <script>
   MathJax = {
     tex: {
@@ -37,6 +37,9 @@
     
       
     
+    
+    
+    <script src="/js/qrcode.min.js"></script>
   </head>
   <body class="post-template">
     
@@ -311,6 +314,36 @@ though the rotation vector, which makes our lives easier.</p>
   <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/blog/rotations/&amp;title=Rotations" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
     <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
   </a>
+
+  
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/blog/rotations/");
+  </script>
 
   <div class="clear"></div>
 </div>

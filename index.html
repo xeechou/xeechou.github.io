@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<meta name="generator" content="Hugo 0.89.3" />
+	<meta name="generator" content="Hugo 0.89.4" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -97,6 +97,36 @@
 
 </div>
 
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
+            <a href="/blog/moving-to-hugo-ii/">Moving to Hugo, Aftermath</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="https://xeechou.net/tags/journal">Journal</a>
+              
+              |
+            
+            <time datetime="2021-11-23">23 Nov 2021</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        My blog is now back online, with brand new render engine Hugo. The URLs are totally different though. Not sure how web crawlers handling it right now.
+After the migration, I did a few extra work for patching the hiccups. Fix the build warnings and adding new features.
+The about page In every blog you always have some pages that you do not want it be inside the blog list. By default Hugo will simply place everything on the &ldquo;navigation list&rdquo;.
+      </section>
+    </div>
+  </article>
+  
 
 
   <article class="post">
@@ -349,35 +379,6 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
 
       <section class="post-excerpt">
         In the first blog of libdrm, we went through the repainting loop using the libdrm. Now we move on to the topic of framebuffers. A framebuffer is a piece of memory (could be on main memory or on GPU) for repainting every frame. It is like a canvas, represents what you would finally see on screen. Framebuffer is already a familiar concept to rendering programmers, in OpenGL, We have GL_FRAMEBUFFER_0 for presenting the surface, additional framebuffers for roles like G-Buffer and post-processing.
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/blog/drm-backend/">Working with libdrm, repainting timeline</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="https://xeechou.net/tags/linux">linux</a>
-              
-              |
-            
-            <time datetime="2020-11-13">13 Nov 2020</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        As the taiwins project finished with X11/Wayland backend rigging. Now I am fully on the libdrm backend development, dealing with hardwares directly. This backend requires 200 percent my energy to tame the complexity.
-Like other backends, libdrm also needs to provide two resources, input and output. Backends like nested wayland backend or X11 backend, the output device are the windows created by ourselves (or by the user). Meaning we can create it or destroy it as we please.
       </section>
     </div>
   </article>

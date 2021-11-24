@@ -6,7 +6,18 @@
     <description>Recent content on Insaturé</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Moving to Hugo, Aftermath</title>
+      <link>https://xeechou.net/blog/moving-to-hugo-ii/</link>
+      <pubDate>Tue, 23 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://xeechou.net/blog/moving-to-hugo-ii/</guid>
+      <description>My blog is now back online, with brand new render engine Hugo. The URLs are totally different though. Not sure how web crawlers handling it right now.
+After the migration, I did a few extra work for patching the hiccups. Fix the build warnings and adding new features.
+The about page In every blog you always have some pages that you do not want it be inside the blog list. By default Hugo will simply place everything on the &amp;ldquo;navigation list&amp;rdquo;.</description>
+    </item>
+    
     <item>
       <title>Moving to Hugo</title>
       <link>https://xeechou.net/blog/moving-to-hugo/</link>

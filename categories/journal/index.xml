@@ -9,10 +9,10 @@
     <lastBuildDate>Sun, 22 Jul 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/categories/journal/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The wayland project</title>
-      <link>https://xeechou.net/blog/the_wayland_project/</link>
+      <link>https://xeechou.net/posts/the_wayland_project/</link>
       <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/the_wayland_project/</guid>
+      <guid>https://xeechou.net/posts/the_wayland_project/</guid>
       <description>It was a good will.
 5 years ago, I read a blog about the future of linux desktop, I was using a window manager called Awesome (one of my friend introduced it to me, I was enchanted by how he opened two terminals side-by-side, one for coding and one for compiling). A voice about next generation desktop was just raised in the linux community , a group of hackers demod the weston project, where you can rotate the application windows.</description>
     </item>

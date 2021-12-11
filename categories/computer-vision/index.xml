@@ -9,19 +9,19 @@
     <lastBuildDate>Sun, 26 Nov 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/categories/computer-vision/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rotations</title>
-      <link>https://xeechou.net/blog/rotations/</link>
+      <link>https://xeechou.net/posts/rotations/</link>
       <pubDate>Sun, 26 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/rotations/</guid>
+      <guid>https://xeechou.net/posts/rotations/</guid>
       <description>Rotation, combined with translation and scaling, are the three affin transforms we do every day in the 3D nutshell universe. The rotation itself, however, is somehow much more complicated than the other two transform, it is one really needs a matrix representation among all three. Representations and computation of it has been developed for years. We have systems like Axis-angle representation, matrix representation, euler angles and quaternions. Despite I have known them for a long time, when I forgot, the rotation is still complicated.</description>
     </item>
     
     <item>
       <title>View Matrix for projection</title>
-      <link>https://xeechou.net/blog/camera_matrix/</link>
+      <link>https://xeechou.net/posts/camera_matrix/</link>
       <pubDate>Mon, 31 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/camera_matrix/</guid>
+      <guid>https://xeechou.net/posts/camera_matrix/</guid>
       <description>The MVP Matrix $\text{Model} * \text{View} * \text{Projection}$ is the first lesson to render (the so called render is the process so that people can see it on a 2D screen )objects in Computer Graphics, which transfer a 3D object in object space into, in the end, a UV plane.
 The Model matrix is simple and easy to understand, simply the translation, scale and rotation, but View matrix and Camera matrix are not obvious(although you can get it for free by single call from glm::lookAt() and glm::perspective()).</description>
     </item>

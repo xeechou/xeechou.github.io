@@ -9,19 +9,19 @@
     <lastBuildDate>Mon, 07 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Working with libdrm, buffer allocation</title>
-      <link>https://xeechou.net/blog/drm-backend-ii/</link>
+      <link>https://xeechou.net/posts/drm-backend-ii/</link>
       <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/drm-backend-ii/</guid>
+      <guid>https://xeechou.net/posts/drm-backend-ii/</guid>
       <description>In the first blog of libdrm, we went through the repainting loop using the libdrm. Now we move on to the topic of framebuffers. A framebuffer is a piece of memory (could be on main memory or on GPU) for repainting every frame. It is like a canvas, represents what you would finally see on screen. Framebuffer is already a familiar concept to rendering programmers, in OpenGL, We have GL_FRAMEBUFFER_0 for presenting the surface, additional framebuffers for roles like G-Buffer and post-processing.</description>
     </item>
     
     <item>
       <title>Working with libdrm, repainting timeline</title>
-      <link>https://xeechou.net/blog/drm-backend/</link>
+      <link>https://xeechou.net/posts/drm-backend/</link>
       <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/drm-backend/</guid>
+      <guid>https://xeechou.net/posts/drm-backend/</guid>
       <description>As the taiwins project finished with X11/Wayland backend rigging. Now I am fully on the libdrm backend development, dealing with hardwares directly. This backend requires 200 percent my energy to tame the complexity.
 Like other backends, libdrm also needs to provide two resources, input and output. Backends like nested wayland backend or X11 backend, the output device are the windows created by ourselves (or by the user). Meaning we can create it or destroy it as we please.</description>
     </item>

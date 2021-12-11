@@ -9,10 +9,10 @@
     <lastBuildDate>Fri, 21 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Scalable org file synchronization solution</title>
-      <link>https://xeechou.net/blog/org-sync-ii/</link>
+      <link>https://xeechou.net/posts/org-sync-ii/</link>
       <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/org-sync-ii/</guid>
+      <guid>https://xeechou.net/posts/org-sync-ii/</guid>
       <description>In my previous post, I&amp;rsquo;ve somewhat found a way to synchronize my org files. I was pretty happy, I was having just around six org pages, coping them to a webdav server was not a huge hustle :P, util I started to use org-roam. Suddenly I have to create org file for every new zettle, the performance quickly started to tank. This is probably the beauty and curse of using open source solutions &amp;mdash; you have full control of your work and you have to solve problems you created yourself.</description>
     </item>
     

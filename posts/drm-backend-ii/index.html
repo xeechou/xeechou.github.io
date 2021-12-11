@@ -1,0 +1,360 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Working with libdrm, buffer allocation</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.2575db56c629c29419c711ff5e241e83f4ce2ba9a4855e1ed7e7dd3c2a9c73d7.css" integrity="sha256-JXXbVsYpwpQZxxH/XiQeg/TOK6mkhV4e1&#43;fdPCqcc9c=" />
+    
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Working with libdrm, buffer allocation</h1>
+    <span class="post-meta">
+      
+      <time datetime="2020-12-07">07 Dec 2020</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content"><p>In the <a href="%7Bfilename%7D/drm-backend.md">first blog of libdrm</a>, we went through the
+repainting loop using the libdrm. Now we move on to the topic of
+framebuffers. A framebuffer is a piece of memory (could be on main memory or on
+GPU) for repainting every frame. It is like a canvas, represents what you would
+finally see on screen. Framebuffer is already a familiar concept to rendering
+programmers, in <strong>OpenGL</strong>, We have <code>GL_FRAMEBUFFER_0</code> for presenting the
+surface, additional framebuffers for roles like G-Buffer and
+post-processing. In GPU programming, framebuffer is also a broader concept,
+&ldquo;abstraction of a collection of attachments&rdquo;, the underlining attachments
+corresponds to actual pieces of memory we talk about here.</p>
+<h3 id="dumb-buffer">Dumb buffer</h3>
+<p>Back to our topic, we have two options for allocating framebuffers for
+libdrm. The <strong>first</strong> is through dumb buffer, a slow, linear, in main memory
+buffer. Creating that, we have <code>drmioctl(fd, DRM_IOCTL_MODE_CREATE_DUMB, &amp;req)</code>. the <code>req</code> argument here specifies parameters like the width, height,
+pitch, bit-per-pixel. For retriving a framebuffer handle, libdrm provides
+function <code>drmModeAddFB(fd, width, height, depth, ...)</code>. <strong>Then</strong> we map the
+buffer though good old <code>mmap</code> function and do all kinds of magic on it, very
+1990s ish. <strong>Finally</strong>, having the fb handle, we would use either
+<code>drmModeSetCrtc</code> or <code>drmModePageFlip</code> to present that buffer on screen.</p>
+<h3 id="gbm-buffers">GBM buffers</h3>
+<p>The second method is through device GEM buffers, they are usually the GPU
+memory, supports compression, modifiers and of course, GPU commands. In the
+open source world, Mesa project provides a generic <code>libgbm</code> for vendor agnostic
+allocations, we get framebuffer handle from libgbm through the <code>gbm_bo</code>
+object. libgbm is rather flexible, for getting the <code>gbm_bo</code>s. We can either go
+with the traditional method, allocating <code>gbm_surface</code> and getting the buffers
+through <code>gbm_surface_lock_front_buffer</code>, or we can mannually creating them with
+<code>gbm_bo_create[_with_modifiers]</code>. The first approach reflects to the OpenGL
+rendering api, A <code>gbm_surface</code> maps to a <code>EGLSurface</code>,
+<code>gbm_surface_lock_front_buffer</code> can only be called after <code>eglSwapBuffers</code>. The
+disadvantage is obvious as well, it is tied to the <code>OpenGL</code> pipeline and we have no
+control of how many <code>gbm_bo</code>s to allocate. As it is tied to <code>OpenGL</code>
+pipeline. In Vulkan, there is no mapping of <code>VKSurfaceKHR</code> to GBM, for that, we
+will go through the details later.</p>
+<h3 id="eglstream">EGLStream</h3>
+<p><code>EGLStream</code> is the Nvidia&rsquo;s proprietary approach on supporting libdrm, as
+apparently they don&rsquo;t use GEM buffers, they came up with this <code>EGLStream</code> stack
+for working with their driver blob. It is not simply a buffer allocation API as
+it also introduces <code>EGLDeviceEXT</code>, <code>EGLOutputLayerEXT</code>. Using <code>EGLStream</code>,
+there are fixed steps to follow:</p>
+<ol>
+<li><strong>discovering</strong> an <code>EGLDeviceEXT</code> which supports drm flags,</li>
+<li><strong>getting</strong> a <code>EGLDisplay</code> from opened device using
+<code>EGL_DRM_MASTER_FD_EXT</code>.</li>
+<li><strong>creating</strong> a <code>EGLStreamKHR</code>,</li>
+<li><strong>getting</strong> an output layer(plane) using <code>eglGetOutputLayersEXT</code>.</li>
+<li><strong>attach</strong> plane as consumer using <code>eglStreamConsumerOutputEXT</code>.</li>
+<li><strong>creating</strong> <code>EGLSurface</code> with the <code>eglCreateStreamProducerSurfaceKHR</code> as
+the producer.</li>
+<li><strong>driving</strong> pageflipping using <code>eglStreamConsumerAcquireAttribNV</code>.</li>
+</ol>
+<h3 id="vulkan-workflow">Vulkan workflow</h3>
+<p>Vulkan has its own path in supporing direct compositing. On Vulkan side, there
+is an extension called <code>VK_DISPLAY_KHR</code>, very much like the <code>EGLStream</code>
+extension, trying to do everying inside vulkan. You can create a <code>VkSurface</code>
+with <code>VkDisplayKHR</code> through <code>vkCreateDisplayPlaneSurfaceKHR</code>, once you have the
+surface, everything else would look like a typical Vulkan application as
+well. The downsides is that you also lose access of direct modesetting control
+like <code>drmModeSetCrtc</code> or <code>drmPageFlip</code>, and there is no plane assignment. If
+you were previously using libdrm, it also means you need to
+throw-the-code-out-of-window. It is a viable approach if you decide to go with
+Vulkan and only Vulkan, as some
+<a href="https://themaister.net/blog/2018/07/02/improving-vk_khr_display-in-mesa-or-lets-make-drm-better/">people</a>
+prefer this approach but not every one. For people wanting an alternative
+way(Vulkan + KMS WSI), The journal of the discussion is
+<a href="https://github.com/KhronosGroup/Vulkan-Docs/issues/294">here</a>. The problem is
+that unlike OpenGL, Vulkan is an &ldquo;explicit&rdquo; API, As <strong>tomek-brcm</strong> wrote:</p>
+<blockquote>
+<p>Currently GLES/EGL implemntation of Wayland compositor and clients is based on
+a silent assumption that driver has an implicit cross-process
+synchronisation. This is not GLES or EGL requirement, just an unwrittenWayland
+assumption. Vulkan is all about explicit synchronisation that isresponsibility
+of an application but it doesn&rsquo;t provide any cross-processsynchronisation
+primitives. This is, to my untrained eye, a blocker issue.</p>
+</blockquote>
+<p>We get the client buffer on the <code>wl_surface.commit</code> but there is no guarantee
+what-so-ever about client has finished drawing. If a wayland server has to wait
+on a fence every time a client commits a buffer. It is probably not very
+usable. Luckly the issue was resolved through the <code>VK_KHR_external_*_extension</code>
+when Vulkan lands on 1.1. <em>They enable the implementation of all the Vulkan WSI
+mechanisms/extensions on top of core Vulkan + the OS-specific parts of external
+objects</em>.</p>
+</section>
+
+            <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/drm-backend-ii/&amp;text=Working%20with%20libdrm,%20buffer%20allocation" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/drm-backend-ii/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/drm-backend-ii/&amp;title=Working%20with%20libdrm,%20buffer%20allocation" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/drm-backend-ii/&amp;title=Working%20with%20libdrm,%20buffer%20allocation" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/drm-backend-ii/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/linux">linux</a>
+          
+            
+            <a href="https://xeechou.net/tags/wayland">wayland</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+            
+
+
+      
+      
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/drm-backend/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Working with libdrm, repainting timeline</h2>
+              <p class="post-nav-excerpt">As the taiwins project finished with X11/Wayland backend rigging. Now I am fully on the libdrm backend development, dealing with hardwares directly. This backend requires 200 percent my energy to tame the complexity.
+Like other backends, libdrm also needs to provide two resources, input and output. Backends like nested wayland backend or X11 backend, the output device are the windows created by ourselves (or by the user). Meaning we can create it or destroy it as we please.</p>
+            </section>
+          </a>
+        
+
+          
+          <a class="post-nav-next" href="/posts/jan-update-2021/">
+            <section class="post-nav-teaser">
+              <i class="icon-left-arrow"></i>
+              <h2 class="post-nav-title">Jan 2021 Status Update</h2>
+              <p class="post-nav-excerpt">Folks, the Magical year of 2020 is behind us, and it wasn&rsquo;t a happy new chapter waiting us. Man, I still couldn&rsquo;t believe, once per 100 years, why it was us who have to face the coronavirus. Now I take a good look of my 2020, I went from trying to submit a xcbcommon handling patch to weston to writing a full wayland compositor from scratch. It was not my plan!</p>
+            </section>
+          </a>
+        
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

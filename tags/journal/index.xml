@@ -9,10 +9,10 @@
     <lastBuildDate>Tue, 23 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/journal/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Moving to Hugo, Aftermath</title>
-      <link>https://xeechou.net/blog/moving-to-hugo-ii/</link>
+      <link>https://xeechou.net/posts/moving-to-hugo-ii/</link>
       <pubDate>Tue, 23 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/moving-to-hugo-ii/</guid>
+      <guid>https://xeechou.net/posts/moving-to-hugo-ii/</guid>
       <description>My blog is now back online, with brand new render engine Hugo. The URLs are totally different though. Not sure how web crawlers handling it right now.
 After the migration, I did a few extra work for patching the hiccups. Fix the build warnings and adding new features.
 The about page In every blog you always have some pages that you do not want it be inside the blog list. By default Hugo will simply place everything on the &amp;ldquo;navigation list&amp;rdquo;.</description>
@@ -20,130 +20,130 @@ The about page In every blog you always have some pages that you do not want it 
     
     <item>
       <title>Moving to Hugo</title>
-      <link>https://xeechou.net/blog/moving-to-hugo/</link>
+      <link>https://xeechou.net/posts/moving-to-hugo/</link>
       <pubDate>Sun, 14 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/moving-to-hugo/</guid>
+      <guid>https://xeechou.net/posts/moving-to-hugo/</guid>
       <description>For a long time I&amp;rsquo;ve been wanting to Migrate my blog system from Pelican to Hugo. One reason is that I had enough with python virtual environment breaks every 3 months. Another motivation is obviously I would like to replace Python with Go in my life.
 A long time ago I followed Go tutorial for getting started, surprised by its syntax tidiness and similarity to Python, and it is way faster.</description>
     </item>
     
     <item>
       <title>Belief or Cult</title>
-      <link>https://xeechou.net/blog/belief-or-cult/</link>
+      <link>https://xeechou.net/posts/belief-or-cult/</link>
       <pubDate>Sun, 31 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/belief-or-cult/</guid>
+      <guid>https://xeechou.net/posts/belief-or-cult/</guid>
       <description>It&amp;rsquo;s been a while that I haven&amp;rsquo;t update the blogs. It is so easy to slack off on good habits. &amp;ldquo;Oh I will continue once I finish A B C&amp;rdquo;. We are all busy as hell, in the software world, you WORK, you WORK and you GO TO SLEEP. Like this one, I am always hoping to switch to Hugo, then I can continue writing the blog. The thing is, I never got the good weekend to do the switching.</description>
     </item>
     
     <item>
       <title>July 2021 Status Update</title>
-      <link>https://xeechou.net/blog/june-2021/</link>
+      <link>https://xeechou.net/posts/june-2021/</link>
       <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/june-2021/</guid>
+      <guid>https://xeechou.net/posts/june-2021/</guid>
       <description>I am now back in Canada, quarantined again. There is much of internal struggle whether I should move back or stay in Shanghai? Working for tech company in Shanghai or many cities in China would be like endless crunching. Maybe I was not used to this high-paced lifestyle, long working hours. Didn&amp;rsquo;t like javascript either. It is a pity that I didn&amp;rsquo;t find a nicer job maybe opens to better opportunities.</description>
     </item>
     
     <item>
       <title>Back with Org Mode</title>
-      <link>https://xeechou.net/blog/back-with-org-mode/</link>
+      <link>https://xeechou.net/posts/back-with-org-mode/</link>
       <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/back-with-org-mode/</guid>
+      <guid>https://xeechou.net/posts/back-with-org-mode/</guid>
       <description>If there is one thing I&amp;rsquo;d like to commit it must be the my time mangement improvements. For that purpose, Emacs Org-mode is the ultimate tool for programmers. I can keep my notes nicely and I can track my tasks/errands all together. But all my notes are stored in my linux box, I lose access to them once I am away. From that reason, I was always on-and-off with using org-mode due to the portability.</description>
     </item>
     
     <item>
       <title>Jan 2021 Status Update</title>
-      <link>https://xeechou.net/blog/jan-update-2021/</link>
+      <link>https://xeechou.net/posts/jan-update-2021/</link>
       <pubDate>Sun, 24 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/jan-update-2021/</guid>
+      <guid>https://xeechou.net/posts/jan-update-2021/</guid>
       <description>Folks, the Magical year of 2020 is behind us, and it wasn&amp;rsquo;t a happy new chapter waiting us. Man, I still couldn&amp;rsquo;t believe, once per 100 years, why it was us who have to face the coronavirus. Now I take a good look of my 2020, I went from trying to submit a xcbcommon handling patch to weston to writing a full wayland compositor from scratch. It was not my plan!</description>
     </item>
     
     <item>
       <title>August 2020 Status Update</title>
-      <link>https://xeechou.net/blog/aug-update-2020/</link>
+      <link>https://xeechou.net/posts/aug-update-2020/</link>
       <pubDate>Sat, 22 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/aug-update-2020/</guid>
+      <guid>https://xeechou.net/posts/aug-update-2020/</guid>
       <description>It is a sunny day, somehow I got up early this morning. The cool, chilling breath of air reminded me we are at the tail of the summer. It felt so strange, this summer was like it was never here. Hiking, go swimming, taking a trips and night outs. all those experiences for a normal summer I would do, they are all absent, hope I don&amp;rsquo;t regret too much for crunching code at home all these months.</description>
     </item>
     
     <item>
       <title>July 2020 Status Update</title>
-      <link>https://xeechou.net/blog/july-update-2020/</link>
+      <link>https://xeechou.net/posts/july-update-2020/</link>
       <pubDate>Sat, 18 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/july-update-2020/</guid>
+      <guid>https://xeechou.net/posts/july-update-2020/</guid>
       <description>July, the hottest month in Montreal every year. The heat wave rushes to you when you walk outside makes you wondering if you are in some tropical island, it sure doesn&amp;rsquo;t look like living at 45 latitde northen hemisphere. Last month was a rapid leap towards wayland objects implementations and now I just hitted the wall of xdg-shell protocol. Today I&amp;rsquo;d like to talk about what it is like to implement a wayland protocol.</description>
     </item>
     
     <item>
       <title>June 2020 Status Update</title>
-      <link>https://xeechou.net/blog/june-update/</link>
+      <link>https://xeechou.net/posts/june-update/</link>
       <pubDate>Mon, 06 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/june-update/</guid>
+      <guid>https://xeechou.net/posts/june-update/</guid>
       <description>Montréal is hotter than ever in this month, under the broiling sun, it was an exhausting quarantine. The first month I remeber I was feeling fortunate I got this aleatory chance for advancement of taiwins in this global pandemic, right now all I felt was the painful experience converting all the Taiwins server code away from libweston. Implementating of server side wayland objects was indeed unpleasant experience. Without libweston, I have to implement every little thing and get it right, even the basics 2D homogenous matrix operations for coordinates transformations.</description>
     </item>
     
     <item>
       <title>May 2020 Status Update</title>
-      <link>https://xeechou.net/blog/may-update/</link>
+      <link>https://xeechou.net/posts/may-update/</link>
       <pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/may-update/</guid>
+      <guid>https://xeechou.net/posts/may-update/</guid>
       <description>Forcing a monthly blog update seems to be a good idea, giving myself a reason to keep paying for this Domain. Also, I don&amp;rsquo;t usually has a topic to address specifically, a monthly update can fill this role. Anyway, time passes rapidly in quarantine my friends. I hope a few years forward when I look back at this moment, I would not feel I wasted so much time. I don&amp;rsquo;t actually feel I made much progress through this month.</description>
     </item>
     
     <item>
       <title>Busy in quarantine</title>
-      <link>https://xeechou.net/blog/busy-in-quarantine/</link>
+      <link>https://xeechou.net/posts/busy-in-quarantine/</link>
       <pubDate>Tue, 07 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/busy-in-quarantine/</guid>
+      <guid>https://xeechou.net/posts/busy-in-quarantine/</guid>
       <description>I update this blog less frequent than once per year, which sometimes makes me question why do I keep paying for this site. Be able to update blogs is always my pursuit, unfortunately there were always more code to write. It has been more than one year, last time I was still on how to MSAA on OpenGL 4, somehow it felt like a decade ago. The peaceful developing world took an interesting turn.</description>
     </item>
     
     <item>
       <title>The wayland project II</title>
-      <link>https://xeechou.net/blog/the_wayland_project_2/</link>
+      <link>https://xeechou.net/posts/the_wayland_project_2/</link>
       <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/the_wayland_project_2/</guid>
+      <guid>https://xeechou.net/posts/the_wayland_project_2/</guid>
       <description>The last post I laid out the story of me with wayland. Technology is fascinating isn&amp;rsquo;t it? Every once a while, there are plenty of new projects that aim to start an revolution, getting people excited. Projects like systemd, Wayland, Vulkan make us think how come we did not think of those before, they seemed perfect at the moment. Technologies always work like a rush of hot wave, our sights are limited at the moment we are in, maybe 5 years from now, even vulkan is not sexy anymore.</description>
     </item>
     
     <item>
       <title>The wayland project</title>
-      <link>https://xeechou.net/blog/the_wayland_project/</link>
+      <link>https://xeechou.net/posts/the_wayland_project/</link>
       <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/the_wayland_project/</guid>
+      <guid>https://xeechou.net/posts/the_wayland_project/</guid>
       <description>It was a good will.
 5 years ago, I read a blog about the future of linux desktop, I was using a window manager called Awesome (one of my friend introduced it to me, I was enchanted by how he opened two terminals side-by-side, one for coding and one for compiling). A voice about next generation desktop was just raised in the linux community , a group of hackers demod the weston project, where you can rotate the application windows.</description>
     </item>
     
     <item>
       <title>6 years of programming</title>
-      <link>https://xeechou.net/blog/six_years_programming/</link>
+      <link>https://xeechou.net/posts/six_years_programming/</link>
       <pubDate>Mon, 08 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/six_years_programming/</guid>
+      <guid>https://xeechou.net/posts/six_years_programming/</guid>
       <description>I have been studying in programming for 6 years, since my first day of undergrad life. I haven&amp;rsquo;t realized it has been so long, this studying life already took away most of my youth. I was a kid without knowing the toughness of life, to a young man need to worry about jobs and how to start having family.
 The computer industry changed vastly in this period. There was no Cloud Computing, Machine Learning was only known in Academics.</description>
     </item>
     
     <item>
       <title>How to write blog generator</title>
-      <link>https://xeechou.net/blog/write_sg0/</link>
+      <link>https://xeechou.net/posts/write_sg0/</link>
       <pubDate>Mon, 27 Apr 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/write_sg0/</guid>
+      <guid>https://xeechou.net/posts/write_sg0/</guid>
       <description>这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不 久。所以写的第一篇博客就以生成我的博客站点的项目mkbl</description>
     </item>
     

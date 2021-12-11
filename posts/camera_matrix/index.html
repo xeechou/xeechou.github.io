@@ -1,0 +1,438 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>View Matrix for projection</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.2575db56c629c29419c711ff5e241e83f4ce2ba9a4855e1ed7e7dd3c2a9c73d7.css" integrity="sha256-JXXbVsYpwpQZxxH/XiQeg/TOK6mkhV4e1&#43;fdPCqcc9c=" />
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">View Matrix for projection</h1>
+    <span class="post-meta">
+      
+      <time datetime="2016-10-31">31 Oct 2016</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content"><h1 id="the-mvp-matrix">The <strong>MVP</strong> Matrix</h1>
+<p>$\text{Model} * \text{View} * \text{Projection}$ is the first lesson to render
+(the so called render is the process so that people can see it on a 2D screen
+)objects in Computer Graphics, which transfer a 3D object in object space into,
+in the end, a UV plane.</p>
+<p>The Model matrix is simple and easy to understand, simply the translation, scale
+and rotation, but View matrix and Camera matrix are not obvious(although you can
+get it for free by single call from <code>glm::lookAt()</code> and <code>glm::perspective()</code>).</p>
+<p>#How does View Matrix work?</p>
+<p>The view matrix has another name called <code>extrinsic matrix</code> in Computer Vision,
+people use it to find the where the camera is.</p>
+<blockquote>
+<p>The engines don&rsquo;t move the ship at all. The ship stays where it is and the
+engines move the universe around it.</p>
+</blockquote>
+<p>This simply means that the view matrix does nothing but remapping everything
+from $(0,0,0) to the centre of the camera. By linear algebra, it is a linear
+transform that changes the basis. and one can use the <code>glm::lookAt()</code> generates
+the view matrix.</p>
+<p>So in the beginning, the camera sits at $(0,0,0)$, and looking at $(0,0,0)$. The
+normal is $(0,1,0)$, since we don&rsquo;t know the direction, lets assume it is
+$(0,0,-1)$. And imaging the universe is a huge Cube box that surround us.</p>
+<ul>
+<li>If we want to move the camera to left by $(-3, 0, 0)$, we can translate the cube
+by $(3,0,0)$</li>
+<li>If we want to rotate the camera to left by 30 degree, we can rotate the cube
+by 30 degree to the right.</li>
+</ul>
+<p>So the inefficient implementation is simply just <code>-translation * -rotation</code>,
+But about the rotation part, there are simple way to do it. Called
+<em>Gram-Schmidt</em> process. The essence is, again, projection, if we want to retrieve
+the coordinates from one xyz coordinate system to our new coordinate system, we
+can simply projecting to that system by dot product to the new axies.</p>
+<p>The complete View matrix format is:</p>
+<p>$$
+M =
+\begin{bmatrix}
+R_x &amp; R_y &amp; R_z &amp; 0 \\
+U_x &amp; U_y &amp; U_z &amp; 0 \\
+D_x &amp; D_y &amp; D_z &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; -T_x \\
+0 &amp; 1 &amp; 0 &amp; -T_y \\
+0 &amp; 0 &amp; 1 &amp; -T_z \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+$$</p>
+<p>$R$, $U$, $D$ is the new coordinate basis, the principle is super simple, simply
+by <strong>first</strong> reverse-translate the point and <strong>second</strong> projecting on the new
+coordinate system.</p>
+<p>In shorter form: $M = R | t$.</p>
+<h1 id="the-persepective-projection">The persepective projection</h1>
+<p>Persepective projection, on the other hand, is a way to project 3d sences to 2d
+plane, as the way of human eyes and camera. Which means the object further from
+us looks smaller than the object closer to us.</p>
+<p>It sounds nature, but how does the computer implement it? Thats where Camera
+matrix were introduced.</p>
+<h2 id="camera-matrix">Camera matrix</h2>
+<p>To finish projecting objects to our eyes, we need to follow the formula that
+make futher objects smaller. Given two points $[x_1, y_1, z_1]$ and $[x_2,
+y_2, z_2 ]$, they would project to the same position if $ x_1 / z_1 = x_2 /
+z_2 $ and $ y_1 / z_1  = y_2 / z_2 $. The projection is to project $[x,
+y, z]$ to $ [d\frac{x}{z}, d{y}{z}] $, the $ d $ there is the camera
+plane.</p>
+<p>Since there is now linear tranform to do that with 3d matrix, we have to use
+homogeneous coordinate.
+$$
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 1 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 1 &amp; 0\\
+0 &amp; 0 &amp; -1/d &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+x\\
+y\\
+z\\
+1\\
+\end{bmatrix}=
+\begin{bmatrix}
+x\\
+y\\
+z\\
+-z/d\\
+\end{bmatrix}
+$$</p>
+<p>And as homogeneous coordinates, we should keep scale to keep last element to 1.
+$$
+\begin{bmatrix}
+x\\
+y\\
+z\\
+-z/d
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+-d\frac{x}{z}\\
+-d\frac{y}{z}\\
+-d\frac{-d}\\
+1
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+-d\frac{x}{z}\\
+-d\frac{y}{z}\\
+\end{bmatrix}
+$$
+We can simply replace ( 1 ) with ( -d ) in the projection matrix to reach
+the same goal.</p>
+<p>$$
+\begin{bmatrix}
+-d &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; -d &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; -d &amp; 0\\
+0 &amp; 0 &amp; 1  &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+x\\
+y\\
+z\\
+1\\
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+-dx\\
+-dy\\
+-dz\\
+z\
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+-d\frac{x}{z}\\
+-d\frac{y}{z}\\
+\end{bmatrix}
+$$</p>
+<p>Finally, the camera matrix looks like this:
+$$
+\begin{bmatrix}
+-fs_x &amp;  0  &amp; x_c\\
+0    &amp;  -fs_y &amp; y_c\\
+0    &amp;  0  &amp; 1
+\end{bmatrix}
+$$
+Its little bit complex than what we have, but general idea stays the same.</p>
+</section>
+
+            <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/camera_matrix/&amp;text=View%20Matrix%20for%20projection" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/camera_matrix/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/camera_matrix/&amp;title=View%20Matrix%20for%20projection" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/camera_matrix/&amp;title=View%20Matrix%20for%20projection" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/camera_matrix/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/vision">Vision</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+            
+
+
+      
+      
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/double_pointer_in_c/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Everything you do I can do it with a double pointer in C</h2>
+              <p class="post-nav-excerpt">It is 2016, low level coding is not needed anymore. We have programming languages like javascript and python. When people code everything with a class and related methods. But do you remember we have a programming language called C? When we had no class, templates, operator-override or implicit constructor at esthat time. You actually know what are doing with C, no magic!
+I claim no expert to programming, since I only have a four-year-old programming life.</p>
+            </section>
+          </a>
+        
+
+          
+          <a class="post-nav-next" href="/posts/template_deduction/">
+            <section class="post-nav-teaser">
+              <i class="icon-left-arrow"></i>
+              <h2 class="post-nav-title">Template Deduction for C&#43;&#43;</h2>
+              <p class="post-nav-excerpt">Template is a confusing and hard features in C++ if you want use it well, and I think it is also one of the reason which causes c++ programmers cannot understand each other. Sometimes the Deduction rule for c++ is really confusing, you don&rsquo;t understand why you code doesn&rsquo;t work or why it works. And Since STL heavily uses nesting Templates, both your compiler and your mind suffers from that.</p>
+            </section>
+          </a>
+        
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

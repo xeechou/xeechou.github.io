@@ -9,29 +9,29 @@
     <lastBuildDate>Mon, 03 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/graphics/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Realistic Deferred MSAA implementation</title>
-      <link>https://xeechou.net/blog/deffered_msaa/</link>
+      <link>https://xeechou.net/posts/deffered_msaa/</link>
       <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/deffered_msaa/</guid>
+      <guid>https://xeechou.net/posts/deffered_msaa/</guid>
       <description>Deferred MSAA, always has been a good problem. In the spatial anti-aliasing domain, MSAA is still the swiss-army knife, handle almost all the case.
 Some other post-processing methods like nvidia&amp;rsquo;s FXAA, AMDs MLAA, or DLAA. FXAA is rather pleasing in many cases as well, especially if you are a video game developer, as long as your rasterization implementation does not screwed up. But for the case like grass rendering, fur rendering, when you have many layers of thin line, FXAA will fail you.</description>
     </item>
     
     <item>
       <title>Rotations</title>
-      <link>https://xeechou.net/blog/rotations/</link>
+      <link>https://xeechou.net/posts/rotations/</link>
       <pubDate>Sun, 26 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/rotations/</guid>
+      <guid>https://xeechou.net/posts/rotations/</guid>
       <description>Rotation, combined with translation and scaling, are the three affin transforms we do every day in the 3D nutshell universe. The rotation itself, however, is somehow much more complicated than the other two transform, it is one really needs a matrix representation among all three. Representations and computation of it has been developed for years. We have systems like Axis-angle representation, matrix representation, euler angles and quaternions. Despite I have known them for a long time, when I forgot, the rotation is still complicated.</description>
     </item>
     
     <item>
       <title>Bone Animation [part I]</title>
-      <link>https://xeechou.net/blog/animation/</link>
+      <link>https://xeechou.net/posts/animation/</link>
       <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://xeechou.net/blog/animation/</guid>
+      <guid>https://xeechou.net/posts/animation/</guid>
       <description>I have been trying to create a animation system for my OpenGL Project for a long time, one of the reason is I have limited amount of time after starting the full-time job. Another problem was that, I mean, if I intend to keep it a clean project rather than just a school project, building a animation system is like a rabbit hole, 30 lines of code got me another 100 lines of work, it only leaded me deeper and deeper.</description>
     </item>
     

@@ -181,9 +181,9 @@ now.</p>
 <p>The function I need is graphviz. It is rendered by
 <a href="https://gravizo.com">gravizo</a>. Paste the following code if your shortcodes
 folder then you can start using them in your posts.</p>
-<pre tabindex="0"><code>{{ $title := &quot;Diagram&quot; }}
+<pre tabindex="0"><code>{{ $title := &#34;Diagram&#34; }}
 {{ if .IsNamedParams }}
-  {{ with .Get &quot;title&quot; }}
+  {{ with .Get &#34;title&#34; }}
     {{ $title = . }}
   {{ end }}
 {{ else }}
@@ -194,8 +194,8 @@ folder then you can start using them in your posts.</p>
 
 &lt;figure&gt;
   &lt;img
-    src='https://g.gravizo.com/svg?{{ .Inner }}'
-    alt='{{ $title  }}'
+    src=&#39;https://g.gravizo.com/svg?{{ .Inner }}&#39;
+    alt=&#39;{{ $title  }}&#39;
     /&gt;
     &lt;figcaption&gt;{{ $title  }}&lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -282,7 +282,7 @@ renders instantly.</p>
       <section class="post-comments activated">
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

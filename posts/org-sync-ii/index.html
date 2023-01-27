@@ -145,7 +145,7 @@ disk, we do it through another function <code>org-msync-flush-chksums</code>.</p
       (org-msync-write-chksums json-local sums)
       (message &quot;flushed org checksums&quot;))))	  
 </code></pre>
-<p>This function runs on <code>auto-save-hook</code> so we don&rsquo;t overdo it. Emacs' Json
+<p>This function runs on <code>auto-save-hook</code> so we don&rsquo;t overdo it. Emacs&rsquo; Json
 implementation offers us a free beer here, we can load a json file into a hash
 table and vice-versa. This saves me a lot trouble and offers good performance.</p>
 <p>At last, I have two commands <code>org-msync-push</code> and <code>org-msync-pull</code>
@@ -238,7 +238,7 @@ when not equal.</li>
       <section class="post-comments activated">
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

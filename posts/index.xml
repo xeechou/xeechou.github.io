@@ -8,6 +8,16 @@
     <language>en-us</language>
     <lastBuildDate>Thu, 23 Mar 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Comparing Vulkan Frameworks</title>
+      <link>https://xeechou.net/posts/vulkan-frameworks/</link>
+      <pubDate>Sun, 29 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://xeechou.net/posts/vulkan-frameworks/</guid>
+      <description>There are indeed many people tried to implement a rendering framework on top of Vulkan to reduce the amount of code to write. But so many of them merely just create a wrapper around existing Vulkan objects, like wrapping the command buffer with a vk::CommandBuffer::Ptr and you still have to fill all the VkObjCreateInfos .
+The rendering framework focus on the render passes should provide a compact yet descriptive API to create render pass.</description>
+    </item>
+    
+    <item>
       <title>Moving to Hugo, Aftermath</title>
       <link>https://xeechou.net/posts/moving-to-hugo-ii/</link>
       <pubDate>Tue, 23 Nov 2021 00:00:00 +0000</pubDate>

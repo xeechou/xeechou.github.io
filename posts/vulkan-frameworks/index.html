@@ -1,0 +1,378 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Comparing Vulkan Frameworks</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.2575db56c629c29419c711ff5e241e83f4ce2ba9a4855e1ed7e7dd3c2a9c73d7.css" integrity="sha256-JXXbVsYpwpQZxxH/XiQeg/TOK6mkhV4e1&#43;fdPCqcc9c=" />
+    
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Comparing Vulkan Frameworks</h1>
+    <span class="post-meta">
+      
+      <time datetime="2023-01-29">29 Jan 2023</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content">
+<p>
+There are indeed many people tried to implement a rendering framework on top of Vulkan to reduce the amount of code to write. But so many of them merely just create a wrapper around existing Vulkan objects, like wrapping the command buffer with a <code>vk::CommandBuffer::Ptr</code>  and you still have to fill all the <code>VkObjCreateInfos</code> .</p>
+<p>
+The rendering framework focus on the render passes should provide a compact yet descriptive API to create render pass. Leaving the user out of the mess of managing/binding descriptors, uniform buffers. Have them focus on the shaders.</p>
+<p>
+I will compare some of the rendering frameworks available publicly and see their pros and cons. To what level they archived and for a user, what granularity you need to work with them.</p>
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+TU-Wien&#39;s <a href="https://github.com/cg-tuwien/Auto-Vk-Toolkit">Auto Vk framework</a>
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>Preparing user with an application template, user need to fill up the `initialize()` and <code>update()</code> and <code>render()</code>. Let&#39;s see how it creates a render pass.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>mPipeline <span style="color:#f92672">=</span> avk<span style="color:#f92672">::</span>context().create_graphics_pipeline_for(
+</span></span><span style="display:flex;"><span>	avk<span style="color:#f92672">::</span>vertex_shader(<span style="color:#e6db74">&#34;shaders/a_triangle.vert&#34;</span>),
+</span></span><span style="display:flex;"><span>	avk<span style="color:#f92672">::</span>fragment_shader(<span style="color:#e6db74">&#34;shaders/a_triangle.frag&#34;</span>),
+</span></span><span style="display:flex;"><span>	avk<span style="color:#f92672">::</span>cfg<span style="color:#f92672">::</span>front_face<span style="color:#f92672">::</span>define_front_faces_to_be_clockwise(),
+</span></span><span style="display:flex;"><span>	avk<span style="color:#f92672">::</span>cfg<span style="color:#f92672">::</span>viewport_depth_scissors_config<span style="color:#f92672">::</span>from_framebuffer(avk<span style="color:#f92672">::</span>context().main_window()<span style="color:#f92672">-&gt;</span>backbuffer_reference_at_index(<span style="color:#ae81ff">0</span>)),
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Just use the main window&#39;s renderpass for this pipeline:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	avk<span style="color:#f92672">::</span>context().main_window()<span style="color:#f92672">-&gt;</span>renderpass()
+</span></span><span style="display:flex;"><span>);</span></span></code></pre></div>
+</div>
+<p>
+So this API uses a fix set of parameters to set up a graphics pipeline, it takes the shaders, fixed functions and parameters and a render pass pointer. It is very close to Vulkan itself actually, you do have some syntax sugar to create Vulkan objects for you but you are exposed to them.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>avk<span style="color:#f92672">::</span>context().create_renderpass({
+</span></span><span style="display:flex;"><span>				avk<span style="color:#f92672">::</span>attachment<span style="color:#f92672">::</span>declare(avk<span style="color:#f92672">::</span>format_from_window_color_buffer(avk<span style="color:#f92672">::</span>context().main_window()), avk<span style="color:#f92672">::</span>on_load<span style="color:#f92672">::</span>clear.from_previous_layout(avk<span style="color:#f92672">::</span>layout<span style="color:#f92672">::</span>undefined), avk<span style="color:#f92672">::</span>usage<span style="color:#f92672">::</span>color(<span style="color:#ae81ff">0</span>)     , avk<span style="color:#f92672">::</span>on_store<span style="color:#f92672">::</span>store),	 
+</span></span><span style="display:flex;"><span>				avk<span style="color:#f92672">::</span>attachment<span style="color:#f92672">::</span>declare(avk<span style="color:#f92672">::</span>format_from_window_depth_buffer(avk<span style="color:#f92672">::</span>context().main_window()), avk<span style="color:#f92672">::</span>on_load<span style="color:#f92672">::</span>clear.from_previous_layout(avk<span style="color:#f92672">::</span>layout<span style="color:#f92672">::</span>undefined), avk<span style="color:#f92672">::</span>usage<span style="color:#f92672">::</span>depth_stencil, avk<span style="color:#f92672">::</span>on_store<span style="color:#f92672">::</span>dont_care)
+</span></span><span style="display:flex;"><span>			}, avk<span style="color:#f92672">::</span>context().main_window()<span style="color:#f92672">-&gt;</span>renderpass_reference().subpass_dependencies()),</span></span></code></pre></div>
+</div>
+<p>
+The way it creates render pass is okay, you define the attachments then sub-passes that uses them, then it should give you a default 2 sub-pass. For the resource creation you will need to manually create the vertex buffers, materials, samples all together.</p>
+<p>
+So expect to write good a few thousands of lines of code to get a complete pipeline.</p>
+<p>
+But I really like some of its APIs though. The updater API is interesting.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">//hot updating the shaders
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mUpdater<span style="color:#f92672">-&gt;</span>on(avk<span style="color:#f92672">::</span>shader_files_changed_event(mPipeline.as_reference()))
+</span></span><span style="display:flex;"><span>	.update(mPipeline);
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//swapchain update
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mUpdater<span style="color:#f92672">-&gt;</span>on(
+</span></span><span style="display:flex;"><span>	avk<span style="color:#f92672">::</span>swapchain_resized_event(avk<span style="color:#f92672">::</span>context().main_window()), <span style="color:#75715e">// In the case of window resizes,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	avk<span style="color:#f92672">::</span>shader_files_changed_event(mPipeline.as_reference())   <span style="color:#75715e">// or in the case of changes to the shader files (hot reloading), ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>)
+</span></span><span style="display:flex;"><span>.update(mPipeline); <span style="color:#75715e">// ... it will recreate the pipeline.
+</span></span></span></code></pre></div>
+</div>
+<p>
+It has two methods, the <code>on()</code> which register a event, then the <code>update()</code> for doing the actual work. It has additional <code>then_on()</code> but man it is equal to just call <code>mUpdater-&gt;on()</code> twice.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+<a href="https://gitlab.uni-koblenz.de/vulkan2021/vkcv-framework">vkcv-framework</a>
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+The vkcv framework is another framework based on Vulkan-HPP. It&#39;s does not have a application framework, which means you can write everything in <code>main()</code>. The good part is that the <code>vkcv</code> framework has quite a few additional APIs to manage the <code>scene</code>, <code>camera</code> and so on. But anyway, lets look how the render pipeline is created</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vkcv<span style="color:#f92672">::</span>GraphicsPipelineHandle firstMeshPipeline <span style="color:#f92672">=</span> core.createGraphicsPipeline(
+</span></span><span style="display:flex;"><span>		vkcv<span style="color:#f92672">::</span>GraphicsPipelineConfig(
+</span></span><span style="display:flex;"><span>				firstMeshProgram,
+</span></span><span style="display:flex;"><span>				firstMeshPass,
+</span></span><span style="display:flex;"><span>				{ firstMeshLayout },
+</span></span><span style="display:flex;"><span>				{ setLayoutHandle }
+</span></span><span style="display:flex;"><span>		)
+</span></span><span style="display:flex;"><span>);</span></span></code></pre></div>
+</div>
+<p>
+It is interestingly the same actually. Taking number of parameters which were created earlier. However the hustle lies on creating individual parameters.</p>
+<p>
+The good part of the API I think is Vulkan feature request,</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>features.requireFeature<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>PhysicalDevice16BitStorageFeatures<span style="color:#f92672">&gt;</span>(
+</span></span><span style="display:flex;"><span>		[](vk<span style="color:#f92672">::</span>PhysicalDevice16BitStorageFeatures <span style="color:#f92672">&amp;</span>features) {
+</span></span><span style="display:flex;"><span>			features.setStorageBuffer16BitAccess(true);
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//then in the context
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vkcv<span style="color:#f92672">::</span>Core core <span style="color:#f92672">=</span> vkcv<span style="color:#f92672">::</span>Core<span style="color:#f92672">::</span>create(
+</span></span><span style="display:flex;"><span>		applicationName,
+</span></span><span style="display:flex;"><span>		VK_MAKE_VERSION(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>		{ vk<span style="color:#f92672">::</span>QueueFlagBits<span style="color:#f92672">::</span>eGraphics ,vk<span style="color:#f92672">::</span>QueueFlagBits<span style="color:#f92672">::</span>eCompute , vk<span style="color:#f92672">::</span>QueueFlagBits<span style="color:#f92672">::</span>eTransfer },
+</span></span><span style="display:flex;"><span>		features
+</span></span><span style="display:flex;"><span>);</span></span></code></pre></div>
+</div>
+<p>
+This does save quite a lot of hustle for querying the support.</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+<a href="https://github.com/vga-group/tauray">Tauray</a>
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+The Tauray is a research platform for the vga group in Tampere University, based on its stance, it is similar to <a href="https://github.com/cg-tuwien/Auto-Vk-Toolkit">TU Wien&#39;s</a> position, though they may have different research directions. Based on their <a href="https://dl.acm.org/doi/pdf/10.1145/3550340.3564225">paper</a> presents that they targeted on heterogeneous hardware.</p>
+</div>
+</div>
+</section>
+
+            <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/vulkan-frameworks/&amp;text=Comparing%20Vulkan%20Frameworks" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/vulkan-frameworks/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/vulkan-frameworks/&amp;title=Comparing%20Vulkan%20Frameworks" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/vulkan-frameworks/&amp;title=Comparing%20Vulkan%20Frameworks" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/vulkan-frameworks/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/graphics">graphics</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+            
+
+
+      
+      
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/moving-to-hugo-ii/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Moving to Hugo, Aftermath</h2>
+              <p class="post-nav-excerpt">My blog is now back online, with brand new render engine Hugo. The URLs are totally different though. Not sure how web crawlers handling it right now.
+After the migration, I did a few extra work for patching the hiccups. Fix the build warnings and adding new features.
+The about page In every blog you always have some pages that you do not want it be inside the blog list. By default Hugo will simply place everything on the &ldquo;navigation list&rdquo;.</p>
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

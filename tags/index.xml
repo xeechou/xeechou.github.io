@@ -6,7 +6,16 @@
     <description>Recent content in Tags on Insaturé</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>graphics</title>
+      <link>https://xeechou.net/tags/graphics/</link>
+      <pubDate>Sun, 29 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://xeechou.net/tags/graphics/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Journal</title>
       <link>https://xeechou.net/tags/journal/</link>
@@ -49,15 +58,6 @@
       <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
       
       <guid>https://xeechou.net/tags/linux/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>graphics</title>
-      <link>https://xeechou.net/tags/graphics/</link>
-      <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://xeechou.net/tags/graphics/</guid>
       <description></description>
     </item>
     

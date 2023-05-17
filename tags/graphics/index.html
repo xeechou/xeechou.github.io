@@ -82,7 +82,7 @@
     <h1 class="blog-name">graphics</h1>
     <span class="blog-description">
       
-        Posts: 4
+        Posts: 5
       
     </span>
     
@@ -109,6 +109,34 @@
 
 </div>
 
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
+            <a href="/posts/moving-to-gpu-driven/">Moving towards GPU driven</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="https://xeechou.net/tags/graphics">Graphics</a>
+              
+              |
+            
+            <time datetime="2023-05-13">13 May 2023</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        We were using a traditional for_each style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features.
+      </section>
+    </div>
+  </article>
+  
 
 
   <article class="post">

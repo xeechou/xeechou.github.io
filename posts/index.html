@@ -135,6 +135,34 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/moving-to-gpu-driven/">Moving towards GPU driven</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="https://xeechou.net/tags/graphics">Graphics</a>
+              
+              |
+            
+            <time datetime="2023-05-13">13 May 2023</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        We were using a traditional for_each style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features.
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/vulkan-frameworks/">Comparing Vulkan Frameworks</a>
           </h2>
           <span class="post-meta">
@@ -381,34 +409,6 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
 
       <section class="post-excerpt">
         I hate every single line of xwayland code I wrote, it is ugly, long and hard to maintain. Now I know very well why there is wayland in the first place, sadly a complete wayland compositor has to bring a piece of crap of X with it. I just finished the selection handling in xwayland by mimicing weston code. After finally understand that 1000 lines of confusing code, I just found out I can&rsquo;t do any better.
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/jan-update-2021/">Jan 2021 Status Update</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="https://xeechou.net/tags/journal">Journal</a>
-              
-              |
-            
-            <time datetime="2021-01-24">24 Jan 2021</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        Folks, the Magical year of 2020 is behind us, and it wasn&rsquo;t a happy new chapter waiting us. Man, I still couldn&rsquo;t believe, once per 100 years, why it was us who have to face the coronavirus. Now I take a good look of my 2020, I went from trying to submit a xcbcommon handling patch to weston to writing a full wayland compositor from scratch. It was not my plan!
       </section>
     </div>
   </article>

@@ -6,7 +6,16 @@
     <description>Recent content in graphics on Insaturé</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/graphics/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 13 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/graphics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Moving towards GPU driven</title>
+      <link>https://xeechou.net/posts/moving-to-gpu-driven/</link>
+      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://xeechou.net/posts/moving-to-gpu-driven/</guid>
+      <description>We were using a traditional for_each style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features.</description>
+    </item>
+    
     <item>
       <title>Comparing Vulkan Frameworks</title>
       <link>https://xeechou.net/posts/vulkan-frameworks/</link>

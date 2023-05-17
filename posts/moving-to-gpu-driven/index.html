@@ -1,0 +1,405 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Moving towards GPU driven</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.2575db56c629c29419c711ff5e241e83f4ce2ba9a4855e1ed7e7dd3c2a9c73d7.css" integrity="sha256-JXXbVsYpwpQZxxH/XiQeg/TOK6mkhV4e1&#43;fdPCqcc9c=" />
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Moving towards GPU driven</h1>
+    <span class="post-meta">
+      
+      <time datetime="2023-05-13">13 May 2023</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content"><p>We were using a traditional <code>for_each</code> style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features. It&rsquo;s promising to draw millions or billions more triangles compared to before. The cost is that it changed the programming paradigm completely. If you want embark on new hardware, chances are you need to rewrite the rendering code.</p>
+<p>The So called GPU-driven term is a catchy phrase for marketing. It&rsquo;s different from the traditional <strong>&lsquo;&lsquo;CPU-driven&rsquo;&rsquo;</strong>  paradigm, what it really means is the introduce of new <code>drawIndirect</code> commands. Using the indirect commands, much of the CPU issuing draw commands gets off loaded to GPU, In Vulkan, we have</p>
+<pre tabindex="0"><code>VKAPI_ATTR void VKAPI_CALL vkCmdDrawIndirect(
+    VkCommandBuffer                          commandBuffer,
+    VkBuffer                                 buffer,
+    VkDeviceSize                             offset,
+    uint32_t                                 drawCount,
+    uint32_t                                 stride);
+</code></pre><p>For drawing triangles and</p>
+<pre tabindex="0"><code>VKAPI_ATTR void VKAPI_CALL vkCmdDrawIndexedIndirect(
+    VkCommandBuffer                                 commandBuffer,
+    VkBuffer                                        buffer,
+    VkDeviceSize                                    offset,
+    uint32_t                                        drawCount,
+    uint32_t                                        stride);
+</code></pre><p>For drawing indices. With these two commands and use of compute shaders, we can play a lot interesting tricks like instance and culling. Performance is also much better than calling individual draw commands on CPU. In this post I am going to layout the steps converting from a CPU-driven to a GPU-driven.</p>
+<h2 id="step-1-changing-data-structure">Step 1: Changing data Structure</h2>
+<p>The hardest part starts from the beginning, not because the indirect draw commands, but because command buffer vertex buffer bindings. In the traditional &lsquo;&lsquo;CPU-driven&rsquo;&rsquo; method, we bind vertices for every mesh using  <code>vkCmdBindVertexBuffers</code> and <code>vkCmdBindIndexBuffer</code> before drawing. Since right now you want to merge the draw calls into one command, you can now only bind one vertices once (or only a few times) for indirect draw. What requires us here is to merge different meshes into a single buffer. Note that you can extend this into new cluster drawing techniques like mesh shaders and <a href="https://advances.realtimerendering.com/s2021/Karis_Nanite_SIGGRAPH_Advances_2021_final.pdf">Nanite</a>, but instead of using the static vertex buffer (which is the case in this tutorial) you will be dynamically filling the vertex buffer with different LoDs data.</p>
+<p>Here we look at the simplest case: static meshes. It is very simple just append one mesh after another for vertices and index buffer. Then we need the additional draw command buffer to track each mesh.</p>
+<h3 id="building-draw-commands">Building draw commands</h3>
+<p>For indirect draw, we need to fill up the draw command:</p>
+<pre tabindex="0"><code>Struct VkDrawIndexedIndirectCommand {
+    uint32_t    indexCount;
+    uint32_t    instanceCount;
+    uint32_t    firstIndex;
+    int32_t     vertexOffset;
+    uint32_t    firstInstance;
+};
+</code></pre><p><code>indexCount</code> is the size of the each index buffer. <code>firstIndex</code> is offset (or the size of all previous mesh). <code>vertexOffset</code> is same as <code>firstIndex</code> for offsetting meshes. We can generate this command for every mesh then adding to the <code>instanceCount</code> later for instancing.</p>
+<h4 id="what-about-skinning-meshes">What about skinning meshes?</h4>
+<p>Skinning meshes needs additional <code>bone_weights</code> and <code>bone_indices</code> for the vertex attributes, it would be quite annoying to combine with normal static meshes. <em>One</em> solution would be just leaving the skinning meshes out of indirect draw. You can also padding the <code>vkDrawIndexIndirectCommand</code> with additional skinning info like <code>bone_weight_offset</code> so we can access <code>bone_weights</code> and <code>bone_indices</code> in a dedicated buffer. The solution I found most elegant is using <a href="https://wickedengine.net/2017/09/09/skinning-in-compute-shader/">compute skinning</a>, using compute shader to skin vertices into our gigantic vertex buffer then afterwards the vertex buffer only contains skinned vertices can be treated as same as normal static meshes. Note that you probably need to duplicate vertices for skinning mesh if you need to compute the motion vectors. In this case we can pad this <code>VkDrawIndexIndirectCommand</code> into:</p>
+<pre tabindex="0"><code>Struct CustomizedIndirectDrawCommand {
+    uint32_t    indexCount;
+    uint32_t    instanceCount;
+    uint32_t    firstIndex;
+    int32_t     vertexOffset;
+    uint32_t    firstInstance;
+	uint32_t    vertexCount; // vertexOffset + vertexCount gives previous frame
+		                     // for skinning meshes
+};
+</code></pre><h3 id="stage-2-indirect-draw">Stage 2: indirect draw</h3>
+<p>Once all of our hard work preparing buffer is done, it&rsquo;s matter of issuing the indirect draw calls. On the cpp side we have:</p>
+<pre tabindex="0"><code>vkCmdBindVertexBuffers(cmd_buf, 1, scene_vertex_buffer, nullptr);
+vkCmdBindIndexBuffer(cmd_buf, scene_index_buffer, 0, VK_INDEX_TYPE_UINT32);
+ 
+if (device&gt;features.multiDrawIndirect)
+{
+  vkCmdDrawIndexedIndirect(cmd_buf,
+                           indirectCommandsBuffer.buffer, 
+						   0,
+						   instances.size(),
+						   sizeof(CustomizedIndirectDrawCommand));
+}
+</code></pre><p>In the vertex shader we could have something like</p>
+<pre tabindex="0"><code>layout(location = 0) in vec3 Position;
+//... other layouts
+
+layout(location = 3) out vec4 PrevPostion;
+
+struct Vertex
+{
+    vec4 position;
+    vec4 tex_coord;
+    vec4 normal;
+    vec4 tangent;
+    vec4 bitangent;
+};
+
+layout(set = 0, binding = 0, std430) readonly buffer Vertices
+{
+	Vertex data[];
+} u_vertices;
+
+layout(set = 0, binding = 1, std430) readonly buffer drawCommand
+{
+	CustomDrawCommand commands[];
+} u_draw_commands;
+
+layout(push_constant) uniform PushConstants
+{
+	mat4 mvp;
+	mat4 prev_mvp;
+}
+
+//somewhere later in the shader
+
+gl_Position = mvp * Position;
+
+uint vertex_count = u_draw_commands.commands[gl_InstanceID].vertexCount;
+if (vertexCount &gt; 0) //skinning mesh
+{
+    
+    uint vertex_id = gl_VertexID + vertex_count;
+	PreviousPosition = prev_mvp * u_vertices[vertex_id];
+}
+else
+{
+	PreviousPosition = prev_mvp * Position;
+}
+</code></pre><h3 id="stage-3-culling">Stage 3: Culling</h3>
+<p>The full details of culling (mostly occlusion culling) is out of the scope here. A good material <a href="https://medium.com/@mil_kru/two-pass-occlusion-culling-4100edcad501">here</a> The thing we need from the culling shader is to setting the draw commands.</p>
+<pre tabindex="0"><code>Struct VkDrawIndexedIndirectCommand {
+    uint32_t    indexCount;    //-----&gt; 0 if culled
+    uint32_t    instanceCount; //-----&gt; 0 if culled
+    ...
+};
+</code></pre><p>Because for the same mesh, we would see the combination of visible and invisible instances, we need a copy of the command for every instance. With the help of culling, the triangle draw is no longer scene bound, this would give sufficient performance in many cases.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Now you can see the complexity of modern GPU and the work programmers need to take advantage of the hardware. GPU driven may be a cool technique right now but it will soon be obsolete when the ray tracing take over.</p>
+</section>
+
+            <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/moving-to-gpu-driven/&amp;text=Moving%20towards%20GPU%20driven" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/moving-to-gpu-driven/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/moving-to-gpu-driven/&amp;title=Moving%20towards%20GPU%20driven" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/moving-to-gpu-driven/&amp;title=Moving%20towards%20GPU%20driven" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/moving-to-gpu-driven/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/graphics">Graphics</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+            
+
+
+      
+      
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/vulkan-frameworks/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Comparing Vulkan Frameworks</h2>
+              <p class="post-nav-excerpt">There are indeed many people tried to implement a rendering framework on top of Vulkan to reduce the amount of code to write. But so many of them merely just create a wrapper around existing Vulkan objects, like wrapping the command buffer with a vk::CommandBuffer::Ptr and you still have to fill all the VkObjCreateInfos .
+The rendering framework focus on the render passes should provide a compact yet descriptive API to create render pass.</p>
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

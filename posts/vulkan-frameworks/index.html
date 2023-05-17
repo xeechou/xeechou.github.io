@@ -200,6 +200,63 @@ This does save quite a lot of hustle for querying the support.</p>
 <div id="outline-text-headline-3" class="outline-text-3">
 <p>
 The Tauray is a research platform for the vga group in Tampere University, based on its stance, it is similar to <a href="https://github.com/cg-tuwien/Auto-Vk-Toolkit">TU Wien&#39;s</a> position, though they may have different research directions. Based on their <a href="https://dl.acm.org/doi/pdf/10.1145/3550340.3564225">paper</a> presents that they targeted on heterogeneous hardware.</p>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+Shaders
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
+<p>Tauray&#39;s binary includes a runtime shader compiler, so it reads the shader from source and then compiles it before creating pipeline. It utilize the <code>spriv-reflect</code> library to generate Vulkan&#39;s descriptor set layout automatically. Pity though the shader is not hot-reloadable.</p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+Data Types
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<div id="outline-container-headline-6" class="outline-5">
+<h5 id="headline-6">
+<code>vkm&lt;T&gt;</code>
+</h5>
+<div id="outline-text-headline-6" class="outline-text-5">
+<p>The first thing we see is the <code>vkm&lt;T&gt;</code>, which is the Vulkan object manager. Everything wrapped in <code>vkm</code> need to unique and the underlining Vulkan object gets destroyed upon calling destructors. You can assign a handle from <code>vkm</code> but that handle is not memory manged. I find this method is interestingly elegant and avoid <code>shared_ptr</code> for many uses case</p>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-5">
+<h5 id="headline-7">
+pipeline
+</h5>
+<div id="outline-text-headline-7" class="outline-text-5">
+<p>Refer to a single GPU pipeline such as <code>rasterization</code>,  <code>compute</code>,  <code>raytracing</code>. But the pipeline does not decide how the rendering going to use it, that is decided by <code>stage</code>.</p>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-5">
+<h5 id="headline-8">
+stage
+</h5>
+<div id="outline-text-headline-8" class="outline-text-5">
+<p>Stage is the collection of GPU pipelines, the purpose of the stage is to record the command buffer for the given pipeline, interestingly the recording phase usually happens before any drawing so during the render time only thing for <code>stages</code> to do is submitting commend buffer.</p>
+<p>
+For example, we have a <code>svgf</code> stage, interestingly, it takes <code>gbuffer_target</code>, which means the target need to be created before initializing the pass</p>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-5">
+<h5 id="headline-9">
+Renderer
+</h5>
+<div id="outline-text-headline-9" class="outline-text-5">
+<p>on top of stage, it also has a concept of renderer, it seemed to be the place where it hard coded the stages and its related configurations.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-4">
+<h4 id="headline-10">
+Comments
+</h4>
+<div id="outline-text-headline-10" class="outline-text-4">
+<p>Tauray has some interesting designs, but it also fairly rigid. Renderer is pretty much hard coded and stages has hard dependencies on each other. I also find there is many unnecessary copy constructor used everywhere. Overall it&#39;s research platform with some engineering efforts but it&#39;s not a friendly one to use.</p>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -317,6 +374,14 @@ The about page In every blog you always have some pages that you do not want it 
         
 
           
+          <a class="post-nav-next" href="/posts/moving-to-gpu-driven/">
+            <section class="post-nav-teaser">
+              <i class="icon-left-arrow"></i>
+              <h2 class="post-nav-title">Moving towards GPU driven</h2>
+              <p class="post-nav-excerpt">We were using a traditional for_each style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features.</p>
+            </section>
+          </a>
+        
 
         <div class="clear"></div>
       </aside>

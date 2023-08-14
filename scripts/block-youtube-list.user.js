@@ -19,4 +19,8 @@ function GM_addStyle(css) {
   sheet.insertRule(css, (sheet.rules || sheet.cssRules || []).length);
 }
 
+//blocking the play next
 GM_addStyle("#secondary {display:none}");
+//block front page grids
+//GM_addStyle(".ytd-two-column-browse-results-renderer {display:none}"); //this disables everything
+GM_addStyle(".ytd-rich-grid-renderer {display:none}"); //disable the front page where it recommands you stuff

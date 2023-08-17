@@ -1,0 +1,348 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Wayland client side window decorations through libdecor</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Wayland client side window decorations through libdecor</h1>
+    <span class="post-meta">
+      
+      <time datetime="2023-08-17">17 Aug 2023</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content"><p>I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.</p>
+<p>There are <strong>two</strong> ways right now to do the client decorations.</p>
+<h3 id="through-server-side-decoration">Through Server side decoration</h3>
+<p>The <a href="https://github.com/swaywm/wlroots">wlroots</a> gangs proposed an protocol <a href="https://github.com/swaywm/wlroots/pull/1053">xdg-decoration</a> to have the server to draw that for you, it is used by fair amount of applications. It&rsquo;s a bit of against the point of the wayland principles because the compositor is not supposed to draw any thing, it just composes the windows together for archiving best performance. If the server does the frame drawing, it need to <strong>either</strong> blit clients&rsquo; <code>committed</code> surface into sub-region its own copy of the surface, it consumes more memory and it will be bandwidth intensive. <strong>Alternatively</strong>, the server has to draw the frame in a separated shader, that will consume more GPU cycles.</p>
+<p>Up to today, wlroots supports it. Gnome&rsquo;s mutter is not supporting it, weston projection is not supporting it either.</p>
+<p><img src="/imgs/server-side-decoration.png" alt="Server Side decoration"></p>
+<h3 id="client-handles-it-all">Client handles it all</h3>
+<p>The clients handle the situation all, you can use the toolkit like <code>gtk</code> that draws the window frame for you. Or you need to draw the window frame first, in a <code>wl_surface</code>, typically through <code>xdg_surface</code>, then you draw the <em>actual content</em> of your window in the sub-area. Alternatively, you can create a <code>wl_subsurface</code> to set it relative position to the frame, then draw the <em>actual content</em> inside it. The problem is that the frame surface can be fairly big which takes quite amount of memory that is empty(alpha=0). Another problem is that the tiling compositor may not interpret your intention correctly.</p>
+<p>The xwayland project, which implements as a wayland client as wayland server, is strongly impacted by it.</p>
+<h4 id="libdecor"><code>libdecor</code></h4>
+<p>Today I would like to review an client side solution that is on the second category, it comes to rescuer when you do not have <code>xdg-decoration</code> and no toolkit to help you either. The project is interesting in the sense it is independent of toolkit, you work directly on <code>wl_surface</code> level as opposed to force you to use <code>Qt</code> or <code>gtk</code>. At the same it hides all the decoration window surface for you. There is no documentation on this project explain it how it works nor does the code is evident enough, The only way to use it correctly is to read through the source code. The experiences was the same when I started on the wayland journey 🤦.</p>
+<p><code>libdecor</code> operates on the <code>xdg_surface</code>, when you call <code>libdecor_decorate()</code> on the <code>wl_surface</code>, it will underneath create a <code>xdg_surface</code> for you, which later you can get it through <code>libdecor_frame_get_xdg_surface</code>. This surface is the <em>content surface</em> you are working on, every time you get <code>configure</code> event, you need create a new <code>libdecor_state</code> and commit it using <code>libdecor_frame_commit</code>, typically in this way:</p>
+<pre tabindex="0"><code>void configure(struct libdecor_frame *frame,
+               struct libdecor_configuration *configuration) 
+{
+  libdecor_configuration_get_window_state(configuration, &amp;window_state);
+  libdecor_configuration_get_content_size(configuration, frame, &amp;width,
+      &amp;height);
+  this-&gt;content_width = width;
+  this-&gt;content_height = height;
+
+  /* working with libdecor_state */
+  state = libdecor_state_new(width, height);
+  libdecor_frame_commit(frame, state, configuration);
+  libdecor_state_free(state);
+  
+  /* store floating dimensions */
+  if (libdecor_frame_is_floating(this-&gt;frame)) {
+    this-&gt;floating_width = width;
+    this-&gt;floating_height = height;
+  }
+
+  /* optionally you need to redraw it or if EGL, redraw all the time */
+  this-&gt;redraw();
+}
+</code></pre><p>What <code>libdecor_frame_commit</code> does underneath is that it creates several border <code>wl_surface</code>s as <code>wl_subsurface</code> to the <code>wl_surface</code> you create, because it only draws the title bar. And then of course it would have to implement listeners like <code>wl_subcompositor</code>, and <code>wl_surface.enter/leave/commit</code>, etc. <strong>Then</strong> you can combine with <code>xdg_shell_surface.set_window_geometry</code> to indicate we have a border here.</p>
+<pre tabindex="0"><code>static void
+frame_set_window_geometry(struct libdecor_frame *frame,
+			  int32_t content_width, int32_t content_height)
+{
+	struct libdecor_plugin *plugin = frame-&gt;priv-&gt;context-&gt;plugin;
+	int x, y, width, height;
+	int left, right, top, bottom;
+
+	plugin-&gt;priv-&gt;iface-&gt;frame_get_border_size(plugin, frame, NULL,
+						   &amp;left, &amp;right, &amp;top, &amp;bottom);
+	x = -left;
+	y = -top;
+	width = content_width + left + right;
+	height = content_height + top + bottom;
+	xdg_surface_set_window_geometry(frame-&gt;priv-&gt;xdg_surface, x, y, width, height);
+}
+</code></pre><p>Note that it is still not fool proof because it indicates <em>negative</em> <code>x,y</code> for the boarder, it requires the compositor to handle negative position, though most compositors I know do handle it.</p>
+</section>
+
+            <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/libdecor/&amp;text=Wayland%20client%20side%20window%20decorations%20through%20libdecor" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/libdecor/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/libdecor/&amp;title=Wayland%20client%20side%20window%20decorations%20through%20libdecor" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/libdecor/&amp;title=Wayland%20client%20side%20window%20decorations%20through%20libdecor" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/libdecor/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/wayland">wayland</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+            
+
+
+      
+      
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/moving-to-gpu-driven/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Moving towards GPU driven</h2>
+              <p class="post-nav-excerpt">We were using a traditional for_each style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features.</p>
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

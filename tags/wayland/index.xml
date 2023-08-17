@@ -6,7 +6,17 @@
     <description>Recent content in wayland on Insaturé</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/wayland/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/wayland/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Wayland client side window decorations through libdecor</title>
+      <link>https://xeechou.net/posts/libdecor/</link>
+      <pubDate>Thu, 17 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://xeechou.net/posts/libdecor/</guid>
+      <description>I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.
+There are two ways right now to do the client decorations.</description>
+    </item>
+    
     <item>
       <title>Xwayland Clipboard</title>
       <link>https://xeechou.net/posts/xwayland-selection/</link>

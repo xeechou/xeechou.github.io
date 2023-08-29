@@ -1,0 +1,330 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Comparing Vulkan and D3D12</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
+    
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Comparing Vulkan and D3D12</h1>
+    <span class="post-meta">
+      
+      <time datetime="2023-08-19">19 Aug 2023</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+      <section class="post-content"><p>Recently I wrote the <a href="https://github.com/xeechou/petitd3d12">PetitD3D12</a> to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &ldquo;real&rdquo; API comparison info, the <a href="https://alain.xyz/blog/comparison-of-modern-graphics-apis" title="A Comparison of Modern Graphics APIs">Alain Galvan&rsquo;s blog post</a> are more just about grouping those API data structures together, not much you will know the difference in using them. With that being said, I am going to talk mostly in the shoes of a Vulkan developer who grabs the hand of D3D12 code to take a close look. Mainly I will cover about <strong>pipeline creation</strong>, <strong>descriptor binding</strong> and <strong>command execution</strong>.</p>
+<h3 id="the-first-100-lines-of-code">The first 100 lines of code</h3>
+<p>Well, let&rsquo;s start when you are writing DX12 code, immediately you will find out the boilerplate code to DX12 is smaller 🙃, within 100 lines of code you are already creating devices. The first thing you do is getting a <code>dxgiFactory</code>. It&rsquo;s similar to <code>VkInstance</code>, but instead of going through selecting extensions, enabling layers. You just get it with flags. Next step you already start to create devices. BTW, Creating debug layer is also simpler. You don&rsquo;t set any special printing code, just</p>
+<pre tabindex="0"><code>WRL::ComPtr&lt;ID3D12Debug&gt; debugInterface;
+ThrowIfFailed(D3D12GetDebugInterface(IID_PPV_ARGS(&amp;debugInterface)));
+debugInterface-&gt;EnableDebugLayer();
+</code></pre><p>It is like validation layers in Vulkan, and it crashes you application immediately when you do anything wrong, like image layout is not correct or something.</p>
+<p>In D3D12, The <code>IDXGIAdapter4</code> is similar to <code>VkPhysicalDevice</code> that you can enumerate, choice is yours, either physical device should be able to present image to OS.</p>
+<p>Once you have the device, you create command queue (equal to <code>VkQueue</code>) with</p>
+<pre tabindex="0"><code>m_DirectCommandQueue = std::make_shared&lt;CommandQueue&gt;(m_d3d12Device, D3D12_COMMAND_LIST_TYPE_DIRECT);
+m_ComputeCommandQueue = std::make_shared&lt;CommandQueue&gt;(m_d3d12Device, D3D12_COMMAND_LIST_TYPE_COMPUTE);
+m_CopyCommandQueue = std::make_shared&lt;CommandQueue&gt;(m_d3d12Device, D3D12_COMMAND_LIST_TYPE_COPY);
+</code></pre><p>One last thing is getting a window and its swapchain to present images, it is again a little easier in D3D12.</p>
+<h3 id="pipeline-creation">Pipeline creation</h3>
+<p>Creating a graphics pipeline is always a lot of code, in D3D12, it is called <code>PSO</code>. Similar to Vulkan, you need to set up the shader as <code>ID3DBlob</code>, setting up the render target formats, setting up the vertex input layouts. Determine if you want to <a href="https://www.braynzarsoft.net/viewtutorial/q16390-directx-12-depth-testing">enable depth testing</a>, etc. There is a lot of parameters filling, good news is that you can find <code>&quot;d3dx12.h&quot;</code> to fill many of them automatically. The noticeable difference between Vulkan and D3D12 is that D3D12 does not have <code>RenderPass</code> and <code>SubPass</code>. So this means that you do not need to bind any frame buffers when creating pipeline.</p>
+<h3 id="descriptors">Descriptors</h3>
+<p>The resource binding in D3D12 also goes through the forms of descriptors. But the way of organizing them is slightly different. In D3D12, they are organized together through <code>ID3D12RootSignature</code>.  The whole scope of root signature probably deserve its own blog post, you can refer to gep&rsquo;s excellent <a href="https://www.3dgep.com/learning-directx-12-2/#Root_Signatures">tutorial</a> on how to create them. In this post I will try to describe the difference between root signature and its Vulkan counterpart <code>VkPipelineLayout</code>.</p>
+<p>D3D12 organize <code>ID3D12RootSignature</code> with <strong>root parameters</strong> while Vulkan does it with a list of descriptor set layouts (with additional push constants). So in general Vulkan pipeline layout is more flat. Root parameters can be either <code>32Bit_CONSTANT</code>, inline descriptors <code>CBV_SRV_UAV</code> or descriptor tables. The former two do not require actual descriptors, you can bind buffers and setup constant directly with command list. Whereas descriptor table requires you to allocate descriptor heaps, then bind actual resource over there.</p>
+<p><img src="/imgs/Descriptor-Tables.png" alt="Descriptor Table"></p>
+<p>In the case of descriptor binding, the descriptor heap can be seen as <code>VkDescriptorSet</code> in Vulkan, you first allocate the heap, then you assign the corresponding resources through</p>
+<pre tabindex="0"><code>//firstly you get the first handle of the heap.
+D3D12_CPU_DESCRIPTOR_HANDLE cbvHandle(mUniformBufferHeap-&gt;GetCPUDescriptorHandleForHeapStart());
+//then offset it for index.
+cbvHandle.ptr = cbvHandle.ptr + mDevice-&gt;GetDescriptorHandleIncrementSize(
+                                    D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) *
+                                    0;
+//lastly you bind the resource view to the slot, in this case a constant buffer view.
+mDevice-&gt;CreateConstantBufferView(&amp;cbvDesc, cbvHandle);
+</code></pre><p>Descriptor heap differs to <code>VkDescriptorSet</code> in the sense that you can also use it to bind render target and depth stencil buffers. We will see how it is used during command list execution.</p>
+<h3 id="command-execution">Command execution</h3>
+<p>Both D3D12 and Vulkan are very command based execution model. In the sense that you record a command list (or command buffer) on the CPU. Then you submit it to GPU for execution (then you wait for the fence for it to complete). Both APIs follow almost the same routine when drawing. Firstly you bind the pipeline, then you bind the descriptors, then finally you issue the draw command. Here we review some of D3D12 binding command.</p>
+<p>For binding a pipeline, in D3D12 it is:
+<code>commandlist-&gt;SetPipelineState(m_PSO.Get())</code></p>
+<p>For binding the render targets, it is also through descriptor heap. Note that you need to get the <code>GetCPUDescriptorHandleForHeapStart</code> for non-shader-visible resource (render targets).</p>
+<pre tabindex="0"><code>CD3DX12_CPU_DESCRIPTOR_HANDLE rtv(m_rtvHeap-&gt;GetCPUDescriptorHandleForHeapStart(), m_frameIndex, m_rtvDescriptorSize);
+
+CD3DX12_CPU_DESCRIPTOR_HANDLE dsv    = m_DSVHeap-&gt;GetCPUDescriptorHandleForHeapStart();
+
+
+commandList-&gt;OMSetRenderTargets(1, &amp;rtv, FALSE, &amp;dsv);
+</code></pre><p>For binding the descriptors</p>
+<pre tabindex="0"><code>//firstly set the descriptor heaps to be active
+ID3D12DescriptorHeap* ppHeaps[] = { m_srvUavHeap.Get() };
+m_commandList-&gt;SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+
+//then you bind the root signature.
+commandList-&gt;SetGraphicsRootSignature(rootSignature);
+
+//now setting the root parameters
+commandList-&gt;SetGraphicsRootConstantBufferView(0, m_UniformBuffer-&gt;GetGPUVirtualAddress());
+commandList-&gt;SetGraphicsRoot32BitConstants(1, sizeof(Data) / sizeof(uint32_t), &amp;Data, 0);
+CD3DX12_GPU_DESCRIPTOR_HANDLE srvHandle(m_srvUavHeap-&gt;GetGPUDescriptorHandleForHeapStart(), srvIndex, m_srvUavDescriptorSize);
+commandList-&gt;SetGraphicsRootDescriptorTable(2, srvHandle);
+</code></pre><p>Finally you issue the draw calls.</p>
+<h3 id="summary">Summary</h3>
+</section>
+
+            <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/vulkan-vs-d3d12/&amp;text=Comparing%20Vulkan%20and%20D3D12" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/vulkan-vs-d3d12/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/vulkan-vs-d3d12/&amp;title=Comparing%20Vulkan%20and%20D3D12" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/vulkan-vs-d3d12/&amp;title=Comparing%20Vulkan%20and%20D3D12" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/vulkan-vs-d3d12/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/graphics">graphics</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+            
+
+
+      
+      
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/libdecor/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Wayland client side window decorations through libdecor</h2>
+              <p class="post-nav-excerpt">I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.
+There are two ways right now to do the client decorations.</p>
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+      
+    
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-119901699-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

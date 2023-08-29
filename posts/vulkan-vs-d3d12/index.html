@@ -87,7 +87,7 @@
     <h1 class="post-title">Comparing Vulkan and D3D12</h1>
     <span class="post-meta">
       
-      <time datetime="2023-08-19">19 Aug 2023</time>
+      <time datetime="2023-08-25">25 Aug 2023</time>
     </span>
 
     
@@ -155,6 +155,8 @@ CD3DX12_GPU_DESCRIPTOR_HANDLE srvHandle(m_srvUavHeap-&gt;GetGPUDescriptorHandleF
 commandList-&gt;SetGraphicsRootDescriptorTable(2, srvHandle);
 </code></pre><p>Finally you issue the draw calls.</p>
 <h3 id="summary">Summary</h3>
+<p>In terms of function APIs, the 2 modern graphics APIs are very similar indeed. One of the noticeable differences are <strong>root signature</strong> setup. However, sometimes the difference isn&rsquo;t really related to API itself, but on the developing experiences. Vulkan has always try to be as platform agnostics as possible, you rely on the API itself and standard C++ headers. Where as for D3D12, you are fiddling with window <code>ComPtr</code>, setup Agility SDKs, getting <code>DirectXMath</code> headers and so on.</p>
+<p>Hope you have fun.</p>
 </section>
 
             <section class="post-info">

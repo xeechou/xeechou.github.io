@@ -10,7 +10,7 @@
     <item>
       <title>Comparing Vulkan and D3D12</title>
       <link>https://xeechou.net/posts/vulkan-vs-d3d12/</link>
-      <pubDate>Sat, 19 Aug 2023 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
       
       <guid>https://xeechou.net/posts/vulkan-vs-d3d12/</guid>
       <description>Recently I wrote the PetitD3D12 to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &amp;ldquo;real&amp;rdquo; API comparison info, the Alain Galvan&amp;rsquo;s blog post are more just about grouping those API data structures together, not much you will know the difference in using them.</description>

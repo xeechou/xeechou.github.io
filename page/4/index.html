@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<meta name="generator" content="Hugo 0.116.1">
+	<meta name="generator" content="Hugo 0.123.7">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -34,6 +34,10 @@
       
         <li class="nav-about-me" role="presentation">
           <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-emacs-config" role="presentation">
+          <a href="/emacs-config/">Emacs Config</a>
         </li>
       
         <li class="nav-rss" role="presentation">
@@ -106,6 +110,67 @@
 
 </div>
 
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
+            <a href="/posts/camera_matrix/">View Matrix for projection</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="https://xeechou.net/tags/vision">Vision</a>
+              
+              |
+            
+            <time datetime="2016-10-31">31 Oct 2016</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        The MVP Matrix $\text{Model} * \text{View} * \text{Projection}$ is the first lesson to render (the so called render is the process so that people can see it on a 2D screen )objects in Computer Graphics, which transfer a 3D object in object space into, in the end, a UV plane.
+The Model matrix is simple and easy to understand, simply the translation, scale and rotation, but View matrix and Camera matrix are not obvious(although you can get it for free by single call from glm::lookAt() and glm::perspective()).
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
+            <a href="/posts/double_pointer_in_c/">Everything you do I can do it with a double pointer in C</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="https://xeechou.net/tags/programming">programming</a>
+              
+                
+                <a href="https://xeechou.net/tags/c/c&#43;&#43;">C/C&#43;&#43;</a>
+              
+              |
+            
+            <time datetime="2016-08-21">21 Aug 2016</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        It is 2016, low level coding is not needed anymore. We have programming languages like javascript and python. When people code everything with a class and related methods. But do you remember we have a programming language called C? When we had no class, templates, operator-override or implicit constructor at esthat time. You actually know what are doing with C, no magic!
+I claim no expert to programming, since I only have a four-year-old programming life.
+      </section>
+    </div>
+  </article>
+  
 
 
   <article class="post">
@@ -228,7 +293,7 @@ The computer industry changed vastly in this period. There was no Cloud Computin
       
     
     
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;

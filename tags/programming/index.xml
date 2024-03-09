@@ -1,49 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>programming on Insaturé</title>
+    <title>Programming on Insaturé</title>
     <link>https://xeechou.net/tags/programming/</link>
-    <description>Recent content in programming on Insaturé</description>
+    <description>Recent content in Programming on Insaturé</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://xeechou.net/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://xeechou.net/tags/programming/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The sphinx website for your project</title>
       <link>https://xeechou.net/posts/sphinx-website/</link>
       <pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://xeechou.net/posts/sphinx-website/</guid>
       <description>Static site generator, I love and hate them at the sametime. They really render your markdowns into a beautiful website without need of knowing web technologies. Then there are the constant hustles once you try to customize it, change a theme, adding different functionalities or upgrade. It is YOUR website, you want it look different than others, right. At some point, whether you like it or not, the SSG users will take the role of website designers by tangling with CSS.</description>
     </item>
-    
     <item>
       <title>Template Deduction for C&#43;&#43;</title>
       <link>https://xeechou.net/posts/template_deduction/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://xeechou.net/posts/template_deduction/</guid>
       <description>Template is a confusing and hard features in C++ if you want use it well, and I think it is also one of the reason which causes c++ programmers cannot understand each other. Sometimes the Deduction rule for c++ is really confusing, you don&amp;rsquo;t understand why you code doesn&amp;rsquo;t work or why it works. And Since STL heavily uses nesting Templates, both your compiler and your mind suffers from that.</description>
     </item>
-    
     <item>
       <title>Everything you do I can do it with a double pointer in C</title>
       <link>https://xeechou.net/posts/double_pointer_in_c/</link>
       <pubDate>Sun, 21 Aug 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://xeechou.net/posts/double_pointer_in_c/</guid>
-      <description>It is 2016, low level coding is not needed anymore. We have programming languages like javascript and python. When people code everything with a class and related methods. But do you remember we have a programming language called C? When we had no class, templates, operator-override or implicit constructor at esthat time. You actually know what are doing with C, no magic!
-I claim no expert to programming, since I only have a four-year-old programming life.</description>
+      <description>It is 2016, low level coding is not needed anymore. We have programming languages like javascript and python. When people code everything with a class and related methods. But do you remember we have a programming language called C? When we had no class, templates, operator-override or implicit constructor at esthat time. You actually know what are doing with C, no magic!&#xA;I claim no expert to programming, since I only have a four-year-old programming life.</description>
     </item>
-    
     <item>
       <title>6 years of programming</title>
       <link>https://xeechou.net/posts/six_years_programming/</link>
       <pubDate>Mon, 08 Aug 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://xeechou.net/posts/six_years_programming/</guid>
-      <description>I have been studying in programming for 6 years, since my first day of undergrad life. I haven&amp;rsquo;t realized it has been so long, this studying life already took away most of my youth. I was a kid without knowing the toughness of life, to a young man need to worry about jobs and how to start having family.
-The computer industry changed vastly in this period. There was no Cloud Computing, Machine Learning was only known in Academics.</description>
+      <description>I have been studying in programming for 6 years, since my first day of undergrad life. I haven&amp;rsquo;t realized it has been so long, this studying life already took away most of my youth. I was a kid without knowing the toughness of life, to a young man need to worry about jobs and how to start having family.&#xA;The computer industry changed vastly in this period. There was no Cloud Computing, Machine Learning was only known in Academics.</description>
     </item>
-    
   </channel>
 </rss>

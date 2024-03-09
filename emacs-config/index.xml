@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Emacs-Configs on Insaturé</title>
+    <link>http://localhost:1313/emacs-config/</link>
+    <description>Recent content in Emacs-Configs on Insaturé</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/emacs-config/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My Vanilla yet powerful Emacs environment</title>
+      <link>http://localhost:1313/emacs-config/readme/</link>
+      <pubDate>Fri, 08 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/emacs-config/readme/</guid>
+      <description>Introduction For years I have been perfecting my Emacs configuration, it is now the essential part of my digital life. This is my personal configuration but you may also find it useful to your needs. Feel free to grab some of my config snippets to work for you.&#xA;Here is a list of incomplete features you get from this config set:&#xA;Clean configuration with use-package Many programming language support: C/C++, Python, typescript, golang, glsl and many others.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -72,7 +72,7 @@
   
     
       <span id="home-button" class="nav-button">
-        <a class="home-button" href="https://xeechou.net/" title="Home">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
           <i class="icon-left-arrow"></i> Home
         </a>
       </span>
@@ -95,7 +95,7 @@
     </span>
 
     
-      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
     
   </div>
 </header>
@@ -104,7 +104,7 @@
 <main class="content" role="main">
   <article class="post">
     <div class="inner">
-      <section class="post-content"><p>Recently I wrote the <a href="https://github.com/xeechou/petitd3d12">PetitD3D12</a> to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &ldquo;real&rdquo; API comparison info, the <a href="https://alain.xyz/blog/comparison-of-modern-graphics-apis" title="A Comparison of Modern Graphics APIs">Alain Galvan&rsquo;s blog post</a> are more just about grouping those API data structures together, not much you will know the difference in using them. With that being said, I am going to talk mostly in the shoes of a Vulkan developer who grabs the hand of D3D12 code to take a close look. Mainly I will cover about <strong>pipeline creation</strong>, <strong>descriptor binding</strong> and <strong>command execution</strong>.</p>
+	<section class="post-content"><p>Recently I wrote the <a href="https://github.com/xeechou/petitd3d12">PetitD3D12</a> to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &ldquo;real&rdquo; API comparison info, the <a href="https://alain.xyz/blog/comparison-of-modern-graphics-apis" title="A Comparison of Modern Graphics APIs">Alain Galvan&rsquo;s blog post</a> are more just about grouping those API data structures together, not much you will know the difference in using them. With that being said, I am going to talk mostly in the shoes of a Vulkan developer who grabs the hand of D3D12 code to take a close look. Mainly I will cover about <strong>pipeline creation</strong>, <strong>descriptor binding</strong> and <strong>command execution</strong>.</p>
 <h3 id="the-first-100-lines-of-code">The first 100 lines of code</h3>
 <p>Well, let&rsquo;s start when you are writing DX12 code, immediately you will find out the boilerplate code to DX12 is smaller 🙃, within 100 lines of code you are already creating devices. The first thing you do is getting a <code>dxgiFactory</code>. It&rsquo;s similar to <code>VkInstance</code>, but instead of going through selecting extensions, enabling layers. You just get it with flags. Next step you already start to create devices. BTW, Creating debug layer is also simpler. You don&rsquo;t set any special printing code, just</p>
 <pre tabindex="0"><code>WRL::ComPtr&lt;ID3D12Debug&gt; debugInterface;
@@ -163,29 +163,29 @@ commandList-&gt;SetGraphicsRootDescriptorTable(2, srvHandle);
 <p>Hope you have fun.</p>
 </section>
 
-            <section class="post-info">
+	      <section class="post-info">
 	
 
 
 <div class="post-share">
 
   
-  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/vulkan-vs-d3d12/&amp;text=Comparing%20Vulkan%20and%20D3D12" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/vulkan-vs-d3d12/&amp;text=Comparing%20Vulkan%20and%20D3D12" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
     <i class="icon-twitter"></i><span class="hidden">Twitter</span>
   </a>
 
   
-  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/vulkan-vs-d3d12/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/vulkan-vs-d3d12/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
     <i class="icon-facebook"></i><span class="hidden">Facebook</span>
   </a>
 
   
-  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/vulkan-vs-d3d12/&amp;title=Comparing%20Vulkan%20and%20D3D12" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/vulkan-vs-d3d12/&amp;title=Comparing%20Vulkan%20and%20D3D12" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
     <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
   </a>
 
   
-  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/vulkan-vs-d3d12/&amp;title=Comparing%20Vulkan%20and%20D3D12" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/vulkan-vs-d3d12/&amp;title=Comparing%20Vulkan%20and%20D3D12" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
     <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
   </a>
 
@@ -215,7 +215,7 @@ commandList-&gt;SetGraphicsRootDescriptorTable(2, srvHandle);
     };
 
     
-    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/vulkan-vs-d3d12/");
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/vulkan-vs-d3d12/");
   </script>
 
   <div class="clear"></div>
@@ -224,7 +224,7 @@ commandList-&gt;SetGraphicsRootDescriptorTable(2, srvHandle);
         <aside class="post-tags">
           
             
-            <a href="https://xeechou.net/tags/graphics">graphics</a>
+            <a href="http://localhost:1313/tags/graphics">graphics</a>
           
         </aside>
 
@@ -232,11 +232,11 @@ commandList-&gt;SetGraphicsRootDescriptorTable(2, srvHandle);
       </section>
 
 
-            
+	      
 
 
-      
-      
+	
+	
       <section class="post-comments activated">
         <div id="disqus_thread"></div>
 <script>
@@ -328,19 +328,15 @@ Clean configuration with use-package Many programming language support: C/C++, P
     <script src="/js/script.js"></script>
 
     
+    
+    
+    
+  
+    
       
     
-    
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-119901699-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
 
   </body>
 </html>

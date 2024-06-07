@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Emacs on Insaturé</title>
-    <link>https://xeechou.net/tags/emacs/</link>
+    <link>http://localhost:1313/tags/emacs/</link>
     <description>Recent content in Emacs on Insaturé</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 08 Mar 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://xeechou.net/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Moving  to literate Emacs configuration.</title>
-      <link>https://xeechou.net/posts/emacs-literate-config/</link>
+      <link>http://localhost:1313/posts/emacs-literate-config/</link>
       <pubDate>Fri, 08 Mar 2024 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/emacs-literate-config/</guid>
+      <guid>http://localhost:1313/posts/emacs-literate-config/</guid>
       <description>For a long time, I have been maintaining my emacs configuration through a folder of elisp files. I am quite happy about it and even have it working pretty well on Windows (unfortunately it&amp;#39;s my work environment) with help my 3rdparty binaries repository. Finally I decided to move to literate configuration. It&amp;#39;s a thing I wanted to do for a long time. Not because it&amp;#39;s THE COOL things to do.</description>
     </item>
     <item>
       <title>Scalable org file synchronization solution</title>
-      <link>https://xeechou.net/posts/org-sync-ii/</link>
+      <link>http://localhost:1313/posts/org-sync-ii/</link>
       <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/org-sync-ii/</guid>
+      <guid>http://localhost:1313/posts/org-sync-ii/</guid>
       <description>In my previous post, I&amp;rsquo;ve somewhat found a way to synchronize my org files. I was pretty happy, I was having just around six org pages, coping them to a webdav server was not a huge hustle :P, util I started to use org-roam. Suddenly I have to create org file for every new zettle, the performance quickly started to tank. This is probably the beauty and curse of using open source solutions &amp;mdash; you have full control of your work and you have to solve problems you created yourself.</description>
     </item>
   </channel>

@@ -2,59 +2,59 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Wayland on Insaturé</title>
-    <link>https://xeechou.net/tags/wayland/</link>
+    <link>http://localhost:1313/tags/wayland/</link>
     <description>Recent content in Wayland on Insaturé</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 17 Aug 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://xeechou.net/tags/wayland/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/wayland/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Wayland client side window decorations through libdecor</title>
-      <link>https://xeechou.net/posts/libdecor/</link>
+      <link>http://localhost:1313/posts/libdecor/</link>
       <pubDate>Thu, 17 Aug 2023 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/libdecor/</guid>
+      <guid>http://localhost:1313/posts/libdecor/</guid>
       <description>I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.&#xA;There are two ways right now to do the client decorations.</description>
     </item>
     <item>
       <title>Xwayland Clipboard</title>
-      <link>https://xeechou.net/posts/xwayland-selection/</link>
+      <link>http://localhost:1313/posts/xwayland-selection/</link>
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/xwayland-selection/</guid>
+      <guid>http://localhost:1313/posts/xwayland-selection/</guid>
       <description>I hate every single line of xwayland code I wrote, it is ugly, long and hard to maintain. Now I know very well why there is wayland in the first place, sadly a complete wayland compositor has to bring a piece of crap of X with it. I just finished the selection handling in xwayland by mimicing weston code. After finally understand that 1000 lines of confusing code, I just found out I can&amp;rsquo;t do any better.</description>
     </item>
     <item>
       <title>Working with libdrm, buffer allocation</title>
-      <link>https://xeechou.net/posts/drm-backend-ii/</link>
+      <link>http://localhost:1313/posts/drm-backend-ii/</link>
       <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/drm-backend-ii/</guid>
+      <guid>http://localhost:1313/posts/drm-backend-ii/</guid>
       <description>In the first blog of libdrm, we went through the repainting loop using the libdrm. Now we move on to the topic of framebuffers. A framebuffer is a piece of memory (could be on main memory or on GPU) for repainting every frame. It is like a canvas, represents what you would finally see on screen. Framebuffer is already a familiar concept to rendering programmers, in OpenGL, We have GL_FRAMEBUFFER_0 for presenting the surface, additional framebuffers for roles like G-Buffer and post-processing.</description>
     </item>
     <item>
       <title>Libweston vs Wlroots</title>
-      <link>https://xeechou.net/posts/weston-vs-wlroots/</link>
+      <link>http://localhost:1313/posts/weston-vs-wlroots/</link>
       <pubDate>Sat, 20 Jun 2020 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/weston-vs-wlroots/</guid>
+      <guid>http://localhost:1313/posts/weston-vs-wlroots/</guid>
       <description>You need a wayland compositor library to create a wayland server. Wayland is a protocol, itself, cannot do much, long time ago I used to think the server-side wl_resource represents some structure you can operate on, well it turned out all you do with it is handling messages between client and server. All the logic you need to implement yourself.&#xA;There were a few attempts to wayland compositing library created. The first sucessful one is wlc.</description>
     </item>
     <item>
       <title>wl_data_device</title>
-      <link>https://xeechou.net/posts/data-device/</link>
+      <link>http://localhost:1313/posts/data-device/</link>
       <pubDate>Fri, 12 Jun 2020 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/data-device/</guid>
+      <guid>http://localhost:1313/posts/data-device/</guid>
       <description>wl_data_device interface in the base wayland protocol is the most complex one, in my opinion, wayland.xml explains it fairly well, but every pieces are scattered in the file, here I serialize it together, give you quick run through.&#xA;In brief, data device in wayland consists of four interfaces: The first is wl_data_device_manager, it is the global. The second is wl_data_device, can be created from wl_data_device_manager for a given seat, it is used to set selection(ctrl-c ctrl-v) and drag-n-drop.</description>
     </item>
     <item>
       <title>The wayland project II</title>
-      <link>https://xeechou.net/posts/the_wayland_project_2/</link>
+      <link>http://localhost:1313/posts/the_wayland_project_2/</link>
       <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/the_wayland_project_2/</guid>
+      <guid>http://localhost:1313/posts/the_wayland_project_2/</guid>
       <description>The last post I laid out the story of me with wayland. Technology is fascinating isn&amp;rsquo;t it? Every once a while, there are plenty of new projects that aim to start an revolution, getting people excited. Projects like systemd, Wayland, Vulkan make us think how come we did not think of those before, they seemed perfect at the moment. Technologies always work like a rush of hot wave, our sights are limited at the moment we are in, maybe 5 years from now, even vulkan is not sexy anymore.</description>
     </item>
     <item>
       <title>The wayland project</title>
-      <link>https://xeechou.net/posts/the_wayland_project/</link>
+      <link>http://localhost:1313/posts/the_wayland_project/</link>
       <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/the_wayland_project/</guid>
+      <guid>http://localhost:1313/posts/the_wayland_project/</guid>
       <description>It was a good will.&#xA;5 years ago, I read a blog about the future of linux desktop, I was using a window manager called Awesome (one of my friend introduced it to me, I was enchanted by how he opened two terminals side-by-side, one for coding and one for compiling). A voice about next generation desktop was just raised in the linux community , a group of hackers demod the weston project, where you can rotate the application windows.</description>
     </item>
   </channel>

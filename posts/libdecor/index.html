@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -93,7 +93,7 @@
   
     
       <span id="home-button" class="nav-button">
-        <a class="home-button" href="https://xeechou.net/" title="Home">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
           <i class="icon-left-arrow"></i> Home
         </a>
       </span>
@@ -116,7 +116,7 @@
     </span>
 
     
-      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
     
   </div>
 </header>
@@ -125,7 +125,7 @@
 <main class="content" role="main">
   <article class="post">
     <div class="inner">
-      <section class="post-content"><p>I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.</p>
+	<section class="post-content"><p>I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.</p>
 <p>There are <strong>two</strong> ways right now to do the client decorations.</p>
 <h3 id="through-server-side-decoration">Through Server side decoration</h3>
 <p>The <a href="https://github.com/swaywm/wlroots">wlroots</a> gangs proposed an protocol <a href="https://github.com/swaywm/wlroots/pull/1053">xdg-decoration</a> to have the server to draw that for you, it is used by fair amount of applications. It&rsquo;s a bit of against the point of the wayland principles because the compositor is not supposed to draw any thing, it just composes the windows together for archiving best performance. If the server does the frame drawing, it need to <strong>either</strong> blit clients&rsquo; <code>committed</code> surface into sub-region its own copy of the surface, it consumes more memory and it will be bandwidth intensive. <strong>Alternatively</strong>, the server has to draw the frame in a separated shader, that will consume more GPU cycles.</p>
@@ -180,29 +180,29 @@ frame_set_window_geometry(struct libdecor_frame *frame,
 </code></pre><p>Note that it is still not fool proof because it indicates <em>negative</em> <code>x,y</code> for the boarder, it requires the compositor to handle negative position, though most compositors I know do handle it.</p>
 </section>
 
-            <section class="post-info">
+	      <section class="post-info">
 	
 
 
 <div class="post-share">
 
   
-  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/libdecor/&amp;text=Wayland%20client%20side%20window%20decorations%20through%20libdecor" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/libdecor/&amp;text=Wayland%20client%20side%20window%20decorations%20through%20libdecor" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
     <i class="icon-twitter"></i><span class="hidden">Twitter</span>
   </a>
 
   
-  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/libdecor/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/libdecor/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
     <i class="icon-facebook"></i><span class="hidden">Facebook</span>
   </a>
 
   
-  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/libdecor/&amp;title=Wayland%20client%20side%20window%20decorations%20through%20libdecor" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/libdecor/&amp;title=Wayland%20client%20side%20window%20decorations%20through%20libdecor" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
     <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
   </a>
 
   
-  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/libdecor/&amp;title=Wayland%20client%20side%20window%20decorations%20through%20libdecor" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/libdecor/&amp;title=Wayland%20client%20side%20window%20decorations%20through%20libdecor" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
     <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
   </a>
 
@@ -232,7 +232,7 @@ frame_set_window_geometry(struct libdecor_frame *frame,
     };
 
     
-    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/libdecor/");
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/libdecor/");
   </script>
 
   <div class="clear"></div>
@@ -241,7 +241,7 @@ frame_set_window_geometry(struct libdecor_frame *frame,
         <aside class="post-tags">
           
             
-            <a href="https://xeechou.net/tags/wayland">wayland</a>
+            <a href="http://localhost:1313/tags/wayland">wayland</a>
           
         </aside>
 
@@ -249,11 +249,11 @@ frame_set_window_geometry(struct libdecor_frame *frame,
       </section>
 
 
-            
+	      
 
 
-      
-      
+	
+	
       <section class="post-comments activated">
         <div id="disqus_thread"></div>
 <script>
@@ -342,19 +342,15 @@ frame_set_window_geometry(struct libdecor_frame *frame,
     <script src="/js/script.js"></script>
 
     
+    
+    
+    
+  
+    
       
     
-    
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-119901699-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
 
   </body>
 </html>

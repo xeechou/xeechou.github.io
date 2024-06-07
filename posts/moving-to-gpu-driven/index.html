@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -93,7 +93,7 @@
   
     
       <span id="home-button" class="nav-button">
-        <a class="home-button" href="https://xeechou.net/" title="Home">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
           <i class="icon-left-arrow"></i> Home
         </a>
       </span>
@@ -116,7 +116,7 @@
     </span>
 
     
-      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
     
   </div>
 </header>
@@ -125,7 +125,7 @@
 <main class="content" role="main">
   <article class="post">
     <div class="inner">
-      <section class="post-content"><p>We were using a traditional <code>for_each</code> style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features. It&rsquo;s promising to draw millions or billions more triangles compared to before. The cost is that it changed the programming paradigm completely. If you want embark on new hardware, chances are you need to rewrite the rendering code.</p>
+	<section class="post-content"><p>We were using a traditional <code>for_each</code> style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features. It&rsquo;s promising to draw millions or billions more triangles compared to before. The cost is that it changed the programming paradigm completely. If you want embark on new hardware, chances are you need to rewrite the rendering code.</p>
 <p>The So called GPU-driven term is a catchy phrase for marketing. It&rsquo;s different from the traditional <strong>&lsquo;&lsquo;CPU-driven&rsquo;&rsquo;</strong>  paradigm, what it really means is the introduce of new <code>drawIndirect</code> commands. Using the indirect commands, much of the CPU issuing draw commands gets off loaded to GPU, In Vulkan, we have</p>
 <pre tabindex="0"><code>VKAPI_ATTR void VKAPI_CALL vkCmdDrawIndirect(
     VkCommandBuffer                          commandBuffer,
@@ -236,29 +236,29 @@ else
 <p>Now you can see the complexity of modern GPU and the work programmers need to take advantage of the hardware. GPU driven may be a cool technique right now but it will soon be obsolete when the ray tracing take over.</p>
 </section>
 
-            <section class="post-info">
+	      <section class="post-info">
 	
 
 
 <div class="post-share">
 
   
-  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/moving-to-gpu-driven/&amp;text=Moving%20towards%20GPU%20driven" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/moving-to-gpu-driven/&amp;text=Moving%20towards%20GPU%20driven" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
     <i class="icon-twitter"></i><span class="hidden">Twitter</span>
   </a>
 
   
-  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/moving-to-gpu-driven/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/moving-to-gpu-driven/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
     <i class="icon-facebook"></i><span class="hidden">Facebook</span>
   </a>
 
   
-  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/moving-to-gpu-driven/&amp;title=Moving%20towards%20GPU%20driven" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/moving-to-gpu-driven/&amp;title=Moving%20towards%20GPU%20driven" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
     <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
   </a>
 
   
-  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/moving-to-gpu-driven/&amp;title=Moving%20towards%20GPU%20driven" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/moving-to-gpu-driven/&amp;title=Moving%20towards%20GPU%20driven" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
     <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
   </a>
 
@@ -288,7 +288,7 @@ else
     };
 
     
-    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/moving-to-gpu-driven/");
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/moving-to-gpu-driven/");
   </script>
 
   <div class="clear"></div>
@@ -297,7 +297,7 @@ else
         <aside class="post-tags">
           
             
-            <a href="https://xeechou.net/tags/graphics">Graphics</a>
+            <a href="http://localhost:1313/tags/graphics">Graphics</a>
           
         </aside>
 
@@ -305,11 +305,11 @@ else
       </section>
 
 
-            
+	      
 
 
-      
-      
+	
+	
       <section class="post-comments activated">
         <div id="disqus_thread"></div>
 <script>
@@ -400,19 +400,15 @@ There are two ways right now to do the client decorations.</p>
     <script src="/js/script.js"></script>
 
     
+    
+    
+    
+  
+    
       
     
-    
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-119901699-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
 
   </body>
 </html>

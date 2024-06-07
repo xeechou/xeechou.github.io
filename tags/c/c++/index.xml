@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>C/C&#43;&#43; on Insaturé</title>
-    <link>https://xeechou.net/tags/c/c&#43;&#43;/</link>
+    <link>http://localhost:1313/tags/c/c&#43;&#43;/</link>
     <description>Recent content in C/C&#43;&#43; on Insaturé</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 04 Nov 2016 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://xeechou.net/tags/c/c++/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/c/c++/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Template Deduction for C&#43;&#43;</title>
-      <link>https://xeechou.net/posts/template_deduction/</link>
+      <link>http://localhost:1313/posts/template_deduction/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/template_deduction/</guid>
+      <guid>http://localhost:1313/posts/template_deduction/</guid>
       <description>Template is a confusing and hard features in C++ if you want use it well, and I think it is also one of the reason which causes c++ programmers cannot understand each other. Sometimes the Deduction rule for c++ is really confusing, you don&amp;rsquo;t understand why you code doesn&amp;rsquo;t work or why it works. And Since STL heavily uses nesting Templates, both your compiler and your mind suffers from that.</description>
     </item>
     <item>
       <title>Everything you do I can do it with a double pointer in C</title>
-      <link>https://xeechou.net/posts/double_pointer_in_c/</link>
+      <link>http://localhost:1313/posts/double_pointer_in_c/</link>
       <pubDate>Sun, 21 Aug 2016 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/double_pointer_in_c/</guid>
+      <guid>http://localhost:1313/posts/double_pointer_in_c/</guid>
       <description>It is 2016, low level coding is not needed anymore. We have programming languages like javascript and python. When people code everything with a class and related methods. But do you remember we have a programming language called C? When we had no class, templates, operator-override or implicit constructor at esthat time. You actually know what are doing with C, no magic!&#xA;I claim no expert to programming, since I only have a four-year-old programming life.</description>
     </item>
   </channel>

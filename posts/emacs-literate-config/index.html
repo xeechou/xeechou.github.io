@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -72,7 +72,7 @@
   
     
       <span id="home-button" class="nav-button">
-        <a class="home-button" href="https://xeechou.net/" title="Home">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
           <i class="icon-left-arrow"></i> Home
         </a>
       </span>
@@ -95,7 +95,7 @@
     </span>
 
     
-      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
     
   </div>
 </header>
@@ -104,7 +104,7 @@
 <main class="content" role="main">
   <article class="post">
     <div class="inner">
-      <section class="post-content">
+	<section class="post-content">
 <p>
 For a long time, I have been maintaining my <a href="https://github.com/xeechou/dotemacs">emacs configuration</a> through a folder of <a href="https://github.com/xeechou/dotemacs/tree/vlisp/etc">elisp files</a>. I am quite happy about it and even have it working pretty well on Windows (unfortunately it&#39;s my work environment) with help my <a href="https://github.com/xeechou/dotemacs-msbin">3rdparty binaries repository</a>.  Finally I decided to move to <a href="https://orgmode.org/worg/org-contrib/babel/intro.html#emacs-initialization">literate configuration</a>. It&#39;s a thing I wanted to do for a long time. Not because it&#39;s <strong>THE COOL</strong> things to do. I do think there is some advantages over my previous approach.</p>
 <div id="outline-container-headline-1" class="outline-3">
@@ -227,29 +227,29 @@ Happy hacking, folks.</p>
 </div>
 </section>
 
-            <section class="post-info">
+	      <section class="post-info">
 	
 
 
 <div class="post-share">
 
   
-  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/emacs-literate-config/&amp;text=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/emacs-literate-config/&amp;text=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
     <i class="icon-twitter"></i><span class="hidden">Twitter</span>
   </a>
 
   
-  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/emacs-literate-config/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/emacs-literate-config/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
     <i class="icon-facebook"></i><span class="hidden">Facebook</span>
   </a>
 
   
-  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/emacs-literate-config/&amp;title=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/emacs-literate-config/&amp;title=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
     <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
   </a>
 
   
-  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/emacs-literate-config/&amp;title=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/emacs-literate-config/&amp;title=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
     <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
   </a>
 
@@ -279,7 +279,7 @@ Happy hacking, folks.</p>
     };
 
     
-    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/emacs-literate-config/");
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/emacs-literate-config/");
   </script>
 
   <div class="clear"></div>
@@ -288,7 +288,7 @@ Happy hacking, folks.</p>
         <aside class="post-tags">
           
             
-            <a href="https://xeechou.net/tags/emacs">emacs</a>
+            <a href="http://localhost:1313/tags/emacs">emacs</a>
           
         </aside>
 
@@ -296,11 +296,11 @@ Happy hacking, folks.</p>
       </section>
 
 
-            
+	      
 
 
-      
-      
+	
+	
       <section class="post-comments activated">
         <div id="disqus_thread"></div>
 <script>
@@ -383,19 +383,15 @@ Clean configuration with use-package Many programming language support: C/C++, P
     <script src="/js/script.js"></script>
 
     
+    
+    
+    
+  
+    
       
     
-    
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-119901699-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
 
   </body>
 </html>

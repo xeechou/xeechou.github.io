@@ -1,0 +1,433 @@
+
+<!doctype html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Modular Vulkan feature and extension manager</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
+    
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-emacs-config" role="presentation">
+          <a href="/emacs-config/">Emacs Config</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Modular Vulkan feature and extension manager</h1>
+    <span class="post-meta">
+      
+      <time datetime="2024-06-12">12 Jun 2024</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+	<section class="post-content">
+<p>
+Recently I&#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&#39;ve want to implement is a modular <a href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFeatures.html">Vulkan Feature</a> management.</p>
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Root Issue: hard-coding enabled features
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable. This is done by inserting <code>features</code> into the <code>pNext</code> chain and extensions into <code>ppEnabledExtenionNames</code>.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">VkDeviceCreateInfo</span> {
+</span></span><span style="display:flex;"><span>    VkStructureType                    sType;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span>                        pNext;
+</span></span><span style="display:flex;"><span>    VkDeviceCreateFlags                flags;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint32_t</span>                           queueCreateInfoCount;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> VkDeviceQueueCreateInfo<span style="color:#f92672">*</span>     pQueueCreateInfos;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint32_t</span>                           enabledLayerCount;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> <span style="color:#66d9ef">const</span><span style="color:#f92672">*</span>                 ppEnabledLayerNames;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint32_t</span>                           enabledExtensionCount;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> <span style="color:#66d9ef">const</span><span style="color:#f92672">*</span>                 ppEnabledExtensionNames;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> VkPhysicalDeviceFeatures<span style="color:#f92672">*</span>    pEnabledFeatures;
+</span></span><span style="display:flex;"><span>} VkDeviceCreateInfo;</span></span></code></pre></div>
+</div>
+<p>
+Issue is that you also need to query those features before you enabling them. Some device many supports <code>RayTracingPipeline</code> some may not. <strong>Hard coding</strong> everything in the device creation code often leads to <strong>non-portable</strong> binaries. It works on your desktop GPU, then you check out the code on your laptop, it doesn&#39;t run anymore.</p>
+<p>
+It has been like this for me for a long time I&#39;ve want to resolve it once for all. Clearly we need some abstraction on top of it.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+Abstracting an interface of Vulkan features
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>For extensions it&#39;s relatively easy, you just passing as array of <code>const char*</code>,  features on the other hand are more of headache.</p>
+<p>
+In the end, we need to chain those features together.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  VkDeviceCreateInfo info{};
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//some info setup code.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  VkPhysicalDeviceFeatures2 feats{};
+</span></span><span style="display:flex;"><span>  feats.features.somefatures0 <span style="color:#f92672">=</span> VK_TRUE;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//enabling other features
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  info.pNext <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>feats;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//Second feature struct
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  VkPhysicalDeviceVulkan11Features feats11 {};
+</span></span><span style="display:flex;"><span>  feats.pNext <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>feats11;
+</span></span><span style="display:flex;"><span>  feats11.somefeatures0 <span style="color:#f92672">=</span> VK_TRUE;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//enabling other features.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//this goes on until your have chain all the feature structures.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  VkPhysicalDeviceSomeFeatures featsN {};
+</span></span><span style="display:flex;"><span>  featsN_1.pNext <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>featsN;
+</span></span><span style="display:flex;"><span>  featsN.pNext <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>; <span style="color:#75715e">//the last one.
+</span></span></span></code></pre></div>
+</div>
+<p>
+Apparently if we want to do this every single time it will be a lot of boring and typing. Note to mention you have to check those features availability before putting it in <code>VkDeviceCreateInfo</code>. There must be a better way doing it, right?</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+Taking advantage of <code>T::*</code> type in C++
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>The issue here is there is too many <code>VkPhysicalDeviceSomeFeatures</code> types in Vulkan. Creating an interface contains all those types would be insane, and I have only a few hours. However all those  <code>VkPhysicalDeviceSomeFeatures</code> looks similar:</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">VkPhysicalDeviceFeatures</span> {
+</span></span><span style="display:flex;"><span>      VkBool32    robustBufferAccess;
+</span></span><span style="display:flex;"><span>      VkBool32    fullDrawIndexUint32;
+</span></span><span style="display:flex;"><span>      VkBool32    imageCubeArray;
+</span></span><span style="display:flex;"><span>      VkBool32    independentBlend;
+</span></span><span style="display:flex;"><span>      VkBool32    geometryShader;
+</span></span><span style="display:flex;"><span>      VkBool32    tessellationShader;
+</span></span><span style="display:flex;"><span>      VkBool32    sampleRateShading;
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  };</span></span></code></pre></div>
+</div>
+<p>
+They are merely just list of <code>VkBool32</code>. After experimenting a bit. I found that I can simply write a templated function to enable one feature using <code>T::*</code> pointer.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span>FEAT<span style="color:#f92672">&gt;</span> <span style="color:#75715e">//FEAT is a type like VkPhysicalDeviceFeatures
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  feature<span style="color:#f92672">&lt;</span>FEAT<span style="color:#f92672">&gt;&amp;</span> feature<span style="color:#f92672">::</span>require(vk<span style="color:#f92672">::</span>Bool32 FEATS<span style="color:#f92672">::*</span>feat)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">//for enabling the feature
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          m_feats.<span style="color:#f92672">*</span>feat <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">//for query the feature.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          m_requests.emplace_back([feat](FEATS<span style="color:#f92672">&amp;</span> feats) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>          { <span style="color:#66d9ef">return</span> feats.<span style="color:#f92672">*</span>feat <span style="color:#f92672">==</span> true; });
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>  }</span></span></code></pre></div>
+</div>
+<p>
+The feature class is something like this.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>   <span style="color:#75715e">//FEATS is some type like VkPhysicalDeviceFeatures
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> FEATS<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">feature</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">//actual features stores here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          FEATS                                    m_feats;
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">//query fucntions
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">bool</span>(FEATS<span style="color:#f92672">&amp;</span>)<span style="color:#f92672">&gt;&gt;</span> m_requests;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">//for chaining the features together.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          <span style="color:#66d9ef">void</span><span style="color:#f92672">**</span> <span style="color:#a6e22e">pnext</span>() <span style="color:#66d9ef">override</span> { <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span>m_feats.pNext; }
+</span></span><span style="display:flex;"><span>  };</span></span></code></pre></div>
+</div>
+<p>
+like in <code>require()</code>, at feature query time I will need to check against my feature query <code>std::functions</code>, and at device creation I can append those <code>features</code> together.</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+Feature Manager class
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>
+On top of this I need a manager interface to manage all the features together. I choose to implement like this</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">feature_descriptor</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>          feature_descriptor() <span style="color:#66d9ef">noexcept</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">check</span>(vk<span style="color:#f92672">::</span>PhysicalDevice phy_dev) <span style="color:#66d9ef">const</span>;
+</span></span><span style="display:flex;"><span>          feature_descriptor<span style="color:#f92672">&amp;</span> require_extension(<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> extension);
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FEATS</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>          feature<span style="color:#f92672">&lt;</span>FEATS<span style="color:#f92672">&gt;&amp;</span> require_feature()
+</span></span><span style="display:flex;"><span>          {
+</span></span><span style="display:flex;"><span>                  std<span style="color:#f92672">::</span>unique_ptr<span style="color:#f92672">&lt;</span>feature<span style="color:#f92672">&lt;</span>FEATS<span style="color:#f92672">&gt;&gt;</span> feats <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>                          std<span style="color:#f92672">::</span>make_unique<span style="color:#f92672">&lt;</span>feature<span style="color:#f92672">&lt;</span>FEATS<span style="color:#f92672">&gt;&gt;</span>();
+</span></span><span style="display:flex;"><span>                  <span style="color:#75715e">//code to please inside feature_descriptor
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                  <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                  <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>feature<span style="color:#f92672">&lt;</span>FEATS<span style="color:#f92672">&gt;*&gt;</span>(feats);
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>  };</span></span></code></pre></div>
+</div>
+<p>
+In this way I can request a feature pack such as <code>vk::PhysicalDeviceVulkan12Features</code> and enable each feature like this:</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#75715e">//enabling Vulkan 1.2 features
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  desc.require_feature<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>PhysicalDeviceVulkan12Features<span style="color:#f92672">&gt;</span>()
+</span></span><span style="display:flex;"><span>      .require(<span style="color:#f92672">&amp;</span>vk<span style="color:#f92672">::</span>PhysicalDeviceVulkan12Features<span style="color:#f92672">::</span>timelineSemaphore)
+</span></span><span style="display:flex;"><span>      .require(<span style="color:#f92672">&amp;</span>vk<span style="color:#f92672">::</span>PhysicalDeviceVulkan12Features<span style="color:#f92672">::</span>bufferDeviceAddress);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//enabling Vulkan 1.3 features
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  desc.require_feature<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>PhysicalDeviceVulkan13Features<span style="color:#f92672">&gt;</span>()
+</span></span><span style="display:flex;"><span>      .require(<span style="color:#f92672">&amp;</span>vk<span style="color:#f92672">::</span>PhysicalDeviceVulkan13Features<span style="color:#f92672">::</span>dynamicRendering);</span></span></code></pre></div>
+</div>
+<p>
+Much easier right 😄?</p>
+</div>
+</div>
+</section>
+
+	      <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/modular-vulkan-feature-manager/&amp;text=Modular%20Vulkan%20feature%20and%20extension%20manager" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/modular-vulkan-feature-manager/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/modular-vulkan-feature-manager/&amp;title=Modular%20Vulkan%20feature%20and%20extension%20manager" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/modular-vulkan-feature-manager/&amp;title=Modular%20Vulkan%20feature%20and%20extension%20manager" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/modular-vulkan-feature-manager/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="http://localhost:1313/tags/graphics">graphics</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+	      
+
+
+	
+	
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/emacs-literate-config/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Moving  to literate Emacs configuration.</h2>
+              <p class="post-nav-excerpt">For a long time, I have been maintaining my emacs configuration through a folder of elisp files. I am quite happy about it and even have it working pretty well on Windows (unfortunately it&#39;s my work environment) with help my 3rdparty binaries repository. Finally I decided to move to literate configuration. It&#39;s a thing I wanted to do for a long time. Not because it&#39;s THE COOL things to do.</p>
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+    
+    
+    
+  
+    
+      
+    
+  
+
+
+  </body>
+</html>

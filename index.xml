@@ -6,8 +6,15 @@
     <description>Recent content on Insaturé</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Jun 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Modular Vulkan feature and extension manager</title>
+      <link>http://localhost:1313/posts/modular-vulkan-feature-manager/</link>
+      <pubDate>Wed, 12 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/modular-vulkan-feature-manager/</guid>
+      <description>Recently I&amp;#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&amp;#39;ve want to implement is a modular Vulkan Feature management.&#xA;Root Issue: hard-coding enabled features When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable.</description>
+    </item>
     <item>
       <title>Moving  to literate Emacs configuration.</title>
       <link>http://localhost:1313/posts/emacs-literate-config/</link>

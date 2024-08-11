@@ -1,0 +1,364 @@
+
+<!doctype html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Event bus implementation</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
+    
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-emacs-config" role="presentation">
+          <a href="/emacs-config/">Emacs Config</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Event bus implementation</h1>
+    <span class="post-meta">
+      
+      <time datetime="2024-08-11">11 Aug 2024</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+	<section class="post-content">
+<p>
+Recently I open sourced a small C++ library called <a href="https://github.com/xeechou/ebus">eBus</a>(Event Bus), it came along separated from another project I was working on. The idea, or should I say the interface was not very original, I took the inspiration from a much more complicated <a href="https://www.docs.o3de.org/docs/user-guide/programming/messaging/ebus-design/">Event Buses In O3DE</a>. The goal is simple, providing an easy to use <a href="https://refactoring.guru/design-patterns/observer">Observer</a> pattern so your can decouple the code from the callers to its callees.</p>
+<p>
+Instead of doing this:</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> caller<span style="color:#f92672">::</span>some_funcion()
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>          interface <span style="color:#f92672">*</span>instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>some_instance;
+</span></span><span style="display:flex;"><span>          instance<span style="color:#f92672">-&gt;</span>callback(param0, param1, param2);	
+</span></span><span style="display:flex;"><span>  }</span></span></code></pre></div>
+</div>
+<p>
+You can decouple your self from keeping a record of the <code>interface</code> by doing this:</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> caller<span style="color:#f92672">::</span>some_funcion()
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">//assume interfaceBus is implmeneted somewhere.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          interfaceBus<span style="color:#f92672">::</span>event(<span style="color:#f92672">&amp;</span>interface<span style="color:#f92672">::</span>callback, param0, param1, param2);
+</span></span><span style="display:flex;"><span>  }</span></span></code></pre></div>
+</div>
+<p>
+This code is partially useful when you have many inter module callbacks it would be crazy to keep track of pointers. Again, this idea is not new. In other C <a href="https://wayland.freedesktop.org/">Wayland</a> project I was working on, it was heavily used in the form of <a href="https://wayland.freedesktop.org/docs/html/apc.html#Server-structwl__signal">wl_signal</a> and <a href="https://wayland.freedesktop.org/docs/html/apc.html#Server-structwl__listener">wl_listener</a>.</p>
+<p>
+The most common <strong>event</strong> you would encounter is a object announce its death, such as window is closed. In the EBus library, we declare them as virtual functions.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">context_events</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> ebus_iface<span style="color:#f92672">&lt;</span>ebus_type<span style="color:#f92672">::</span>GLOBAL<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">on_dev_init</span>(device_data<span style="color:#f92672">&amp;</span> dev) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">on_dev_fini</span>(device_data<span style="color:#f92672">&amp;</span> dev) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">on_context_fini</span>(context<span style="color:#f92672">&amp;</span> ctx) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">typedef</span> ebus<span style="color:#f92672">&lt;</span>context_events<span style="color:#f92672">&gt;</span> context_bus;</span></span></code></pre></div>
+</div>
+<p>
+This <code>context_events</code> interface declares 3 events, <code>on_context_fini</code>, which is the death of itself, and the <code>context</code> holds records of multiple <code>device_data</code> with its lifetime. As a stake holder, you may be interested when a device gets created and destroyed (especially, so that you don&#39;t call on the device function after its destruction). Through Ebus, there is 2 sides of the code. The <strong>event emitter</strong> and the <strong>event listener</strong>.</p>
+<p>
+The Emitters code is simply as above <code>Ebus&lt;Interface&gt;::Event</code>. The listener&#39;s code is a bit involved. The 2 most important functions are <code>connect()</code> and <code>disconnect()</code> which allows the listener to subscribe/unsubscribe to the events. You can see an concrete example in <a href="https://github.com/xeechou/ebus/blob/main/test/test_ebus.cc">ebus/test/test_ebus.cc</a>.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">context_listener</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> ebus_handler<span style="color:#f92672">&lt;</span>context_events<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">//you will need to implement those functions.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">on_dev_init</span>(device_data<span style="color:#f92672">&amp;</span> dev) <span style="color:#66d9ef">override</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">on_dev_fini</span>(device_data<span style="color:#f92672">&amp;</span> dev) <span style="color:#66d9ef">override</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">on_context_fini</span>(context<span style="color:#f92672">&amp;</span> ctx) <span style="color:#66d9ef">override</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//then later when you instantiate a context_listener
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">context_listener</span> listener;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//connect to the event so that your virtual functions gets called.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  listener.connect();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//an example of event implementation
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> context_listener<span style="color:#f92672">::~</span>context_listner()
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>          disconnect();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> context_listener<span style="color:#f92672">::</span>on_context_fini(context<span style="color:#f92672">&amp;</span> ctx)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">//disconnect from the context.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          disconnect();
+</span></span><span style="display:flex;"><span>  }</span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+How it is done
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>The implementation of EBus is not very difficult actually, basic ingredients you need is <code>static variable</code> and <a href="https://www.data-structures-in-practice.com/intrusive-linked-lists/">Intrusive lists</a>. Once again, the idea is not new, I just borrowed from Wayland&#39;s implementation (and wayland borrowed it from Linux kernel 😄). The benefits of the <code>intrusive</code> is that there is no memory management involved. Yes, you can have a whole application working with ebus without a single <code>malloc</code>. The listeners hold a <strong>list node</strong>, at <code>connect()</code> it gets added to events (which are statically allocated) link list. And at <code>disconnect()</code> it gets removed. It is really simple as that in my implementation.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+An object based event system
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>Besides <code>ebus</code>, there is also an object based <a href="https://github.com/xeechou/ebus/blob/main/include/ebus/event.hh">event</a> included, what it differentiate from <code>ebus</code> is that events has to instantiated.  Which may be quite useful when you do not want your events to as global as a C++ type. In my cases I create event for every GLSL/HLSL shader module which will emit <code>shader.event(&amp;shader::on_modified)</code> event when the file-system detects the changes in the shader contents. </p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+Closing remarks
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>In the two previous projects I worked on, wayland compositors and O3DE hair gem. This EBus interface is really heavily used everywhere, it is almost like a corner stone for building those software systems. I hope you can also find it useful for your next C++ project. Cheers!</p>
+</div>
+</div>
+</section>
+
+	      <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/ebus/&amp;text=Event%20bus%20implementation" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/ebus/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/ebus/&amp;title=Event%20bus%20implementation" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/ebus/&amp;title=Event%20bus%20implementation" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/ebus/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="http://localhost:1313/tags/journal">journal</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+	      
+
+
+	
+	
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/modular-vulkan-feature-manager/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Modular Vulkan feature and extension manager</h2>
+              <p class="post-nav-excerpt">Recently I&#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&#39;ve want to implement is a modular Vulkan Feature management.
+Root Issue: hard-coding enabled features When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable.</p>
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+    
+    
+    
+  
+    
+      
+    
+  
+
+
+  </body>
+</html>

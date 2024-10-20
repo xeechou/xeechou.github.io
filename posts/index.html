@@ -139,6 +139,71 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/hideshow-emacs/">Customizing Hide-Show for CMake Mode in Emacs</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/journal">journal</a>
+              
+                
+                <a href="http://localhost:1313/tags/emacs">Emacs</a>
+              
+              |
+            
+            <time datetime="2024-10-19">19 Oct 2024</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>
+customizing HideShow mode on Emacs is done by <a href="http://doc.endlessparentheses.com/Var/hs-special-modes-alist.html">hs-special-modes-alist</a>. There are 4 parts (actually 5, but we care mostly about the 3) of the equation. You can customize it for your mode with a list like this</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (MODE START END COMMENT-START FORWARD-SEXP-FUNC ADJUST-BEG-FUNC)</span></span></code></pre></div>
+</div>
+<p>
+For example, the default definition of the <code>hs-special-modes-alist</code> looks like this:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (defvar hs-special-modes-alist
+</span></span><span style="display:flex;"><span>    (<span style="color:#a6e22e">mapcar</span> <span style="color:#a6e22e">#&#39;purecopy</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#39;</span>((c-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (c-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (c++-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (c++-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (bibtex-mode (<span style="color:#e6db74">&#34;@\\S(*\\(\\s(\\)&#34;</span> <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>              (java-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (java-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (js-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (js-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (mhtml-mode <span style="color:#e6db74">&#34;{\\|&lt;[^/&gt;]*?&#34;</span> <span style="color:#e6db74">&#34;}\\|&lt;/[^/&gt;]*[^/]&gt;&#34;</span> <span style="color:#e6db74">&#34;&lt;!--&#34;</span> mhtml-forward <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              <span style="color:#75715e">;; Add more support here.</span>
+</span></span><span style="display:flex;"><span>              ))</span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+The ingredients
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+<code>START</code> and <code>END</code> regular expression
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+This regular expression matches the beginning/end of the folding code. For C/C++ alike languages, this is as brackets &#34;{&#34;, &#34;}&#34;, etc. For some language lacks of any brackets/parenthesis like python, it is more difficult. Emacs&#39; built-in python mode provided <a href="https://mail.python.org/pipermail/python-mode/2006-April/000353.html">patch</a> to support it:</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/ebus/">Event bus implementation</a>
           </h2>
           <span class="post-meta">
@@ -418,39 +483,6 @@ found out it would be one of this thing I learned for a weekend and forget all
 together, since I don&rsquo;t have any projects I would use it actively. Now after
 one month of procrastination, I finally pieces ALMOST everything to reproduce
 my old blog. Time for a summary.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/belief-or-cult/">Belief or Cult</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/journal">Journal</a>
-              
-              |
-            
-            <time datetime="2021-10-31">31 Oct 2021</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>It&rsquo;s been a while that I haven&rsquo;t update the blogs. It is so easy to slack off
-on good habits. &ldquo;Oh I will continue once I finish A B C&rdquo;. We are all busy as
-hell, in the software world, you WORK, you WORK and you GO TO SLEEP. Like this
-one, I am always hoping to switch to <a href="https://gohugo.io">Hugo</a>, then I can
-continue writing the blog. The thing is, I never got the good weekend to do the
-switching. Weekends are really no for staying at home confronting monitors.</p>
       </section>
     </div>
   </article>

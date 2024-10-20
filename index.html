@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<meta name="generator" content="Hugo 0.131.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta name="generator" content="Hugo 0.135.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -116,6 +116,71 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/hideshow-emacs/">Customizing Hide-Show for CMake Mode in Emacs</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/journal">journal</a>
+              
+                
+                <a href="http://localhost:1313/tags/emacs">Emacs</a>
+              
+              |
+            
+            <time datetime="2024-10-19">19 Oct 2024</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>
+customizing HideShow mode on Emacs is done by <a href="http://doc.endlessparentheses.com/Var/hs-special-modes-alist.html">hs-special-modes-alist</a>. There are 4 parts (actually 5, but we care mostly about the 3) of the equation. You can customize it for your mode with a list like this</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (MODE START END COMMENT-START FORWARD-SEXP-FUNC ADJUST-BEG-FUNC)</span></span></code></pre></div>
+</div>
+<p>
+For example, the default definition of the <code>hs-special-modes-alist</code> looks like this:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (defvar hs-special-modes-alist
+</span></span><span style="display:flex;"><span>    (<span style="color:#a6e22e">mapcar</span> <span style="color:#a6e22e">#&#39;purecopy</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#39;</span>((c-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (c-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (c++-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (c++-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (bibtex-mode (<span style="color:#e6db74">&#34;@\\S(*\\(\\s(\\)&#34;</span> <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>              (java-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (java-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (js-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (js-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (mhtml-mode <span style="color:#e6db74">&#34;{\\|&lt;[^/&gt;]*?&#34;</span> <span style="color:#e6db74">&#34;}\\|&lt;/[^/&gt;]*[^/]&gt;&#34;</span> <span style="color:#e6db74">&#34;&lt;!--&#34;</span> mhtml-forward <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              <span style="color:#75715e">;; Add more support here.</span>
+</span></span><span style="display:flex;"><span>              ))</span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+The ingredients
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+<code>START</code> and <code>END</code> regular expression
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+This regular expression matches the beginning/end of the folding code. For C/C++ alike languages, this is as brackets &#34;{&#34;, &#34;}&#34;, etc. For some language lacks of any brackets/parenthesis like python, it is more difficult. Emacs&#39; built-in python mode provided <a href="https://mail.python.org/pipermail/python-mode/2006-April/000353.html">patch</a> to support it:</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/ebus/">Event bus implementation</a>
           </h2>
           <span class="post-meta">
@@ -133,7 +198,10 @@
       </header>
 
       <section class="post-excerpt">
-        Recently I open sourced a small C++ library called eBus(Event Bus), it came along separated from another project I was working on. The idea, or should I say the interface was not very original, I took the inspiration from a much more complicated Event Buses In O3DE. The goal is simple, providing an easy to use Observer pattern so your can decouple the code from the callers to its callees.
+        <p>
+Recently I open sourced a small C++ library called <a href="https://github.com/xeechou/ebus">eBus</a>(Event Bus), it came along separated from another project I was working on. The idea, or should I say the interface was not very original, I took the inspiration from a much more complicated <a href="https://www.docs.o3de.org/docs/user-guide/programming/messaging/ebus-design/">Event Buses In O3DE</a>. The goal is simple, providing an easy to use <a href="https://refactoring.guru/design-patterns/observer">Observer</a> pattern so your can decouple the code from the callers to its callees.</p>
+<p>
+Instead of doing this:</p>
       </section>
     </div>
   </article>
@@ -161,8 +229,15 @@
       </header>
 
       <section class="post-excerpt">
-        Recently I&#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&#39;ve want to implement is a modular Vulkan Feature management.
-Root Issue: hard-coding enabled features When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable.
+        <p>
+Recently I&#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&#39;ve want to implement is a modular <a href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFeatures.html">Vulkan Feature</a> management.</p>
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Root Issue: hard-coding enabled features
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable. This is done by inserting <code>features</code> into the <code>pNext</code> chain and extensions into <code>ppEnabledExtenionNames</code>.</p>
       </section>
     </div>
   </article>
@@ -190,7 +265,8 @@ Root Issue: hard-coding enabled features When creating an Vulkan device, you hav
       </header>
 
       <section class="post-excerpt">
-        For a long time, I have been maintaining my emacs configuration through a folder of elisp files. I am quite happy about it and even have it working pretty well on Windows (unfortunately it&#39;s my work environment) with help my 3rdparty binaries repository. Finally I decided to move to literate configuration. It&#39;s a thing I wanted to do for a long time. Not because it&#39;s THE COOL things to do.
+        <p>
+For a long time, I have been maintaining my <a href="https://github.com/xeechou/dotemacs">emacs configuration</a> through a folder of <a href="https://github.com/xeechou/dotemacs/tree/vlisp/etc">elisp files</a>. I am quite happy about it and even have it working pretty well on Windows (unfortunately it&#39;s my work environment) with help my <a href="https://github.com/xeechou/dotemacs-msbin">3rdparty binaries repository</a>.  Finally I decided to move to <a href="https://orgmode.org/worg/org-contrib/babel/intro.html#emacs-initialization">literate configuration</a>. It&#39;s a thing I wanted to do for a long time. Not because it&#39;s <strong>THE COOL</strong> things to do. I do think there is some advantages over my previous approach.</p>
       </section>
     </div>
   </article>
@@ -220,7 +296,7 @@ Root Issue: hard-coding enabled features When creating an Vulkan device, you hav
       </header>
 
       <section class="post-excerpt">
-        Recently I wrote the PetitD3D12 to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &ldquo;real&rdquo; API comparison info, the Alain Galvan&rsquo;s blog post are more just about grouping those API data structures together, not much you will know the difference in using them.
+        <p>Recently I wrote the <a href="https://github.com/xeechou/petitd3d12">PetitD3D12</a> to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &ldquo;real&rdquo; API comparison info, the <a href="https://alain.xyz/blog/comparison-of-modern-graphics-apis" title="A Comparison of Modern Graphics APIs">Alain Galvan&rsquo;s blog post</a> are more just about grouping those API data structures together, not much you will know the difference in using them. With that being said, I am going to talk mostly in the shoes of a Vulkan developer who grabs the hand of D3D12 code to take a close look. Mainly I will cover about <strong>pipeline creation</strong>, <strong>descriptor binding</strong> and <strong>command execution</strong>.</p>
       </section>
     </div>
   </article>
@@ -248,8 +324,8 @@ Root Issue: hard-coding enabled features When creating an Vulkan device, you hav
       </header>
 
       <section class="post-excerpt">
-        I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.
-There are two ways right now to do the client decorations.
+        <p>I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.</p>
+<p>There are <strong>two</strong> ways right now to do the client decorations.</p>
       </section>
     </div>
   </article>
@@ -277,7 +353,7 @@ There are two ways right now to do the client decorations.
       </header>
 
       <section class="post-excerpt">
-        We were using a traditional for_each style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features.
+        <p>We were using a traditional <code>for_each</code> style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features. It&rsquo;s promising to draw millions or billions more triangles compared to before. The cost is that it changed the programming paradigm completely. If you want embark on new hardware, chances are you need to rewrite the rendering code.</p>
       </section>
     </div>
   </article>
@@ -305,8 +381,10 @@ There are two ways right now to do the client decorations.
       </header>
 
       <section class="post-excerpt">
-        There are indeed many people tried to implement a rendering framework on top of Vulkan to reduce the amount of code to write. But so many of them merely just create a wrapper around existing Vulkan objects, like wrapping the command buffer with a vk::CommandBuffer::Ptr and you still have to fill all the VkObjCreateInfos .
-The rendering framework focus on the render passes should provide a compact yet descriptive API to create render pass.
+        <p>
+There are indeed many people tried to implement a rendering framework on top of Vulkan to reduce the amount of code to write. But so many of them merely just create a wrapper around existing Vulkan objects, like wrapping the command buffer with a <code>vk::CommandBuffer::Ptr</code>  and you still have to fill all the <code>VkObjCreateInfos</code> .</p>
+<p>
+The rendering framework focus on the render passes should provide a compact yet descriptive API to create render pass. Leaving the user out of the mess of managing/binding descriptors, uniform buffers. Have them focus on the shaders.</p>
       </section>
     </div>
   </article>
@@ -334,38 +412,18 @@ The rendering framework focus on the render passes should provide a compact yet 
       </header>
 
       <section class="post-excerpt">
-        My blog is now back online, with brand new render engine Hugo. The URLs are totally different though. Not sure how web crawlers handling it right now.
-After the migration, I did a few extra work for patching the hiccups. Fix the build warnings and adding new features.
-The about page In every blog you always have some pages that you do not want it be inside the blog list. By default Hugo will simply place everything on the &ldquo;navigation list&rdquo;.
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/moving-to-hugo/">Moving to Hugo</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/journal">Journal</a>
-              
-              |
-            
-            <time datetime="2021-11-14">14 Nov 2021</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        For a long time I&rsquo;ve been wanting to Migrate my blog system from Pelican to Hugo. One reason is that I had enough with python virtual environment breaks every 3 months. Another motivation is obviously I would like to replace Python with Go in my life.
-A long time ago I followed Go tutorial for getting started, surprised by its syntax tidiness and similarity to Python, and it is way faster.
+        <p>My blog is now back online, with brand new render engine Hugo. The URLs are
+totally different though. Not sure how web crawlers handling it right
+now.</p>
+<p>After the migration, I did a few extra work for patching the hiccups. Fix the
+build warnings and adding new features.</p>
+<h3 id="the-about-page">The about page</h3>
+<p>In every blog you always have some pages that you do not want it be inside the
+blog list. By default Hugo will simply place everything on the &ldquo;navigation
+list&rdquo;. Even if I place it outside the blog folder. This is the list your
+template is calling <code>.NextPage</code> and <code>.PrevPage</code>. So initially I just give it a
+very old date, or simply removed the date, so it will appear as the last on the
+list. Obviously I will have to fix that.</p>
       </section>
     </div>
   </article>
@@ -429,12 +487,5 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

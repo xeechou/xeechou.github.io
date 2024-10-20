@@ -13,14 +13,14 @@
       <link>http://localhost:1313/posts/sphinx-website/</link>
       <pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/sphinx-website/</guid>
-      <description>Static site generator, I love and hate them at the sametime. They really render your markdowns into a beautiful website without need of knowing web technologies. Then there are the constant hustles once you try to customize it, change a theme, adding different functionalities or upgrade. It is YOUR website, you want it look different than others, right. At some point, whether you like it or not, the SSG users will take the role of website designers by tangling with CSS.</description>
+      <description>&lt;p&gt;Static site generator, I love and hate them at the sametime. They really render&#xA;your markdowns into a beautiful website without need of knowing web&#xA;technologies. Then there are the constant hustles once you try to customize it,&#xA;change a theme, adding different functionalities or upgrade. It is YOUR&#xA;website, you want it look different than others, right. At some point, whether&#xA;you like it or not, the SSG users will take the role of website designers by&#xA;tangling with CSS.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Template Deduction for C&#43;&#43;</title>
       <link>http://localhost:1313/posts/template_deduction/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/template_deduction/</guid>
-      <description>Template is a confusing and hard features in C++ if you want use it well, and I think it is also one of the reason which causes c++ programmers cannot understand each other. Sometimes the Deduction rule for c++ is really confusing, you don&amp;rsquo;t understand why you code doesn&amp;rsquo;t work or why it works. And Since STL heavily uses nesting Templates, both your compiler and your mind suffers from that.</description>
+      <description>&lt;p&gt;Template is a confusing and hard features in C++ if you want use it well, and I&#xA;think it is also one of the reason which causes c++ programmers cannot&#xA;understand each other. Sometimes the Deduction rule for c++ is really confusing,&#xA;you don&amp;rsquo;t understand why you code doesn&amp;rsquo;t work or why it works. And Since&#xA;&lt;strong&gt;STL&lt;/strong&gt; heavily uses nesting Templates, both your compiler and your mind suffers&#xA;from that.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

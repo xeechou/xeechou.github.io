@@ -13,14 +13,14 @@
       <link>http://localhost:1313/posts/emacs-literate-config/</link>
       <pubDate>Fri, 08 Mar 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/emacs-literate-config/</guid>
-      <description>For a long time, I have been maintaining my emacs configuration through a folder of elisp files. I am quite happy about it and even have it working pretty well on Windows (unfortunately it&amp;#39;s my work environment) with help my 3rdparty binaries repository. Finally I decided to move to literate configuration. It&amp;#39;s a thing I wanted to do for a long time. Not because it&amp;#39;s THE COOL things to do.</description>
+      <description>&lt;p&gt;&#xA;For a long time, I have been maintaining my &lt;a href=&#34;https://github.com/xeechou/dotemacs&#34;&gt;emacs configuration&lt;/a&gt; through a folder of &lt;a href=&#34;https://github.com/xeechou/dotemacs/tree/vlisp/etc&#34;&gt;elisp files&lt;/a&gt;. I am quite happy about it and even have it working pretty well on Windows (unfortunately it&amp;#39;s my work environment) with help my &lt;a href=&#34;https://github.com/xeechou/dotemacs-msbin&#34;&gt;3rdparty binaries repository&lt;/a&gt;.  Finally I decided to move to &lt;a href=&#34;https://orgmode.org/worg/org-contrib/babel/intro.html#emacs-initialization&#34;&gt;literate configuration&lt;/a&gt;. It&amp;#39;s a thing I wanted to do for a long time. Not because it&amp;#39;s &lt;strong&gt;THE COOL&lt;/strong&gt; things to do. I do think there is some advantages over my previous approach.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Scalable org file synchronization solution</title>
       <link>http://localhost:1313/posts/org-sync-ii/</link>
       <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/org-sync-ii/</guid>
-      <description>In my previous post, I&amp;rsquo;ve somewhat found a way to synchronize my org files. I was pretty happy, I was having just around six org pages, coping them to a webdav server was not a huge hustle :P, util I started to use org-roam. Suddenly I have to create org file for every new zettle, the performance quickly started to tank. This is probably the beauty and curse of using open source solutions &amp;mdash; you have full control of your work and you have to solve problems you created yourself.</description>
+      <description>&lt;p&gt;In my previous &lt;a href=&#34;http://localhost:1313/posts/back-with-org-mode/&#34;&gt;post&lt;/a&gt;, I&amp;rsquo;ve somewhat found&#xA;a way to synchronize my org files. I was pretty happy, I was having just around&#xA;six org pages, coping them to a &lt;strong&gt;webdav&lt;/strong&gt; server was not a huge hustle :P,&#xA;util I started to use &lt;a href=&#34;https://www.orgroam.com/manual.html&#34;&gt;org-roam&lt;/a&gt;. Suddenly&#xA;I have to create org file for every new&#xA;&lt;a href=&#34;https://zettelkasten.de/posts/learn-faster-by-writing-zettel-notes/&#34;&gt;zettle&lt;/a&gt;,&#xA;the performance quickly started to tank. This is probably the beauty and curse&#xA;of using open source solutions &amp;mdash; you have full control of your work and you&#xA;have to solve problems you created yourself.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

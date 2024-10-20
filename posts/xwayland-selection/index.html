@@ -283,7 +283,20 @@ again. For us xwayland case, we are in the akward situation for waiting on both
             <section class="post-nav-teaser">
               <i class="icon-right-arrow"></i>
               <h2 class="post-nav-title">Jan 2021 Status Update</h2>
-              <p class="post-nav-excerpt">Folks, the Magical year of 2020 is behind us, and it wasn&rsquo;t a happy new chapter waiting us. Man, I still couldn&rsquo;t believe, once per 100 years, why it was us who have to face the coronavirus. Now I take a good look of my 2020, I went from trying to submit a xcbcommon handling patch to weston to writing a full wayland compositor from scratch. It was not my plan!</p>
+              <p class="post-nav-excerpt"><p>Folks, the Magical year of 2020 is behind us, and it wasn&rsquo;t a happy new chapter
+waiting us. Man, I still couldn&rsquo;t believe, once per 100 years, why it was us
+who have to face the coronavirus. Now I take a good look of my 2020, I went
+from trying to submit a xcbcommon handling patch to weston to writing a full
+wayland compositor from scratch. It was not my plan!!! Taiwins should have
+being a rather simple application on top of the libweston, the so called
+&ldquo;reference compositor &ldquo;, but libweston cannot change keyboard layout once
+launching, nor it can support cloning output, there are new bugs when you
+digging deep. The worst is that it breaks the library into different shared
+modules, and changes lib location every release. It was like it really does not
+want to link to it. The codebase was old and long, it was difficult to make a
+change and really difficult to get libweston taking a patch. Then there is the
+wlroots. If it was released half year earlier Taiwins would probably sit on top
+of that. But, screw it. I am doing it myself.</p></p>
             </section>
           </a>
         
@@ -293,7 +306,13 @@ again. For us xwayland case, we are in the akward situation for waiting on both
             <section class="post-nav-teaser">
               <i class="icon-left-arrow"></i>
               <h2 class="post-nav-title">Back with Org Mode</h2>
-              <p class="post-nav-excerpt">If there is one thing I&rsquo;d like to commit it must be the my time mangement improvements. For that purpose, Emacs Org-mode is the ultimate tool for programmers. I can keep my notes nicely and I can track my tasks/errands all together. But all my notes are stored in my linux box, I lose access to them once I am away. From that reason, I was always on-and-off with using org-mode due to the portability.</p>
+              <p class="post-nav-excerpt"><p>If there is one thing I&rsquo;d like to commit it must be the my time mangement
+improvements. For that purpose, Emacs Org-mode is the <strong>ultimate</strong> tool for
+programmers. I can keep my notes nicely and I can track my tasks/errands all
+together. But all my notes are stored in my linux box, I lose access to them
+once I am away. From that reason, I was always on-and-off with using org-mode
+due to the portability. We are not in the age doing everything with desktop
+anymore, more often I need to track my TODOs from cellphone as well.</p></p>
             </section>
           </a>
         
@@ -343,12 +362,5 @@ again. For us xwayland case, we are in the akward situation for waiting on both
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

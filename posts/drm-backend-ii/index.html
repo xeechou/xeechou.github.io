@@ -296,8 +296,23 @@ objects</em>.</p>
             <section class="post-nav-teaser">
               <i class="icon-right-arrow"></i>
               <h2 class="post-nav-title">Working with libdrm, repainting timeline</h2>
-              <p class="post-nav-excerpt">As the taiwins project finished with X11/Wayland backend rigging. Now I am fully on the libdrm backend development, dealing with hardwares directly. This backend requires 200 percent my energy to tame the complexity.
-Like other backends, libdrm also needs to provide two resources, input and output. Backends like nested wayland backend or X11 backend, the output device are the windows created by ourselves (or by the user). Meaning we can create it or destroy it as we please.</p>
+              <p class="post-nav-excerpt"><p>As the taiwins project finished with X11/Wayland backend rigging. Now I am fully
+on the libdrm backend development, dealing with hardwares directly. This backend
+requires 200 percent my energy to tame the complexity.</p>
+<p>Like other backends, libdrm also needs to provide two resources, <em>input</em> and
+<em>output</em>. Backends like nested wayland backend or X11 backend, the <em>output</em>
+device are the windows created by ourselves (or by the user). Meaning we can
+create it or destroy it as we please. As for libdrm, those are provided by the
+OS. An <em>output</em> in libdrm&rsquo;s terminology, is called connector. We query and
+change the connectors state by <code>drmModeGet*</code> functions. Then later set the
+hardware states by <code>drmModeSet*</code> or the new atomic API. It may sound simple but
+actually, for displaying images on the screen using the <em>libdrm</em> mechanism, it
+takes quite a few components, working together, to achieve the goal. We uses
+<code>drmMode*</code> routines for
+<a href="https://01.org/linuxgraphics/gfx-docs/drm/gpu/drm-kms.html">kernel-modesetting</a>;
+libgbm for framebuffer allocation; OpenGL or Vulkan for rendering. If done
+right, you would get tear-free images on your screen constant refresh rate. But
+should anything goes wrong, you probably end up with a black screen.</p></p>
             </section>
           </a>
         
@@ -307,7 +322,20 @@ Like other backends, libdrm also needs to provide two resources, input and outpu
             <section class="post-nav-teaser">
               <i class="icon-left-arrow"></i>
               <h2 class="post-nav-title">Jan 2021 Status Update</h2>
-              <p class="post-nav-excerpt">Folks, the Magical year of 2020 is behind us, and it wasn&rsquo;t a happy new chapter waiting us. Man, I still couldn&rsquo;t believe, once per 100 years, why it was us who have to face the coronavirus. Now I take a good look of my 2020, I went from trying to submit a xcbcommon handling patch to weston to writing a full wayland compositor from scratch. It was not my plan!</p>
+              <p class="post-nav-excerpt"><p>Folks, the Magical year of 2020 is behind us, and it wasn&rsquo;t a happy new chapter
+waiting us. Man, I still couldn&rsquo;t believe, once per 100 years, why it was us
+who have to face the coronavirus. Now I take a good look of my 2020, I went
+from trying to submit a xcbcommon handling patch to weston to writing a full
+wayland compositor from scratch. It was not my plan!!! Taiwins should have
+being a rather simple application on top of the libweston, the so called
+&ldquo;reference compositor &ldquo;, but libweston cannot change keyboard layout once
+launching, nor it can support cloning output, there are new bugs when you
+digging deep. The worst is that it breaks the library into different shared
+modules, and changes lib location every release. It was like it really does not
+want to link to it. The codebase was old and long, it was difficult to make a
+change and really difficult to get libweston taking a patch. Then there is the
+wlroots. If it was released half year earlier Taiwins would probably sit on top
+of that. But, screw it. I am doing it myself.</p></p>
             </section>
           </a>
         
@@ -357,12 +385,5 @@ Like other backends, libdrm also needs to provide two resources, input and outpu
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

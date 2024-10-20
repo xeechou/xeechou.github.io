@@ -285,7 +285,7 @@ frame_set_window_geometry(struct libdecor_frame *frame,
             <section class="post-nav-teaser">
               <i class="icon-right-arrow"></i>
               <h2 class="post-nav-title">Moving towards GPU driven</h2>
-              <p class="post-nav-excerpt">We were using a traditional for_each style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features.</p>
+              <p class="post-nav-excerpt"><p>We were using a traditional <code>for_each</code> style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features. It&rsquo;s promising to draw millions or billions more triangles compared to before. The cost is that it changed the programming paradigm completely. If you want embark on new hardware, chances are you need to rewrite the rendering code.</p></p>
             </section>
           </a>
         
@@ -295,7 +295,7 @@ frame_set_window_geometry(struct libdecor_frame *frame,
             <section class="post-nav-teaser">
               <i class="icon-left-arrow"></i>
               <h2 class="post-nav-title">Comparing Vulkan and D3D12</h2>
-              <p class="post-nav-excerpt">Recently I wrote the PetitD3D12 to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &ldquo;real&rdquo; API comparison info, the Alain Galvan&rsquo;s blog post are more just about grouping those API data structures together, not much you will know the difference in using them.</p>
+              <p class="post-nav-excerpt"><p>Recently I wrote the <a href="https://github.com/xeechou/petitd3d12">PetitD3D12</a> to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &ldquo;real&rdquo; API comparison info, the <a href="https://alain.xyz/blog/comparison-of-modern-graphics-apis" title="A Comparison of Modern Graphics APIs">Alain Galvan&rsquo;s blog post</a> are more just about grouping those API data structures together, not much you will know the difference in using them. With that being said, I am going to talk mostly in the shoes of a Vulkan developer who grabs the hand of D3D12 code to take a close look. Mainly I will cover about <strong>pipeline creation</strong>, <strong>descriptor binding</strong> and <strong>command execution</strong>.</p></p>
             </section>
           </a>
         
@@ -345,12 +345,5 @@ frame_set_window_geometry(struct libdecor_frame *frame,
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

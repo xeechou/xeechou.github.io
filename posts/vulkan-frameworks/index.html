@@ -370,9 +370,18 @@ Comments
             <section class="post-nav-teaser">
               <i class="icon-right-arrow"></i>
               <h2 class="post-nav-title">Moving to Hugo, Aftermath</h2>
-              <p class="post-nav-excerpt">My blog is now back online, with brand new render engine Hugo. The URLs are totally different though. Not sure how web crawlers handling it right now.
-After the migration, I did a few extra work for patching the hiccups. Fix the build warnings and adding new features.
-The about page In every blog you always have some pages that you do not want it be inside the blog list. By default Hugo will simply place everything on the &ldquo;navigation list&rdquo;.</p>
+              <p class="post-nav-excerpt"><p>My blog is now back online, with brand new render engine Hugo. The URLs are
+totally different though. Not sure how web crawlers handling it right
+now.</p>
+<p>After the migration, I did a few extra work for patching the hiccups. Fix the
+build warnings and adding new features.</p>
+<h3 id="the-about-page">The about page</h3>
+<p>In every blog you always have some pages that you do not want it be inside the
+blog list. By default Hugo will simply place everything on the &ldquo;navigation
+list&rdquo;. Even if I place it outside the blog folder. This is the list your
+template is calling <code>.NextPage</code> and <code>.PrevPage</code>. So initially I just give it a
+very old date, or simply removed the date, so it will appear as the last on the
+list. Obviously I will have to fix that.</p></p>
             </section>
           </a>
         
@@ -382,7 +391,7 @@ The about page In every blog you always have some pages that you do not want it 
             <section class="post-nav-teaser">
               <i class="icon-left-arrow"></i>
               <h2 class="post-nav-title">Moving towards GPU driven</h2>
-              <p class="post-nav-excerpt">We were using a traditional for_each style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features.</p>
+              <p class="post-nav-excerpt"><p>We were using a traditional <code>for_each</code> style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features. It&rsquo;s promising to draw millions or billions more triangles compared to before. The cost is that it changed the programming paradigm completely. If you want embark on new hardware, chances are you need to rewrite the rendering code.</p></p>
             </section>
           </a>
         
@@ -432,12 +441,5 @@ The about page In every blog you always have some pages that you do not want it 
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

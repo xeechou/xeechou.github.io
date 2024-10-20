@@ -242,7 +242,16 @@ to the future right?</p>
             <section class="post-nav-teaser">
               <i class="icon-right-arrow"></i>
               <h2 class="post-nav-title">Working with libdrm, buffer allocation</h2>
-              <p class="post-nav-excerpt">In the first blog of libdrm, we went through the repainting loop using the libdrm. Now we move on to the topic of framebuffers. A framebuffer is a piece of memory (could be on main memory or on GPU) for repainting every frame. It is like a canvas, represents what you would finally see on screen. Framebuffer is already a familiar concept to rendering programmers, in OpenGL, We have GL_FRAMEBUFFER_0 for presenting the surface, additional framebuffers for roles like G-Buffer and post-processing.</p>
+              <p class="post-nav-excerpt"><p>In the <a href="%7Bfilename%7D/drm-backend.md">first blog of libdrm</a>, we went through the
+repainting loop using the libdrm. Now we move on to the topic of
+framebuffers. A framebuffer is a piece of memory (could be on main memory or on
+GPU) for repainting every frame. It is like a canvas, represents what you would
+finally see on screen. Framebuffer is already a familiar concept to rendering
+programmers, in <strong>OpenGL</strong>, We have <code>GL_FRAMEBUFFER_0</code> for presenting the
+surface, additional framebuffers for roles like G-Buffer and
+post-processing. In GPU programming, framebuffer is also a broader concept,
+&ldquo;abstraction of a collection of attachments&rdquo;, the underlining attachments
+corresponds to actual pieces of memory we talk about here.</p></p>
             </section>
           </a>
         
@@ -252,7 +261,12 @@ to the future right?</p>
             <section class="post-nav-teaser">
               <i class="icon-left-arrow"></i>
               <h2 class="post-nav-title">Xwayland Clipboard</h2>
-              <p class="post-nav-excerpt">I hate every single line of xwayland code I wrote, it is ugly, long and hard to maintain. Now I know very well why there is wayland in the first place, sadly a complete wayland compositor has to bring a piece of crap of X with it. I just finished the selection handling in xwayland by mimicing weston code. After finally understand that 1000 lines of confusing code, I just found out I can&rsquo;t do any better.</p>
+              <p class="post-nav-excerpt"><p>I hate every single line of xwayland code I wrote, it is ugly, long and hard to
+maintain. Now I know very well why there is wayland in the first place, sadly a
+complete wayland compositor has to bring a piece of crap of X with it. I just
+finished the selection handling in xwayland by mimicing weston code. After
+finally understand that 1000 lines of confusing code, I just found out I can&rsquo;t
+do any better.</p></p>
             </section>
           </a>
         
@@ -302,12 +316,5 @@ to the future right?</p>
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

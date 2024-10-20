@@ -136,8 +136,15 @@
       </header>
 
       <section class="post-excerpt">
-        Recently I&#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&#39;ve want to implement is a modular Vulkan Feature management.
-Root Issue: hard-coding enabled features When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable.
+        <p>
+Recently I&#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&#39;ve want to implement is a modular <a href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFeatures.html">Vulkan Feature</a> management.</p>
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Root Issue: hard-coding enabled features
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable. This is done by inserting <code>features</code> into the <code>pNext</code> chain and extensions into <code>ppEnabledExtenionNames</code>.</p>
       </section>
     </div>
   </article>
@@ -165,7 +172,7 @@ Root Issue: hard-coding enabled features When creating an Vulkan device, you hav
       </header>
 
       <section class="post-excerpt">
-        Recently I wrote the PetitD3D12 to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &ldquo;real&rdquo; API comparison info, the Alain Galvan&rsquo;s blog post are more just about grouping those API data structures together, not much you will know the difference in using them.
+        <p>Recently I wrote the <a href="https://github.com/xeechou/petitd3d12">PetitD3D12</a> to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &ldquo;real&rdquo; API comparison info, the <a href="https://alain.xyz/blog/comparison-of-modern-graphics-apis" title="A Comparison of Modern Graphics APIs">Alain Galvan&rsquo;s blog post</a> are more just about grouping those API data structures together, not much you will know the difference in using them. With that being said, I am going to talk mostly in the shoes of a Vulkan developer who grabs the hand of D3D12 code to take a close look. Mainly I will cover about <strong>pipeline creation</strong>, <strong>descriptor binding</strong> and <strong>command execution</strong>.</p>
       </section>
     </div>
   </article>
@@ -193,7 +200,7 @@ Root Issue: hard-coding enabled features When creating an Vulkan device, you hav
       </header>
 
       <section class="post-excerpt">
-        We were using a traditional for_each style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features.
+        <p>We were using a traditional <code>for_each</code> style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features. It&rsquo;s promising to draw millions or billions more triangles compared to before. The cost is that it changed the programming paradigm completely. If you want embark on new hardware, chances are you need to rewrite the rendering code.</p>
       </section>
     </div>
   </article>
@@ -221,8 +228,10 @@ Root Issue: hard-coding enabled features When creating an Vulkan device, you hav
       </header>
 
       <section class="post-excerpt">
-        There are indeed many people tried to implement a rendering framework on top of Vulkan to reduce the amount of code to write. But so many of them merely just create a wrapper around existing Vulkan objects, like wrapping the command buffer with a vk::CommandBuffer::Ptr and you still have to fill all the VkObjCreateInfos .
-The rendering framework focus on the render passes should provide a compact yet descriptive API to create render pass.
+        <p>
+There are indeed many people tried to implement a rendering framework on top of Vulkan to reduce the amount of code to write. But so many of them merely just create a wrapper around existing Vulkan objects, like wrapping the command buffer with a <code>vk::CommandBuffer::Ptr</code>  and you still have to fill all the <code>VkObjCreateInfos</code> .</p>
+<p>
+The rendering framework focus on the render passes should provide a compact yet descriptive API to create render pass. Leaving the user out of the mess of managing/binding descriptors, uniform buffers. Have them focus on the shaders.</p>
       </section>
     </div>
   </article>
@@ -250,8 +259,14 @@ The rendering framework focus on the render passes should provide a compact yet 
       </header>
 
       <section class="post-excerpt">
-        Deferred MSAA, always has been a good problem. In the spatial anti-aliasing domain, MSAA is still the swiss-army knife, handle almost all the case.
-Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA. FXAA is rather pleasing in many cases as well, especially if you are a video game developer, as long as your rasterization implementation does not screwed up. But for the case like grass rendering, fur rendering, when you have many layers of thin line, FXAA will fail you.
+        <p>Deferred MSAA, always has been a good problem. In the spatial anti-aliasing
+domain, MSAA is still the swiss-army knife, handle almost all the case.</p>
+<p>Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA. FXAA
+is rather pleasing in many cases as well, especially if
+you are a video game developer, as long as your rasterization implementation
+does not screwed up. But for the case like grass rendering, fur rendering, when
+you have many layers of thin line, FXAA will fail you. Just like the pixels
+annotated in the image below.</p>
       </section>
     </div>
   </article>
@@ -279,7 +294,15 @@ Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA.
       </header>
 
       <section class="post-excerpt">
-        Rotation, combined with translation and scaling, are the three affin transforms we do every day in the 3D nutshell universe. The rotation itself, however, is somehow much more complicated than the other two transform, it is one really needs a matrix representation among all three. Representations and computation of it has been developed for years. We have systems like Axis-angle representation, matrix representation, euler angles and quaternions. Despite I have known them for a long time, when I forgot, the rotation is still complicated.
+        <p>Rotation, combined with translation and scaling, are the three affin transforms
+we do every day in the 3D nutshell universe. The rotation itself, however, is
+somehow much more complicated than the other two transform, it is one really
+needs a matrix representation among all three. Representations and computation
+of it has been developed for years. We have systems like <strong>Axis-angle</strong>
+representation, <strong>matrix representation</strong>, <strong>euler angles</strong> and <strong>quaternions</strong>.
+Despite I have known them for a long time, when I forgot, the rotation is still
+complicated. Here I am writing this again, as easily understanding as possible,
+for my future-self (or I can just travel through time to ask myself now).</p>
       </section>
     </div>
   </article>
@@ -307,7 +330,19 @@ Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA.
       </header>
 
       <section class="post-excerpt">
-        I have been trying to create a animation system for my OpenGL Project for a long time, one of the reason is I have limited amount of time after starting the full-time job. Another problem was that, I mean, if I intend to keep it a clean project rather than just a school project, building a animation system is like a rabbit hole, 30 lines of code got me another 100 lines of work, it only leaded me deeper and deeper.
+        <p>I have been trying to create a animation system for my <a href="https://github.com/xeechou/gltutorial">OpenGL
+Project</a> for a long time, one of the
+reason is I have limited amount of time after starting the full-time job.
+Another problem was that, I mean, if I intend to keep it a clean project rather
+than just a school project, building a animation system is like a rabbit hole,
+30 lines of code got me another 100 lines of work, it only leaded me deeper and
+deeper. Well, it is a perfect opportunity for me to explain the story here. The
+amount of skeletal animation that I found online, especially good blogs are less
+than a dozen. Gladly, I would like to point it out here, there is a good youtube
+video <a href="https://www.youtube.com/watch?v=f3Cr8Yx3GGA">series</a> you can follow, it
+is in Java, the author provided the source code for reference. Khronos has a
+shader example <a href="https://www.khronos.org/opengl/wiki/Skeletal_Animation">here</a>
+and there are a few others.</p>
       </section>
     </div>
   </article>
@@ -366,12 +401,5 @@ Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA.
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

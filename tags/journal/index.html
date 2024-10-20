@@ -141,7 +141,10 @@
       </header>
 
       <section class="post-excerpt">
-        Recently I open sourced a small C++ library called eBus(Event Bus), it came along separated from another project I was working on. The idea, or should I say the interface was not very original, I took the inspiration from a much more complicated Event Buses In O3DE. The goal is simple, providing an easy to use Observer pattern so your can decouple the code from the callers to its callees.
+        <p>
+Recently I open sourced a small C++ library called <a href="https://github.com/xeechou/ebus">eBus</a>(Event Bus), it came along separated from another project I was working on. The idea, or should I say the interface was not very original, I took the inspiration from a much more complicated <a href="https://www.docs.o3de.org/docs/user-guide/programming/messaging/ebus-design/">Event Buses In O3DE</a>. The goal is simple, providing an easy to use <a href="https://refactoring.guru/design-patterns/observer">Observer</a> pattern so your can decouple the code from the callers to its callees.</p>
+<p>
+Instead of doing this:</p>
       </section>
     </div>
   </article>
@@ -169,9 +172,18 @@
       </header>
 
       <section class="post-excerpt">
-        My blog is now back online, with brand new render engine Hugo. The URLs are totally different though. Not sure how web crawlers handling it right now.
-After the migration, I did a few extra work for patching the hiccups. Fix the build warnings and adding new features.
-The about page In every blog you always have some pages that you do not want it be inside the blog list. By default Hugo will simply place everything on the &ldquo;navigation list&rdquo;.
+        <p>My blog is now back online, with brand new render engine Hugo. The URLs are
+totally different though. Not sure how web crawlers handling it right
+now.</p>
+<p>After the migration, I did a few extra work for patching the hiccups. Fix the
+build warnings and adding new features.</p>
+<h3 id="the-about-page">The about page</h3>
+<p>In every blog you always have some pages that you do not want it be inside the
+blog list. By default Hugo will simply place everything on the &ldquo;navigation
+list&rdquo;. Even if I place it outside the blog folder. This is the list your
+template is calling <code>.NextPage</code> and <code>.PrevPage</code>. So initially I just give it a
+very old date, or simply removed the date, so it will appear as the last on the
+list. Obviously I will have to fix that.</p>
       </section>
     </div>
   </article>
@@ -199,8 +211,17 @@ The about page In every blog you always have some pages that you do not want it 
       </header>
 
       <section class="post-excerpt">
-        For a long time I&rsquo;ve been wanting to Migrate my blog system from Pelican to Hugo. One reason is that I had enough with python virtual environment breaks every 3 months. Another motivation is obviously I would like to replace Python with Go in my life.
-A long time ago I followed Go tutorial for getting started, surprised by its syntax tidiness and similarity to Python, and it is way faster.
+        <p>For a long time I&rsquo;ve been wanting to Migrate my blog system from
+<a href="https://blog.getpelican.com/">Pelican</a> to <a href="https://gohugo.io/">Hugo</a>. One
+reason is that I had enough with python virtual environment breaks every 3
+months. Another motivation is obviously I would like to replace Python with Go
+in my life.</p>
+<p>A long time ago I followed Go tutorial for getting started, surprised by its
+syntax tidiness and similarity to Python, and it is way faster. But soon I
+found out it would be one of this thing I learned for a weekend and forget all
+together, since I don&rsquo;t have any projects I would use it actively. Now after
+one month of procrastination, I finally pieces ALMOST everything to reproduce
+my old blog. Time for a summary.</p>
       </section>
     </div>
   </article>
@@ -228,7 +249,12 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
       </header>
 
       <section class="post-excerpt">
-        It&rsquo;s been a while that I haven&rsquo;t update the blogs. It is so easy to slack off on good habits. &ldquo;Oh I will continue once I finish A B C&rdquo;. We are all busy as hell, in the software world, you WORK, you WORK and you GO TO SLEEP. Like this one, I am always hoping to switch to Hugo, then I can continue writing the blog. The thing is, I never got the good weekend to do the switching.
+        <p>It&rsquo;s been a while that I haven&rsquo;t update the blogs. It is so easy to slack off
+on good habits. &ldquo;Oh I will continue once I finish A B C&rdquo;. We are all busy as
+hell, in the software world, you WORK, you WORK and you GO TO SLEEP. Like this
+one, I am always hoping to switch to <a href="https://gohugo.io">Hugo</a>, then I can
+continue writing the blog. The thing is, I never got the good weekend to do the
+switching. Weekends are really no for staying at home confronting monitors.</p>
       </section>
     </div>
   </article>
@@ -256,7 +282,15 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
       </header>
 
       <section class="post-excerpt">
-        I am now back in Canada, quarantined again. There is much of internal struggle whether I should move back or stay in Shanghai? Working for tech company in Shanghai or many cities in China would be like endless crunching. Maybe I was not used to this high-paced lifestyle, long working hours. Didn&rsquo;t like javascript either. It is a pity that I didn&rsquo;t find a nicer job maybe opens to better opportunities.
+        <p>I am now back in Canada, quarantined again. There is much of internal struggle
+whether I should move back or stay in Shanghai? Working for tech company in
+Shanghai or many cities in China would be like endless crunching. Maybe I was
+not used to this high-paced lifestyle, long working hours. Didn&rsquo;t like
+javascript either. It is a pity that I didn&rsquo;t find a nicer job maybe opens to
+better opportunities. I was focusing on the development of Taiwins back then,
+well it is working now and I don&rsquo;t develop it anymore. The June was pretty
+unproductive, ever since the ICL implant surgery I couldn&rsquo;t use computers for
+long, even now it is painful to do so. At least I get more time reading books?</p>
       </section>
     </div>
   </article>
@@ -284,7 +318,13 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
       </header>
 
       <section class="post-excerpt">
-        If there is one thing I&rsquo;d like to commit it must be the my time mangement improvements. For that purpose, Emacs Org-mode is the ultimate tool for programmers. I can keep my notes nicely and I can track my tasks/errands all together. But all my notes are stored in my linux box, I lose access to them once I am away. From that reason, I was always on-and-off with using org-mode due to the portability.
+        <p>If there is one thing I&rsquo;d like to commit it must be the my time mangement
+improvements. For that purpose, Emacs Org-mode is the <strong>ultimate</strong> tool for
+programmers. I can keep my notes nicely and I can track my tasks/errands all
+together. But all my notes are stored in my linux box, I lose access to them
+once I am away. From that reason, I was always on-and-off with using org-mode
+due to the portability. We are not in the age doing everything with desktop
+anymore, more often I need to track my TODOs from cellphone as well.</p>
       </section>
     </div>
   </article>
@@ -312,7 +352,20 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
       </header>
 
       <section class="post-excerpt">
-        Folks, the Magical year of 2020 is behind us, and it wasn&rsquo;t a happy new chapter waiting us. Man, I still couldn&rsquo;t believe, once per 100 years, why it was us who have to face the coronavirus. Now I take a good look of my 2020, I went from trying to submit a xcbcommon handling patch to weston to writing a full wayland compositor from scratch. It was not my plan!
+        <p>Folks, the Magical year of 2020 is behind us, and it wasn&rsquo;t a happy new chapter
+waiting us. Man, I still couldn&rsquo;t believe, once per 100 years, why it was us
+who have to face the coronavirus. Now I take a good look of my 2020, I went
+from trying to submit a xcbcommon handling patch to weston to writing a full
+wayland compositor from scratch. It was not my plan!!! Taiwins should have
+being a rather simple application on top of the libweston, the so called
+&ldquo;reference compositor &ldquo;, but libweston cannot change keyboard layout once
+launching, nor it can support cloning output, there are new bugs when you
+digging deep. The worst is that it breaks the library into different shared
+modules, and changes lib location every release. It was like it really does not
+want to link to it. The codebase was old and long, it was difficult to make a
+change and really difficult to get libweston taking a patch. Then there is the
+wlroots. If it was released half year earlier Taiwins would probably sit on top
+of that. But, screw it. I am doing it myself.</p>
       </section>
     </div>
   </article>
@@ -340,7 +393,15 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
       </header>
 
       <section class="post-excerpt">
-        It is a sunny day, somehow I got up early this morning. The cool, chilling breath of air reminded me we are at the tail of the summer. It felt so strange, this summer was like it was never here. Hiking, go swimming, taking a trips and night outs. all those experiences for a normal summer I would do, they are all absent, hope I don&rsquo;t regret too much for crunching code at home all these months.
+        <p>It is a sunny day, somehow I got up early this morning. The cool, chilling
+breath of air reminded me we are at the tail of the summer. It felt so strange,
+this summer was like it was never here. Hiking, go swimming, taking a trips and
+night outs. all those experiences for a normal summer I would do, they are all
+absent, hope I don&rsquo;t regret too much for crunching code at home all these
+months. It was a tough year actually, I was determined to push Taiwins to a
+usable state, it has been stressful. Every time I look at the pile of the TODO
+list, a sentiment of endless development and desperate hit me hard like a heart
+attack. I had to work <strong>a lot</strong> to stay healthy.</p>
       </section>
     </div>
   </article>
@@ -368,7 +429,12 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
       </header>
 
       <section class="post-excerpt">
-        July, the hottest month in Montreal every year. The heat wave rushes to you when you walk outside makes you wondering if you are in some tropical island, it sure doesn&rsquo;t look like living at 45 latitde northen hemisphere. Last month was a rapid leap towards wayland objects implementations and now I just hitted the wall of xdg-shell protocol. Today I&rsquo;d like to talk about what it is like to implement a wayland protocol.
+        <p>July, the hottest month in Montreal every year. The heat wave rushes to you when
+you walk outside makes you wondering if you are in some tropical island, it sure
+doesn&rsquo;t look like living at 45 latitde northen hemisphere. Last month was a
+rapid leap towards wayland objects implementations and now I just hitted the
+wall of <code>xdg-shell</code> protocol. Today I&rsquo;d like to talk about what it is like to
+implement a wayland protocol.</p>
       </section>
     </div>
   </article>
@@ -396,7 +462,22 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
       </header>
 
       <section class="post-excerpt">
-        Montréal is hotter than ever in this month, under the broiling sun, it was an exhausting quarantine. The first month I remeber I was feeling fortunate I got this aleatory chance for advancement of taiwins in this global pandemic, right now all I felt was the painful experience converting all the Taiwins server code away from libweston. Implementating of server side wayland objects was indeed unpleasant experience. Without libweston, I have to implement every little thing and get it right, even the basics 2D homogenous matrix operations for coordinates transformations.
+        <p>Montréal is hotter than ever in this month, under the broiling sun, it was an
+exhausting quarantine. The first <a href="/blog/busy-in-quarantine">month</a> I
+remeber I was feeling fortunate I got this aleatory chance for advancement of
+<em>taiwins</em> in this global pandemic, right now all I felt was the painful
+experience converting all the Taiwins server code away from
+libweston. Implementating of server side wayland objects was indeed unpleasant
+experience. Without libweston, I have to implement every little thing and get it
+right, even the basics 2D homogenous matrix operations for coordinates
+transformations. Just a days I ago I discovered my mistakenly used rotations in
+the &ldquo;Y-up&rdquo; coordinate system (like OpenGL) in the &ldquo;Y-down&rdquo; coordinate sytem
+(like Wayland protocol). The good news was that I did not give up, it seemed I
+overcame one difficulties after another, now at least I can paint my taiwins
+shell objects using a primitive renderer. In the end, hopefully I will end-up
+with a working and cleaner compositor library than <em>libweston</em>. This is
+certainly an encouraging news as I used to think a compositor library was not
+possible to finish with only two hands.</p>
       </section>
     </div>
   </article>
@@ -460,12 +541,5 @@ A long time ago I followed Go tutorial for getting started, surprised by its syn
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

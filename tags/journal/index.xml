@@ -13,112 +13,112 @@
       <link>http://localhost:1313/posts/ebus/</link>
       <pubDate>Sun, 11 Aug 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/ebus/</guid>
-      <description>Recently I open sourced a small C++ library called eBus(Event Bus), it came along separated from another project I was working on. The idea, or should I say the interface was not very original, I took the inspiration from a much more complicated Event Buses In O3DE. The goal is simple, providing an easy to use Observer pattern so your can decouple the code from the callers to its callees.</description>
+      <description>&lt;p&gt;&#xA;Recently I open sourced a small C++ library called &lt;a href=&#34;https://github.com/xeechou/ebus&#34;&gt;eBus&lt;/a&gt;(Event Bus), it came along separated from another project I was working on. The idea, or should I say the interface was not very original, I took the inspiration from a much more complicated &lt;a href=&#34;https://www.docs.o3de.org/docs/user-guide/programming/messaging/ebus-design/&#34;&gt;Event Buses In O3DE&lt;/a&gt;. The goal is simple, providing an easy to use &lt;a href=&#34;https://refactoring.guru/design-patterns/observer&#34;&gt;Observer&lt;/a&gt; pattern so your can decouple the code from the callers to its callees.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;Instead of doing this:&lt;/p&gt;</description>
     </item>
     <item>
       <title>Moving to Hugo, Aftermath</title>
       <link>http://localhost:1313/posts/moving-to-hugo-ii/</link>
       <pubDate>Tue, 23 Nov 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/moving-to-hugo-ii/</guid>
-      <description>My blog is now back online, with brand new render engine Hugo. The URLs are totally different though. Not sure how web crawlers handling it right now.&#xA;After the migration, I did a few extra work for patching the hiccups. Fix the build warnings and adding new features.&#xA;The about page In every blog you always have some pages that you do not want it be inside the blog list. By default Hugo will simply place everything on the &amp;ldquo;navigation list&amp;rdquo;.</description>
+      <description>&lt;p&gt;My blog is now back online, with brand new render engine Hugo. The URLs are&#xA;totally different though. Not sure how web crawlers handling it right&#xA;now.&lt;/p&gt;&#xA;&lt;p&gt;After the migration, I did a few extra work for patching the hiccups. Fix the&#xA;build warnings and adding new features.&lt;/p&gt;&#xA;&lt;h3 id=&#34;the-about-page&#34;&gt;The about page&lt;/h3&gt;&#xA;&lt;p&gt;In every blog you always have some pages that you do not want it be inside the&#xA;blog list. By default Hugo will simply place everything on the &amp;ldquo;navigation&#xA;list&amp;rdquo;. Even if I place it outside the blog folder. This is the list your&#xA;template is calling &lt;code&gt;.NextPage&lt;/code&gt; and &lt;code&gt;.PrevPage&lt;/code&gt;. So initially I just give it a&#xA;very old date, or simply removed the date, so it will appear as the last on the&#xA;list. Obviously I will have to fix that.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Moving to Hugo</title>
       <link>http://localhost:1313/posts/moving-to-hugo/</link>
       <pubDate>Sun, 14 Nov 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/moving-to-hugo/</guid>
-      <description>For a long time I&amp;rsquo;ve been wanting to Migrate my blog system from Pelican to Hugo. One reason is that I had enough with python virtual environment breaks every 3 months. Another motivation is obviously I would like to replace Python with Go in my life.&#xA;A long time ago I followed Go tutorial for getting started, surprised by its syntax tidiness and similarity to Python, and it is way faster.</description>
+      <description>&lt;p&gt;For a long time I&amp;rsquo;ve been wanting to Migrate my blog system from&#xA;&lt;a href=&#34;https://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; to &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt;. One&#xA;reason is that I had enough with python virtual environment breaks every 3&#xA;months. Another motivation is obviously I would like to replace Python with Go&#xA;in my life.&lt;/p&gt;&#xA;&lt;p&gt;A long time ago I followed Go tutorial for getting started, surprised by its&#xA;syntax tidiness and similarity to Python, and it is way faster. But soon I&#xA;found out it would be one of this thing I learned for a weekend and forget all&#xA;together, since I don&amp;rsquo;t have any projects I would use it actively. Now after&#xA;one month of procrastination, I finally pieces ALMOST everything to reproduce&#xA;my old blog. Time for a summary.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Belief or Cult</title>
       <link>http://localhost:1313/posts/belief-or-cult/</link>
       <pubDate>Sun, 31 Oct 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/belief-or-cult/</guid>
-      <description>It&amp;rsquo;s been a while that I haven&amp;rsquo;t update the blogs. It is so easy to slack off on good habits. &amp;ldquo;Oh I will continue once I finish A B C&amp;rdquo;. We are all busy as hell, in the software world, you WORK, you WORK and you GO TO SLEEP. Like this one, I am always hoping to switch to Hugo, then I can continue writing the blog. The thing is, I never got the good weekend to do the switching.</description>
+      <description>&lt;p&gt;It&amp;rsquo;s been a while that I haven&amp;rsquo;t update the blogs. It is so easy to slack off&#xA;on good habits. &amp;ldquo;Oh I will continue once I finish A B C&amp;rdquo;. We are all busy as&#xA;hell, in the software world, you WORK, you WORK and you GO TO SLEEP. Like this&#xA;one, I am always hoping to switch to &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt;, then I can&#xA;continue writing the blog. The thing is, I never got the good weekend to do the&#xA;switching. Weekends are really no for staying at home confronting monitors.&lt;/p&gt;</description>
     </item>
     <item>
       <title>July 2021 Status Update</title>
       <link>http://localhost:1313/posts/june-2021/</link>
       <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/june-2021/</guid>
-      <description>I am now back in Canada, quarantined again. There is much of internal struggle whether I should move back or stay in Shanghai? Working for tech company in Shanghai or many cities in China would be like endless crunching. Maybe I was not used to this high-paced lifestyle, long working hours. Didn&amp;rsquo;t like javascript either. It is a pity that I didn&amp;rsquo;t find a nicer job maybe opens to better opportunities.</description>
+      <description>&lt;p&gt;I am now back in Canada, quarantined again. There is much of internal struggle&#xA;whether I should move back or stay in Shanghai? Working for tech company in&#xA;Shanghai or many cities in China would be like endless crunching. Maybe I was&#xA;not used to this high-paced lifestyle, long working hours. Didn&amp;rsquo;t like&#xA;javascript either. It is a pity that I didn&amp;rsquo;t find a nicer job maybe opens to&#xA;better opportunities. I was focusing on the development of Taiwins back then,&#xA;well it is working now and I don&amp;rsquo;t develop it anymore. The June was pretty&#xA;unproductive, ever since the ICL implant surgery I couldn&amp;rsquo;t use computers for&#xA;long, even now it is painful to do so. At least I get more time reading books?&lt;/p&gt;</description>
     </item>
     <item>
       <title>Back with Org Mode</title>
       <link>http://localhost:1313/posts/back-with-org-mode/</link>
       <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/back-with-org-mode/</guid>
-      <description>If there is one thing I&amp;rsquo;d like to commit it must be the my time mangement improvements. For that purpose, Emacs Org-mode is the ultimate tool for programmers. I can keep my notes nicely and I can track my tasks/errands all together. But all my notes are stored in my linux box, I lose access to them once I am away. From that reason, I was always on-and-off with using org-mode due to the portability.</description>
+      <description>&lt;p&gt;If there is one thing I&amp;rsquo;d like to commit it must be the my time mangement&#xA;improvements. For that purpose, Emacs Org-mode is the &lt;strong&gt;ultimate&lt;/strong&gt; tool for&#xA;programmers. I can keep my notes nicely and I can track my tasks/errands all&#xA;together. But all my notes are stored in my linux box, I lose access to them&#xA;once I am away. From that reason, I was always on-and-off with using org-mode&#xA;due to the portability. We are not in the age doing everything with desktop&#xA;anymore, more often I need to track my TODOs from cellphone as well.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Jan 2021 Status Update</title>
       <link>http://localhost:1313/posts/jan-update-2021/</link>
       <pubDate>Sun, 24 Jan 2021 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/jan-update-2021/</guid>
-      <description>Folks, the Magical year of 2020 is behind us, and it wasn&amp;rsquo;t a happy new chapter waiting us. Man, I still couldn&amp;rsquo;t believe, once per 100 years, why it was us who have to face the coronavirus. Now I take a good look of my 2020, I went from trying to submit a xcbcommon handling patch to weston to writing a full wayland compositor from scratch. It was not my plan!</description>
+      <description>&lt;p&gt;Folks, the Magical year of 2020 is behind us, and it wasn&amp;rsquo;t a happy new chapter&#xA;waiting us. Man, I still couldn&amp;rsquo;t believe, once per 100 years, why it was us&#xA;who have to face the coronavirus. Now I take a good look of my 2020, I went&#xA;from trying to submit a xcbcommon handling patch to weston to writing a full&#xA;wayland compositor from scratch. It was not my plan!!! Taiwins should have&#xA;being a rather simple application on top of the libweston, the so called&#xA;&amp;ldquo;reference compositor &amp;ldquo;, but libweston cannot change keyboard layout once&#xA;launching, nor it can support cloning output, there are new bugs when you&#xA;digging deep. The worst is that it breaks the library into different shared&#xA;modules, and changes lib location every release. It was like it really does not&#xA;want to link to it. The codebase was old and long, it was difficult to make a&#xA;change and really difficult to get libweston taking a patch. Then there is the&#xA;wlroots. If it was released half year earlier Taiwins would probably sit on top&#xA;of that. But, screw it. I am doing it myself.&lt;/p&gt;</description>
     </item>
     <item>
       <title>August 2020 Status Update</title>
       <link>http://localhost:1313/posts/aug-update-2020/</link>
       <pubDate>Sat, 22 Aug 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/aug-update-2020/</guid>
-      <description>It is a sunny day, somehow I got up early this morning. The cool, chilling breath of air reminded me we are at the tail of the summer. It felt so strange, this summer was like it was never here. Hiking, go swimming, taking a trips and night outs. all those experiences for a normal summer I would do, they are all absent, hope I don&amp;rsquo;t regret too much for crunching code at home all these months.</description>
+      <description>&lt;p&gt;It is a sunny day, somehow I got up early this morning. The cool, chilling&#xA;breath of air reminded me we are at the tail of the summer. It felt so strange,&#xA;this summer was like it was never here. Hiking, go swimming, taking a trips and&#xA;night outs. all those experiences for a normal summer I would do, they are all&#xA;absent, hope I don&amp;rsquo;t regret too much for crunching code at home all these&#xA;months. It was a tough year actually, I was determined to push Taiwins to a&#xA;usable state, it has been stressful. Every time I look at the pile of the TODO&#xA;list, a sentiment of endless development and desperate hit me hard like a heart&#xA;attack. I had to work &lt;strong&gt;a lot&lt;/strong&gt; to stay healthy.&lt;/p&gt;</description>
     </item>
     <item>
       <title>July 2020 Status Update</title>
       <link>http://localhost:1313/posts/july-update-2020/</link>
       <pubDate>Sat, 18 Jul 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/july-update-2020/</guid>
-      <description>July, the hottest month in Montreal every year. The heat wave rushes to you when you walk outside makes you wondering if you are in some tropical island, it sure doesn&amp;rsquo;t look like living at 45 latitde northen hemisphere. Last month was a rapid leap towards wayland objects implementations and now I just hitted the wall of xdg-shell protocol. Today I&amp;rsquo;d like to talk about what it is like to implement a wayland protocol.</description>
+      <description>&lt;p&gt;July, the hottest month in Montreal every year. The heat wave rushes to you when&#xA;you walk outside makes you wondering if you are in some tropical island, it sure&#xA;doesn&amp;rsquo;t look like living at 45 latitde northen hemisphere. Last month was a&#xA;rapid leap towards wayland objects implementations and now I just hitted the&#xA;wall of &lt;code&gt;xdg-shell&lt;/code&gt; protocol. Today I&amp;rsquo;d like to talk about what it is like to&#xA;implement a wayland protocol.&lt;/p&gt;</description>
     </item>
     <item>
       <title>June 2020 Status Update</title>
       <link>http://localhost:1313/posts/june-update/</link>
       <pubDate>Mon, 06 Jul 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/june-update/</guid>
-      <description>Montréal is hotter than ever in this month, under the broiling sun, it was an exhausting quarantine. The first month I remeber I was feeling fortunate I got this aleatory chance for advancement of taiwins in this global pandemic, right now all I felt was the painful experience converting all the Taiwins server code away from libweston. Implementating of server side wayland objects was indeed unpleasant experience. Without libweston, I have to implement every little thing and get it right, even the basics 2D homogenous matrix operations for coordinates transformations.</description>
+      <description>&lt;p&gt;Montréal is hotter than ever in this month, under the broiling sun, it was an&#xA;exhausting quarantine. The first &lt;a href=&#34;http://localhost:1313/blog/busy-in-quarantine&#34;&gt;month&lt;/a&gt; I&#xA;remeber I was feeling fortunate I got this aleatory chance for advancement of&#xA;&lt;em&gt;taiwins&lt;/em&gt; in this global pandemic, right now all I felt was the painful&#xA;experience converting all the Taiwins server code away from&#xA;libweston. Implementating of server side wayland objects was indeed unpleasant&#xA;experience. Without libweston, I have to implement every little thing and get it&#xA;right, even the basics 2D homogenous matrix operations for coordinates&#xA;transformations. Just a days I ago I discovered my mistakenly used rotations in&#xA;the &amp;ldquo;Y-up&amp;rdquo; coordinate system (like OpenGL) in the &amp;ldquo;Y-down&amp;rdquo; coordinate sytem&#xA;(like Wayland protocol). The good news was that I did not give up, it seemed I&#xA;overcame one difficulties after another, now at least I can paint my taiwins&#xA;shell objects using a primitive renderer. In the end, hopefully I will end-up&#xA;with a working and cleaner compositor library than &lt;em&gt;libweston&lt;/em&gt;. This is&#xA;certainly an encouraging news as I used to think a compositor library was not&#xA;possible to finish with only two hands.&lt;/p&gt;</description>
     </item>
     <item>
       <title>May 2020 Status Update</title>
       <link>http://localhost:1313/posts/may-update/</link>
       <pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/may-update/</guid>
-      <description>Forcing a monthly blog update seems to be a good idea, giving myself a reason to keep paying for this Domain. Also, I don&amp;rsquo;t usually has a topic to address specifically, a monthly update can fill this role. Anyway, time passes rapidly in quarantine my friends. I hope a few years forward when I look back at this moment, I would not feel I wasted so much time. I don&amp;rsquo;t actually feel I made much progress through this month.</description>
+      <description>&lt;p&gt;Forcing a monthly blog update seems to be a good idea, giving myself a reason to&#xA;keep paying for this Domain. Also, I don&amp;rsquo;t usually has a topic to address&#xA;specifically, a monthly update can fill this role. Anyway, time passes rapidly&#xA;in quarantine my friends. I hope a few years forward when I look back at this&#xA;moment, I would not feel I wasted so much time. I don&amp;rsquo;t actually feel I made&#xA;much progress through this month. I would say, I am digging into my memory right&#xA;now, it is hard to recall much in detail. yeah, that is life in quarantine,&#xA;&amp;ldquo;stagnation&amp;rdquo;, like the blackwater.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Busy in quarantine</title>
       <link>http://localhost:1313/posts/busy-in-quarantine/</link>
       <pubDate>Tue, 07 Apr 2020 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/busy-in-quarantine/</guid>
-      <description>I update this blog less frequent than once per year, which sometimes makes me question why do I keep paying for this site. Be able to update blogs is always my pursuit, unfortunately there were always more code to write. It has been more than one year, last time I was still on how to MSAA on OpenGL 4, somehow it felt like a decade ago. The peaceful developing world took an interesting turn.</description>
+      <description>&lt;p&gt;I update this blog less frequent than once per year, which sometimes makes me&#xA;question why do I keep paying for this site. Be able to update blogs is always&#xA;my pursuit, unfortunately there were always more code to write. It has been more&#xA;than one year, last time I was still on how to MSAA on OpenGL 4, somehow it felt&#xA;like a decade ago. The peaceful developing world took an interesting turn. A&#xA;long run bull market is killed and NYSE triggered circuit break 4 times in 10&#xA;days. People are joking they now have 75% of Warren Buffet&amp;rsquo;s experience. Will&#xA;this gonna be the story we told our grand children born after 2020? &amp;ldquo;You know&#xA;back in 2020, it was a crazy year&amp;hellip;&amp;rdquo;. We just saw the quarter of it, I am kind&#xA;of expecting the crazier in the rest, will it be massive unemployment and a&#xA;scary recession will be waiting? This week the market has recovered a bit of its&#xA;confidence somehow, despite the Covid-19 cases are surging. A friend used to&#xA;tell me, it would be a point where many will be killed by the virus and people&#xA;just don&amp;rsquo;t care anymore, looks like the market is at that point.&lt;/p&gt;</description>
     </item>
     <item>
       <title>The wayland project II</title>
       <link>http://localhost:1313/posts/the_wayland_project_2/</link>
       <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/the_wayland_project_2/</guid>
-      <description>The last post I laid out the story of me with wayland. Technology is fascinating isn&amp;rsquo;t it? Every once a while, there are plenty of new projects that aim to start an revolution, getting people excited. Projects like systemd, Wayland, Vulkan make us think how come we did not think of those before, they seemed perfect at the moment. Technologies always work like a rush of hot wave, our sights are limited at the moment we are in, maybe 5 years from now, even vulkan is not sexy anymore.</description>
+      <description>&lt;p&gt;The last &lt;a href=&#34;%7Bfilename%7D/the_wayland_project.md&#34;&gt;post&lt;/a&gt; I laid out the story of me&#xA;with wayland. Technology is fascinating isn&amp;rsquo;t it? Every once a while, there are&#xA;plenty of new projects that aim to start an revolution, getting people&#xA;excited. Projects like &lt;strong&gt;systemd&lt;/strong&gt;, &lt;strong&gt;Wayland&lt;/strong&gt;, &lt;strong&gt;Vulkan&lt;/strong&gt; make us think how&#xA;come we did not think of those before, they seemed perfect at the&#xA;moment. Technologies always work like a rush of hot wave, our sights are limited&#xA;at the moment we are in, maybe 5 years from now, even &lt;strong&gt;vulkan&lt;/strong&gt; is not sexy&#xA;anymore. For ten years, community has been urging everyone to jump on the boat&#xA;of wayland. Some major platform adopted it, just there is no money in it. Major&#xA;platforms like &lt;strong&gt;GNOME&lt;/strong&gt; and &lt;strong&gt;KDE&lt;/strong&gt; are not even mature yet, KDE developers&#xA;also worries about the future of the wayland, will it last 30 years like &lt;strong&gt;X&#xA;window&lt;/strong&gt;?&lt;/p&gt;</description>
     </item>
     <item>
       <title>The wayland project</title>
       <link>http://localhost:1313/posts/the_wayland_project/</link>
       <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/the_wayland_project/</guid>
-      <description>It was a good will.&#xA;5 years ago, I read a blog about the future of linux desktop, I was using a window manager called Awesome (one of my friend introduced it to me, I was enchanted by how he opened two terminals side-by-side, one for coding and one for compiling). A voice about next generation desktop was just raised in the linux community , a group of hackers demod the weston project, where you can rotate the application windows.</description>
+      <description>&lt;p&gt;It was a good will.&lt;/p&gt;&#xA;&lt;p&gt;5 years ago, I read a blog about the future of linux desktop, I was using a&#xA;window manager called &lt;code&gt;Awesome&lt;/code&gt; (one of my friend introduced it to me, I was&#xA;enchanted by how he opened two terminals side-by-side, one for coding and one&#xA;for compiling). A voice about next generation desktop was just raised in the&#xA;linux community , a group of hackers demod the &lt;code&gt;weston&lt;/code&gt; project, where you can&#xA;rotate the application windows. They also pointed out the existing problems in&#xA;the x server architecture(basically it is too old, let us just replace it). It&#xA;is cumbersome, too many components, easily dead after package upgrade.&lt;/p&gt;</description>
     </item>
     <item>
       <title>6 years of programming</title>
       <link>http://localhost:1313/posts/six_years_programming/</link>
       <pubDate>Mon, 08 Aug 2016 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/six_years_programming/</guid>
-      <description>I have been studying in programming for 6 years, since my first day of undergrad life. I haven&amp;rsquo;t realized it has been so long, this studying life already took away most of my youth. I was a kid without knowing the toughness of life, to a young man need to worry about jobs and how to start having family.&#xA;The computer industry changed vastly in this period. There was no Cloud Computing, Machine Learning was only known in Academics.</description>
+      <description>&lt;p&gt;I have been studying in programming for 6 years, since my first day of&#xA;undergrad life. I haven&amp;rsquo;t realized it has been so long, this studying life&#xA;already took away most of my youth. I was a kid without knowing the toughness&#xA;of life, to a young man need to worry about jobs and how to start having&#xA;family.&lt;/p&gt;&#xA;&lt;p&gt;The computer industry changed vastly in this period. There was no Cloud&#xA;Computing, Machine Learning was only known in Academics. Universities taught&#xA;students how to code in VC++. Now everything is different.&lt;/p&gt;</description>
     </item>
     <item>
       <title>How to write blog generator</title>
       <link>http://localhost:1313/posts/write_sg0/</link>
       <pubDate>Mon, 27 Apr 2015 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/write_sg0/</guid>
-      <description>这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不 久。所以写的第一篇博客就以生成我的博客站点的项目mkbl</description>
+      <description>&lt;p&gt;这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不&#xA;久。所以写的第一篇博客就以生成我的博客站点的项目&lt;code&gt;mkblogs&lt;/code&gt;说起，来说说如何写一个&#xA;博客生成器吧。&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

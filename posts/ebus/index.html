@@ -300,8 +300,15 @@ Closing remarks
             <section class="post-nav-teaser">
               <i class="icon-right-arrow"></i>
               <h2 class="post-nav-title">Modular Vulkan feature and extension manager</h2>
-              <p class="post-nav-excerpt">Recently I&#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&#39;ve want to implement is a modular Vulkan Feature management.
-Root Issue: hard-coding enabled features When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable.</p>
+              <p class="post-nav-excerpt"><p>
+Recently I&#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&#39;ve want to implement is a modular <a href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFeatures.html">Vulkan Feature</a> management.</p>
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Root Issue: hard-coding enabled features
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable. This is done by inserting <code>features</code> into the <code>pNext</code> chain and extensions into <code>ppEnabledExtenionNames</code>.</p></p>
             </section>
           </a>
         
@@ -353,12 +360,5 @@ Root Issue: hard-coding enabled features When creating an Vulkan device, you hav
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

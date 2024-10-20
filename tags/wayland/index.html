@@ -136,8 +136,8 @@
       </header>
 
       <section class="post-excerpt">
-        I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.
-There are two ways right now to do the client decorations.
+        <p>I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.</p>
+<p>There are <strong>two</strong> ways right now to do the client decorations.</p>
       </section>
     </div>
   </article>
@@ -165,7 +165,12 @@ There are two ways right now to do the client decorations.
       </header>
 
       <section class="post-excerpt">
-        I hate every single line of xwayland code I wrote, it is ugly, long and hard to maintain. Now I know very well why there is wayland in the first place, sadly a complete wayland compositor has to bring a piece of crap of X with it. I just finished the selection handling in xwayland by mimicing weston code. After finally understand that 1000 lines of confusing code, I just found out I can&rsquo;t do any better.
+        <p>I hate every single line of xwayland code I wrote, it is ugly, long and hard to
+maintain. Now I know very well why there is wayland in the first place, sadly a
+complete wayland compositor has to bring a piece of crap of X with it. I just
+finished the selection handling in xwayland by mimicing weston code. After
+finally understand that 1000 lines of confusing code, I just found out I can&rsquo;t
+do any better.</p>
       </section>
     </div>
   </article>
@@ -196,7 +201,16 @@ There are two ways right now to do the client decorations.
       </header>
 
       <section class="post-excerpt">
-        In the first blog of libdrm, we went through the repainting loop using the libdrm. Now we move on to the topic of framebuffers. A framebuffer is a piece of memory (could be on main memory or on GPU) for repainting every frame. It is like a canvas, represents what you would finally see on screen. Framebuffer is already a familiar concept to rendering programmers, in OpenGL, We have GL_FRAMEBUFFER_0 for presenting the surface, additional framebuffers for roles like G-Buffer and post-processing.
+        <p>In the <a href="%7Bfilename%7D/drm-backend.md">first blog of libdrm</a>, we went through the
+repainting loop using the libdrm. Now we move on to the topic of
+framebuffers. A framebuffer is a piece of memory (could be on main memory or on
+GPU) for repainting every frame. It is like a canvas, represents what you would
+finally see on screen. Framebuffer is already a familiar concept to rendering
+programmers, in <strong>OpenGL</strong>, We have <code>GL_FRAMEBUFFER_0</code> for presenting the
+surface, additional framebuffers for roles like G-Buffer and
+post-processing. In GPU programming, framebuffer is also a broader concept,
+&ldquo;abstraction of a collection of attachments&rdquo;, the underlining attachments
+corresponds to actual pieces of memory we talk about here.</p>
       </section>
     </div>
   </article>
@@ -224,8 +238,22 @@ There are two ways right now to do the client decorations.
       </header>
 
       <section class="post-excerpt">
-        You need a wayland compositor library to create a wayland server. Wayland is a protocol, itself, cannot do much, long time ago I used to think the server-side wl_resource represents some structure you can operate on, well it turned out all you do with it is handling messages between client and server. All the logic you need to implement yourself.
-There were a few attempts to wayland compositing library created. The first sucessful one is wlc.
+        <p>You need a wayland compositor library to create a wayland server. Wayland is a
+protocol, itself, cannot do much, long time ago I used to think the server-side
+<code>wl_resource</code> represents some structure you can operate on, well it turned out
+all you do with it is handling messages between client and server. All the logic
+you need to implement yourself.</p>
+<p>There were a few attempts to wayland compositing library created. The first
+sucessful one is <a href="https://github.com/Cloudef/wlc">wlc</a>. I think its existence is
+that <a href="https://github.com/wayland-project/weston">weston</a> (the twin of the
+wayland project, now maintained by Pekka Paalanen). was a monolith application
+for a long time. Weston looks pretty and quite fast and beautiful but not very
+useful to anyone else. The developers maybe realized that they want to get more
+people to use weston, so they managed to strip <strong>libweston</strong> out of weston
+itself. It was a good attempt, although I doubt their true intention was to
+creating a reusable compositing library. Nonetheless, to some extent, it helped
+the birth of the third library by Drew Devault, the
+<a href="https://github.com/swaywm/wlroots">wlroots</a>.</p>
       </section>
     </div>
   </article>
@@ -253,8 +281,16 @@ There were a few attempts to wayland compositing library created. The first suce
       </header>
 
       <section class="post-excerpt">
-        wl_data_device interface in the base wayland protocol is the most complex one, in my opinion, wayland.xml explains it fairly well, but every pieces are scattered in the file, here I serialize it together, give you quick run through.
-In brief, data device in wayland consists of four interfaces: The first is wl_data_device_manager, it is the global. The second is wl_data_device, can be created from wl_data_device_manager for a given seat, it is used to set selection(ctrl-c ctrl-v) and drag-n-drop.
+        <p><code>wl_data_device</code> interface in the base wayland protocol is the most complex one,
+in my opinion, <em>wayland.xml</em> explains it fairly well, but every pieces are
+scattered in the file, here I serialize it together, give you quick run through.</p>
+<p>In brief, data device in wayland consists of four interfaces: The first is
+<code>wl_data_device_manager</code>, it is the global. The second is <code>wl_data_device</code>,
+can be created from <code>wl_data_device_manager</code> for a given seat, it is used to
+set selection(ctrl-c ctrl-v) and drag-n-drop. The 3rd is <code>wl_data_source</code>,
+also created from <code>wl_data_device_manager</code>, this source will be either a
+selection source or drag-n-drop source. The last is <code>wl_data_offer</code>, which is
+used for copying data from <code>wl_data_source</code>.</p>
       </section>
     </div>
   </article>
@@ -285,7 +321,18 @@ In brief, data device in wayland consists of four interfaces: The first is wl_da
       </header>
 
       <section class="post-excerpt">
-        The last post I laid out the story of me with wayland. Technology is fascinating isn&rsquo;t it? Every once a while, there are plenty of new projects that aim to start an revolution, getting people excited. Projects like systemd, Wayland, Vulkan make us think how come we did not think of those before, they seemed perfect at the moment. Technologies always work like a rush of hot wave, our sights are limited at the moment we are in, maybe 5 years from now, even vulkan is not sexy anymore.
+        <p>The last <a href="%7Bfilename%7D/the_wayland_project.md">post</a> I laid out the story of me
+with wayland. Technology is fascinating isn&rsquo;t it? Every once a while, there are
+plenty of new projects that aim to start an revolution, getting people
+excited. Projects like <strong>systemd</strong>, <strong>Wayland</strong>, <strong>Vulkan</strong> make us think how
+come we did not think of those before, they seemed perfect at the
+moment. Technologies always work like a rush of hot wave, our sights are limited
+at the moment we are in, maybe 5 years from now, even <strong>vulkan</strong> is not sexy
+anymore. For ten years, community has been urging everyone to jump on the boat
+of wayland. Some major platform adopted it, just there is no money in it. Major
+platforms like <strong>GNOME</strong> and <strong>KDE</strong> are not even mature yet, KDE developers
+also worries about the future of the wayland, will it last 30 years like <strong>X
+window</strong>?</p>
       </section>
     </div>
   </article>
@@ -316,8 +363,15 @@ In brief, data device in wayland consists of four interfaces: The first is wl_da
       </header>
 
       <section class="post-excerpt">
-        It was a good will.
-5 years ago, I read a blog about the future of linux desktop, I was using a window manager called Awesome (one of my friend introduced it to me, I was enchanted by how he opened two terminals side-by-side, one for coding and one for compiling). A voice about next generation desktop was just raised in the linux community , a group of hackers demod the weston project, where you can rotate the application windows.
+        <p>It was a good will.</p>
+<p>5 years ago, I read a blog about the future of linux desktop, I was using a
+window manager called <code>Awesome</code> (one of my friend introduced it to me, I was
+enchanted by how he opened two terminals side-by-side, one for coding and one
+for compiling). A voice about next generation desktop was just raised in the
+linux community , a group of hackers demod the <code>weston</code> project, where you can
+rotate the application windows. They also pointed out the existing problems in
+the x server architecture(basically it is too old, let us just replace it). It
+is cumbersome, too many components, easily dead after package upgrade.</p>
       </section>
     </div>
   </article>
@@ -376,12 +430,5 @@ In brief, data device in wayland consists of four interfaces: The first is wl_da
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

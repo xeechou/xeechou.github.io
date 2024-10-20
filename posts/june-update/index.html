@@ -241,8 +241,22 @@ stronger.</p>
             <section class="post-nav-teaser">
               <i class="icon-right-arrow"></i>
               <h2 class="post-nav-title">Libweston vs Wlroots</h2>
-              <p class="post-nav-excerpt">You need a wayland compositor library to create a wayland server. Wayland is a protocol, itself, cannot do much, long time ago I used to think the server-side wl_resource represents some structure you can operate on, well it turned out all you do with it is handling messages between client and server. All the logic you need to implement yourself.
-There were a few attempts to wayland compositing library created. The first sucessful one is wlc.</p>
+              <p class="post-nav-excerpt"><p>You need a wayland compositor library to create a wayland server. Wayland is a
+protocol, itself, cannot do much, long time ago I used to think the server-side
+<code>wl_resource</code> represents some structure you can operate on, well it turned out
+all you do with it is handling messages between client and server. All the logic
+you need to implement yourself.</p>
+<p>There were a few attempts to wayland compositing library created. The first
+sucessful one is <a href="https://github.com/Cloudef/wlc">wlc</a>. I think its existence is
+that <a href="https://github.com/wayland-project/weston">weston</a> (the twin of the
+wayland project, now maintained by Pekka Paalanen). was a monolith application
+for a long time. Weston looks pretty and quite fast and beautiful but not very
+useful to anyone else. The developers maybe realized that they want to get more
+people to use weston, so they managed to strip <strong>libweston</strong> out of weston
+itself. It was a good attempt, although I doubt their true intention was to
+creating a reusable compositing library. Nonetheless, to some extent, it helped
+the birth of the third library by Drew Devault, the
+<a href="https://github.com/swaywm/wlroots">wlroots</a>.</p></p>
             </section>
           </a>
         
@@ -252,7 +266,12 @@ There were a few attempts to wayland compositing library created. The first suce
             <section class="post-nav-teaser">
               <i class="icon-left-arrow"></i>
               <h2 class="post-nav-title">July 2020 Status Update</h2>
-              <p class="post-nav-excerpt">July, the hottest month in Montreal every year. The heat wave rushes to you when you walk outside makes you wondering if you are in some tropical island, it sure doesn&rsquo;t look like living at 45 latitde northen hemisphere. Last month was a rapid leap towards wayland objects implementations and now I just hitted the wall of xdg-shell protocol. Today I&rsquo;d like to talk about what it is like to implement a wayland protocol.</p>
+              <p class="post-nav-excerpt"><p>July, the hottest month in Montreal every year. The heat wave rushes to you when
+you walk outside makes you wondering if you are in some tropical island, it sure
+doesn&rsquo;t look like living at 45 latitde northen hemisphere. Last month was a
+rapid leap towards wayland objects implementations and now I just hitted the
+wall of <code>xdg-shell</code> protocol. Today I&rsquo;d like to talk about what it is like to
+implement a wayland protocol.</p></p>
             </section>
           </a>
         
@@ -302,12 +321,5 @@ There were a few attempts to wayland compositing library created. The first suce
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

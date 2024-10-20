@@ -13,7 +13,7 @@
       <link>http://localhost:1313/posts/camera_matrix/</link>
       <pubDate>Mon, 31 Oct 2016 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/camera_matrix/</guid>
-      <description>The MVP Matrix $\text{Model} * \text{View} * \text{Projection}$ is the first lesson to render (the so called render is the process so that people can see it on a 2D screen )objects in Computer Graphics, which transfer a 3D object in object space into, in the end, a UV plane.&#xA;The Model matrix is simple and easy to understand, simply the translation, scale and rotation, but View matrix and Camera matrix are not obvious(although you can get it for free by single call from glm::lookAt() and glm::perspective()).</description>
+      <description>&lt;h1 id=&#34;the-mvp-matrix&#34;&gt;The &lt;strong&gt;MVP&lt;/strong&gt; Matrix&lt;/h1&gt;&#xA;&lt;p&gt;$\text{Model} * \text{View} * \text{Projection}$ is the first lesson to render&#xA;(the so called render is the process so that people can see it on a 2D screen&#xA;)objects in Computer Graphics, which transfer a 3D object in object space into,&#xA;in the end, a UV plane.&lt;/p&gt;&#xA;&lt;p&gt;The Model matrix is simple and easy to understand, simply the translation, scale&#xA;and rotation, but View matrix and Camera matrix are not obvious(although you can&#xA;get it for free by single call from &lt;code&gt;glm::lookAt()&lt;/code&gt; and &lt;code&gt;glm::perspective()&lt;/code&gt;).&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

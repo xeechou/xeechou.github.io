@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<meta name="generator" content="Hugo 0.131.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta name="generator" content="Hugo 0.135.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -121,6 +121,42 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/aug-update-2020/">August 2020 Status Update</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/journal">Journal</a>
+              
+              |
+            
+            <time datetime="2020-08-22">22 Aug 2020</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>It is a sunny day, somehow I got up early this morning. The cool, chilling
+breath of air reminded me we are at the tail of the summer. It felt so strange,
+this summer was like it was never here. Hiking, go swimming, taking a trips and
+night outs. all those experiences for a normal summer I would do, they are all
+absent, hope I don&rsquo;t regret too much for crunching code at home all these
+months. It was a tough year actually, I was determined to push Taiwins to a
+usable state, it has been stressful. Every time I look at the pile of the TODO
+list, a sentiment of endless development and desperate hit me hard like a heart
+attack. I had to work <strong>a lot</strong> to stay healthy.</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/july-update-2020/">July 2020 Status Update</a>
           </h2>
           <span class="post-meta">
@@ -138,7 +174,12 @@
       </header>
 
       <section class="post-excerpt">
-        July, the hottest month in Montreal every year. The heat wave rushes to you when you walk outside makes you wondering if you are in some tropical island, it sure doesn&rsquo;t look like living at 45 latitde northen hemisphere. Last month was a rapid leap towards wayland objects implementations and now I just hitted the wall of xdg-shell protocol. Today I&rsquo;d like to talk about what it is like to implement a wayland protocol.
+        <p>July, the hottest month in Montreal every year. The heat wave rushes to you when
+you walk outside makes you wondering if you are in some tropical island, it sure
+doesn&rsquo;t look like living at 45 latitde northen hemisphere. Last month was a
+rapid leap towards wayland objects implementations and now I just hitted the
+wall of <code>xdg-shell</code> protocol. Today I&rsquo;d like to talk about what it is like to
+implement a wayland protocol.</p>
       </section>
     </div>
   </article>
@@ -166,7 +207,22 @@
       </header>
 
       <section class="post-excerpt">
-        Montréal is hotter than ever in this month, under the broiling sun, it was an exhausting quarantine. The first month I remeber I was feeling fortunate I got this aleatory chance for advancement of taiwins in this global pandemic, right now all I felt was the painful experience converting all the Taiwins server code away from libweston. Implementating of server side wayland objects was indeed unpleasant experience. Without libweston, I have to implement every little thing and get it right, even the basics 2D homogenous matrix operations for coordinates transformations.
+        <p>Montréal is hotter than ever in this month, under the broiling sun, it was an
+exhausting quarantine. The first <a href="/blog/busy-in-quarantine">month</a> I
+remeber I was feeling fortunate I got this aleatory chance for advancement of
+<em>taiwins</em> in this global pandemic, right now all I felt was the painful
+experience converting all the Taiwins server code away from
+libweston. Implementating of server side wayland objects was indeed unpleasant
+experience. Without libweston, I have to implement every little thing and get it
+right, even the basics 2D homogenous matrix operations for coordinates
+transformations. Just a days I ago I discovered my mistakenly used rotations in
+the &ldquo;Y-up&rdquo; coordinate system (like OpenGL) in the &ldquo;Y-down&rdquo; coordinate sytem
+(like Wayland protocol). The good news was that I did not give up, it seemed I
+overcame one difficulties after another, now at least I can paint my taiwins
+shell objects using a primitive renderer. In the end, hopefully I will end-up
+with a working and cleaner compositor library than <em>libweston</em>. This is
+certainly an encouraging news as I used to think a compositor library was not
+possible to finish with only two hands.</p>
       </section>
     </div>
   </article>
@@ -194,8 +250,22 @@
       </header>
 
       <section class="post-excerpt">
-        You need a wayland compositor library to create a wayland server. Wayland is a protocol, itself, cannot do much, long time ago I used to think the server-side wl_resource represents some structure you can operate on, well it turned out all you do with it is handling messages between client and server. All the logic you need to implement yourself.
-There were a few attempts to wayland compositing library created. The first sucessful one is wlc.
+        <p>You need a wayland compositor library to create a wayland server. Wayland is a
+protocol, itself, cannot do much, long time ago I used to think the server-side
+<code>wl_resource</code> represents some structure you can operate on, well it turned out
+all you do with it is handling messages between client and server. All the logic
+you need to implement yourself.</p>
+<p>There were a few attempts to wayland compositing library created. The first
+sucessful one is <a href="https://github.com/Cloudef/wlc">wlc</a>. I think its existence is
+that <a href="https://github.com/wayland-project/weston">weston</a> (the twin of the
+wayland project, now maintained by Pekka Paalanen). was a monolith application
+for a long time. Weston looks pretty and quite fast and beautiful but not very
+useful to anyone else. The developers maybe realized that they want to get more
+people to use weston, so they managed to strip <strong>libweston</strong> out of weston
+itself. It was a good attempt, although I doubt their true intention was to
+creating a reusable compositing library. Nonetheless, to some extent, it helped
+the birth of the third library by Drew Devault, the
+<a href="https://github.com/swaywm/wlroots">wlroots</a>.</p>
       </section>
     </div>
   </article>
@@ -223,8 +293,16 @@ There were a few attempts to wayland compositing library created. The first suce
       </header>
 
       <section class="post-excerpt">
-        wl_data_device interface in the base wayland protocol is the most complex one, in my opinion, wayland.xml explains it fairly well, but every pieces are scattered in the file, here I serialize it together, give you quick run through.
-In brief, data device in wayland consists of four interfaces: The first is wl_data_device_manager, it is the global. The second is wl_data_device, can be created from wl_data_device_manager for a given seat, it is used to set selection(ctrl-c ctrl-v) and drag-n-drop.
+        <p><code>wl_data_device</code> interface in the base wayland protocol is the most complex one,
+in my opinion, <em>wayland.xml</em> explains it fairly well, but every pieces are
+scattered in the file, here I serialize it together, give you quick run through.</p>
+<p>In brief, data device in wayland consists of four interfaces: The first is
+<code>wl_data_device_manager</code>, it is the global. The second is <code>wl_data_device</code>,
+can be created from <code>wl_data_device_manager</code> for a given seat, it is used to
+set selection(ctrl-c ctrl-v) and drag-n-drop. The 3rd is <code>wl_data_source</code>,
+also created from <code>wl_data_device_manager</code>, this source will be either a
+selection source or drag-n-drop source. The last is <code>wl_data_offer</code>, which is
+used for copying data from <code>wl_data_source</code>.</p>
       </section>
     </div>
   </article>
@@ -252,7 +330,14 @@ In brief, data device in wayland consists of four interfaces: The first is wl_da
       </header>
 
       <section class="post-excerpt">
-        Forcing a monthly blog update seems to be a good idea, giving myself a reason to keep paying for this Domain. Also, I don&rsquo;t usually has a topic to address specifically, a monthly update can fill this role. Anyway, time passes rapidly in quarantine my friends. I hope a few years forward when I look back at this moment, I would not feel I wasted so much time. I don&rsquo;t actually feel I made much progress through this month.
+        <p>Forcing a monthly blog update seems to be a good idea, giving myself a reason to
+keep paying for this Domain. Also, I don&rsquo;t usually has a topic to address
+specifically, a monthly update can fill this role. Anyway, time passes rapidly
+in quarantine my friends. I hope a few years forward when I look back at this
+moment, I would not feel I wasted so much time. I don&rsquo;t actually feel I made
+much progress through this month. I would say, I am digging into my memory right
+now, it is hard to recall much in detail. yeah, that is life in quarantine,
+&ldquo;stagnation&rdquo;, like the blackwater.</p>
       </section>
     </div>
   </article>
@@ -280,7 +365,20 @@ In brief, data device in wayland consists of four interfaces: The first is wl_da
       </header>
 
       <section class="post-excerpt">
-        I update this blog less frequent than once per year, which sometimes makes me question why do I keep paying for this site. Be able to update blogs is always my pursuit, unfortunately there were always more code to write. It has been more than one year, last time I was still on how to MSAA on OpenGL 4, somehow it felt like a decade ago. The peaceful developing world took an interesting turn.
+        <p>I update this blog less frequent than once per year, which sometimes makes me
+question why do I keep paying for this site. Be able to update blogs is always
+my pursuit, unfortunately there were always more code to write. It has been more
+than one year, last time I was still on how to MSAA on OpenGL 4, somehow it felt
+like a decade ago. The peaceful developing world took an interesting turn. A
+long run bull market is killed and NYSE triggered circuit break 4 times in 10
+days. People are joking they now have 75% of Warren Buffet&rsquo;s experience. Will
+this gonna be the story we told our grand children born after 2020? &ldquo;You know
+back in 2020, it was a crazy year&hellip;&rdquo;. We just saw the quarter of it, I am kind
+of expecting the crazier in the rest, will it be massive unemployment and a
+scary recession will be waiting? This week the market has recovered a bit of its
+confidence somehow, despite the Covid-19 cases are surging. A friend used to
+tell me, it would be a point where many will be killed by the virus and people
+just don&rsquo;t care anymore, looks like the market is at that point.</p>
       </section>
     </div>
   </article>
@@ -308,8 +406,14 @@ In brief, data device in wayland consists of four interfaces: The first is wl_da
       </header>
 
       <section class="post-excerpt">
-        Deferred MSAA, always has been a good problem. In the spatial anti-aliasing domain, MSAA is still the swiss-army knife, handle almost all the case.
-Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA. FXAA is rather pleasing in many cases as well, especially if you are a video game developer, as long as your rasterization implementation does not screwed up. But for the case like grass rendering, fur rendering, when you have many layers of thin line, FXAA will fail you.
+        <p>Deferred MSAA, always has been a good problem. In the spatial anti-aliasing
+domain, MSAA is still the swiss-army knife, handle almost all the case.</p>
+<p>Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA. FXAA
+is rather pleasing in many cases as well, especially if
+you are a video game developer, as long as your rasterization implementation
+does not screwed up. But for the case like grass rendering, fur rendering, when
+you have many layers of thin line, FXAA will fail you. Just like the pixels
+annotated in the image below.</p>
       </section>
     </div>
   </article>
@@ -340,7 +444,18 @@ Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA.
       </header>
 
       <section class="post-excerpt">
-        The last post I laid out the story of me with wayland. Technology is fascinating isn&rsquo;t it? Every once a while, there are plenty of new projects that aim to start an revolution, getting people excited. Projects like systemd, Wayland, Vulkan make us think how come we did not think of those before, they seemed perfect at the moment. Technologies always work like a rush of hot wave, our sights are limited at the moment we are in, maybe 5 years from now, even vulkan is not sexy anymore.
+        <p>The last <a href="%7Bfilename%7D/the_wayland_project.md">post</a> I laid out the story of me
+with wayland. Technology is fascinating isn&rsquo;t it? Every once a while, there are
+plenty of new projects that aim to start an revolution, getting people
+excited. Projects like <strong>systemd</strong>, <strong>Wayland</strong>, <strong>Vulkan</strong> make us think how
+come we did not think of those before, they seemed perfect at the
+moment. Technologies always work like a rush of hot wave, our sights are limited
+at the moment we are in, maybe 5 years from now, even <strong>vulkan</strong> is not sexy
+anymore. For ten years, community has been urging everyone to jump on the boat
+of wayland. Some major platform adopted it, just there is no money in it. Major
+platforms like <strong>GNOME</strong> and <strong>KDE</strong> are not even mature yet, KDE developers
+also worries about the future of the wayland, will it last 30 years like <strong>X
+window</strong>?</p>
       </section>
     </div>
   </article>
@@ -371,36 +486,15 @@ Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA.
       </header>
 
       <section class="post-excerpt">
-        It was a good will.
-5 years ago, I read a blog about the future of linux desktop, I was using a window manager called Awesome (one of my friend introduced it to me, I was enchanted by how he opened two terminals side-by-side, one for coding and one for compiling). A voice about next generation desktop was just raised in the linux community , a group of hackers demod the weston project, where you can rotate the application windows.
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/rotations/">Rotations</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/graphics">graphics</a>
-              
-              |
-            
-            <time datetime="2017-11-26">26 Nov 2017</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        Rotation, combined with translation and scaling, are the three affin transforms we do every day in the 3D nutshell universe. The rotation itself, however, is somehow much more complicated than the other two transform, it is one really needs a matrix representation among all three. Representations and computation of it has been developed for years. We have systems like Axis-angle representation, matrix representation, euler angles and quaternions. Despite I have known them for a long time, when I forgot, the rotation is still complicated.
+        <p>It was a good will.</p>
+<p>5 years ago, I read a blog about the future of linux desktop, I was using a
+window manager called <code>Awesome</code> (one of my friend introduced it to me, I was
+enchanted by how he opened two terminals side-by-side, one for coding and one
+for compiling). A voice about next generation desktop was just raised in the
+linux community , a group of hackers demod the <code>weston</code> project, where you can
+rotate the application windows. They also pointed out the existing problems in
+the x server architecture(basically it is too old, let us just replace it). It
+is cumbersome, too many components, easily dead after package upgrade.</p>
       </section>
     </div>
   </article>
@@ -469,12 +563,5 @@ Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA.
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

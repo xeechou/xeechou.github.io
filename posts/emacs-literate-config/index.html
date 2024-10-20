@@ -332,9 +332,36 @@ Happy hacking, folks.</p>
             <section class="post-nav-teaser">
               <i class="icon-right-arrow"></i>
               <h2 class="post-nav-title">My Vanilla yet powerful Emacs environment</h2>
-              <p class="post-nav-excerpt">Introduction For years I have been perfecting my Emacs configuration, it is now the essential part of my digital life. This is my personal configuration but you may also find it useful to your needs. Feel free to grab some of my config snippets to work for you.
-Here is a list of incomplete features you get from this config set:
-Clean configuration with use-package Many programming language support: C/C++, Python, typescript, golang, glsl and many others.</p>
+              <p class="post-nav-excerpt"><div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+Introduction
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>For years I have been perfecting my Emacs configuration, it is now the
+essential part of my digital life. This is my personal configuration but
+you may also find it useful to your needs. Feel free to grab some of my
+config snippets to work for you.</p>
+<p>
+Here is a list of incomplete features you get from this config set:</p>
+<ul>
+<li>Clean configuration with <a href="https://github.com/jwiegley/use-package">use-package</a></li>
+<li>Many programming language support: C/C++, Python, typescript, golang, glsl and many others.</li>
+<li>Some of my collected code snippets for different languages.</li>
+<li>Code auto-complete support via eglot and <a href="https://company-mode.github.io/">Company-mode</a>.</li>
+<li>Completion framework using <a href="https://github.com/abo-abo/swiper">Ivy</a>.</li>
+<li>keybinding look-up with <a href="https://github.com/justbur/emacs-which-key">which-key</a>.</li>
+<li>FlySpell support via Hunspell.</li>
+<li>minimal LLM support through <a href="https://github.com/s-kostyaev/ellama">Ellama</a>.</li>
+<li>many others.</li>
+</ul>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+Run-time requirement for some packages.
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>Some of the packages requires not only Emacs-Lisp code but also other
+binaries to work. Here is the list of binaries required for all the
+features.</p></p>
             </section>
           </a>
         
@@ -344,8 +371,15 @@ Clean configuration with use-package Many programming language support: C/C++, P
             <section class="post-nav-teaser">
               <i class="icon-left-arrow"></i>
               <h2 class="post-nav-title">Modular Vulkan feature and extension manager</h2>
-              <p class="post-nav-excerpt">Recently I&#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&#39;ve want to implement is a modular Vulkan Feature management.
-Root Issue: hard-coding enabled features When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable.</p>
+              <p class="post-nav-excerpt"><p>
+Recently I&#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&#39;ve want to implement is a modular <a href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFeatures.html">Vulkan Feature</a> management.</p>
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Root Issue: hard-coding enabled features
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable. This is done by inserting <code>features</code> into the <code>pNext</code> chain and extensions into <code>ppEnabledExtenionNames</code>.</p></p>
             </section>
           </a>
         
@@ -395,12 +429,5 @@ Root Issue: hard-coding enabled features When creating an Vulkan device, you hav
     
     
     
-  
-    
-      
-    
-  
-
-
   </body>
 </html>

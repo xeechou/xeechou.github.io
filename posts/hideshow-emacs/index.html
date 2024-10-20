@@ -1,0 +1,516 @@
+
+<!doctype html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Customizing Hide-Show for CMake Mode in Emacs</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
+    
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-emacs-config" role="presentation">
+          <a href="/emacs-config/">Emacs Config</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Customizing Hide-Show for CMake Mode in Emacs</h1>
+    <span class="post-meta">
+      
+      <time datetime="2024-10-19">19 Oct 2024</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+	<section class="post-content">
+<p>
+customizing HideShow mode on Emacs is done by <a href="http://doc.endlessparentheses.com/Var/hs-special-modes-alist.html">hs-special-modes-alist</a>. There are 4 parts (actually 5, but we care mostly about the 3) of the equation. You can customize it for your mode with a list like this</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (MODE START END COMMENT-START FORWARD-SEXP-FUNC ADJUST-BEG-FUNC)</span></span></code></pre></div>
+</div>
+<p>
+For example, the default definition of the <code>hs-special-modes-alist</code> looks like this:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (defvar hs-special-modes-alist
+</span></span><span style="display:flex;"><span>    (<span style="color:#a6e22e">mapcar</span> <span style="color:#a6e22e">#&#39;purecopy</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#39;</span>((c-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (c-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (c++-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (c++-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (bibtex-mode (<span style="color:#e6db74">&#34;@\\S(*\\(\\s(\\)&#34;</span> <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>              (java-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (java-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (js-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (js-ts-mode <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">&#34;/[*/]&#34;</span> <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (mhtml-mode <span style="color:#e6db74">&#34;{\\|&lt;[^/&gt;]*?&#34;</span> <span style="color:#e6db74">&#34;}\\|&lt;/[^/&gt;]*[^/]&gt;&#34;</span> <span style="color:#e6db74">&#34;&lt;!--&#34;</span> mhtml-forward <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              <span style="color:#75715e">;; Add more support here.</span>
+</span></span><span style="display:flex;"><span>              ))</span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+The ingredients
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+<code>START</code> and <code>END</code> regular expression
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+This regular expression matches the beginning/end of the folding code. For C/C++ alike languages, this is as brackets &#34;{&#34;, &#34;}&#34;, etc. For some language lacks of any brackets/parenthesis like python, it is more difficult. Emacs&#39; built-in python mode provided <a href="https://mail.python.org/pipermail/python-mode/2006-April/000353.html">patch</a> to support it:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (unless (<span style="color:#a6e22e">assoc</span> <span style="color:#e6db74">&#39;pyhon-mode</span> hs-special-modes-alist)
+</span></span><span style="display:flex;"><span>    (setq hs-special-modes-alist
+</span></span><span style="display:flex;"><span>          (<span style="color:#a6e22e">cons</span> (<span style="color:#a6e22e">list</span> 
+</span></span><span style="display:flex;"><span>                 <span style="color:#e6db74">&#39;python-mode</span> <span style="color:#e6db74">&#34;^\\s-*def\\&gt;&#34;</span> <span style="color:#66d9ef">nil</span> <span style="color:#e6db74">&#34;#&#34;</span> 
+</span></span><span style="display:flex;"><span>                 (lambda (arg)
+</span></span><span style="display:flex;"><span>                   (py-end-of-def-or-class)
+</span></span><span style="display:flex;"><span>                   (<span style="color:#a6e22e">skip-chars-backward</span> <span style="color:#e6db74">&#34; \t\n&#34;</span>))
+</span></span><span style="display:flex;"><span>                 <span style="color:#66d9ef">nil</span>) hs-special-modes-alist)))</span></span></code></pre></div>
+</div>
+<p>
+You can see that in for python mode, they did not define a <code>END</code> expression, it is simply nil. This is due to how the <code>hs-hide-block</code> works. We will see it below.</p>
+<p>
+ Comment regular expression is similar, it is used to match the comments. </p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+<code>FORWARD-SEXP-FUNC</code> 
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>The <code>FORWARD-SEXP-FUNC</code> here is for jumping from the begging of the <a href="https://www.emacswiki.org/emacs/Sexp">s-expression</a> to its end. For the elisp that is basically the jumping between parenthesis. In C/C++, Java, etc. We can jump over brackets with <code>forward-sexp</code> and <code>backward-sexp</code>. </p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+How it actually works
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>We take a look at the <code>(hs-hide-blocks)</code> functions. It is written like this:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (defun hs-hide-block (<span style="color:#66d9ef">&amp;optional</span> end)
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Select a block and hide it.  With prefix arg, reposition at END.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  Upon completion, point is repositioned and the normal hook
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  </span><span style="color:#e6db74">`hs-hide-hook&#39;</span><span style="color:#e6db74"> is run.  See documentation for </span><span style="color:#e6db74">`run-hooks&#39;</span><span style="color:#e6db74">.&#34;</span>
+</span></span><span style="display:flex;"><span>    (interactive <span style="color:#e6db74">&#34;P&#34;</span>)
+</span></span><span style="display:flex;"><span>    (hs-life-goes-on
+</span></span><span style="display:flex;"><span>     (let ((c-reg (hs-inside-comment-p)))
+</span></span><span style="display:flex;"><span>       (cond
+</span></span><span style="display:flex;"><span>        ((and c-reg (or (<span style="color:#a6e22e">null</span> (<span style="color:#a6e22e">nth</span> <span style="color:#ae81ff">0</span> c-reg))
+</span></span><span style="display:flex;"><span>                        (<span style="color:#a6e22e">&lt;=</span> (count-lines (<span style="color:#a6e22e">car</span> c-reg) (<span style="color:#a6e22e">nth</span> <span style="color:#ae81ff">1</span> c-reg)) <span style="color:#ae81ff">1</span>)))
+</span></span><span style="display:flex;"><span>         (<span style="color:#a6e22e">message</span> <span style="color:#e6db74">&#34;(not enough comment lines to hide)&#34;</span>))
+</span></span><span style="display:flex;"><span>        ((or c-reg
+</span></span><span style="display:flex;"><span>             (<span style="color:#a6e22e">funcall</span> hs-looking-at-block-start-p-func)
+</span></span><span style="display:flex;"><span>             (<span style="color:#a6e22e">funcall</span> hs-find-block-beginning-func))
+</span></span><span style="display:flex;"><span>         (hs-hide-block-at-point end c-reg)
+</span></span><span style="display:flex;"><span>         (<span style="color:#a6e22e">run-hooks</span> <span style="color:#e6db74">&#39;hs-hide-hook</span>))))))</span></span></code></pre></div>
+</div>
+<p>
+This function takes condition with <code>(hs-inside-comment-p)</code>, which returns <code>nil</code> or a list of <code>(BEGIN END)</code> of the comment. Then it tries to see if we only one line of comment, you get <code>(not enough comment lines to hide)</code> in <strong>Message</strong> in this case. If we are not in the comments, the function tries to find the beginning using <code>(hs-find-block-beginning)</code> of the block and call <code>(hs-hide-block-at-point)</code></p>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+<code>(hs-hide-block-at-point end comment-reg)</code>
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<p>This function is the <strong>meat</strong> of the hide-show package. It does the actual hiding. It takes additional arguments of <code>end</code> (which will go to block end if true) and <code>comment-reg</code> as the comment region.</p>
+<p>
+The function starts by:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (when (<span style="color:#a6e22e">funcall</span> hs-looking-at-block-start-p-func)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;;when we are at the begining of the block</span>
+</span></span><span style="display:flex;"><span>    (let ((mdata (<span style="color:#a6e22e">match-data</span> <span style="color:#66d9ef">t</span>))
+</span></span><span style="display:flex;"><span>          (header-end (<span style="color:#a6e22e">match-end</span> <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>          p q ov)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">;; `p&#39; is the point at the end of the block beginning, which</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">;; may need to be adjusted. Adjustint p</span>
+</span></span><span style="display:flex;"><span>      (save-excursion
+</span></span><span style="display:flex;"><span>        (<span style="color:#a6e22e">goto-char</span> (<span style="color:#a6e22e">funcall</span> (or hs-adjust-block-beginning <span style="color:#a6e22e">#&#39;identity</span>)
+</span></span><span style="display:flex;"><span>                            header-end))
+</span></span><span style="display:flex;"><span>        (setq p (<span style="color:#a6e22e">line-end-position</span>)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">;; We getting `q&#39;</span>
+</span></span><span style="display:flex;"><span>      (hs-forward-sexp mdata <span style="color:#ae81ff">1</span>) <span style="color:#75715e">;;going forward-by 1 s-expression</span>
+</span></span><span style="display:flex;"><span>      (setq q (if (looking-back hs-block-end-regexp <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>                  (<span style="color:#a6e22e">match-beginning</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>                (<span style="color:#a6e22e">point</span>)))
+</span></span><span style="display:flex;"><span>      ))</span></span></code></pre></div>
+</div>
+<p>
+The <code>(match-data t)</code> gives … and <code>(match-end 0)</code> gives the position of end-of-text from last <strong>entire match</strong>. Afterwards we <em>optionally</em> adjust the block-beginning with defined <code>hs-adjust-block-beginning</code> function. <strong>Finally</strong>, the <code>q</code> is set to the <code>(hs-forward-sexp mdata 1)</code>, which means we are going forward by 1 s-expression.  The expression below:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (setq q (if (looking-back hs-block-end-regexp <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>              (<span style="color:#a6e22e">match-beginning</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            (<span style="color:#a6e22e">point</span>)))</span></span></code></pre></div>
+</div>
+<p>Basically will set q to either a <code>match-beggining</code> of matched <code>hs-block-end-regexp</code> or simply <code>(point)</code>
+<span style="text-decoration: underline;">Now we have everything</span>, the requirement to make <code>hs-hide-block-at-point</code> work is that</p>
+<ol>
+<li>We are at the match beginning of <code>hs-block-start-regexp</code>.</li>
+<li>We can go forward to <code>hs-block-end-regexp</code> by jumping 1 s-expression. <strong>NOTE</strong> the <code>hs-block-end-regexp</code> is not a hard requirement, because we can always set <code>q</code> using <code>(point)</code>. Remember in the python&#39;s setup before. The <code>hs-block-end-regexp</code> is actually simply <code>nil</code>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+How we make it work for CMake Mode.
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<p>CMake language is not friendly to hide-show mode at all, just like Python.  since it does not rely on parenthesis or brackets for organizing the code blocks, we have to come up with something creative, in the python case above, it is done by implementing a special <code>hs-forward-sexp</code> using <code>py-end-of-def-or-class</code>. This effectively makes the hide-show only works with method or class level, no folding for <code>if</code>, <code>for</code>, etc. (Though I think by checking the indentation level you can probably implementing it). Anyway, for CMake, I crafted the <code>hs-block-start-regexp</code> and <code>hs-block-end-regexp</code>.</p>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+<code>hs-block-start-regexp</code>
+</h3>
+<div id="outline-text-headline-7" class="outline-text-3">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (setq hs-block-start-regexp
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;^\\([:blank:]*\\)\\(?1:if\\|function\\|macro\\) *(.*)&#34;</span>)</span></span></code></pre></div>
+</div>
+<p>
+Without turning this block post into a Emacs regular expression <a href="https://www.emacswiki.org/emacs/RegularExpression">crash course</a> as well, the meaning of the expression here simply means to match line that <span style="text-decoration: underline;">maybe</span> starts with blank spaces, followed by either <code>if(someting)</code>, <code>function(something)</code>, <code>macro(something)</code> with maybe space before the parenthesis. This is also just <strong>one level</strong> folding, we pretty much ignore anything like <code>elif ()</code>,  <code>else ()</code>.</p>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+<code>hs-block-end-regexp</code>
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (setq hs-block-end-regexp <span style="color:#e6db74">&#34;^\\([:blank:]*\\)end\\(?1:[A-Za-z]+\\) *(.*)&#34;</span>)</span></span></code></pre></div>
+</div>
+<p>
+The end part is actually really simple, as the language offers explicit syntax for this.</p>
+<p>
+How we can test our matches using <code>re-search-forward</code></p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  <span style="color:#75715e">;; should return if or function or macro</span>
+</span></span><span style="display:flex;"><span>  (prog2 (<span style="color:#a6e22e">re-search-forward</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;^\\([:blank:]*\\)\\(?1:if\\|function\\|macro\\) *(.*)&#34;</span>)
+</span></span><span style="display:flex;"><span>      (match-string-no-properties <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">;; should return anything after end</span>
+</span></span><span style="display:flex;"><span>  (prog2 (<span style="color:#a6e22e">re-search-forward</span> <span style="color:#e6db74">&#34;^\\([:blank:]*\\)end\\(?1:[A-Za-z]+\\) *(.*)&#34;</span>)
+</span></span><span style="display:flex;"><span>      (match-string-no-properties <span style="color:#ae81ff">1</span>))</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
+Implementing <code>hs-forward-sexp</code> for CMake
+</h3>
+<div id="outline-text-headline-9" class="outline-text-3">
+<p>Right now if we stands at the beginning of CMake if statement, what we can do, the obvious thing is we can do is search for a <code>re-block-end-regexp</code>, however it may or may not be the same <code>re-block-beginning-regexp</code> we are looking for. A simple example if we stands at <code>function()</code>  and next end expression would match a <code>endif()</code>. What we want is to match the first <code>endfunction())</code> we meet.</p>
+<p>
+Here is an example of such implementation:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (defun hs-cmake-forward-sexp-once ()
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;forward cmake s-expression once&#34;</span>
+</span></span><span style="display:flex;"><span>    (when (<span style="color:#a6e22e">looking-at</span> hs-block-start-regexp)
+</span></span><span style="display:flex;"><span>      (let ((matched-key-beg (match-string-no-properties <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>            (matched-key-end <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>            end-point)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">;; now we search for the end regular expression</span>
+</span></span><span style="display:flex;"><span>        (save-excursion
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">;; loop until we find the END that matches the START </span>
+</span></span><span style="display:flex;"><span>          (while (not (string= matched-key-beg matched-key-end))
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">;; search forward</span>
+</span></span><span style="display:flex;"><span>            (<span style="color:#a6e22e">re-search-forward</span> hs-block-end-regexp)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">;; and updating the point and end match data.</span>
+</span></span><span style="display:flex;"><span>            (setq matched-key-end (match-string-no-properties <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>            (setq end-point (<span style="color:#a6e22e">match-beginning</span> <span style="color:#ae81ff">0</span>)))
+</span></span><span style="display:flex;"><span>          )
+</span></span><span style="display:flex;"><span>        (<span style="color:#a6e22e">goto-char</span> end-point))))</span></span></code></pre></div>
+</div>
+<p>
+The function <code>(hs-cmake-forward-sexp-once)</code> will try to jump one cmake expression block. The <code>(hs-cmake-forward-sexp ())</code> will do this N times.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(defun hs-cmake-forward-sexp (N)
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;forward cmake s-expression ARGS times&#34;</span>
+</span></span><span style="display:flex;"><span>    (dotimes (i N)
+</span></span><span style="display:flex;"><span>      (hs-cmake-forward-sexp-once)))</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+Putting it all together
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<p>We simply insert our CMake settings to the <code>hs-special-modes-alist</code>.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  <span style="color:#75715e">;; same as before</span>
+</span></span><span style="display:flex;"><span>  (defun hs-cmake-forward-sexp-once ()
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">;; same as before</span>
+</span></span><span style="display:flex;"><span>  (defun hs-cmake-forward-sexp (args)
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  (add-to-list <span style="color:#e6db74">&#39;hs-special-modes-alist</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#f92672">&#39;</span>(cmake-mode
+</span></span><span style="display:flex;"><span>                 <span style="color:#75715e">;;match the begining</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#e6db74">&#34;^\\([:blank:]*\\)\\(?1:if\\|function\\|macro\\) *(.*)&#34;</span>
+</span></span><span style="display:flex;"><span>                                          <span style="color:#75715e">;match the end</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#e6db74">&#34;^\\([:blank:]*\\)end\\(?1:[A-Za-z]+\\) *(.*)&#34;</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#75715e">;;comment</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#e6db74">&#34;#&#34;</span>
+</span></span><span style="display:flex;"><span>                 hs-cmake-forward-sexp
+</span></span><span style="display:flex;"><span>                 <span style="color:#66d9ef">nil</span>))</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+	      <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/hideshow-emacs/&amp;text=Customizing%20Hide-Show%20for%20CMake%20Mode%20in%20Emacs" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/hideshow-emacs/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/hideshow-emacs/&amp;title=Customizing%20Hide-Show%20for%20CMake%20Mode%20in%20Emacs" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/hideshow-emacs/&amp;title=Customizing%20Hide-Show%20for%20CMake%20Mode%20in%20Emacs" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/hideshow-emacs/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="http://localhost:1313/tags/journal">journal</a>
+          
+            
+            <a href="http://localhost:1313/tags/emacs">Emacs</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+	      
+
+
+	
+	
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/ebus/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Event bus implementation</h2>
+              <p class="post-nav-excerpt"><p>
+Recently I open sourced a small C++ library called <a href="https://github.com/xeechou/ebus">eBus</a>(Event Bus), it came along separated from another project I was working on. The idea, or should I say the interface was not very original, I took the inspiration from a much more complicated <a href="https://www.docs.o3de.org/docs/user-guide/programming/messaging/ebus-design/">Event Buses In O3DE</a>. The goal is simple, providing an easy to use <a href="https://refactoring.guru/design-patterns/observer">Observer</a> pattern so your can decouple the code from the callers to its callees.</p>
+<p>
+Instead of doing this:</p></p>
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+    
+    
+    
+  </body>
+</html>

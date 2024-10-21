@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -72,7 +72,7 @@
   
     
       <span id="home-button" class="nav-button">
-        <a class="home-button" href="http://localhost:1313/" title="Home">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
           <i class="icon-left-arrow"></i> Home
         </a>
       </span>
@@ -95,7 +95,7 @@
     </span>
 
     
-      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
     
   </div>
 </header>
@@ -124,15 +124,15 @@ How
 <div id="outline-text-headline-2" class="outline-text-3">
 <p>The killer feature of Emacs is <a href="https://orgmode.org/">Org mode.</a> One of the feature in it is <a href="https://orgmode.org/worg/org-contrib/babel/intro.html">Babel</a>, which can allow you write and evaluate code snippet directly inside your org files, you can tangle your code snippets, which means to compile them into a generated file. Babel has a special support for Emacs configuration with <a href="https://orgmode.org/worg/org-contrib/babel/intro.html#emacs-initialization">org-babel-load-file</a>. Your lisp code is automatically generated and loaded for configuration. All you have to do is writing a small snippet in the init file:</p>
 <div class="src src-emacs-lisp">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; Load up Org Mode and (now included) Org Babel for elisp embedded in Org Mode files</span>
-</span></span><span style="display:flex;"><span>(setq dotfiles-dir (<span style="color:#a6e22e">file-name-directory</span> (or (<span style="color:#a6e22e">buffer-file-name</span>) load-file-name)))
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#888;font-style:italic">;; Load up Org Mode and (now included) Org Babel for elisp embedded in Org Mode files</span>
+</span></span><span style="display:flex;"><span>(<span style="font-weight:bold;font-style:italic">setq</span> <span style="color:#666;font-weight:bold;font-style:italic">dotfiles-dir</span> (<span style="color:#666;font-weight:bold;font-style:italic">file-name-directory</span> (<span style="font-weight:bold;font-style:italic">or</span> (<span style="color:#666;font-weight:bold;font-style:italic">buffer-file-name</span>) <span style="color:#666;font-weight:bold;font-style:italic">load-file-name</span>)))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">;; load up Org and Org-babel</span>
-</span></span><span style="display:flex;"><span>(require <span style="color:#e6db74">&#39;org</span>)
-</span></span><span style="display:flex;"><span>(require <span style="color:#e6db74">&#39;ob-tangle</span>)
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">;; load up Org and Org-babel</span>
+</span></span><span style="display:flex;"><span>(<span style="font-weight:bold;font-style:italic">require</span> <span style="color:#666;font-style:italic">&#39;org</span>)
+</span></span><span style="display:flex;"><span>(<span style="font-weight:bold;font-style:italic">require</span> <span style="color:#666;font-style:italic">&#39;ob-tangle</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">;; load up all literate org-mode files in this directory</span>
-</span></span><span style="display:flex;"><span>(<span style="color:#a6e22e">mapc</span> <span style="color:#a6e22e">#&#39;</span>org-babel-load-file (<span style="color:#a6e22e">directory-files</span> dotfiles-dir <span style="color:#66d9ef">t</span> <span style="color:#e6db74">&#34;\\.org$&#34;</span>))</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">;; load up all literate org-mode files in this directory</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#666;font-weight:bold;font-style:italic">mapc</span> <span style="color:#666;font-weight:bold;font-style:italic">#&#39;</span><span style="color:#666;font-weight:bold;font-style:italic">org-babel-load-file</span> (<span style="color:#666;font-weight:bold;font-style:italic">directory-files</span> <span style="color:#666;font-weight:bold;font-style:italic">dotfiles-dir</span> <span style="color:#666;font-weight:bold;font-style:italic">t</span> <span style="color:#666;font-style:italic">&#34;\\.org$&#34;</span>))</span></span></code></pre></div>
 </div>
 <p>
 it will compile each <code>config.org</code> into a <code>config.el[c]</code> and load them. All you have to do is starting the conversion. If you have more than a insignificant collection of elisp config, it will be a long and tedious process.</p>
@@ -143,37 +143,37 @@ NOWEB
 <div id="outline-text-headline-3" class="outline-text-4">
 <p>One advantage over writing lisp directly is <strong>NOWEB template</strong>, it allows you to break a long configuration snippet into parts for better readability. It works a bit like HTML template libraries like <a href="https://jinja.palletsprojects.com/en/2.10.x/">Jinja</a>, not as complex but good for lisp code. One of classic example is breaking down the org templates.</p>
 <div class="src src-emacs-lisp">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (setq org-capture-templates
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#39;</span>(
-</span></span><span style="display:flex;"><span>        &lt;&lt;ORG_CAPTURE&gt;&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (<span style="font-weight:bold;font-style:italic">setq</span> <span style="color:#666;font-weight:bold;font-style:italic">org-capture-templates</span>
+</span></span><span style="display:flex;"><span>      &#39;(
+</span></span><span style="display:flex;"><span>        <span style="color:#666;font-weight:bold;font-style:italic">&lt;&lt;ORG_CAPTURE&gt;&gt;</span>
 </span></span><span style="display:flex;"><span>       )
 </span></span><span style="display:flex;"><span>  )</span></span></code></pre></div>
 </div>
 <p>
 Put int <code>misc.org</code></p>
 <div class="src src-emacs-lisp">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  <span style="color:#75715e">;; misc tasks, moving coding or writing later?</span>
-</span></span><span style="display:flex;"><span>  (<span style="color:#e6db74">&#34;m&#34;</span> <span style="color:#e6db74">&#34;Miscs&#34;</span> entry
-</span></span><span style="display:flex;"><span>               (file+headline <span style="color:#f92672">,</span>(my/org-file <span style="color:#e6db74">&#34;miscs.org&#34;</span>) <span style="color:#e6db74">&#34;Tasks&#34;</span>)
-</span></span><span style="display:flex;"><span>               <span style="color:#e6db74">&#34;* TODO %?\n%i\n  %a&#34;</span> :prepend <span style="color:#66d9ef">t</span>)</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">;; misc tasks, moving coding or writing later?</span>
+</span></span><span style="display:flex;"><span>  (<span style="color:#666;font-style:italic">&#34;m&#34;</span> <span style="color:#666;font-style:italic">&#34;Miscs&#34;</span> <span style="color:#666;font-weight:bold;font-style:italic">entry</span>
+</span></span><span style="display:flex;"><span>               (<span style="color:#666;font-weight:bold;font-style:italic">file+headline</span> ,(<span style="color:#666;font-weight:bold;font-style:italic">my/org-file</span> <span style="color:#666;font-style:italic">&#34;miscs.org&#34;</span>) <span style="color:#666;font-style:italic">&#34;Tasks&#34;</span>)
+</span></span><span style="display:flex;"><span>               <span style="color:#666;font-style:italic">&#34;* TODO %?\n%i\n  %a&#34;</span> <span style="font-weight:bold;font-style:italic">:prepend</span> <span style="color:#666;font-weight:bold;font-style:italic">t</span>)</span></span></code></pre></div>
 </div>
 <p>
 Capture some ideas in <code>thoughts.org</code></p>
 <div class="src src-emacs-lisp">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  <span style="color:#75715e">;; my ideas</span>
-</span></span><span style="display:flex;"><span>  (<span style="color:#e6db74">&#34;s&#34;</span> <span style="color:#e6db74">&#34;Thoughts&#34;</span> entry
-</span></span><span style="display:flex;"><span>   (file+headline <span style="color:#f92672">,</span>(my/org-file <span style="color:#e6db74">&#34;thoughts.org&#34;</span>) <span style="color:#e6db74">&#34;Ideas&#34;</span>)
-</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">&#34;* %?\n %i\n \n\n&#34;</span>
-</span></span><span style="display:flex;"><span>   :prepend <span style="color:#66d9ef">t</span>)</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">;; my ideas</span>
+</span></span><span style="display:flex;"><span>  (<span style="color:#666;font-style:italic">&#34;s&#34;</span> <span style="color:#666;font-style:italic">&#34;Thoughts&#34;</span> <span style="color:#666;font-weight:bold;font-style:italic">entry</span>
+</span></span><span style="display:flex;"><span>   (<span style="color:#666;font-weight:bold;font-style:italic">file+headline</span> ,(<span style="color:#666;font-weight:bold;font-style:italic">my/org-file</span> <span style="color:#666;font-style:italic">&#34;thoughts.org&#34;</span>) <span style="color:#666;font-style:italic">&#34;Ideas&#34;</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#666;font-style:italic">&#34;* %?\n %i\n \n\n&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="font-weight:bold;font-style:italic">:prepend</span> <span style="color:#666;font-weight:bold;font-style:italic">t</span>)</span></span></code></pre></div>
 </div>
 <p>
 Something to read.</p>
 <div class="src src-emacs-lisp">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  <span style="color:#75715e">;; Learning items</span>
-</span></span><span style="display:flex;"><span>  (<span style="color:#e6db74">&#34;r&#34;</span> <span style="color:#e6db74">&#34;Reading&#34;</span> entry
-</span></span><span style="display:flex;"><span>   (file+headline <span style="color:#f92672">,</span>(my/org-file <span style="color:#e6db74">&#34;reading.org&#34;</span>) <span style="color:#e6db74">&#34;Articles&#34;</span>)
-</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">&#34;** TODO %?\n%i\n %^L\n \n&#34;</span>
-</span></span><span style="display:flex;"><span>   :prepend <span style="color:#66d9ef">t</span>) <span style="color:#75715e">;;why the linebreak didn&#39;t work?</span></span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">;; Learning items</span>
+</span></span><span style="display:flex;"><span>  (<span style="color:#666;font-style:italic">&#34;r&#34;</span> <span style="color:#666;font-style:italic">&#34;Reading&#34;</span> <span style="color:#666;font-weight:bold;font-style:italic">entry</span>
+</span></span><span style="display:flex;"><span>   (<span style="color:#666;font-weight:bold;font-style:italic">file+headline</span> ,(<span style="color:#666;font-weight:bold;font-style:italic">my/org-file</span> <span style="color:#666;font-style:italic">&#34;reading.org&#34;</span>) <span style="color:#666;font-style:italic">&#34;Articles&#34;</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#666;font-style:italic">&#34;** TODO %?\n%i\n %^L\n \n&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="font-weight:bold;font-style:italic">:prepend</span> <span style="color:#666;font-weight:bold;font-style:italic">t</span>) <span style="color:#888;font-style:italic">;;why the linebreak didn&#39;t work?</span></span></span></code></pre></div>
 </div>
 <p>
 Each entry of the template can be isolated and you have to admit it&#39;s easier to read.</p>
@@ -186,20 +186,20 @@ Tangle or load
 <div id="outline-text-headline-4" class="outline-text-4">
 <p>Once we are done with the configurations. One small optimization is reduce the tangle rate? Evidently you do not need to tangle the org file every single time for loading. Only time it&#39;s required is when there is any changes to the org file. Fortunately, it&#39;s quite easy to do. We just selectively to tangle based on the file <strong>modification-time</strong>.</p>
 <div class="src src-emacs-lisp">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(let* ((dotfile-dir (<span style="color:#a6e22e">file-name-directory</span> (or (<span style="color:#a6e22e">buffer-file-name</span>)
-</span></span><span style="display:flex;"><span>					     load-file-name)))
-</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;; disabled</span>
-</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;; (etc-dir   (expand-file-name &#34;etc&#34; dotfile-dir))</span>
-</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;; (etc-files (directory-files etc-dir t &#34;\\.org$&#34;))</span>
-</span></span><span style="display:flex;"><span>       (config-org  (<span style="color:#a6e22e">expand-file-name</span> <span style="color:#e6db74">&#34;README.org&#34;</span> dotfile-dir))
-</span></span><span style="display:flex;"><span>       (config-el   (<span style="color:#a6e22e">expand-file-name</span> <span style="color:#e6db74">&#34;README.el&#34;</span>  dotfile-dir)))
-</span></span><span style="display:flex;"><span>  (require <span style="color:#e6db74">&#39;org</span>)
-</span></span><span style="display:flex;"><span>  (require <span style="color:#e6db74">&#39;ob-tangle</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">;;tangle and load if newer than compiled</span>
-</span></span><span style="display:flex;"><span>  (if (or (not (<span style="color:#a6e22e">file-exists-p</span> config-el))
-</span></span><span style="display:flex;"><span>          (<span style="color:#a6e22e">file-newer-than-file-p</span> config-org config-el))
-</span></span><span style="display:flex;"><span>      (org-babel-load-file config-org <span style="color:#66d9ef">t</span>)
-</span></span><span style="display:flex;"><span>    (load-file config-el)))</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(<span style="font-weight:bold;font-style:italic">let*</span> ((<span style="color:#666;font-weight:bold;font-style:italic">dotfile-dir</span> (<span style="color:#666;font-weight:bold;font-style:italic">file-name-directory</span> (<span style="font-weight:bold;font-style:italic">or</span> (<span style="color:#666;font-weight:bold;font-style:italic">buffer-file-name</span>)
+</span></span><span style="display:flex;"><span>					     <span style="color:#666;font-weight:bold;font-style:italic">load-file-name</span>)))
+</span></span><span style="display:flex;"><span>       <span style="color:#888;font-style:italic">;; disabled</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#888;font-style:italic">;; (etc-dir   (expand-file-name &#34;etc&#34; dotfile-dir))</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#888;font-style:italic">;; (etc-files (directory-files etc-dir t &#34;\\.org$&#34;))</span>
+</span></span><span style="display:flex;"><span>       (<span style="color:#666;font-weight:bold;font-style:italic">config-org</span>  (<span style="color:#666;font-weight:bold;font-style:italic">expand-file-name</span> <span style="color:#666;font-style:italic">&#34;README.org&#34;</span> <span style="color:#666;font-weight:bold;font-style:italic">dotfile-dir</span>))
+</span></span><span style="display:flex;"><span>       (<span style="color:#666;font-weight:bold;font-style:italic">config-el</span>   (<span style="color:#666;font-weight:bold;font-style:italic">expand-file-name</span> <span style="color:#666;font-style:italic">&#34;README.el&#34;</span>  <span style="color:#666;font-weight:bold;font-style:italic">dotfile-dir</span>)))
+</span></span><span style="display:flex;"><span>  (<span style="font-weight:bold;font-style:italic">require</span> <span style="color:#666;font-style:italic">&#39;org</span>)
+</span></span><span style="display:flex;"><span>  (<span style="font-weight:bold;font-style:italic">require</span> <span style="color:#666;font-style:italic">&#39;ob-tangle</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">;;tangle and load if newer than compiled</span>
+</span></span><span style="display:flex;"><span>  (<span style="font-weight:bold;font-style:italic">if</span> (<span style="font-weight:bold;font-style:italic">or</span> (<span style="color:#666;font-weight:bold;font-style:italic">not</span> (<span style="color:#666;font-weight:bold;font-style:italic">file-exists-p</span> <span style="color:#666;font-weight:bold;font-style:italic">config-el</span>))
+</span></span><span style="display:flex;"><span>          (<span style="color:#666;font-weight:bold;font-style:italic">file-newer-than-file-p</span> <span style="color:#666;font-weight:bold;font-style:italic">config-org</span> <span style="color:#666;font-weight:bold;font-style:italic">config-el</span>))
+</span></span><span style="display:flex;"><span>      (<span style="color:#666;font-weight:bold;font-style:italic">org-babel-load-file</span> <span style="color:#666;font-weight:bold;font-style:italic">config-org</span> <span style="color:#666;font-weight:bold;font-style:italic">t</span>)
+</span></span><span style="display:flex;"><span>    (<span style="color:#666;font-weight:bold;font-style:italic">load-file</span> <span style="color:#666;font-weight:bold;font-style:italic">config-el</span>)))</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -234,22 +234,22 @@ Happy hacking, folks.</p>
 <div class="post-share">
 
   
-  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/emacs-literate-config/&amp;text=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/emacs-literate-config/&amp;text=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
     <i class="icon-twitter"></i><span class="hidden">Twitter</span>
   </a>
 
   
-  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/emacs-literate-config/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/emacs-literate-config/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
     <i class="icon-facebook"></i><span class="hidden">Facebook</span>
   </a>
 
   
-  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/emacs-literate-config/&amp;title=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/emacs-literate-config/&amp;title=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
     <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
   </a>
 
   
-  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/emacs-literate-config/&amp;title=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/emacs-literate-config/&amp;title=Moving%20%20to%20literate%20Emacs%20configuration." onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
     <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
   </a>
 
@@ -279,7 +279,7 @@ Happy hacking, folks.</p>
     };
 
     
-    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/emacs-literate-config/");
+    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/emacs-literate-config/");
   </script>
 
   <div class="clear"></div>
@@ -288,7 +288,7 @@ Happy hacking, folks.</p>
         <aside class="post-tags">
           
             
-            <a href="http://localhost:1313/tags/emacs">emacs</a>
+            <a href="https://xeechou.net/tags/emacs">emacs</a>
           
         </aside>
 

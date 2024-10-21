@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -72,7 +72,7 @@
   
     
       <span id="home-button" class="nav-button">
-        <a class="home-button" href="http://localhost:1313/" title="Home">
+        <a class="home-button" href="https://xeechou.net/" title="Home">
           <i class="icon-left-arrow"></i> Home
         </a>
       </span>
@@ -95,7 +95,7 @@
     </span>
 
     
-      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
+      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
     
   </div>
 </header>
@@ -118,22 +118,22 @@ TU-Wien&#39;s <a href="https://github.com/cg-tuwien/Auto-Vk-Toolkit">Auto Vk fra
 <div id="outline-text-headline-1" class="outline-text-3">
 <p>Preparing user with an application template, user need to fill up the `initialize()` and <code>update()</code> and <code>render()</code>. Let&#39;s see how it creates a render pass.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>mPipeline <span style="color:#f92672">=</span> avk<span style="color:#f92672">::</span>context().create_graphics_pipeline_for(
-</span></span><span style="display:flex;"><span>	avk<span style="color:#f92672">::</span>vertex_shader(<span style="color:#e6db74">&#34;shaders/a_triangle.vert&#34;</span>),
-</span></span><span style="display:flex;"><span>	avk<span style="color:#f92672">::</span>fragment_shader(<span style="color:#e6db74">&#34;shaders/a_triangle.frag&#34;</span>),
-</span></span><span style="display:flex;"><span>	avk<span style="color:#f92672">::</span>cfg<span style="color:#f92672">::</span>front_face<span style="color:#f92672">::</span>define_front_faces_to_be_clockwise(),
-</span></span><span style="display:flex;"><span>	avk<span style="color:#f92672">::</span>cfg<span style="color:#f92672">::</span>viewport_depth_scissors_config<span style="color:#f92672">::</span>from_framebuffer(avk<span style="color:#f92672">::</span>context().main_window()<span style="color:#f92672">-&gt;</span>backbuffer_reference_at_index(<span style="color:#ae81ff">0</span>)),
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Just use the main window&#39;s renderpass for this pipeline:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	avk<span style="color:#f92672">::</span>context().main_window()<span style="color:#f92672">-&gt;</span>renderpass()
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>mPipeline = avk::context().create_graphics_pipeline_for(
+</span></span><span style="display:flex;"><span>	avk::vertex_shader(<span style="color:#666;font-style:italic">&#34;shaders/a_triangle.vert&#34;</span>),
+</span></span><span style="display:flex;"><span>	avk::fragment_shader(<span style="color:#666;font-style:italic">&#34;shaders/a_triangle.frag&#34;</span>),
+</span></span><span style="display:flex;"><span>	avk::cfg::front_face::define_front_faces_to_be_clockwise(),
+</span></span><span style="display:flex;"><span>	avk::cfg::viewport_depth_scissors_config::from_framebuffer(avk::context().main_window()-&gt;backbuffer_reference_at_index(0)),
+</span></span><span style="display:flex;"><span>	<span style="color:#888;font-style:italic">// Just use the main window&#39;s renderpass for this pipeline:
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>	avk::context().main_window()-&gt;renderpass()
 </span></span><span style="display:flex;"><span>);</span></span></code></pre></div>
 </div>
 <p>
 So this API uses a fix set of parameters to set up a graphics pipeline, it takes the shaders, fixed functions and parameters and a render pass pointer. It is very close to Vulkan itself actually, you do have some syntax sugar to create Vulkan objects for you but you are exposed to them.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>avk<span style="color:#f92672">::</span>context().create_renderpass({
-</span></span><span style="display:flex;"><span>				avk<span style="color:#f92672">::</span>attachment<span style="color:#f92672">::</span>declare(avk<span style="color:#f92672">::</span>format_from_window_color_buffer(avk<span style="color:#f92672">::</span>context().main_window()), avk<span style="color:#f92672">::</span>on_load<span style="color:#f92672">::</span>clear.from_previous_layout(avk<span style="color:#f92672">::</span>layout<span style="color:#f92672">::</span>undefined), avk<span style="color:#f92672">::</span>usage<span style="color:#f92672">::</span>color(<span style="color:#ae81ff">0</span>)     , avk<span style="color:#f92672">::</span>on_store<span style="color:#f92672">::</span>store),	 
-</span></span><span style="display:flex;"><span>				avk<span style="color:#f92672">::</span>attachment<span style="color:#f92672">::</span>declare(avk<span style="color:#f92672">::</span>format_from_window_depth_buffer(avk<span style="color:#f92672">::</span>context().main_window()), avk<span style="color:#f92672">::</span>on_load<span style="color:#f92672">::</span>clear.from_previous_layout(avk<span style="color:#f92672">::</span>layout<span style="color:#f92672">::</span>undefined), avk<span style="color:#f92672">::</span>usage<span style="color:#f92672">::</span>depth_stencil, avk<span style="color:#f92672">::</span>on_store<span style="color:#f92672">::</span>dont_care)
-</span></span><span style="display:flex;"><span>			}, avk<span style="color:#f92672">::</span>context().main_window()<span style="color:#f92672">-&gt;</span>renderpass_reference().subpass_dependencies()),</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>avk::context().create_renderpass({
+</span></span><span style="display:flex;"><span>				avk::attachment::declare(avk::format_from_window_color_buffer(avk::context().main_window()), avk::on_load::clear.from_previous_layout(avk::layout::undefined), avk::usage::color(0)     , avk::on_store::store),	 
+</span></span><span style="display:flex;"><span>				avk::attachment::declare(avk::format_from_window_depth_buffer(avk::context().main_window()), avk::on_load::clear.from_previous_layout(avk::layout::undefined), avk::usage::depth_stencil, avk::on_store::dont_care)
+</span></span><span style="display:flex;"><span>			}, avk::context().main_window()-&gt;renderpass_reference().subpass_dependencies()),</span></span></code></pre></div>
 </div>
 <p>
 The way it creates render pass is okay, you define the attachments then sub-passes that uses them, then it should give you a default 2 sub-pass. For the resource creation you will need to manually create the vertex buffers, materials, samples all together.</p>
@@ -142,16 +142,16 @@ So expect to write good a few thousands of lines of code to get a complete pipel
 <p>
 But I really like some of its APIs though. The updater API is interesting.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">//hot updating the shaders
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mUpdater<span style="color:#f92672">-&gt;</span>on(avk<span style="color:#f92672">::</span>shader_files_changed_event(mPipeline.as_reference()))
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">//hot updating the shaders
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>mUpdater-&gt;on(avk::shader_files_changed_event(mPipeline.as_reference()))
 </span></span><span style="display:flex;"><span>	.update(mPipeline);
 </span></span><span style="display:flex;"><span>	
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//swapchain update
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mUpdater<span style="color:#f92672">-&gt;</span>on(
-</span></span><span style="display:flex;"><span>	avk<span style="color:#f92672">::</span>swapchain_resized_event(avk<span style="color:#f92672">::</span>context().main_window()), <span style="color:#75715e">// In the case of window resizes,
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	avk<span style="color:#f92672">::</span>shader_files_changed_event(mPipeline.as_reference())   <span style="color:#75715e">// or in the case of changes to the shader files (hot reloading), ...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>)
-</span></span><span style="display:flex;"><span>.update(mPipeline); <span style="color:#75715e">// ... it will recreate the pipeline.
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//swapchain update
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>mUpdater-&gt;on(
+</span></span><span style="display:flex;"><span>	avk::swapchain_resized_event(avk::context().main_window()), <span style="color:#888;font-style:italic">// In the case of window resizes,
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>	avk::shader_files_changed_event(mPipeline.as_reference())   <span style="color:#888;font-style:italic">// or in the case of changes to the shader files (hot reloading), ...
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>)
+</span></span><span style="display:flex;"><span>.update(mPipeline); <span style="color:#888;font-style:italic">// ... it will recreate the pipeline.
 </span></span></span></code></pre></div>
 </div>
 <p>
@@ -166,8 +166,8 @@ It has two methods, the <code>on()</code> which register a event, then the <code
 <p>
 The vkcv framework is another framework based on Vulkan-HPP. It&#39;s does not have a application framework, which means you can write everything in <code>main()</code>. The good part is that the <code>vkcv</code> framework has quite a few additional APIs to manage the <code>scene</code>, <code>camera</code> and so on. But anyway, lets look how the render pipeline is created</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vkcv<span style="color:#f92672">::</span>GraphicsPipelineHandle firstMeshPipeline <span style="color:#f92672">=</span> core.createGraphicsPipeline(
-</span></span><span style="display:flex;"><span>		vkcv<span style="color:#f92672">::</span>GraphicsPipelineConfig(
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vkcv::GraphicsPipelineHandle firstMeshPipeline = core.createGraphicsPipeline(
+</span></span><span style="display:flex;"><span>		vkcv::GraphicsPipelineConfig(
 </span></span><span style="display:flex;"><span>				firstMeshProgram,
 </span></span><span style="display:flex;"><span>				firstMeshPass,
 </span></span><span style="display:flex;"><span>				{ firstMeshLayout },
@@ -180,16 +180,16 @@ It is interestingly the same actually. Taking number of parameters which were cr
 <p>
 The good part of the API I think is Vulkan feature request,</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>features.requireFeature<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>PhysicalDevice16BitStorageFeatures<span style="color:#f92672">&gt;</span>(
-</span></span><span style="display:flex;"><span>		[](vk<span style="color:#f92672">::</span>PhysicalDevice16BitStorageFeatures <span style="color:#f92672">&amp;</span>features) {
-</span></span><span style="display:flex;"><span>			features.setStorageBuffer16BitAccess(true);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>features.requireFeature&lt;vk::PhysicalDevice16BitStorageFeatures&gt;(
+</span></span><span style="display:flex;"><span>		[](vk::PhysicalDevice16BitStorageFeatures &amp;features) {
+</span></span><span style="display:flex;"><span>			features.setStorageBuffer16BitAccess(<span style="font-weight:bold;font-style:italic">true</span>);
 </span></span><span style="display:flex;"><span>		}
 </span></span><span style="display:flex;"><span>);
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//then in the context
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vkcv<span style="color:#f92672">::</span>Core core <span style="color:#f92672">=</span> vkcv<span style="color:#f92672">::</span>Core<span style="color:#f92672">::</span>create(
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//then in the context
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkcv::Core core = vkcv::Core::create(
 </span></span><span style="display:flex;"><span>		applicationName,
-</span></span><span style="display:flex;"><span>		VK_MAKE_VERSION(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>),
-</span></span><span style="display:flex;"><span>		{ vk<span style="color:#f92672">::</span>QueueFlagBits<span style="color:#f92672">::</span>eGraphics ,vk<span style="color:#f92672">::</span>QueueFlagBits<span style="color:#f92672">::</span>eCompute , vk<span style="color:#f92672">::</span>QueueFlagBits<span style="color:#f92672">::</span>eTransfer },
+</span></span><span style="display:flex;"><span>		VK_MAKE_VERSION(0, 0, 1),
+</span></span><span style="display:flex;"><span>		{ vk::QueueFlagBits::eGraphics ,vk::QueueFlagBits::eCompute , vk::QueueFlagBits::eTransfer },
 </span></span><span style="display:flex;"><span>		features
 </span></span><span style="display:flex;"><span>);</span></span></code></pre></div>
 </div>
@@ -272,22 +272,22 @@ Comments
 <div class="post-share">
 
   
-  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/vulkan-frameworks/&amp;text=Comparing%20Vulkan%20Frameworks" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/vulkan-frameworks/&amp;text=Comparing%20Vulkan%20Frameworks" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
     <i class="icon-twitter"></i><span class="hidden">Twitter</span>
   </a>
 
   
-  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/vulkan-frameworks/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/vulkan-frameworks/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
     <i class="icon-facebook"></i><span class="hidden">Facebook</span>
   </a>
 
   
-  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/vulkan-frameworks/&amp;title=Comparing%20Vulkan%20Frameworks" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/vulkan-frameworks/&amp;title=Comparing%20Vulkan%20Frameworks" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
     <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
   </a>
 
   
-  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/vulkan-frameworks/&amp;title=Comparing%20Vulkan%20Frameworks" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/vulkan-frameworks/&amp;title=Comparing%20Vulkan%20Frameworks" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
     <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
   </a>
 
@@ -317,7 +317,7 @@ Comments
     };
 
     
-    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/vulkan-frameworks/");
+    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/vulkan-frameworks/");
   </script>
 
   <div class="clear"></div>
@@ -326,7 +326,7 @@ Comments
         <aside class="post-tags">
           
             
-            <a href="http://localhost:1313/tags/graphics">graphics</a>
+            <a href="https://xeechou.net/tags/graphics">graphics</a>
           
         </aside>
 

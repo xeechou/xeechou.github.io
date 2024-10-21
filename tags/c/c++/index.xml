@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>C/C&#43;&#43; on Insaturé</title>
-    <link>http://localhost:1313/tags/c/c&#43;&#43;/</link>
+    <link>https://xeechou.net/tags/c/c&#43;&#43;/</link>
     <description>Recent content in C/C&#43;&#43; on Insaturé</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 04 Nov 2016 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/c/c++/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://xeechou.net/tags/c/c++/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Template Deduction for C&#43;&#43;</title>
-      <link>http://localhost:1313/posts/template_deduction/</link>
+      <link>https://xeechou.net/posts/template_deduction/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/template_deduction/</guid>
+      <guid>https://xeechou.net/posts/template_deduction/</guid>
       <description>&lt;p&gt;Template is a confusing and hard features in C++ if you want use it well, and I&#xA;think it is also one of the reason which causes c++ programmers cannot&#xA;understand each other. Sometimes the Deduction rule for c++ is really confusing,&#xA;you don&amp;rsquo;t understand why you code doesn&amp;rsquo;t work or why it works. And Since&#xA;&lt;strong&gt;STL&lt;/strong&gt; heavily uses nesting Templates, both your compiler and your mind suffers&#xA;from that.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Everything you do I can do it with a double pointer in C</title>
-      <link>http://localhost:1313/posts/double_pointer_in_c/</link>
+      <link>https://xeechou.net/posts/double_pointer_in_c/</link>
       <pubDate>Sun, 21 Aug 2016 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/double_pointer_in_c/</guid>
+      <guid>https://xeechou.net/posts/double_pointer_in_c/</guid>
       <description>&lt;p&gt;It is 2016, low level coding is not needed anymore. We have programming&#xA;languages like &lt;code&gt;javascript&lt;/code&gt; and python. When people code everything with a class&#xA;and related methods. But do you remember we have a programming language called&#xA;C? When we had no class, templates, operator-override or implicit constructor at&#xA;esthat time. You actually know what are doing with C, no magic!&lt;/p&gt;&#xA;&lt;p&gt;I claim no expert to programming, since I only have a four-year-old programming&#xA;life. But even you are inexperienced like me, you should still be able to code&#xA;some thing in C. IT IS fatigue to code in C, you have no standard containers to&#xA;rely on, you spend 10 hours to build a perfect &lt;code&gt;deque&lt;/code&gt; data type which works on&#xA;amortized O(1) complexity and has no memory leaks before you are able to work on&#xA;your project. Awesome!!! But why? Why try to build a huge robust data structure&#xA;in a non-OOP language? Instead of trying simulate constructors and destructors,&#xA;you could always use a double pointer to do the job. Have you ever seen Linus&#xA;Torvalds&amp;rsquo;s double pointer code? It removes on special case where you would make&#xA;mistakes.&lt;/p&gt;</description>
     </item>
   </channel>

@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Computer Vision on Insaturé</title>
-    <link>http://localhost:1313/categories/computer-vision/</link>
+    <link>https://xeechou.net/categories/computer-vision/</link>
     <description>Recent content in Computer Vision on Insaturé</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 26 Nov 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/computer-vision/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://xeechou.net/categories/computer-vision/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rotations</title>
-      <link>http://localhost:1313/posts/rotations/</link>
+      <link>https://xeechou.net/posts/rotations/</link>
       <pubDate>Sun, 26 Nov 2017 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/rotations/</guid>
+      <guid>https://xeechou.net/posts/rotations/</guid>
       <description>&lt;p&gt;Rotation, combined with translation and scaling, are the three affin transforms&#xA;we do every day in the 3D nutshell universe. The rotation itself, however, is&#xA;somehow much more complicated than the other two transform, it is one really&#xA;needs a matrix representation among all three. Representations and computation&#xA;of it has been developed for years. We have systems like &lt;strong&gt;Axis-angle&lt;/strong&gt;&#xA;representation, &lt;strong&gt;matrix representation&lt;/strong&gt;, &lt;strong&gt;euler angles&lt;/strong&gt; and &lt;strong&gt;quaternions&lt;/strong&gt;.&#xA;Despite I have known them for a long time, when I forgot, the rotation is still&#xA;complicated. Here I am writing this again, as easily understanding as possible,&#xA;for my future-self (or I can just travel through time to ask myself now).&lt;/p&gt;</description>
     </item>
     <item>
       <title>View Matrix for projection</title>
-      <link>http://localhost:1313/posts/camera_matrix/</link>
+      <link>https://xeechou.net/posts/camera_matrix/</link>
       <pubDate>Mon, 31 Oct 2016 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/camera_matrix/</guid>
+      <guid>https://xeechou.net/posts/camera_matrix/</guid>
       <description>&lt;h1 id=&#34;the-mvp-matrix&#34;&gt;The &lt;strong&gt;MVP&lt;/strong&gt; Matrix&lt;/h1&gt;&#xA;&lt;p&gt;$\text{Model} * \text{View} * \text{Projection}$ is the first lesson to render&#xA;(the so called render is the process so that people can see it on a 2D screen&#xA;)objects in Computer Graphics, which transfer a 3D object in object space into,&#xA;in the end, a UV plane.&lt;/p&gt;&#xA;&lt;p&gt;The Model matrix is simple and easy to understand, simply the translation, scale&#xA;and rotation, but View matrix and Camera matrix are not obvious(although you can&#xA;get it for free by single call from &lt;code&gt;glm::lookAt()&lt;/code&gt; and &lt;code&gt;glm::perspective()&lt;/code&gt;).&lt;/p&gt;</description>
     </item>
   </channel>

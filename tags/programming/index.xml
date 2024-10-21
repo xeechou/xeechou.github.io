@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Programming on Insaturé</title>
-    <link>http://localhost:1313/tags/programming/</link>
+    <link>https://xeechou.net/tags/programming/</link>
     <description>Recent content in Programming on Insaturé</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 28 Apr 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://xeechou.net/tags/programming/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The sphinx website for your project</title>
-      <link>http://localhost:1313/posts/sphinx-website/</link>
+      <link>https://xeechou.net/posts/sphinx-website/</link>
       <pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/sphinx-website/</guid>
+      <guid>https://xeechou.net/posts/sphinx-website/</guid>
       <description>&lt;p&gt;Static site generator, I love and hate them at the sametime. They really render&#xA;your markdowns into a beautiful website without need of knowing web&#xA;technologies. Then there are the constant hustles once you try to customize it,&#xA;change a theme, adding different functionalities or upgrade. It is YOUR&#xA;website, you want it look different than others, right. At some point, whether&#xA;you like it or not, the SSG users will take the role of website designers by&#xA;tangling with CSS.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Template Deduction for C&#43;&#43;</title>
-      <link>http://localhost:1313/posts/template_deduction/</link>
+      <link>https://xeechou.net/posts/template_deduction/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/template_deduction/</guid>
+      <guid>https://xeechou.net/posts/template_deduction/</guid>
       <description>&lt;p&gt;Template is a confusing and hard features in C++ if you want use it well, and I&#xA;think it is also one of the reason which causes c++ programmers cannot&#xA;understand each other. Sometimes the Deduction rule for c++ is really confusing,&#xA;you don&amp;rsquo;t understand why you code doesn&amp;rsquo;t work or why it works. And Since&#xA;&lt;strong&gt;STL&lt;/strong&gt; heavily uses nesting Templates, both your compiler and your mind suffers&#xA;from that.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Everything you do I can do it with a double pointer in C</title>
-      <link>http://localhost:1313/posts/double_pointer_in_c/</link>
+      <link>https://xeechou.net/posts/double_pointer_in_c/</link>
       <pubDate>Sun, 21 Aug 2016 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/double_pointer_in_c/</guid>
+      <guid>https://xeechou.net/posts/double_pointer_in_c/</guid>
       <description>&lt;p&gt;It is 2016, low level coding is not needed anymore. We have programming&#xA;languages like &lt;code&gt;javascript&lt;/code&gt; and python. When people code everything with a class&#xA;and related methods. But do you remember we have a programming language called&#xA;C? When we had no class, templates, operator-override or implicit constructor at&#xA;esthat time. You actually know what are doing with C, no magic!&lt;/p&gt;&#xA;&lt;p&gt;I claim no expert to programming, since I only have a four-year-old programming&#xA;life. But even you are inexperienced like me, you should still be able to code&#xA;some thing in C. IT IS fatigue to code in C, you have no standard containers to&#xA;rely on, you spend 10 hours to build a perfect &lt;code&gt;deque&lt;/code&gt; data type which works on&#xA;amortized O(1) complexity and has no memory leaks before you are able to work on&#xA;your project. Awesome!!! But why? Why try to build a huge robust data structure&#xA;in a non-OOP language? Instead of trying simulate constructors and destructors,&#xA;you could always use a double pointer to do the job. Have you ever seen Linus&#xA;Torvalds&amp;rsquo;s double pointer code? It removes on special case where you would make&#xA;mistakes.&lt;/p&gt;</description>
     </item>
     <item>
       <title>6 years of programming</title>
-      <link>http://localhost:1313/posts/six_years_programming/</link>
+      <link>https://xeechou.net/posts/six_years_programming/</link>
       <pubDate>Mon, 08 Aug 2016 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/six_years_programming/</guid>
+      <guid>https://xeechou.net/posts/six_years_programming/</guid>
       <description>&lt;p&gt;I have been studying in programming for 6 years, since my first day of&#xA;undergrad life. I haven&amp;rsquo;t realized it has been so long, this studying life&#xA;already took away most of my youth. I was a kid without knowing the toughness&#xA;of life, to a young man need to worry about jobs and how to start having&#xA;family.&lt;/p&gt;&#xA;&lt;p&gt;The computer industry changed vastly in this period. There was no Cloud&#xA;Computing, Machine Learning was only known in Academics. Universities taught&#xA;students how to code in VC++. Now everything is different.&lt;/p&gt;</description>
     </item>
   </channel>

@@ -2,269 +2,269 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Insaturé</title>
-    <link>http://localhost:1313/</link>
+    <link>https://xeechou.net/</link>
     <description>Recent content on Insaturé</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 19 Oct 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://xeechou.net/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Customizing Hide-Show for CMake Mode in Emacs</title>
-      <link>http://localhost:1313/posts/hideshow-emacs/</link>
+      <link>https://xeechou.net/posts/hideshow-emacs/</link>
       <pubDate>Sat, 19 Oct 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/hideshow-emacs/</guid>
-      <description>&lt;p&gt;&#xA;customizing HideShow mode on Emacs is done by &lt;a href=&#34;http://doc.endlessparentheses.com/Var/hs-special-modes-alist.html&#34;&gt;hs-special-modes-alist&lt;/a&gt;. There are 4 parts (actually 5, but we care mostly about the 3) of the equation. You can customize it for your mode with a list like this&lt;/p&gt;&#xA;&lt;div class=&#34;src src-emacs-lisp&#34;&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  (MODE START END COMMENT-START FORWARD-SEXP-FUNC ADJUST-BEG-FUNC)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;&#xA;For example, the default definition of the &lt;code&gt;hs-special-modes-alist&lt;/code&gt; looks like this:&lt;/p&gt;&#xA;&lt;div class=&#34;src src-emacs-lisp&#34;&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  (defvar hs-special-modes-alist&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    (&lt;span style=&#34;color:#a6e22e&#34;&gt;mapcar&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;#&amp;#39;purecopy&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#39;&lt;/span&gt;((c-mode &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (c-ts-mode &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (c++-mode &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (c++-ts-mode &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (bibtex-mode (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@\\S(*\\(\\s(\\)&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (java-mode &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (java-ts-mode &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (js-mode &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (js-ts-mode &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (mhtml-mode &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{\\|&amp;lt;[^/&amp;gt;]*?&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;}\\|&amp;lt;/[^/&amp;gt;]*[^/]&amp;gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;lt;!--&amp;#34;&lt;/span&gt; mhtml-forward &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#75715e&#34;&gt;;; Add more support here.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              ))&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-2&#34;&gt;&#xA;&lt;h2 id=&#34;headline-1&#34;&gt;&#xA;The ingredients&#xA;&lt;/h2&gt;&#xA;&lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;&#xA;&lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-3&#34;&gt;&#xA;&lt;h3 id=&#34;headline-2&#34;&gt;&#xA;&lt;code&gt;START&lt;/code&gt; and &lt;code&gt;END&lt;/code&gt; regular expression&#xA;&lt;/h3&gt;&#xA;&lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;&#xA;&lt;p&gt;&#xA;This regular expression matches the beginning/end of the folding code. For C/C++ alike languages, this is as brackets &amp;#34;{&amp;#34;, &amp;#34;}&amp;#34;, etc. For some language lacks of any brackets/parenthesis like python, it is more difficult. Emacs&amp;#39; built-in python mode provided &lt;a href=&#34;https://mail.python.org/pipermail/python-mode/2006-April/000353.html&#34;&gt;patch&lt;/a&gt; to support it:&lt;/p&gt;</description>
+      <guid>https://xeechou.net/posts/hideshow-emacs/</guid>
+      <description>&lt;p&gt;&#xA;customizing HideShow mode on Emacs is done by &lt;a href=&#34;http://doc.endlessparentheses.com/Var/hs-special-modes-alist.html&#34;&gt;hs-special-modes-alist&lt;/a&gt;. There are 4 parts (actually 5, but we care mostly about the 3) of the equation. You can customize it for your mode with a list like this&lt;/p&gt;&#xA;&lt;div class=&#34;src src-emacs-lisp&#34;&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;MODE&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;START&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;END&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;COMMENT-START&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;FORWARD-SEXP-FUNC&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;ADJUST-BEG-FUNC&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;&#xA;For example, the default definition of the &lt;code&gt;hs-special-modes-alist&lt;/code&gt; looks like this:&lt;/p&gt;&#xA;&lt;div class=&#34;src src-emacs-lisp&#34;&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-emacs-lisp&#34; data-lang=&#34;emacs-lisp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  (&lt;span style=&#34;font-weight:bold;font-style:italic&#34;&gt;defvar&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;hs-special-modes-alist&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;mapcar&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;#&amp;#39;purecopy&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &amp;#39;((&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;c-mode&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;c-ts-mode&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;c++-mode&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;c++-ts-mode&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;bibtex-mode&lt;/span&gt; (&lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;@\\S(*\\(\\s(\\)&amp;#34;&lt;/span&gt; 1))&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;java-mode&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;java-ts-mode&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;js-mode&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;js-ts-mode&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;{&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;/[*/]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              (&lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;mhtml-mode&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;{\\|&amp;lt;[^/&amp;gt;]*?&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;}\\|&amp;lt;/[^/&amp;gt;]*[^/]&amp;gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-style:italic&#34;&gt;&amp;#34;&amp;lt;!--&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;mhtml-forward&lt;/span&gt; &lt;span style=&#34;color:#666;font-weight:bold;font-style:italic&#34;&gt;nil&lt;/span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#888;font-style:italic&#34;&gt;;; Add more support here.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              ))&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-2&#34;&gt;&#xA;&lt;h2 id=&#34;headline-1&#34;&gt;&#xA;The ingredients&#xA;&lt;/h2&gt;&#xA;&lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;&#xA;&lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-3&#34;&gt;&#xA;&lt;h3 id=&#34;headline-2&#34;&gt;&#xA;&lt;code&gt;START&lt;/code&gt; and &lt;code&gt;END&lt;/code&gt; regular expression&#xA;&lt;/h3&gt;&#xA;&lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;&#xA;&lt;p&gt;&#xA;This regular expression matches the beginning/end of the folding code. For C/C++ alike languages, this is as brackets &amp;#34;{&amp;#34;, &amp;#34;}&amp;#34;, etc. For some language lacks of any brackets/parenthesis like python, it is more difficult. Emacs&amp;#39; built-in python mode provided &lt;a href=&#34;https://mail.python.org/pipermail/python-mode/2006-April/000353.html&#34;&gt;patch&lt;/a&gt; to support it:&lt;/p&gt;</description>
     </item>
     <item>
       <title>Event bus implementation</title>
-      <link>http://localhost:1313/posts/ebus/</link>
+      <link>https://xeechou.net/posts/ebus/</link>
       <pubDate>Sun, 11 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/ebus/</guid>
+      <guid>https://xeechou.net/posts/ebus/</guid>
       <description>&lt;p&gt;&#xA;Recently I open sourced a small C++ library called &lt;a href=&#34;https://github.com/xeechou/ebus&#34;&gt;eBus&lt;/a&gt;(Event Bus), it came along separated from another project I was working on. The idea, or should I say the interface was not very original, I took the inspiration from a much more complicated &lt;a href=&#34;https://www.docs.o3de.org/docs/user-guide/programming/messaging/ebus-design/&#34;&gt;Event Buses In O3DE&lt;/a&gt;. The goal is simple, providing an easy to use &lt;a href=&#34;https://refactoring.guru/design-patterns/observer&#34;&gt;Observer&lt;/a&gt; pattern so your can decouple the code from the callers to its callees.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;Instead of doing this:&lt;/p&gt;</description>
     </item>
     <item>
       <title>Modular Vulkan feature and extension manager</title>
-      <link>http://localhost:1313/posts/modular-vulkan-feature-manager/</link>
+      <link>https://xeechou.net/posts/modular-vulkan-feature-manager/</link>
       <pubDate>Wed, 12 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/modular-vulkan-feature-manager/</guid>
+      <guid>https://xeechou.net/posts/modular-vulkan-feature-manager/</guid>
       <description>&lt;p&gt;&#xA;Recently I&amp;#39;ve been trying to squeeze a few hours at a time from my weekends to work on my Vulkan renderer projects. Because the extremely limited time I have, any feature I want need to planned well and get implemented in a few hours or I need to break it down to do so. One of such feature I&amp;#39;ve want to implement is a modular &lt;a href=&#34;https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceFeatures.html&#34;&gt;Vulkan Feature&lt;/a&gt; management.&lt;/p&gt;&#xA;&lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-3&#34;&gt;&#xA;&lt;h3 id=&#34;headline-1&#34;&gt;&#xA;Root Issue: hard-coding enabled features&#xA;&lt;/h3&gt;&#xA;&lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-3&#34;&gt;&#xA;&lt;p&gt;&#xA;When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable. This is done by inserting &lt;code&gt;features&lt;/code&gt; into the &lt;code&gt;pNext&lt;/code&gt; chain and extensions into &lt;code&gt;ppEnabledExtenionNames&lt;/code&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Moving  to literate Emacs configuration.</title>
-      <link>http://localhost:1313/posts/emacs-literate-config/</link>
+      <link>https://xeechou.net/posts/emacs-literate-config/</link>
       <pubDate>Fri, 08 Mar 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/emacs-literate-config/</guid>
+      <guid>https://xeechou.net/posts/emacs-literate-config/</guid>
       <description>&lt;p&gt;&#xA;For a long time, I have been maintaining my &lt;a href=&#34;https://github.com/xeechou/dotemacs&#34;&gt;emacs configuration&lt;/a&gt; through a folder of &lt;a href=&#34;https://github.com/xeechou/dotemacs/tree/vlisp/etc&#34;&gt;elisp files&lt;/a&gt;. I am quite happy about it and even have it working pretty well on Windows (unfortunately it&amp;#39;s my work environment) with help my &lt;a href=&#34;https://github.com/xeechou/dotemacs-msbin&#34;&gt;3rdparty binaries repository&lt;/a&gt;.  Finally I decided to move to &lt;a href=&#34;https://orgmode.org/worg/org-contrib/babel/intro.html#emacs-initialization&#34;&gt;literate configuration&lt;/a&gt;. It&amp;#39;s a thing I wanted to do for a long time. Not because it&amp;#39;s &lt;strong&gt;THE COOL&lt;/strong&gt; things to do. I do think there is some advantages over my previous approach.&lt;/p&gt;</description>
     </item>
     <item>
       <title>My Vanilla yet powerful Emacs environment</title>
-      <link>http://localhost:1313/emacs-config/</link>
+      <link>https://xeechou.net/emacs-config/</link>
       <pubDate>Fri, 08 Mar 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/emacs-config/</guid>
+      <guid>https://xeechou.net/emacs-config/</guid>
       <description>&lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-2&#34;&gt;&#xA;&lt;h2 id=&#34;headline-1&#34;&gt;&#xA;Introduction&#xA;&lt;/h2&gt;&#xA;&lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;&#xA;&lt;p&gt;For years I have been perfecting my Emacs configuration, it is now the&#xA;essential part of my digital life. This is my personal configuration but&#xA;you may also find it useful to your needs. Feel free to grab some of my&#xA;config snippets to work for you.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;Here is a list of incomplete features you get from this config set:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Clean configuration with &lt;a href=&#34;https://github.com/jwiegley/use-package&#34;&gt;use-package&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;Many programming language support: C/C++, Python, typescript, golang, glsl and many others.&lt;/li&gt;&#xA;&lt;li&gt;Some of my collected code snippets for different languages.&lt;/li&gt;&#xA;&lt;li&gt;Code auto-complete support via eglot and &lt;a href=&#34;https://company-mode.github.io/&#34;&gt;Company-mode&lt;/a&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Completion framework using &lt;a href=&#34;https://github.com/abo-abo/swiper&#34;&gt;Ivy&lt;/a&gt;.&lt;/li&gt;&#xA;&lt;li&gt;keybinding look-up with &lt;a href=&#34;https://github.com/justbur/emacs-which-key&#34;&gt;which-key&lt;/a&gt;.&lt;/li&gt;&#xA;&lt;li&gt;FlySpell support via Hunspell.&lt;/li&gt;&#xA;&lt;li&gt;minimal LLM support through &lt;a href=&#34;https://github.com/s-kostyaev/ellama&#34;&gt;Ellama&lt;/a&gt;.&lt;/li&gt;&#xA;&lt;li&gt;many others.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;div id=&#34;outline-container-headline-2&#34; class=&#34;outline-3&#34;&gt;&#xA;&lt;h3 id=&#34;headline-2&#34;&gt;&#xA;Run-time requirement for some packages.&#xA;&lt;/h3&gt;&#xA;&lt;div id=&#34;outline-text-headline-2&#34; class=&#34;outline-text-3&#34;&gt;&#xA;&lt;p&gt;Some of the packages requires not only Emacs-Lisp code but also other&#xA;binaries to work. Here is the list of binaries required for all the&#xA;features.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Comparing Vulkan and D3D12</title>
-      <link>http://localhost:1313/posts/vulkan-vs-d3d12/</link>
+      <link>https://xeechou.net/posts/vulkan-vs-d3d12/</link>
       <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/vulkan-vs-d3d12/</guid>
+      <guid>https://xeechou.net/posts/vulkan-vs-d3d12/</guid>
       <description>&lt;p&gt;Recently I wrote the &lt;a href=&#34;https://github.com/xeechou/petitd3d12&#34;&gt;PetitD3D12&lt;/a&gt; to extend my graphics API knowledge to the land of DirectX, well I am surprised to see how similar those modern graphics APIs are. More precisely I think Vulkan is trying to stay close to D3D12 these days for be able to easily translate it. However there are also some noticeable differences, surprisingly I did not find too much &amp;ldquo;real&amp;rdquo; API comparison info, the &lt;a href=&#34;https://alain.xyz/blog/comparison-of-modern-graphics-apis&#34; title=&#34;A Comparison of Modern Graphics APIs&#34;&gt;Alain Galvan&amp;rsquo;s blog post&lt;/a&gt; are more just about grouping those API data structures together, not much you will know the difference in using them. With that being said, I am going to talk mostly in the shoes of a Vulkan developer who grabs the hand of D3D12 code to take a close look. Mainly I will cover about &lt;strong&gt;pipeline creation&lt;/strong&gt;, &lt;strong&gt;descriptor binding&lt;/strong&gt; and &lt;strong&gt;command execution&lt;/strong&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Wayland client side window decorations through libdecor</title>
-      <link>http://localhost:1313/posts/libdecor/</link>
+      <link>https://xeechou.net/posts/libdecor/</link>
       <pubDate>Thu, 17 Aug 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/libdecor/</guid>
+      <guid>https://xeechou.net/posts/libdecor/</guid>
       <description>&lt;p&gt;I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.&lt;/p&gt;&#xA;&lt;p&gt;There are &lt;strong&gt;two&lt;/strong&gt; ways right now to do the client decorations.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Moving towards GPU driven</title>
-      <link>http://localhost:1313/posts/moving-to-gpu-driven/</link>
+      <link>https://xeechou.net/posts/moving-to-gpu-driven/</link>
       <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/moving-to-gpu-driven/</guid>
+      <guid>https://xeechou.net/posts/moving-to-gpu-driven/</guid>
       <description>&lt;p&gt;We were using a traditional &lt;code&gt;for_each&lt;/code&gt; style drawing G-buffer and shadow in Vulkan, with over 2.5 million triangles, and 25,000+ objects, I started to see my GTX 1650 having hard time following it up. Although you can pre-record command buffers in Vulkan to reduce the CPU time but we will also end up with a very large command buffer to submit and potentially miss the driver optimizations with indirect draws. These days, GPUs are getting more and more powerful and complex, including tons of new features. It&amp;rsquo;s promising to draw millions or billions more triangles compared to before. The cost is that it changed the programming paradigm completely. If you want embark on new hardware, chances are you need to rewrite the rendering code.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Comparing Vulkan Frameworks</title>
-      <link>http://localhost:1313/posts/vulkan-frameworks/</link>
+      <link>https://xeechou.net/posts/vulkan-frameworks/</link>
       <pubDate>Sun, 29 Jan 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/vulkan-frameworks/</guid>
+      <guid>https://xeechou.net/posts/vulkan-frameworks/</guid>
       <description>&lt;p&gt;&#xA;There are indeed many people tried to implement a rendering framework on top of Vulkan to reduce the amount of code to write. But so many of them merely just create a wrapper around existing Vulkan objects, like wrapping the command buffer with a &lt;code&gt;vk::CommandBuffer::Ptr&lt;/code&gt;  and you still have to fill all the &lt;code&gt;VkObjCreateInfos&lt;/code&gt; .&lt;/p&gt;&#xA;&lt;p&gt;&#xA;The rendering framework focus on the render passes should provide a compact yet descriptive API to create render pass. Leaving the user out of the mess of managing/binding descriptors, uniform buffers. Have them focus on the shaders.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Moving to Hugo, Aftermath</title>
-      <link>http://localhost:1313/posts/moving-to-hugo-ii/</link>
+      <link>https://xeechou.net/posts/moving-to-hugo-ii/</link>
       <pubDate>Tue, 23 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/moving-to-hugo-ii/</guid>
+      <guid>https://xeechou.net/posts/moving-to-hugo-ii/</guid>
       <description>&lt;p&gt;My blog is now back online, with brand new render engine Hugo. The URLs are&#xA;totally different though. Not sure how web crawlers handling it right&#xA;now.&lt;/p&gt;&#xA;&lt;p&gt;After the migration, I did a few extra work for patching the hiccups. Fix the&#xA;build warnings and adding new features.&lt;/p&gt;&#xA;&lt;h3 id=&#34;the-about-page&#34;&gt;The about page&lt;/h3&gt;&#xA;&lt;p&gt;In every blog you always have some pages that you do not want it be inside the&#xA;blog list. By default Hugo will simply place everything on the &amp;ldquo;navigation&#xA;list&amp;rdquo;. Even if I place it outside the blog folder. This is the list your&#xA;template is calling &lt;code&gt;.NextPage&lt;/code&gt; and &lt;code&gt;.PrevPage&lt;/code&gt;. So initially I just give it a&#xA;very old date, or simply removed the date, so it will appear as the last on the&#xA;list. Obviously I will have to fix that.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Moving to Hugo</title>
-      <link>http://localhost:1313/posts/moving-to-hugo/</link>
+      <link>https://xeechou.net/posts/moving-to-hugo/</link>
       <pubDate>Sun, 14 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/moving-to-hugo/</guid>
+      <guid>https://xeechou.net/posts/moving-to-hugo/</guid>
       <description>&lt;p&gt;For a long time I&amp;rsquo;ve been wanting to Migrate my blog system from&#xA;&lt;a href=&#34;https://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; to &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt;. One&#xA;reason is that I had enough with python virtual environment breaks every 3&#xA;months. Another motivation is obviously I would like to replace Python with Go&#xA;in my life.&lt;/p&gt;&#xA;&lt;p&gt;A long time ago I followed Go tutorial for getting started, surprised by its&#xA;syntax tidiness and similarity to Python, and it is way faster. But soon I&#xA;found out it would be one of this thing I learned for a weekend and forget all&#xA;together, since I don&amp;rsquo;t have any projects I would use it actively. Now after&#xA;one month of procrastination, I finally pieces ALMOST everything to reproduce&#xA;my old blog. Time for a summary.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Belief or Cult</title>
-      <link>http://localhost:1313/posts/belief-or-cult/</link>
+      <link>https://xeechou.net/posts/belief-or-cult/</link>
       <pubDate>Sun, 31 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/belief-or-cult/</guid>
+      <guid>https://xeechou.net/posts/belief-or-cult/</guid>
       <description>&lt;p&gt;It&amp;rsquo;s been a while that I haven&amp;rsquo;t update the blogs. It is so easy to slack off&#xA;on good habits. &amp;ldquo;Oh I will continue once I finish A B C&amp;rdquo;. We are all busy as&#xA;hell, in the software world, you WORK, you WORK and you GO TO SLEEP. Like this&#xA;one, I am always hoping to switch to &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt;, then I can&#xA;continue writing the blog. The thing is, I never got the good weekend to do the&#xA;switching. Weekends are really no for staying at home confronting monitors.&lt;/p&gt;</description>
     </item>
     <item>
       <title>July 2021 Status Update</title>
-      <link>http://localhost:1313/posts/june-2021/</link>
+      <link>https://xeechou.net/posts/june-2021/</link>
       <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/june-2021/</guid>
+      <guid>https://xeechou.net/posts/june-2021/</guid>
       <description>&lt;p&gt;I am now back in Canada, quarantined again. There is much of internal struggle&#xA;whether I should move back or stay in Shanghai? Working for tech company in&#xA;Shanghai or many cities in China would be like endless crunching. Maybe I was&#xA;not used to this high-paced lifestyle, long working hours. Didn&amp;rsquo;t like&#xA;javascript either. It is a pity that I didn&amp;rsquo;t find a nicer job maybe opens to&#xA;better opportunities. I was focusing on the development of Taiwins back then,&#xA;well it is working now and I don&amp;rsquo;t develop it anymore. The June was pretty&#xA;unproductive, ever since the ICL implant surgery I couldn&amp;rsquo;t use computers for&#xA;long, even now it is painful to do so. At least I get more time reading books?&lt;/p&gt;</description>
     </item>
     <item>
       <title>Scalable org file synchronization solution</title>
-      <link>http://localhost:1313/posts/org-sync-ii/</link>
+      <link>https://xeechou.net/posts/org-sync-ii/</link>
       <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/org-sync-ii/</guid>
-      <description>&lt;p&gt;In my previous &lt;a href=&#34;http://localhost:1313/posts/back-with-org-mode/&#34;&gt;post&lt;/a&gt;, I&amp;rsquo;ve somewhat found&#xA;a way to synchronize my org files. I was pretty happy, I was having just around&#xA;six org pages, coping them to a &lt;strong&gt;webdav&lt;/strong&gt; server was not a huge hustle :P,&#xA;util I started to use &lt;a href=&#34;https://www.orgroam.com/manual.html&#34;&gt;org-roam&lt;/a&gt;. Suddenly&#xA;I have to create org file for every new&#xA;&lt;a href=&#34;https://zettelkasten.de/posts/learn-faster-by-writing-zettel-notes/&#34;&gt;zettle&lt;/a&gt;,&#xA;the performance quickly started to tank. This is probably the beauty and curse&#xA;of using open source solutions &amp;mdash; you have full control of your work and you&#xA;have to solve problems you created yourself.&lt;/p&gt;</description>
+      <guid>https://xeechou.net/posts/org-sync-ii/</guid>
+      <description>&lt;p&gt;In my previous &lt;a href=&#34;https://xeechou.net/posts/back-with-org-mode/&#34;&gt;post&lt;/a&gt;, I&amp;rsquo;ve somewhat found&#xA;a way to synchronize my org files. I was pretty happy, I was having just around&#xA;six org pages, coping them to a &lt;strong&gt;webdav&lt;/strong&gt; server was not a huge hustle :P,&#xA;util I started to use &lt;a href=&#34;https://www.orgroam.com/manual.html&#34;&gt;org-roam&lt;/a&gt;. Suddenly&#xA;I have to create org file for every new&#xA;&lt;a href=&#34;https://zettelkasten.de/posts/learn-faster-by-writing-zettel-notes/&#34;&gt;zettle&lt;/a&gt;,&#xA;the performance quickly started to tank. This is probably the beauty and curse&#xA;of using open source solutions &amp;mdash; you have full control of your work and you&#xA;have to solve problems you created yourself.&lt;/p&gt;</description>
     </item>
     <item>
       <title>The sphinx website for your project</title>
-      <link>http://localhost:1313/posts/sphinx-website/</link>
+      <link>https://xeechou.net/posts/sphinx-website/</link>
       <pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/sphinx-website/</guid>
+      <guid>https://xeechou.net/posts/sphinx-website/</guid>
       <description>&lt;p&gt;Static site generator, I love and hate them at the sametime. They really render&#xA;your markdowns into a beautiful website without need of knowing web&#xA;technologies. Then there are the constant hustles once you try to customize it,&#xA;change a theme, adding different functionalities or upgrade. It is YOUR&#xA;website, you want it look different than others, right. At some point, whether&#xA;you like it or not, the SSG users will take the role of website designers by&#xA;tangling with CSS.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Back with Org Mode</title>
-      <link>http://localhost:1313/posts/back-with-org-mode/</link>
+      <link>https://xeechou.net/posts/back-with-org-mode/</link>
       <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/back-with-org-mode/</guid>
+      <guid>https://xeechou.net/posts/back-with-org-mode/</guid>
       <description>&lt;p&gt;If there is one thing I&amp;rsquo;d like to commit it must be the my time mangement&#xA;improvements. For that purpose, Emacs Org-mode is the &lt;strong&gt;ultimate&lt;/strong&gt; tool for&#xA;programmers. I can keep my notes nicely and I can track my tasks/errands all&#xA;together. But all my notes are stored in my linux box, I lose access to them&#xA;once I am away. From that reason, I was always on-and-off with using org-mode&#xA;due to the portability. We are not in the age doing everything with desktop&#xA;anymore, more often I need to track my TODOs from cellphone as well.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Xwayland Clipboard</title>
-      <link>http://localhost:1313/posts/xwayland-selection/</link>
+      <link>https://xeechou.net/posts/xwayland-selection/</link>
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/xwayland-selection/</guid>
+      <guid>https://xeechou.net/posts/xwayland-selection/</guid>
       <description>&lt;p&gt;I hate every single line of xwayland code I wrote, it is ugly, long and hard to&#xA;maintain. Now I know very well why there is wayland in the first place, sadly a&#xA;complete wayland compositor has to bring a piece of crap of X with it. I just&#xA;finished the selection handling in xwayland by mimicing weston code. After&#xA;finally understand that 1000 lines of confusing code, I just found out I can&amp;rsquo;t&#xA;do any better.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Jan 2021 Status Update</title>
-      <link>http://localhost:1313/posts/jan-update-2021/</link>
+      <link>https://xeechou.net/posts/jan-update-2021/</link>
       <pubDate>Sun, 24 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/jan-update-2021/</guid>
+      <guid>https://xeechou.net/posts/jan-update-2021/</guid>
       <description>&lt;p&gt;Folks, the Magical year of 2020 is behind us, and it wasn&amp;rsquo;t a happy new chapter&#xA;waiting us. Man, I still couldn&amp;rsquo;t believe, once per 100 years, why it was us&#xA;who have to face the coronavirus. Now I take a good look of my 2020, I went&#xA;from trying to submit a xcbcommon handling patch to weston to writing a full&#xA;wayland compositor from scratch. It was not my plan!!! Taiwins should have&#xA;being a rather simple application on top of the libweston, the so called&#xA;&amp;ldquo;reference compositor &amp;ldquo;, but libweston cannot change keyboard layout once&#xA;launching, nor it can support cloning output, there are new bugs when you&#xA;digging deep. The worst is that it breaks the library into different shared&#xA;modules, and changes lib location every release. It was like it really does not&#xA;want to link to it. The codebase was old and long, it was difficult to make a&#xA;change and really difficult to get libweston taking a patch. Then there is the&#xA;wlroots. If it was released half year earlier Taiwins would probably sit on top&#xA;of that. But, screw it. I am doing it myself.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Working with libdrm, buffer allocation</title>
-      <link>http://localhost:1313/posts/drm-backend-ii/</link>
+      <link>https://xeechou.net/posts/drm-backend-ii/</link>
       <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/drm-backend-ii/</guid>
+      <guid>https://xeechou.net/posts/drm-backend-ii/</guid>
       <description>&lt;p&gt;In the &lt;a href=&#34;%7Bfilename%7D/drm-backend.md&#34;&gt;first blog of libdrm&lt;/a&gt;, we went through the&#xA;repainting loop using the libdrm. Now we move on to the topic of&#xA;framebuffers. A framebuffer is a piece of memory (could be on main memory or on&#xA;GPU) for repainting every frame. It is like a canvas, represents what you would&#xA;finally see on screen. Framebuffer is already a familiar concept to rendering&#xA;programmers, in &lt;strong&gt;OpenGL&lt;/strong&gt;, We have &lt;code&gt;GL_FRAMEBUFFER_0&lt;/code&gt; for presenting the&#xA;surface, additional framebuffers for roles like G-Buffer and&#xA;post-processing. In GPU programming, framebuffer is also a broader concept,&#xA;&amp;ldquo;abstraction of a collection of attachments&amp;rdquo;, the underlining attachments&#xA;corresponds to actual pieces of memory we talk about here.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Working with libdrm, repainting timeline</title>
-      <link>http://localhost:1313/posts/drm-backend/</link>
+      <link>https://xeechou.net/posts/drm-backend/</link>
       <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/drm-backend/</guid>
+      <guid>https://xeechou.net/posts/drm-backend/</guid>
       <description>&lt;p&gt;As the taiwins project finished with X11/Wayland backend rigging. Now I am fully&#xA;on the libdrm backend development, dealing with hardwares directly. This backend&#xA;requires 200 percent my energy to tame the complexity.&lt;/p&gt;&#xA;&lt;p&gt;Like other backends, libdrm also needs to provide two resources, &lt;em&gt;input&lt;/em&gt; and&#xA;&lt;em&gt;output&lt;/em&gt;. Backends like nested wayland backend or X11 backend, the &lt;em&gt;output&lt;/em&gt;&#xA;device are the windows created by ourselves (or by the user). Meaning we can&#xA;create it or destroy it as we please. As for libdrm, those are provided by the&#xA;OS. An &lt;em&gt;output&lt;/em&gt; in libdrm&amp;rsquo;s terminology, is called connector. We query and&#xA;change the connectors state by &lt;code&gt;drmModeGet*&lt;/code&gt; functions. Then later set the&#xA;hardware states by &lt;code&gt;drmModeSet*&lt;/code&gt; or the new atomic API. It may sound simple but&#xA;actually, for displaying images on the screen using the &lt;em&gt;libdrm&lt;/em&gt; mechanism, it&#xA;takes quite a few components, working together, to achieve the goal. We uses&#xA;&lt;code&gt;drmMode*&lt;/code&gt; routines for&#xA;&lt;a href=&#34;https://01.org/linuxgraphics/gfx-docs/drm/gpu/drm-kms.html&#34;&gt;kernel-modesetting&lt;/a&gt;;&#xA;libgbm for framebuffer allocation; OpenGL or Vulkan for rendering. If done&#xA;right, you would get tear-free images on your screen constant refresh rate. But&#xA;should anything goes wrong, you probably end up with a black screen.&lt;/p&gt;</description>
     </item>
     <item>
       <title>August 2020 Status Update</title>
-      <link>http://localhost:1313/posts/aug-update-2020/</link>
+      <link>https://xeechou.net/posts/aug-update-2020/</link>
       <pubDate>Sat, 22 Aug 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/aug-update-2020/</guid>
+      <guid>https://xeechou.net/posts/aug-update-2020/</guid>
       <description>&lt;p&gt;It is a sunny day, somehow I got up early this morning. The cool, chilling&#xA;breath of air reminded me we are at the tail of the summer. It felt so strange,&#xA;this summer was like it was never here. Hiking, go swimming, taking a trips and&#xA;night outs. all those experiences for a normal summer I would do, they are all&#xA;absent, hope I don&amp;rsquo;t regret too much for crunching code at home all these&#xA;months. It was a tough year actually, I was determined to push Taiwins to a&#xA;usable state, it has been stressful. Every time I look at the pile of the TODO&#xA;list, a sentiment of endless development and desperate hit me hard like a heart&#xA;attack. I had to work &lt;strong&gt;a lot&lt;/strong&gt; to stay healthy.&lt;/p&gt;</description>
     </item>
     <item>
       <title>July 2020 Status Update</title>
-      <link>http://localhost:1313/posts/july-update-2020/</link>
+      <link>https://xeechou.net/posts/july-update-2020/</link>
       <pubDate>Sat, 18 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/july-update-2020/</guid>
+      <guid>https://xeechou.net/posts/july-update-2020/</guid>
       <description>&lt;p&gt;July, the hottest month in Montreal every year. The heat wave rushes to you when&#xA;you walk outside makes you wondering if you are in some tropical island, it sure&#xA;doesn&amp;rsquo;t look like living at 45 latitde northen hemisphere. Last month was a&#xA;rapid leap towards wayland objects implementations and now I just hitted the&#xA;wall of &lt;code&gt;xdg-shell&lt;/code&gt; protocol. Today I&amp;rsquo;d like to talk about what it is like to&#xA;implement a wayland protocol.&lt;/p&gt;</description>
     </item>
     <item>
       <title>June 2020 Status Update</title>
-      <link>http://localhost:1313/posts/june-update/</link>
+      <link>https://xeechou.net/posts/june-update/</link>
       <pubDate>Mon, 06 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/june-update/</guid>
-      <description>&lt;p&gt;Montréal is hotter than ever in this month, under the broiling sun, it was an&#xA;exhausting quarantine. The first &lt;a href=&#34;http://localhost:1313/blog/busy-in-quarantine&#34;&gt;month&lt;/a&gt; I&#xA;remeber I was feeling fortunate I got this aleatory chance for advancement of&#xA;&lt;em&gt;taiwins&lt;/em&gt; in this global pandemic, right now all I felt was the painful&#xA;experience converting all the Taiwins server code away from&#xA;libweston. Implementating of server side wayland objects was indeed unpleasant&#xA;experience. Without libweston, I have to implement every little thing and get it&#xA;right, even the basics 2D homogenous matrix operations for coordinates&#xA;transformations. Just a days I ago I discovered my mistakenly used rotations in&#xA;the &amp;ldquo;Y-up&amp;rdquo; coordinate system (like OpenGL) in the &amp;ldquo;Y-down&amp;rdquo; coordinate sytem&#xA;(like Wayland protocol). The good news was that I did not give up, it seemed I&#xA;overcame one difficulties after another, now at least I can paint my taiwins&#xA;shell objects using a primitive renderer. In the end, hopefully I will end-up&#xA;with a working and cleaner compositor library than &lt;em&gt;libweston&lt;/em&gt;. This is&#xA;certainly an encouraging news as I used to think a compositor library was not&#xA;possible to finish with only two hands.&lt;/p&gt;</description>
+      <guid>https://xeechou.net/posts/june-update/</guid>
+      <description>&lt;p&gt;Montréal is hotter than ever in this month, under the broiling sun, it was an&#xA;exhausting quarantine. The first &lt;a href=&#34;https://xeechou.net/blog/busy-in-quarantine&#34;&gt;month&lt;/a&gt; I&#xA;remeber I was feeling fortunate I got this aleatory chance for advancement of&#xA;&lt;em&gt;taiwins&lt;/em&gt; in this global pandemic, right now all I felt was the painful&#xA;experience converting all the Taiwins server code away from&#xA;libweston. Implementating of server side wayland objects was indeed unpleasant&#xA;experience. Without libweston, I have to implement every little thing and get it&#xA;right, even the basics 2D homogenous matrix operations for coordinates&#xA;transformations. Just a days I ago I discovered my mistakenly used rotations in&#xA;the &amp;ldquo;Y-up&amp;rdquo; coordinate system (like OpenGL) in the &amp;ldquo;Y-down&amp;rdquo; coordinate sytem&#xA;(like Wayland protocol). The good news was that I did not give up, it seemed I&#xA;overcame one difficulties after another, now at least I can paint my taiwins&#xA;shell objects using a primitive renderer. In the end, hopefully I will end-up&#xA;with a working and cleaner compositor library than &lt;em&gt;libweston&lt;/em&gt;. This is&#xA;certainly an encouraging news as I used to think a compositor library was not&#xA;possible to finish with only two hands.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Libweston vs Wlroots</title>
-      <link>http://localhost:1313/posts/weston-vs-wlroots/</link>
+      <link>https://xeechou.net/posts/weston-vs-wlroots/</link>
       <pubDate>Sat, 20 Jun 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/weston-vs-wlroots/</guid>
+      <guid>https://xeechou.net/posts/weston-vs-wlroots/</guid>
       <description>&lt;p&gt;You need a wayland compositor library to create a wayland server. Wayland is a&#xA;protocol, itself, cannot do much, long time ago I used to think the server-side&#xA;&lt;code&gt;wl_resource&lt;/code&gt; represents some structure you can operate on, well it turned out&#xA;all you do with it is handling messages between client and server. All the logic&#xA;you need to implement yourself.&lt;/p&gt;&#xA;&lt;p&gt;There were a few attempts to wayland compositing library created. The first&#xA;sucessful one is &lt;a href=&#34;https://github.com/Cloudef/wlc&#34;&gt;wlc&lt;/a&gt;. I think its existence is&#xA;that &lt;a href=&#34;https://github.com/wayland-project/weston&#34;&gt;weston&lt;/a&gt; (the twin of the&#xA;wayland project, now maintained by Pekka Paalanen). was a monolith application&#xA;for a long time. Weston looks pretty and quite fast and beautiful but not very&#xA;useful to anyone else. The developers maybe realized that they want to get more&#xA;people to use weston, so they managed to strip &lt;strong&gt;libweston&lt;/strong&gt; out of weston&#xA;itself. It was a good attempt, although I doubt their true intention was to&#xA;creating a reusable compositing library. Nonetheless, to some extent, it helped&#xA;the birth of the third library by Drew Devault, the&#xA;&lt;a href=&#34;https://github.com/swaywm/wlroots&#34;&gt;wlroots&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>wl_data_device</title>
-      <link>http://localhost:1313/posts/data-device/</link>
+      <link>https://xeechou.net/posts/data-device/</link>
       <pubDate>Fri, 12 Jun 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/data-device/</guid>
+      <guid>https://xeechou.net/posts/data-device/</guid>
       <description>&lt;p&gt;&lt;code&gt;wl_data_device&lt;/code&gt; interface in the base wayland protocol is the most complex one,&#xA;in my opinion, &lt;em&gt;wayland.xml&lt;/em&gt; explains it fairly well, but every pieces are&#xA;scattered in the file, here I serialize it together, give you quick run through.&lt;/p&gt;&#xA;&lt;p&gt;In brief, data device in wayland consists of four interfaces: The first is&#xA;&lt;code&gt;wl_data_device_manager&lt;/code&gt;, it is the global. The second is &lt;code&gt;wl_data_device&lt;/code&gt;,&#xA;can be created from &lt;code&gt;wl_data_device_manager&lt;/code&gt; for a given seat, it is used to&#xA;set selection(ctrl-c ctrl-v) and drag-n-drop. The 3rd is &lt;code&gt;wl_data_source&lt;/code&gt;,&#xA;also created from &lt;code&gt;wl_data_device_manager&lt;/code&gt;, this source will be either a&#xA;selection source or drag-n-drop source. The last is &lt;code&gt;wl_data_offer&lt;/code&gt;, which is&#xA;used for copying data from &lt;code&gt;wl_data_source&lt;/code&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>May 2020 Status Update</title>
-      <link>http://localhost:1313/posts/may-update/</link>
+      <link>https://xeechou.net/posts/may-update/</link>
       <pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/may-update/</guid>
+      <guid>https://xeechou.net/posts/may-update/</guid>
       <description>&lt;p&gt;Forcing a monthly blog update seems to be a good idea, giving myself a reason to&#xA;keep paying for this Domain. Also, I don&amp;rsquo;t usually has a topic to address&#xA;specifically, a monthly update can fill this role. Anyway, time passes rapidly&#xA;in quarantine my friends. I hope a few years forward when I look back at this&#xA;moment, I would not feel I wasted so much time. I don&amp;rsquo;t actually feel I made&#xA;much progress through this month. I would say, I am digging into my memory right&#xA;now, it is hard to recall much in detail. yeah, that is life in quarantine,&#xA;&amp;ldquo;stagnation&amp;rdquo;, like the blackwater.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Busy in quarantine</title>
-      <link>http://localhost:1313/posts/busy-in-quarantine/</link>
+      <link>https://xeechou.net/posts/busy-in-quarantine/</link>
       <pubDate>Tue, 07 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/busy-in-quarantine/</guid>
+      <guid>https://xeechou.net/posts/busy-in-quarantine/</guid>
       <description>&lt;p&gt;I update this blog less frequent than once per year, which sometimes makes me&#xA;question why do I keep paying for this site. Be able to update blogs is always&#xA;my pursuit, unfortunately there were always more code to write. It has been more&#xA;than one year, last time I was still on how to MSAA on OpenGL 4, somehow it felt&#xA;like a decade ago. The peaceful developing world took an interesting turn. A&#xA;long run bull market is killed and NYSE triggered circuit break 4 times in 10&#xA;days. People are joking they now have 75% of Warren Buffet&amp;rsquo;s experience. Will&#xA;this gonna be the story we told our grand children born after 2020? &amp;ldquo;You know&#xA;back in 2020, it was a crazy year&amp;hellip;&amp;rdquo;. We just saw the quarter of it, I am kind&#xA;of expecting the crazier in the rest, will it be massive unemployment and a&#xA;scary recession will be waiting? This week the market has recovered a bit of its&#xA;confidence somehow, despite the Covid-19 cases are surging. A friend used to&#xA;tell me, it would be a point where many will be killed by the virus and people&#xA;just don&amp;rsquo;t care anymore, looks like the market is at that point.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Realistic Deferred MSAA implementation</title>
-      <link>http://localhost:1313/posts/deffered_msaa/</link>
+      <link>https://xeechou.net/posts/deffered_msaa/</link>
       <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/deffered_msaa/</guid>
+      <guid>https://xeechou.net/posts/deffered_msaa/</guid>
       <description>&lt;p&gt;Deferred MSAA, always has been a good problem. In the spatial anti-aliasing&#xA;domain, MSAA is still the swiss-army knife, handle almost all the case.&lt;/p&gt;&#xA;&lt;p&gt;Some other post-processing methods like nvidia&amp;rsquo;s FXAA, AMDs MLAA, or DLAA. FXAA&#xA;is rather pleasing in many cases as well, especially if&#xA;you are a video game developer, as long as your rasterization implementation&#xA;does not screwed up. But for the case like grass rendering, fur rendering, when&#xA;you have many layers of thin line, FXAA will fail you. Just like the pixels&#xA;annotated in the image below.&lt;/p&gt;</description>
     </item>
     <item>
       <title>The wayland project II</title>
-      <link>http://localhost:1313/posts/the_wayland_project_2/</link>
+      <link>https://xeechou.net/posts/the_wayland_project_2/</link>
       <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/the_wayland_project_2/</guid>
+      <guid>https://xeechou.net/posts/the_wayland_project_2/</guid>
       <description>&lt;p&gt;The last &lt;a href=&#34;%7Bfilename%7D/the_wayland_project.md&#34;&gt;post&lt;/a&gt; I laid out the story of me&#xA;with wayland. Technology is fascinating isn&amp;rsquo;t it? Every once a while, there are&#xA;plenty of new projects that aim to start an revolution, getting people&#xA;excited. Projects like &lt;strong&gt;systemd&lt;/strong&gt;, &lt;strong&gt;Wayland&lt;/strong&gt;, &lt;strong&gt;Vulkan&lt;/strong&gt; make us think how&#xA;come we did not think of those before, they seemed perfect at the&#xA;moment. Technologies always work like a rush of hot wave, our sights are limited&#xA;at the moment we are in, maybe 5 years from now, even &lt;strong&gt;vulkan&lt;/strong&gt; is not sexy&#xA;anymore. For ten years, community has been urging everyone to jump on the boat&#xA;of wayland. Some major platform adopted it, just there is no money in it. Major&#xA;platforms like &lt;strong&gt;GNOME&lt;/strong&gt; and &lt;strong&gt;KDE&lt;/strong&gt; are not even mature yet, KDE developers&#xA;also worries about the future of the wayland, will it last 30 years like &lt;strong&gt;X&#xA;window&lt;/strong&gt;?&lt;/p&gt;</description>
     </item>
     <item>
       <title>The wayland project</title>
-      <link>http://localhost:1313/posts/the_wayland_project/</link>
+      <link>https://xeechou.net/posts/the_wayland_project/</link>
       <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/the_wayland_project/</guid>
+      <guid>https://xeechou.net/posts/the_wayland_project/</guid>
       <description>&lt;p&gt;It was a good will.&lt;/p&gt;&#xA;&lt;p&gt;5 years ago, I read a blog about the future of linux desktop, I was using a&#xA;window manager called &lt;code&gt;Awesome&lt;/code&gt; (one of my friend introduced it to me, I was&#xA;enchanted by how he opened two terminals side-by-side, one for coding and one&#xA;for compiling). A voice about next generation desktop was just raised in the&#xA;linux community , a group of hackers demod the &lt;code&gt;weston&lt;/code&gt; project, where you can&#xA;rotate the application windows. They also pointed out the existing problems in&#xA;the x server architecture(basically it is too old, let us just replace it). It&#xA;is cumbersome, too many components, easily dead after package upgrade.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Rotations</title>
-      <link>http://localhost:1313/posts/rotations/</link>
+      <link>https://xeechou.net/posts/rotations/</link>
       <pubDate>Sun, 26 Nov 2017 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/rotations/</guid>
+      <guid>https://xeechou.net/posts/rotations/</guid>
       <description>&lt;p&gt;Rotation, combined with translation and scaling, are the three affin transforms&#xA;we do every day in the 3D nutshell universe. The rotation itself, however, is&#xA;somehow much more complicated than the other two transform, it is one really&#xA;needs a matrix representation among all three. Representations and computation&#xA;of it has been developed for years. We have systems like &lt;strong&gt;Axis-angle&lt;/strong&gt;&#xA;representation, &lt;strong&gt;matrix representation&lt;/strong&gt;, &lt;strong&gt;euler angles&lt;/strong&gt; and &lt;strong&gt;quaternions&lt;/strong&gt;.&#xA;Despite I have known them for a long time, when I forgot, the rotation is still&#xA;complicated. Here I am writing this again, as easily understanding as possible,&#xA;for my future-self (or I can just travel through time to ask myself now).&lt;/p&gt;</description>
     </item>
     <item>
       <title>Bone Animation [part I]</title>
-      <link>http://localhost:1313/posts/animation/</link>
+      <link>https://xeechou.net/posts/animation/</link>
       <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/animation/</guid>
+      <guid>https://xeechou.net/posts/animation/</guid>
       <description>&lt;p&gt;I have been trying to create a animation system for my &lt;a href=&#34;https://github.com/xeechou/gltutorial&#34;&gt;OpenGL&#xA;Project&lt;/a&gt; for a long time, one of the&#xA;reason is I have limited amount of time after starting the full-time job.&#xA;Another problem was that, I mean, if I intend to keep it a clean project rather&#xA;than just a school project, building a animation system is like a rabbit hole,&#xA;30 lines of code got me another 100 lines of work, it only leaded me deeper and&#xA;deeper. Well, it is a perfect opportunity for me to explain the story here. The&#xA;amount of skeletal animation that I found online, especially good blogs are less&#xA;than a dozen. Gladly, I would like to point it out here, there is a good youtube&#xA;video &lt;a href=&#34;https://www.youtube.com/watch?v=f3Cr8Yx3GGA&#34;&gt;series&lt;/a&gt; you can follow, it&#xA;is in Java, the author provided the source code for reference. Khronos has a&#xA;shader example &lt;a href=&#34;https://www.khronos.org/opengl/wiki/Skeletal_Animation&#34;&gt;here&lt;/a&gt;&#xA;and there are a few others.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Template Deduction for C&#43;&#43;</title>
-      <link>http://localhost:1313/posts/template_deduction/</link>
+      <link>https://xeechou.net/posts/template_deduction/</link>
       <pubDate>Fri, 04 Nov 2016 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/template_deduction/</guid>
+      <guid>https://xeechou.net/posts/template_deduction/</guid>
       <description>&lt;p&gt;Template is a confusing and hard features in C++ if you want use it well, and I&#xA;think it is also one of the reason which causes c++ programmers cannot&#xA;understand each other. Sometimes the Deduction rule for c++ is really confusing,&#xA;you don&amp;rsquo;t understand why you code doesn&amp;rsquo;t work or why it works. And Since&#xA;&lt;strong&gt;STL&lt;/strong&gt; heavily uses nesting Templates, both your compiler and your mind suffers&#xA;from that.&lt;/p&gt;</description>
     </item>
     <item>
       <title>View Matrix for projection</title>
-      <link>http://localhost:1313/posts/camera_matrix/</link>
+      <link>https://xeechou.net/posts/camera_matrix/</link>
       <pubDate>Mon, 31 Oct 2016 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/camera_matrix/</guid>
+      <guid>https://xeechou.net/posts/camera_matrix/</guid>
       <description>&lt;h1 id=&#34;the-mvp-matrix&#34;&gt;The &lt;strong&gt;MVP&lt;/strong&gt; Matrix&lt;/h1&gt;&#xA;&lt;p&gt;$\text{Model} * \text{View} * \text{Projection}$ is the first lesson to render&#xA;(the so called render is the process so that people can see it on a 2D screen&#xA;)objects in Computer Graphics, which transfer a 3D object in object space into,&#xA;in the end, a UV plane.&lt;/p&gt;&#xA;&lt;p&gt;The Model matrix is simple and easy to understand, simply the translation, scale&#xA;and rotation, but View matrix and Camera matrix are not obvious(although you can&#xA;get it for free by single call from &lt;code&gt;glm::lookAt()&lt;/code&gt; and &lt;code&gt;glm::perspective()&lt;/code&gt;).&lt;/p&gt;</description>
     </item>
     <item>
       <title>Everything you do I can do it with a double pointer in C</title>
-      <link>http://localhost:1313/posts/double_pointer_in_c/</link>
+      <link>https://xeechou.net/posts/double_pointer_in_c/</link>
       <pubDate>Sun, 21 Aug 2016 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/double_pointer_in_c/</guid>
+      <guid>https://xeechou.net/posts/double_pointer_in_c/</guid>
       <description>&lt;p&gt;It is 2016, low level coding is not needed anymore. We have programming&#xA;languages like &lt;code&gt;javascript&lt;/code&gt; and python. When people code everything with a class&#xA;and related methods. But do you remember we have a programming language called&#xA;C? When we had no class, templates, operator-override or implicit constructor at&#xA;esthat time. You actually know what are doing with C, no magic!&lt;/p&gt;&#xA;&lt;p&gt;I claim no expert to programming, since I only have a four-year-old programming&#xA;life. But even you are inexperienced like me, you should still be able to code&#xA;some thing in C. IT IS fatigue to code in C, you have no standard containers to&#xA;rely on, you spend 10 hours to build a perfect &lt;code&gt;deque&lt;/code&gt; data type which works on&#xA;amortized O(1) complexity and has no memory leaks before you are able to work on&#xA;your project. Awesome!!! But why? Why try to build a huge robust data structure&#xA;in a non-OOP language? Instead of trying simulate constructors and destructors,&#xA;you could always use a double pointer to do the job. Have you ever seen Linus&#xA;Torvalds&amp;rsquo;s double pointer code? It removes on special case where you would make&#xA;mistakes.&lt;/p&gt;</description>
     </item>
     <item>
       <title>6 years of programming</title>
-      <link>http://localhost:1313/posts/six_years_programming/</link>
+      <link>https://xeechou.net/posts/six_years_programming/</link>
       <pubDate>Mon, 08 Aug 2016 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/six_years_programming/</guid>
+      <guid>https://xeechou.net/posts/six_years_programming/</guid>
       <description>&lt;p&gt;I have been studying in programming for 6 years, since my first day of&#xA;undergrad life. I haven&amp;rsquo;t realized it has been so long, this studying life&#xA;already took away most of my youth. I was a kid without knowing the toughness&#xA;of life, to a young man need to worry about jobs and how to start having&#xA;family.&lt;/p&gt;&#xA;&lt;p&gt;The computer industry changed vastly in this period. There was no Cloud&#xA;Computing, Machine Learning was only known in Academics. Universities taught&#xA;students how to code in VC++. Now everything is different.&lt;/p&gt;</description>
     </item>
     <item>
       <title>How to write blog generator</title>
-      <link>http://localhost:1313/posts/write_sg0/</link>
+      <link>https://xeechou.net/posts/write_sg0/</link>
       <pubDate>Mon, 27 Apr 2015 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/write_sg0/</guid>
+      <guid>https://xeechou.net/posts/write_sg0/</guid>
       <description>&lt;p&gt;这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不&#xA;久。所以写的第一篇博客就以生成我的博客站点的项目&lt;code&gt;mkblogs&lt;/code&gt;说起，来说说如何写一个&#xA;博客生成器吧。&lt;/p&gt;</description>
     </item>
   </channel>

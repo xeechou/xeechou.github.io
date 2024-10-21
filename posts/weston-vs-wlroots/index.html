@@ -359,16 +359,7 @@ and adding modification is difficult, though it is a more mature project.</p>
             <section class="post-nav-teaser">
               <i class="icon-right-arrow"></i>
               <h2 class="post-nav-title">wl_data_device</h2>
-              <p class="post-nav-excerpt"><p><code>wl_data_device</code> interface in the base wayland protocol is the most complex one,
-in my opinion, <em>wayland.xml</em> explains it fairly well, but every pieces are
-scattered in the file, here I serialize it together, give you quick run through.</p>
-<p>In brief, data device in wayland consists of four interfaces: The first is
-<code>wl_data_device_manager</code>, it is the global. The second is <code>wl_data_device</code>,
-can be created from <code>wl_data_device_manager</code> for a given seat, it is used to
-set selection(ctrl-c ctrl-v) and drag-n-drop. The 3rd is <code>wl_data_source</code>,
-also created from <code>wl_data_device_manager</code>, this source will be either a
-selection source or drag-n-drop source. The last is <code>wl_data_offer</code>, which is
-used for copying data from <code>wl_data_source</code>.</p></p>
+              
             </section>
           </a>
         
@@ -378,22 +369,7 @@ used for copying data from <code>wl_data_source</code>.</p></p>
             <section class="post-nav-teaser">
               <i class="icon-left-arrow"></i>
               <h2 class="post-nav-title">June 2020 Status Update</h2>
-              <p class="post-nav-excerpt"><p>Montréal is hotter than ever in this month, under the broiling sun, it was an
-exhausting quarantine. The first <a href="/blog/busy-in-quarantine">month</a> I
-remeber I was feeling fortunate I got this aleatory chance for advancement of
-<em>taiwins</em> in this global pandemic, right now all I felt was the painful
-experience converting all the Taiwins server code away from
-libweston. Implementating of server side wayland objects was indeed unpleasant
-experience. Without libweston, I have to implement every little thing and get it
-right, even the basics 2D homogenous matrix operations for coordinates
-transformations. Just a days I ago I discovered my mistakenly used rotations in
-the &ldquo;Y-up&rdquo; coordinate system (like OpenGL) in the &ldquo;Y-down&rdquo; coordinate sytem
-(like Wayland protocol). The good news was that I did not give up, it seemed I
-overcame one difficulties after another, now at least I can paint my taiwins
-shell objects using a primitive renderer. In the end, hopefully I will end-up
-with a working and cleaner compositor library than <em>libweston</em>. This is
-certainly an encouraging news as I used to think a compositor library was not
-possible to finish with only two hands.</p></p>
+              
             </section>
           </a>
         

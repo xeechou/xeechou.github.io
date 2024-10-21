@@ -250,12 +250,7 @@ can get more people engaged in the project, the one thing I am not good at.</p>
             <section class="post-nav-teaser">
               <i class="icon-right-arrow"></i>
               <h2 class="post-nav-title">July 2020 Status Update</h2>
-              <p class="post-nav-excerpt"><p>July, the hottest month in Montreal every year. The heat wave rushes to you when
-you walk outside makes you wondering if you are in some tropical island, it sure
-doesn&rsquo;t look like living at 45 latitde northen hemisphere. Last month was a
-rapid leap towards wayland objects implementations and now I just hitted the
-wall of <code>xdg-shell</code> protocol. Today I&rsquo;d like to talk about what it is like to
-implement a wayland protocol.</p></p>
+              
             </section>
           </a>
         
@@ -265,23 +260,7 @@ implement a wayland protocol.</p></p>
             <section class="post-nav-teaser">
               <i class="icon-left-arrow"></i>
               <h2 class="post-nav-title">Working with libdrm, repainting timeline</h2>
-              <p class="post-nav-excerpt"><p>As the taiwins project finished with X11/Wayland backend rigging. Now I am fully
-on the libdrm backend development, dealing with hardwares directly. This backend
-requires 200 percent my energy to tame the complexity.</p>
-<p>Like other backends, libdrm also needs to provide two resources, <em>input</em> and
-<em>output</em>. Backends like nested wayland backend or X11 backend, the <em>output</em>
-device are the windows created by ourselves (or by the user). Meaning we can
-create it or destroy it as we please. As for libdrm, those are provided by the
-OS. An <em>output</em> in libdrm&rsquo;s terminology, is called connector. We query and
-change the connectors state by <code>drmModeGet*</code> functions. Then later set the
-hardware states by <code>drmModeSet*</code> or the new atomic API. It may sound simple but
-actually, for displaying images on the screen using the <em>libdrm</em> mechanism, it
-takes quite a few components, working together, to achieve the goal. We uses
-<code>drmMode*</code> routines for
-<a href="https://01.org/linuxgraphics/gfx-docs/drm/gpu/drm-kms.html">kernel-modesetting</a>;
-libgbm for framebuffer allocation; OpenGL or Vulkan for rendering. If done
-right, you would get tear-free images on your screen constant refresh rate. But
-should anything goes wrong, you probably end up with a black screen.</p></p>
+              
             </section>
           </a>
         

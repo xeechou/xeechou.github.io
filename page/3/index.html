@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<meta name="generator" content="Hugo 0.135.0">
+	<meta name="generator" content="Hugo 0.140.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -83,7 +83,7 @@
     </h1>
     
     
-      <div class="blog-cover cover" style="background-image: url('https://xeechou.net/imgs/home-bg.jpg');"></div>
+      <div class="blog-cover cover" style="background-image: url('http://localhost:1313/imgs/home-bg.jpg');"></div>
     
 </header>
 
@@ -121,6 +121,50 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/drm-backend/">Working with libdrm, repainting timeline</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/linux">linux</a>
+              
+              |
+            
+            <time datetime="2020-11-13">13 Nov 2020</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>As the taiwins project finished with X11/Wayland backend rigging. Now I am fully
+on the libdrm backend development, dealing with hardwares directly. This backend
+requires 200 percent my energy to tame the complexity.</p>
+<p>Like other backends, libdrm also needs to provide two resources, <em>input</em> and
+<em>output</em>. Backends like nested wayland backend or X11 backend, the <em>output</em>
+device are the windows created by ourselves (or by the user). Meaning we can
+create it or destroy it as we please. As for libdrm, those are provided by the
+OS. An <em>output</em> in libdrm&rsquo;s terminology, is called connector. We query and
+change the connectors state by <code>drmModeGet*</code> functions. Then later set the
+hardware states by <code>drmModeSet*</code> or the new atomic API. It may sound simple but
+actually, for displaying images on the screen using the <em>libdrm</em> mechanism, it
+takes quite a few components, working together, to achieve the goal. We uses
+<code>drmMode*</code> routines for
+<a href="https://01.org/linuxgraphics/gfx-docs/drm/gpu/drm-kms.html">kernel-modesetting</a>;
+libgbm for framebuffer allocation; OpenGL or Vulkan for rendering. If done
+right, you would get tear-free images on your screen constant refresh rate. But
+should anything goes wrong, you probably end up with a black screen.</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/aug-update-2020/">August 2020 Status Update</a>
           </h2>
           <span class="post-meta">
@@ -128,7 +172,7 @@
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -164,7 +208,7 @@ attack. I had to work <strong>a lot</strong> to stay healthy.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -197,7 +241,7 @@ implement a wayland protocol.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -240,7 +284,7 @@ possible to finish with only two hands.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/wayland">wayland</a>
+                <a href="http://localhost:1313/tags/wayland">wayland</a>
               
               |
             
@@ -283,7 +327,7 @@ the birth of the third library by Drew Devault, the
             
               
                 
-                <a href="https://xeechou.net/tags/wayland">wayland</a>
+                <a href="http://localhost:1313/tags/wayland">wayland</a>
               
               |
             
@@ -320,7 +364,7 @@ used for copying data from <code>wl_data_source</code>.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -355,7 +399,7 @@ now, it is hard to recall much in detail. yeah, that is life in quarantine,
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -396,7 +440,7 @@ just don&rsquo;t care anymore, looks like the market is at that point.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/graphics">graphics</a>
+                <a href="http://localhost:1313/tags/graphics">graphics</a>
               
               |
             
@@ -431,10 +475,10 @@ annotated in the image below.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/wayland">wayland</a>
+                <a href="http://localhost:1313/tags/wayland">wayland</a>
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -456,45 +500,6 @@ of wayland. Some major platform adopted it, just there is no money in it. Major
 platforms like <strong>GNOME</strong> and <strong>KDE</strong> are not even mature yet, KDE developers
 also worries about the future of the wayland, will it last 30 years like <strong>X
 window</strong>?</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/the_wayland_project/">The wayland project</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="https://xeechou.net/tags/wayland">wayland</a>
-              
-                
-                <a href="https://xeechou.net/tags/journal">Journal</a>
-              
-              |
-            
-            <time datetime="2018-07-22">22 Jul 2018</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>It was a good will.</p>
-<p>5 years ago, I read a blog about the future of linux desktop, I was using a
-window manager called <code>Awesome</code> (one of my friend introduced it to me, I was
-enchanted by how he opened two terminals side-by-side, one for coding and one
-for compiling). A voice about next generation desktop was just raised in the
-linux community , a group of hackers demod the <code>weston</code> project, where you can
-rotate the application windows. They also pointed out the existing problems in
-the x server architecture(basically it is too old, let us just replace it). It
-is cumbersome, too many components, easily dead after package upgrade.</p>
       </section>
     </div>
   </article>

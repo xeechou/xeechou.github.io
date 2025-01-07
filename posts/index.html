@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -72,7 +72,7 @@
   
     
       <span id="home-button" class="nav-button">
-        <a class="home-button" href="https://xeechou.net/" title="Home">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
           <i class="icon-left-arrow"></i> Home
         </a>
       </span>
@@ -95,7 +95,7 @@
     </span>
 
     
-      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
     
   </div>
 </header>
@@ -139,6 +139,63 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/ebus-part-ii/">Event bus implementation, Part II, on a task system</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/journal">journal</a>
+              
+              |
+            
+            <time datetime="2025-01-05">05 Jan 2025</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Recap on EBus
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+From our last <a href="http://localhost:1313/posts/ebus/">post</a> on an <a href="https://github.com/xeechou/ebus">eBus</a> implementation. We talk about that how you can implement the <a href="https://refactoring.guru/design-patterns/observer">Observer</a> pattern so your can decouple the code from the callers to its callees. The perfect use case for that is obviously to register the observers for certain events such as <strong>ticks</strong>, system input events such as keyboard, mouse, etc.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//the listener will override those methods
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">keyboard_input_listener</span> : <span style="font-weight:bold;text-decoration:underline">public</span> ebus_handler&lt;keyboard_events&gt;
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">on_enter</span>(keyboard_t* keyboard,
+</span></span><span style="display:flex;"><span>                                surface_t* surf, <span style="font-weight:bold;text-decoration:underline">uint32_t</span> key) <span style="font-weight:bold;text-decoration:underline">override</span>;
+</span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">on_leave</span>(keyboard_t* keyboard, surface_t *surf) <span style="font-weight:bold;text-decoration:underline">override</span>;
+</span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">on_key</span>(keyboard_t* keyboard,
+</span></span><span style="display:flex;"><span>                              <span style="font-weight:bold;text-decoration:underline">uint32_t</span> key, <span style="font-weight:bold;text-decoration:underline">uint32_t</span> state) <span style="font-weight:bold;text-decoration:underline">override</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#888;font-style:italic">//other events ...
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  };
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//then listen on the events.
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  keyboard_input_listener listener;
+</span></span><span style="display:flex;"><span>  listener.connect();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//certain point a system will trigger events
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_enter, ...);
+</span></span><span style="display:flex;"><span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_key, ...);
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">///...
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_leave, ...);</span></span></code></pre></div>
+</div>
+<p>
+But actually the power of the eBus is far beyond this. On top of this system,  we can build other system as well. In this post, we are going to build a (async) task system.</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/hideshow-emacs/">Customizing Hide-Show for CMake Mode in Emacs</a>
           </h2>
           <span class="post-meta">
@@ -146,10 +203,10 @@
             
               
                 
-                <a href="https://xeechou.net/tags/journal">journal</a>
+                <a href="http://localhost:1313/tags/journal">journal</a>
               
                 
-                <a href="https://xeechou.net/tags/emacs">Emacs</a>
+                <a href="http://localhost:1313/tags/emacs">Emacs</a>
               
               |
             
@@ -211,7 +268,7 @@ This regular expression matches the beginning/end of the folding code. For C/C++
             
               
                 
-                <a href="https://xeechou.net/tags/journal">journal</a>
+                <a href="http://localhost:1313/tags/journal">journal</a>
               
               |
             
@@ -242,7 +299,7 @@ Instead of doing this:</p>
             
               
                 
-                <a href="https://xeechou.net/tags/graphics">graphics</a>
+                <a href="http://localhost:1313/tags/graphics">graphics</a>
               
               |
             
@@ -278,7 +335,7 @@ When creating an Vulkan device, you have a lot of options which extensions you w
             
               
                 
-                <a href="https://xeechou.net/tags/emacs">emacs</a>
+                <a href="http://localhost:1313/tags/emacs">emacs</a>
               
               |
             
@@ -307,7 +364,7 @@ For a long time, I have been maintaining my <a href="https://github.com/xeechou/
             
               
                 
-                <a href="https://xeechou.net/tags/graphics">graphics</a>
+                <a href="http://localhost:1313/tags/graphics">graphics</a>
               
               |
             
@@ -335,7 +392,7 @@ For a long time, I have been maintaining my <a href="https://github.com/xeechou/
             
               
                 
-                <a href="https://xeechou.net/tags/wayland">wayland</a>
+                <a href="http://localhost:1313/tags/wayland">wayland</a>
               
               |
             
@@ -364,7 +421,7 @@ For a long time, I have been maintaining my <a href="https://github.com/xeechou/
             
               
                 
-                <a href="https://xeechou.net/tags/graphics">Graphics</a>
+                <a href="http://localhost:1313/tags/graphics">Graphics</a>
               
               |
             
@@ -392,7 +449,7 @@ For a long time, I have been maintaining my <a href="https://github.com/xeechou/
             
               
                 
-                <a href="https://xeechou.net/tags/graphics">graphics</a>
+                <a href="http://localhost:1313/tags/graphics">graphics</a>
               
               |
             
@@ -423,7 +480,7 @@ The rendering framework focus on the render passes should provide a compact yet 
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -445,44 +502,6 @@ list&rdquo;. Even if I place it outside the blog folder. This is the list your
 template is calling <code>.NextPage</code> and <code>.PrevPage</code>. So initially I just give it a
 very old date, or simply removed the date, so it will appear as the last on the
 list. Obviously I will have to fix that.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/moving-to-hugo/">Moving to Hugo</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="https://xeechou.net/tags/journal">Journal</a>
-              
-              |
-            
-            <time datetime="2021-11-14">14 Nov 2021</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>For a long time I&rsquo;ve been wanting to Migrate my blog system from
-<a href="https://blog.getpelican.com/">Pelican</a> to <a href="https://gohugo.io/">Hugo</a>. One
-reason is that I had enough with python virtual environment breaks every 3
-months. Another motivation is obviously I would like to replace Python with Go
-in my life.</p>
-<p>A long time ago I followed Go tutorial for getting started, surprised by its
-syntax tidiness and similarity to Python, and it is way faster. But soon I
-found out it would be one of this thing I learned for a weekend and forget all
-together, since I don&rsquo;t have any projects I would use it actively. Now after
-one month of procrastination, I finally pieces ALMOST everything to reproduce
-my old blog. Time for a summary.</p>
       </section>
     </div>
   </article>

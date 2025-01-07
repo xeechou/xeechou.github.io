@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -67,7 +67,7 @@
   
     
       <span id="home-button" class="nav-button">
-        <a class="home-button" href="https://xeechou.net/" title="Home">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
           <i class="icon-left-arrow"></i> Home
         </a>
       </span>
@@ -86,11 +86,11 @@
     <h1 class="blog-name">Journal</h1>
     <span class="blog-description">
       
-        Posts: 17
+        Posts: 18
       
     </span>
     
-      <div class="blog-cover cover" style="background-image: url('https://xeechou.net/imgs/home-bg.jpg');"></div>
+      <div class="blog-cover cover" style="background-image: url('http://localhost:1313/imgs/home-bg.jpg');"></div>
     
   </div>
 </header>
@@ -124,6 +124,63 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/ebus-part-ii/">Event bus implementation, Part II, on a task system</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/journal">journal</a>
+              
+              |
+            
+            <time datetime="2025-01-05">05 Jan 2025</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Recap on EBus
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+From our last <a href="http://localhost:1313/posts/ebus/">post</a> on an <a href="https://github.com/xeechou/ebus">eBus</a> implementation. We talk about that how you can implement the <a href="https://refactoring.guru/design-patterns/observer">Observer</a> pattern so your can decouple the code from the callers to its callees. The perfect use case for that is obviously to register the observers for certain events such as <strong>ticks</strong>, system input events such as keyboard, mouse, etc.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//the listener will override those methods
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">keyboard_input_listener</span> : <span style="font-weight:bold;text-decoration:underline">public</span> ebus_handler&lt;keyboard_events&gt;
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">on_enter</span>(keyboard_t* keyboard,
+</span></span><span style="display:flex;"><span>                                surface_t* surf, <span style="font-weight:bold;text-decoration:underline">uint32_t</span> key) <span style="font-weight:bold;text-decoration:underline">override</span>;
+</span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">on_leave</span>(keyboard_t* keyboard, surface_t *surf) <span style="font-weight:bold;text-decoration:underline">override</span>;
+</span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">on_key</span>(keyboard_t* keyboard,
+</span></span><span style="display:flex;"><span>                              <span style="font-weight:bold;text-decoration:underline">uint32_t</span> key, <span style="font-weight:bold;text-decoration:underline">uint32_t</span> state) <span style="font-weight:bold;text-decoration:underline">override</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#888;font-style:italic">//other events ...
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  };
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//then listen on the events.
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  keyboard_input_listener listener;
+</span></span><span style="display:flex;"><span>  listener.connect();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//certain point a system will trigger events
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_enter, ...);
+</span></span><span style="display:flex;"><span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_key, ...);
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">///...
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_leave, ...);</span></span></code></pre></div>
+</div>
+<p>
+But actually the power of the eBus is far beyond this. On top of this system,  we can build other system as well. In this post, we are going to build a (async) task system.</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/hideshow-emacs/">Customizing Hide-Show for CMake Mode in Emacs</a>
           </h2>
           <span class="post-meta">
@@ -131,10 +188,10 @@
             
               
                 
-                <a href="https://xeechou.net/tags/journal">journal</a>
+                <a href="http://localhost:1313/tags/journal">journal</a>
               
                 
-                <a href="https://xeechou.net/tags/emacs">Emacs</a>
+                <a href="http://localhost:1313/tags/emacs">Emacs</a>
               
               |
             
@@ -196,7 +253,7 @@ This regular expression matches the beginning/end of the folding code. For C/C++
             
               
                 
-                <a href="https://xeechou.net/tags/journal">journal</a>
+                <a href="http://localhost:1313/tags/journal">journal</a>
               
               |
             
@@ -227,7 +284,7 @@ Instead of doing this:</p>
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -266,7 +323,7 @@ list. Obviously I will have to fix that.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -304,7 +361,7 @@ my old blog. Time for a summary.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -337,7 +394,7 @@ switching. Weekends are really no for staying at home confronting monitors.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -373,7 +430,7 @@ long, even now it is painful to do so. At least I get more time reading books?</
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -407,7 +464,7 @@ anymore, more often I need to track my TODOs from cellphone as well.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -448,7 +505,7 @@ of that. But, screw it. I am doing it myself.</p>
             
               
                 
-                <a href="https://xeechou.net/tags/journal">Journal</a>
+                <a href="http://localhost:1313/tags/journal">Journal</a>
               
               |
             
@@ -467,39 +524,6 @@ months. It was a tough year actually, I was determined to push Taiwins to a
 usable state, it has been stressful. Every time I look at the pile of the TODO
 list, a sentiment of endless development and desperate hit me hard like a heart
 attack. I had to work <strong>a lot</strong> to stay healthy.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/july-update-2020/">July 2020 Status Update</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="https://xeechou.net/tags/journal">Journal</a>
-              
-              |
-            
-            <time datetime="2020-07-18">18 Jul 2020</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>July, the hottest month in Montreal every year. The heat wave rushes to you when
-you walk outside makes you wondering if you are in some tropical island, it sure
-doesn&rsquo;t look like living at 45 latitde northen hemisphere. Last month was a
-rapid leap towards wayland objects implementations and now I just hitted the
-wall of <code>xdg-shell</code> protocol. Today I&rsquo;d like to talk about what it is like to
-implement a wayland protocol.</p>
       </section>
     </div>
   </article>

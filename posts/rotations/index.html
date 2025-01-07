@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -93,7 +93,7 @@
   
     
       <span id="home-button" class="nav-button">
-        <a class="home-button" href="https://xeechou.net/" title="Home">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
           <i class="icon-left-arrow"></i> Home
         </a>
       </span>
@@ -116,7 +116,7 @@
     </span>
 
     
-      <div class="post-cover cover" style="background-image: url('https://xeechou.net/imgs/post-bg.jpg');"></div>
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
     
   </div>
 </header>
@@ -150,7 +150,7 @@ they are Bruce Banna in different forms of hulk(clear throat).</p>
 <table>
   <thead>
       <tr>
-          <th style="text-align: left">Name</th>
+          <th>Name</th>
           <th style="text-align: center">representation</th>
           <th style="text-align: center">N</th>
           <th style="text-align: center">operations on vector</th>
@@ -160,7 +160,7 @@ they are Bruce Banna in different forms of hulk(clear throat).</p>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">rotation vector</td>
+          <td>rotation vector</td>
           <td style="text-align: center">$(w,\theta)$</td>
           <td style="text-align: center">4</td>
           <td style="text-align: center">Rodrigues&rsquo; rotation</td>
@@ -168,7 +168,7 @@ they are Bruce Banna in different forms of hulk(clear throat).</p>
           <td style="text-align: center">hard</td>
       </tr>
       <tr>
-          <td style="text-align: left">Matrix</td>
+          <td>Matrix</td>
           <td style="text-align: center">$M$</td>
           <td style="text-align: center">9</td>
           <td style="text-align: center">$M \cdot v$</td>
@@ -176,7 +176,7 @@ they are Bruce Banna in different forms of hulk(clear throat).</p>
           <td style="text-align: center">hard</td>
       </tr>
       <tr>
-          <td style="text-align: left">euler angles</td>
+          <td>euler angles</td>
           <td style="text-align: center">$(\phi,\theta,\psi)$</td>
           <td style="text-align: center">3</td>
           <td style="text-align: center">$\psi(\theta(\phi(v)))$</td>
@@ -184,7 +184,7 @@ they are Bruce Banna in different forms of hulk(clear throat).</p>
           <td style="text-align: center">hard</td>
       </tr>
       <tr>
-          <td style="text-align: left">quaternions</td>
+          <td>quaternions</td>
           <td style="text-align: center">$q=(w,x,y,z)$</td>
           <td style="text-align: center">4</td>
           <td style="text-align: center">$q\cdot v \cdot q^{-1}$</td>
@@ -216,41 +216,41 @@ $$</p>
 <table>
   <thead>
       <tr>
-          <th style="text-align: left"></th>
-          <th style="text-align: left">rotation matrix</th>
-          <th style="text-align: left">rotation vector</th>
-          <th style="text-align: left">euler angle</th>
-          <th style="text-align: left">quaternions</th>
+          <th></th>
+          <th>rotation matrix</th>
+          <th>rotation vector</th>
+          <th>euler angle</th>
+          <th>quaternions</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">rotation matrix</td>
-          <td style="text-align: left">x</td>
-          <td style="text-align: left">decompose</td>
-          <td style="text-align: left">solving equations</td>
-          <td style="text-align: left">solving equation</td>
+          <td>rotation matrix</td>
+          <td>x</td>
+          <td>decompose</td>
+          <td>solving equations</td>
+          <td>solving equation</td>
       </tr>
       <tr>
-          <td style="text-align: left">rotation vector</td>
-          <td style="text-align: left">$RR_{2D}R^{-1}$</td>
-          <td style="text-align: left">x</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left">$(w,1/2\theta)$</td>
+          <td>rotation vector</td>
+          <td>$RR_{2D}R^{-1}$</td>
+          <td>x</td>
+          <td></td>
+          <td>$(w,1/2\theta)$</td>
       </tr>
       <tr>
-          <td style="text-align: left">euler angle</td>
-          <td style="text-align: left">$R_p R_y R_r$</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left">x</td>
-          <td style="text-align: left">x</td>
+          <td>euler angle</td>
+          <td>$R_p R_y R_r$</td>
+          <td></td>
+          <td>x</td>
+          <td>x</td>
       </tr>
       <tr>
-          <td style="text-align: left">quaternions</td>
-          <td style="text-align: left">Matrix formula</td>
-          <td style="text-align: left">$(w, 1/2\theta)$</td>
-          <td style="text-align: left">x</td>
-          <td style="text-align: left">x</td>
+          <td>quaternions</td>
+          <td>Matrix formula</td>
+          <td>$(w, 1/2\theta)$</td>
+          <td>x</td>
+          <td>x</td>
       </tr>
   </tbody>
 </table>
@@ -310,22 +310,22 @@ though the rotation vector, which makes our lives easier.</p>
 <div class="post-share">
 
   
-  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/rotations/&amp;text=Rotations" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/rotations/&amp;text=Rotations" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
     <i class="icon-twitter"></i><span class="hidden">Twitter</span>
   </a>
 
   
-  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/rotations/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/rotations/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
     <i class="icon-facebook"></i><span class="hidden">Facebook</span>
   </a>
 
   
-  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/rotations/&amp;title=Rotations" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/rotations/&amp;title=Rotations" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
     <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
   </a>
 
   
-  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/rotations/&amp;title=Rotations" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/rotations/&amp;title=Rotations" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
     <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
   </a>
 
@@ -355,7 +355,7 @@ though the rotation vector, which makes our lives easier.</p>
     };
 
     
-    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/rotations/");
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/rotations/");
   </script>
 
   <div class="clear"></div>
@@ -364,7 +364,7 @@ though the rotation vector, which makes our lives easier.</p>
         <aside class="post-tags">
           
             
-            <a href="https://xeechou.net/tags/graphics">graphics</a>
+            <a href="http://localhost:1313/tags/graphics">graphics</a>
           
         </aside>
 

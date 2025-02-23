@@ -144,6 +144,45 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/moving-to-hugo-ii/">Moving to Hugo, Aftermath</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/journal">Journal</a>
+              
+              |
+            
+            <time datetime="2021-11-23">23 Nov 2021</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>My blog is now back online, with brand new render engine Hugo. The URLs are
+totally different though. Not sure how web crawlers handling it right
+now.</p>
+<p>After the migration, I did a few extra work for patching the hiccups. Fix the
+build warnings and adding new features.</p>
+<h3 id="the-about-page">The about page</h3>
+<p>In every blog you always have some pages that you do not want it be inside the
+blog list. By default Hugo will simply place everything on the &ldquo;navigation
+list&rdquo;. Even if I place it outside the blog folder. This is the list your
+template is calling <code>.NextPage</code> and <code>.PrevPage</code>. So initially I just give it a
+very old date, or simply removed the date, so it will appear as the last on the
+list. Obviously I will have to fix that.</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/moving-to-hugo/">Moving to Hugo</a>
           </h2>
           <span class="post-meta">
@@ -459,50 +498,6 @@ surface, additional framebuffers for roles like G-Buffer and
 post-processing. In GPU programming, framebuffer is also a broader concept,
 &ldquo;abstraction of a collection of attachments&rdquo;, the underlining attachments
 corresponds to actual pieces of memory we talk about here.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/drm-backend/">Working with libdrm, repainting timeline</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/linux">linux</a>
-              
-              |
-            
-            <time datetime="2020-11-13">13 Nov 2020</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>As the taiwins project finished with X11/Wayland backend rigging. Now I am fully
-on the libdrm backend development, dealing with hardwares directly. This backend
-requires 200 percent my energy to tame the complexity.</p>
-<p>Like other backends, libdrm also needs to provide two resources, <em>input</em> and
-<em>output</em>. Backends like nested wayland backend or X11 backend, the <em>output</em>
-device are the windows created by ourselves (or by the user). Meaning we can
-create it or destroy it as we please. As for libdrm, those are provided by the
-OS. An <em>output</em> in libdrm&rsquo;s terminology, is called connector. We query and
-change the connectors state by <code>drmModeGet*</code> functions. Then later set the
-hardware states by <code>drmModeSet*</code> or the new atomic API. It may sound simple but
-actually, for displaying images on the screen using the <em>libdrm</em> mechanism, it
-takes quite a few components, working together, to achieve the goal. We uses
-<code>drmMode*</code> routines for
-<a href="https://01.org/linuxgraphics/gfx-docs/drm/gpu/drm-kms.html">kernel-modesetting</a>;
-libgbm for framebuffer allocation; OpenGL or Vulkan for rendering. If done
-right, you would get tear-free images on your screen constant refresh rate. But
-should anything goes wrong, you probably end up with a black screen.</p>
       </section>
     </div>
   </article>

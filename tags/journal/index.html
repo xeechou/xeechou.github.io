@@ -86,7 +86,7 @@
     <h1 class="blog-name">Journal</h1>
     <span class="blog-description">
       
-        Posts: 18
+        Posts: 19
       
     </span>
     
@@ -124,6 +124,37 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/status-update-2025-02/">Status Update, winter, 2025</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/journal">journal</a>
+              
+              |
+            
+            <time datetime="2025-02-22">22 Feb 2025</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>
+We had a incredible snowy winter this year in Toronto. 25cm of snow in 24 hours on Sunday [2025-02-16 Sun], which  preceded by 20+cm earlier Thursday. While stuck at home, I found sometime to work on some long delaying projects. This got me into <a href="https://esphome.io/">ESPHome</a>. Yeah, home automation, somehow I feel this is probably inevitable for north American dwellers.</p>
+<p>
+This days, the smart home word is incredibly messy, on the one hand, you have those giant players like Google home, Apple HomeKit, and Amazon Alexa. On the other hand, all the IoT manufactures are trying to <strong>steal</strong> user data by their crappy app. <a href="https://www.moen.ca/flo">water valves</a>, light switch, <a href="https://www.home-assistant.io/blog/2023/11/06/removal-of-myq-integration/">garage door openers</a>. All of them are trying to force you to their app. For you to simply close your garage, you have to <span style="text-decoration: underline;">send</span> a command on your phone to their <span style="text-decoration: underline;">proprietary cloud server</span>, then travel all the way back to connect to your opener at home. This is insane! Hopefully with the new <a href="https://www.home-assistant.io/blog/2024/01/25/matter-livestream-blog/">Matter</a> standard, it may bring some sanity back.</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/ebus-part-ii/">Event bus implementation, Part II, on a task system</a>
           </h2>
           <span class="post-meta">
@@ -147,7 +178,9 @@ Recap on EBus
 </h3>
 <div id="outline-text-headline-1" class="outline-text-3">
 <p>
-From our last <a href="http://localhost:1313/posts/ebus/">post</a> on an <a href="https://github.com/xeechou/ebus">eBus</a> implementation. We talk about that how you can implement the <a href="https://refactoring.guru/design-patterns/observer">Observer</a> pattern so your can decouple the code from the callers to its callees. The perfect use case for that is obviously to register the observers for certain events such as <strong>ticks</strong>, system input events such as keyboard, mouse, etc.</p>
+From our last <a href="http://localhost:1313/posts/ebus/">post</a> on an <a href="https://github.com/xeechou/ebus">eBus</a> implementation. We talk about that how you can implement the <a href="https://refactoring.guru/design-patterns/observer">Observer</a> pattern so your can decouple the code from the callers to its callees. The perfect use case for that is obviously to register the observers for certain events such as <strong>ticks</strong>, </p>
+<p>
+For example, a keyboard event listener may looks like this:</p>
 <div class="src src-c++">
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//the listener will override those methods
 </span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">keyboard_input_listener</span> : <span style="font-weight:bold;text-decoration:underline">public</span> ebus_handler&lt;keyboard_events&gt;
@@ -488,42 +521,6 @@ want to link to it. The codebase was old and long, it was difficult to make a
 change and really difficult to get libweston taking a patch. Then there is the
 wlroots. If it was released half year earlier Taiwins would probably sit on top
 of that. But, screw it. I am doing it myself.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/aug-update-2020/">August 2020 Status Update</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/journal">Journal</a>
-              
-              |
-            
-            <time datetime="2020-08-22">22 Aug 2020</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>It is a sunny day, somehow I got up early this morning. The cool, chilling
-breath of air reminded me we are at the tail of the summer. It felt so strange,
-this summer was like it was never here. Hiking, go swimming, taking a trips and
-night outs. all those experiences for a normal summer I would do, they are all
-absent, hope I don&rsquo;t regret too much for crunching code at home all these
-months. It was a tough year actually, I was determined to push Taiwins to a
-usable state, it has been stressful. Every time I look at the pile of the TODO
-list, a sentiment of endless development and desperate hit me hard like a heart
-attack. I had to work <strong>a lot</strong> to stay healthy.</p>
       </section>
     </div>
   </article>

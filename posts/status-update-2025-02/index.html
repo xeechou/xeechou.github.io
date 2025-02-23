@@ -1,0 +1,413 @@
+
+<!doctype html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>ESPHome, emporia vue, winter, 2025</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
+    
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-emacs-config" role="presentation">
+          <a href="/emacs-config/">Emacs Config</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">ESPHome, emporia vue, winter, 2025</h1>
+    <span class="post-meta">
+      
+      <time datetime="2025-02-22">22 Feb 2025</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+	<section class="post-content">
+<p>
+We had a incredible snowy winter this year in Toronto. 25cm of snow in 24 hours on Sunday [2025-02-16 Sun], which  preceded by 20+cm earlier Thursday. While stuck at home, I found sometime to work on some long delaying projects. This got me into <a href="https://esphome.io/">ESPHome</a>. Yeah, home automation, somehow I feel this is probably inevitable for north American dwellers.</p>
+<p>
+This days, the smart home word is incredibly messy, on the one hand, you have those giant players like Google home, Apple HomeKit, and Amazon Alexa. On the other hand, all the IoT manufactures are trying to <strong>steal</strong> user data by their crappy app. <a href="https://www.moen.ca/flo">water valves</a>, light switch, <a href="https://www.home-assistant.io/blog/2023/11/06/removal-of-myq-integration/">garage door openers</a>. All of them are trying to lock you to their app. For you to simply close your garage, you have to <span style="text-decoration: underline;">send</span> a command on your phone to their <span style="text-decoration: underline;">proprietary cloud server</span>, then travel all the way back to connect to your opener at home. This is insane! Hopefully with the new <a href="https://www.home-assistant.io/blog/2024/01/25/matter-livestream-blog/">Matter</a> standard, it may bring some sanity back.</p>
+<p>
+At the moment, we have esphome, allows you to combine some low cost, low power esp32 micro-controllers (RISC-V) with some sensors to make an <strong>local</strong> IoT device. That sounds complicated, but actually esphome guys really made this project noob friendly, most of times, all you have to do is writing some YML and you are good to go.</p>
+<p>
+For my personal case, I tried to add a home energy monitoring device to my electric panel. (Learned quite a bit electricity 101 along the way). The best option for me at the moment is through <a href="https://github.com/emporia-vue-local/esphome">emporia-vue-esphome</a>. How it works is the main board (with an ESP32 chip on it) connects to some <a href="https://www.youtube.com/watch?v=9craqaYN8Y0">CT Clamp</a> which use to measure the <strong>current</strong>. On the other hand, 2 or 3 cooper wires connect to each 2 phases of your circuit breaker to measure the <strong>voltage</strong>. With the 2, then you obviously can compute the wattage and energy use. </p>
+<img src="/imgs/emporia.png" alt="/imgs/emporia.png" title="/imgs/emporia.png" width="50%"/>
+<div class="center-block" style="text-align: center; margin-left: auto; margin-right: auto;">
+<p>emporia vue voltage and current connection, image from emporia guide</p>
+</div>
+<p>
+The Emporia device itself does not actually have esphome installed, obviously we have to get creative. There are a few steps needed here, there are already quite a few <a href="https://github.com/emporia-vue-local/esphome/discussions/264">resources</a> online on how to do it. I am not an expert in electronics, quite a contrary, I am a newbie. So I will focus on the point of view of a noob on this project. Assuming you have some software background with 0 hardware knowledge, and you need to take my advice with grain of salt.</p>
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+Step 0: Take blue pill or red pill?
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>Emporia actually has a home assistant <a href="https://github.com/magico13/ha-emporia-vue">integration</a> already, if you don&#39;t mind your electricity data collected by that company, you can jump directly to step 4.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+Step 1: creating a ROM on ESPhome
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>ESPHome guys made it really easy to create a firmware, and you don&#39;t need to get every right the first time. Soon as you got any EspHome flashed in, the following updates can happen wirelessly. Only thing needed at the moment is:</p>
+<div class="src src-yaml">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>esphome:
+</span></span><span style="display:flex;"><span>  name: ${name}
+</span></span><span style="display:flex;"><span>  area: ${area}
+</span></span><span style="display:flex;"><span>  friendly_name: ${friendly_name}
+</span></span><span style="display:flex;"><span>  name_add_mac_suffix: <span style="font-weight:bold;text-decoration:underline">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>external_components:
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic"># Update for Vue 3</span>
+</span></span><span style="display:flex;"><span>  - source: github://emporia-vue-local/esphome@vue3
+</span></span><span style="display:flex;"><span>    components:
+</span></span><span style="display:flex;"><span>      - emporia_vue
+</span></span><span style="display:flex;"><span>api:
+</span></span><span style="display:flex;"><span>  encryption:
+</span></span><span style="display:flex;"><span>    key: !secret api_key_emporia
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>wifi:
+</span></span><span style="display:flex;"><span>  ssid: !secret wifi_ssid
+</span></span><span style="display:flex;"><span>  password: !secret wifi_password
+</span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic"># I choose manual IP, you can obviously do DHCP if you want      </span>
+</span></span><span style="display:flex;"><span>  manual_ip:
+</span></span><span style="display:flex;"><span>    static_ip: !secret ip_emporia
+</span></span><span style="display:flex;"><span>    gateway: !secret ip_gateway
+</span></span><span style="display:flex;"><span>    subnet: !secret ip_subnet
+</span></span><span style="display:flex;"><span>    dns1: !secret ip_dns1</span></span></code></pre></div>
+</div>
+<p>
+The difficult thing is that that the emporia device is not easy to turn on. As you can see in ref:fig:emporia, you need to manually wire the hot/neutral wires to power it on and I am not sure without anything else in the code, will the board be fried? I created my first filmware from one of the <a href="https://github.com/emporia-vue-local/esphome/discussions/264#discussioncomment-11871801">template</a>. You will get all your reading wrong I suppose but those can be fixed by following updates.</p>
+<p>
+In the end, you will get a <code>filmware.bin</code> we need to upload in step 3.</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+Step 2: connect the esp board to computer
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>This is the most difficult step to me at least, there is no USB port on it you have to manually use jump wires to connect to the tiny pins on the PCB board. Either through 1) soldering or in my case a 2) <a href="https://digiblur.com/wiki/devices/plugs/wyze_plug_outdoor_wlppo1/#how-to-flash-esphome-or-tasmota">BPM Frame</a>. The BPM frame is <strong>really</strong> tricky to work with, you have to precisely place the needles on exact copper contact, because they are flat, the needle turned to slip away with any movement. </p>
+<img src="/imgs/emporia-copper-contact.png" alt="/imgs/emporia-copper-contact.png" title="/imgs/emporia-copper-contact.png" width="50%"/>
+<div class="center-block" style="text-align: center; margin-left: auto; margin-right: auto;">
+<p>The (GND, 3.3V, TXD, RXD, GPIO0), image from online</p>
+</div>
+<p>
+What I managed to do is to place the needles near the top of the copper dots, because there is some tiny tiny gap near the edges of the contacts, hopefully the electricity can successfully flow through.</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+Step 3: flash the firmware
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>With some patience and luck, when you plug the TTL adapter to your computer, the LEDs on the Emporia board may start flashing and if you run the <code>esptool.py flash_id</code>. You may get some output like this:</p>
+<div class="src src-text">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>#this is the output from another device, you may have something on /dev/ttyUSB0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Serial port /dev/ttyACM0  
+</span></span><span style="display:flex;"><span>Connecting...
+</span></span><span style="display:flex;"><span>Detecting chip type... ESP32-C6
+</span></span><span style="display:flex;"><span>Chip is ESP32-C6 (QFN40) (revision v0.0)
+</span></span><span style="display:flex;"><span>Features: WiFi 6, BT 5, IEEE802.15.4
+</span></span><span style="display:flex;"><span>Crystal is 40MHz
+</span></span><span style="display:flex;"><span>MAC: 40:4c:ca:ff:fe:55:bc:8c
+</span></span><span style="display:flex;"><span>BASE MAC: 40:4c:ca:55:bc:8c
+</span></span><span style="display:flex;"><span>MAC_EXT: ff:fe
+</span></span><span style="display:flex;"><span>Uploading stub...
+</span></span><span style="display:flex;"><span>Running stub...
+</span></span><span style="display:flex;"><span>Stub running...
+</span></span><span style="display:flex;"><span>Manufacturer: c8
+</span></span><span style="display:flex;"><span>Device: 4017
+</span></span><span style="display:flex;"><span>Detected flash size: 8MB
+</span></span><span style="display:flex;"><span>Hard resetting via RTS pin...</span></span></code></pre></div>
+</div>
+<p>
+Make a backup if you want, assuming the needles stay in place for a while, then you want to flash the firmware on the ESP32 chip:</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size detect 0x0 emporia_vue.bin</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+Step 4: wire the Emporia in your panel.
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>The <a href="https://www.emporiaenergy.com/wp-content/uploads/2024/03/Emporia-Vue-Gen-3-Installation-Guide-v1.20.pdf">Guide</a> provided by Emporia is actually comprehensive. If you are curious how it all work, the brilliant <a href="https://www.youtube.com/watch?v=fJeRabV5hNU">video</a> by engineering mindset is really helpful to understand what is split-phases and identify your electric panel.</p>
+<img src="/imgs/emporia_wiring.jpeg" alt="/imgs/emporia_wiring.jpeg" title="/imgs/emporia_wiring.jpeg" width="50%"/>
+<div class="center-block" style="text-align: center; margin-left: auto; margin-right: auto;">
+<p>wiring the emporia</p>
+</div>
+<p>
+To save some time, I labeled my every circuit breaker and took a picture so I know exactly what the clamps are hooked onto. The yellow and green colors are the two different phases, which is common in US and Canada households. There is no much more I can say here, except be careful, as careful as you can. 😄</p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+Summary
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<p>The result of the work is quite rewarding, you get to monitor how much electricity your home is using on each appliance level. Purely magical</p>
+<img src="/imgs/hass-electricity.png" alt="/imgs/hass-electricity.png" title="/imgs/hass-electricity.png" width="60%"/>
+<div class="center-block" style="text-align: center; margin-left: auto; margin-right: auto;">
+<p>The individual appliance electricity use</p>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-2">
+<h2 id="headline-7">
+Reference
+</h2>
+<div id="outline-text-headline-7" class="outline-text-2">
+<ul>
+<li><a href="https://www.youtube.com/watch?v=fJeRabV5hNU">120V 240V Electricity explained - Split phase 3 wire electrician - YouTube</a></li>
+<li><a href="https://digiblur.com/2024/03/14/emporia-vue-gen3-esp32-esphome-home-assistant/">Emporia Vue Gen 3 Power Monitoring is Compatible with ESPHome &amp; Home Assistan…</a></li>
+<li><a href="https://github.com/emporia-vue-local/esphome/discussions/264">Emporia Vue Gen 3 Support · emporia-vue-local/esphome · Discussion #264 · GitHub</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+	      <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/status-update-2025-02/&amp;text=ESPHome,%20emporia%20vue,%20winter,%202025" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/status-update-2025-02/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/status-update-2025-02/&amp;title=ESPHome,%20emporia%20vue,%20winter,%202025" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/status-update-2025-02/&amp;title=ESPHome,%20emporia%20vue,%20winter,%202025" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/status-update-2025-02/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="http://localhost:1313/tags/journal">journal</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+	      
+
+
+	
+	
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/ebus-part-ii/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Event bus implementation, Part II, on a task system</h2>
+              
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+    
+    
+    
+  </body>
+</html>

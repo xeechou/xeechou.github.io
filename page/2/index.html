@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<meta name="generator" content="Hugo 0.140.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta name="generator" content="Hugo 0.143.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -115,6 +115,37 @@
 
 </div>
 
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
+            <a href="/posts/vulkan-frameworks/">Comparing Vulkan Frameworks</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/graphics">graphics</a>
+              
+              |
+            
+            <time datetime="2023-01-29">29 Jan 2023</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>
+There are indeed many people tried to implement a rendering framework on top of Vulkan to reduce the amount of code to write. But so many of them merely just create a wrapper around existing Vulkan objects, like wrapping the command buffer with a <code>vk::CommandBuffer::Ptr</code>  and you still have to fill all the <code>VkObjCreateInfos</code> .</p>
+<p>
+The rendering framework focus on the render passes should provide a compact yet descriptive API to create render pass. Leaving the user out of the mess of managing/binding descriptors, uniform buffers. Have them focus on the shaders.</p>
+      </section>
+    </div>
+  </article>
+  
 
 
   <article class="post">
@@ -435,46 +466,6 @@ want to link to it. The codebase was old and long, it was difficult to make a
 change and really difficult to get libweston taking a patch. Then there is the
 wlroots. If it was released half year earlier Taiwins would probably sit on top
 of that. But, screw it. I am doing it myself.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/drm-backend-ii/">Working with libdrm, buffer allocation</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/linux">linux</a>
-              
-                
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
-              
-              |
-            
-            <time datetime="2020-12-07">07 Dec 2020</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>In the <a href="%7Bfilename%7D/drm-backend.md">first blog of libdrm</a>, we went through the
-repainting loop using the libdrm. Now we move on to the topic of
-framebuffers. A framebuffer is a piece of memory (could be on main memory or on
-GPU) for repainting every frame. It is like a canvas, represents what you would
-finally see on screen. Framebuffer is already a familiar concept to rendering
-programmers, in <strong>OpenGL</strong>, We have <code>GL_FRAMEBUFFER_0</code> for presenting the
-surface, additional framebuffers for roles like G-Buffer and
-post-processing. In GPU programming, framebuffer is also a broader concept,
-&ldquo;abstraction of a collection of attachments&rdquo;, the underlining attachments
-corresponds to actual pieces of memory we talk about here.</p>
       </section>
     </div>
   </article>

@@ -177,8 +177,7 @@ a silent assumption that driver has an implicit cross-process
 synchronisation. This is not GLES or EGL requirement, just an unwrittenWayland
 assumption. Vulkan is all about explicit synchronisation that isresponsibility
 of an application but it doesn&rsquo;t provide any cross-processsynchronisation
-primitives. This is, to my untrained eye, a blocker issue.</p>
-</blockquote>
+primitives. This is, to my untrained eye, a blocker issue.</p></blockquote>
 <p>We get the client buffer on the <code>wl_surface.commit</code> but there is no guarantee
 what-so-ever about client has finished drawing. If a wayland server has to wait
 on a fence every time a client commits a buffer. It is probably not very

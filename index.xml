@@ -6,8 +6,15 @@
     <description>Recent content on Insaturé</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Feb 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ESPHome, emporia vue, winter, 2025</title>
+      <link>http://localhost:1313/posts/status-update-2025-02/</link>
+      <pubDate>Sat, 22 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/status-update-2025-02/</guid>
+      <description>&lt;p&gt;&#xA;We had a incredible snowy winter this year in Toronto. 25cm of snow in 24 hours on Sunday [2025-02-16 Sun], which  preceded by 20+cm earlier Thursday. While stuck at home, I found sometime to work on some long delaying projects. This got me into &lt;a href=&#34;https://esphome.io/&#34;&gt;ESPHome&lt;/a&gt;. Yeah, home automation, somehow I feel this is probably inevitable for north American dwellers.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;This days, the smart home word is incredibly messy, on the one hand, you have those giant players like Google home, Apple HomeKit, and Amazon Alexa. On the other hand, all the IoT manufactures are trying to &lt;strong&gt;steal&lt;/strong&gt; user data by their crappy app. &lt;a href=&#34;https://www.moen.ca/flo&#34;&gt;water valves&lt;/a&gt;, light switch, &lt;a href=&#34;https://www.home-assistant.io/blog/2023/11/06/removal-of-myq-integration/&#34;&gt;garage door openers&lt;/a&gt;. All of them are trying to lock you to their app. For you to simply close your garage, you have to &lt;span style=&#34;text-decoration: underline;&#34;&gt;send&lt;/span&gt; a command on your phone to their &lt;span style=&#34;text-decoration: underline;&#34;&gt;proprietary cloud server&lt;/span&gt;, then travel all the way back to connect to your opener at home. This is insane! Hopefully with the new &lt;a href=&#34;https://www.home-assistant.io/blog/2024/01/25/matter-livestream-blog/&#34;&gt;Matter&lt;/a&gt; standard, it may bring some sanity back.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Event bus implementation, Part II, on a task system</title>
       <link>http://localhost:1313/posts/ebus-part-ii/</link>

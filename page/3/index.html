@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<meta name="generator" content="Hugo 0.140.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta name="generator" content="Hugo 0.143.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -115,6 +115,46 @@
 
 </div>
 
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
+            <a href="/posts/drm-backend-ii/">Working with libdrm, buffer allocation</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/linux">linux</a>
+              
+                
+                <a href="http://localhost:1313/tags/wayland">wayland</a>
+              
+              |
+            
+            <time datetime="2020-12-07">07 Dec 2020</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>In the <a href="%7Bfilename%7D/drm-backend.md">first blog of libdrm</a>, we went through the
+repainting loop using the libdrm. Now we move on to the topic of
+framebuffers. A framebuffer is a piece of memory (could be on main memory or on
+GPU) for repainting every frame. It is like a canvas, represents what you would
+finally see on screen. Framebuffer is already a familiar concept to rendering
+programmers, in <strong>OpenGL</strong>, We have <code>GL_FRAMEBUFFER_0</code> for presenting the
+surface, additional framebuffers for roles like G-Buffer and
+post-processing. In GPU programming, framebuffer is also a broader concept,
+&ldquo;abstraction of a collection of attachments&rdquo;, the underlining attachments
+corresponds to actual pieces of memory we talk about here.</p>
+      </section>
+    </div>
+  </article>
+  
 
 
   <article class="post">
@@ -458,48 +498,6 @@ you are a video game developer, as long as your rasterization implementation
 does not screwed up. But for the case like grass rendering, fur rendering, when
 you have many layers of thin line, FXAA will fail you. Just like the pixels
 annotated in the image below.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/the_wayland_project_2/">The wayland project II</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
-              
-                
-                <a href="http://localhost:1313/tags/journal">Journal</a>
-              
-              |
-            
-            <time datetime="2018-11-30">30 Nov 2018</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>The last <a href="%7Bfilename%7D/the_wayland_project.md">post</a> I laid out the story of me
-with wayland. Technology is fascinating isn&rsquo;t it? Every once a while, there are
-plenty of new projects that aim to start an revolution, getting people
-excited. Projects like <strong>systemd</strong>, <strong>Wayland</strong>, <strong>Vulkan</strong> make us think how
-come we did not think of those before, they seemed perfect at the
-moment. Technologies always work like a rush of hot wave, our sights are limited
-at the moment we are in, maybe 5 years from now, even <strong>vulkan</strong> is not sexy
-anymore. For ten years, community has been urging everyone to jump on the boat
-of wayland. Some major platform adopted it, just there is no money in it. Major
-platforms like <strong>GNOME</strong> and <strong>KDE</strong> are not even mature yet, KDE developers
-also worries about the future of the wayland, will it last 30 years like <strong>X
-window</strong>?</p>
       </section>
     </div>
   </article>

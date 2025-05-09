@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on Insaturé</title>
-    <link>https://xeechou.net/tags/python/</link>
+    <link>http://localhost:1313/tags/python/</link>
     <description>Recent content in Python on Insaturé</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 27 Apr 2015 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://xeechou.net/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to write blog generator</title>
-      <link>https://xeechou.net/posts/write_sg0/</link>
+      <link>http://localhost:1313/posts/write_sg0/</link>
       <pubDate>Mon, 27 Apr 2015 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/write_sg0/</guid>
+      <guid>http://localhost:1313/posts/write_sg0/</guid>
       <description>&lt;p&gt;这是我的第一篇github上的博客，感觉落后时代好多年啊。因为完成自己的博客生成器不&#xA;久。所以写的第一篇博客就以生成我的博客站点的项目&lt;code&gt;mkblogs&lt;/code&gt;说起，来说说如何写一个&#xA;博客生成器吧。&lt;/p&gt;</description>
     </item>
   </channel>

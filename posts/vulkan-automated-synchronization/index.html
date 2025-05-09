@@ -1,0 +1,564 @@
+
+<!doctype html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Automated Vulkan Synchronization</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
+    
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-emacs-config" role="presentation">
+          <a href="/emacs-config/">Emacs Config</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="http://localhost:1313/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Automated Vulkan Synchronization</h1>
+    <span class="post-meta">
+      
+      <time datetime="2025-05-09">09 May 2025</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+	<section class="post-content">
+<p>
+Recently I finally decided to solve the synchronization system in my Vulkan renderer. It is something that I really want to do for a long time, to me it should be part of the <a href="https://gdcvault.com/play/1024612/FrameGraph-Extensible-Rendering-Architecture-in">FrameGraph</a> design in the application, where you <strong>declare</strong> your individual render passes and the resources it uses (read/write). The synchronization system itself handles the resource transitions, where it should change layout from? Whether we need to setup a semaphore etc.</p>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+Vulkan Synchronization API
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p><a href="https://www.khronos.org/blog/understanding-vulkan-synchronization">Vulkan Synchronization</a> from the API is really powerful, but it is not really friendly if you want to use them <strong>directly</strong> in the application. It becomes quite awkward because need to both the current and previous access pattern of the resource (<code>vkImage</code> and <code>VkBuffer</code>). Then there is the multi-queue, things will get quite complex once you decided to work with not only one queue anymore.</p>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+Barriers
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>Barriers is the most lightweight synchronization mechanism you can use and it is probably the primary tool you should use. You inject them between your draw/dispatch/copy commands to ensure your cache flushed, image layout is in proper place etc.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">vkCmdPipelineBarrier2</span>(
+</span></span><span style="display:flex;"><span>    VkCommandBuffer                             commandBuffer,
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">const</span> VkDependencyInfo*                     pDependencyInfo);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkDependencyInfo</span> {
+</span></span><span style="display:flex;"><span>    VkStructureType                  sType;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">const</span> <span style="font-weight:bold;text-decoration:underline">void</span>*                      pNext;
+</span></span><span style="display:flex;"><span>    VkDependencyFlags                dependencyFlags;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">uint32_t</span>                         memoryBarrierCount;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">const</span> VkMemoryBarrier2*          pMemoryBarriers;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">uint32_t</span>                         bufferMemoryBarrierCount;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">const</span> VkBufferMemoryBarrier2*    pBufferMemoryBarriers;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">uint32_t</span>                         imageMemoryBarrierCount;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">const</span> VkImageMemoryBarrier2*     pImageMemoryBarriers;
+</span></span><span style="display:flex;"><span>} VkDependencyInfo;</span></span></code></pre></div>
+</div>
+<p>
+This requires <code>VK_KHR_synchronization2</code> which is in core Vulkan 1.3, however the concept is quite similar to Vulkan 1.0, with some minor difference. The meat here is that you need to record your <strong>buffer memory barrier</strong> and <strong>image memory barrier</strong> (You can choose either <code>VkMemoryBarrier2</code> or <code>VkBufferMemoryBarrier2</code> for buffers). They have something in common:</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkCOMMONMemoryBarrier2</span> {
+</span></span><span style="display:flex;"><span>    VkStructureType          sType;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">const</span> <span style="font-weight:bold;text-decoration:underline">void</span>*              pNext;
+</span></span><span style="display:flex;"><span>    VkPipelineStageFlags2    srcStageMask;
+</span></span><span style="display:flex;"><span>    VkAccessFlags2           srcAccessMask;
+</span></span><span style="display:flex;"><span>    VkPipelineStageFlags2    dstStageMask;
+</span></span><span style="display:flex;"><span>    VkAccessFlags2           dstAccessMask;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">uint32_t</span>                 srcQueueFamilyIndex;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">uint32_t</span>                 dstQueueFamilyIndex;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Then buffer has
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkBufferMemoryBarrier2</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#888;font-style:italic">// common stuff
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>    VkBuffer                 buffer;
+</span></span><span style="display:flex;"><span>    VkDeviceSize             offset;
+</span></span><span style="display:flex;"><span>    VkDeviceSize             size;	
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">// image has
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkImageMemoryBarrier2</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#888;font-style:italic">//common stuff
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>    VkImage                    image;
+</span></span><span style="display:flex;"><span>    VkImageSubresourceRange    subresourceRange;	
+</span></span><span style="display:flex;"><span>};</span></span></code></pre></div>
+</div>
+<p>
+You need to know both the <strong>source</strong> <code>stageMask/AcessMask</code> (which is what you are waiting for), and <strong>destined</strong> <code>stageMask/AcessMask</code> (which is what you need for the moment). The <strong>mental model</strong> here is that you need to think your application writes all the commands for the frame in a single big static function, where you obviously know where your previous resource you accessed.</p>
+<div id="outline-container-headline-3" class="outline-4">
+<h4 id="headline-3">
+Barrier is for synchronizing within the queue.
+</h4>
+<div id="outline-text-headline-3" class="outline-text-4">
+<p>Initially I thought the barriers are for synchronization <span style="text-decoration: underline;">inside</span> the a single submission, that is actually not the case, you can use them across submissions. This is because <strong>Vulkan guarantees the commands starts exactly the same order you submitted</strong>, but they may finished in differently. </p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">//1st submission
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdDispatch();
+</span></span><span style="display:flex;"><span>vkCmdDispatch();
+</span></span><span style="display:flex;"><span>vkCmdPipelineBarrier(srcStageMask = COMPUTE, dstStageMask = TRANSFER);
+</span></span><span style="display:flex;"><span>vkQueueSubmit();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//2nd submission
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdCopy();
+</span></span><span style="display:flex;"><span>VkQueueSubmit();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//3rd submission
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdPipelineBarrier(srcStageMask = TRANSFER, dstStageMask = DRAW);
+</span></span><span style="display:flex;"><span>vkCmdDraw();</span></span></code></pre></div>
+</div>
+<p>
+So in this example that we have 3 submissions, where we inject the barriers both <strong>before</strong> or <strong>after</strong> the submission. That is fine. In reality though, you want to minimize the submissions to keep GPU busy.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+semaphores
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>Semaphores are the primary GPU sync mechanism <strong>across queues</strong>, that is it most useful if decide to use multiple queues. The primary use case is that if use the same resource in different queue, you need to define their order of <strong>finish</strong> using semaphores.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">// queue 1
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdDispatch();
+</span></span><span style="display:flex;"><span>vkQueueSubmit(signal = my_semaphore, wait = null);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">// queue 2
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdBeginRenderPass();
+</span></span><span style="display:flex;"><span>vkCmdDraw()
+</span></span><span style="display:flex;"><span>vkCmdEndRenderPass();
+</span></span><span style="display:flex;"><span>vkQueueSubmit(wait = my_semaphore, pDstWaitStageMask = FRAGMENT_SHADER);</span></span></code></pre></div>
+</div>
+<p>
+That is in my queue2, I want to  fragment shaders in the <code>VkCmdDraw()</code> to <strong>wait</strong> on previous <code>VkCmdDispatch()</code> to finish in queue 1.</p>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+Implicit memory guarantees when waiting the queue.
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<p>Note that using semaphores levitates the need of barriers because it makes all previous signaled semaphore finished.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+queue ownership transfer
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<p>Normally that is all you need but Vulkan always make your life harder right? To ensure the most performance you create your resource <code>VkImage</code> <code>VkBuffer</code> with <code>VK_SHARING_MODE_EXCLUSIVE</code>. That is they can only be accessed by a single queue family at a time. Then if you want to take advantage of the  <strong>async compute</strong> for example, you need to ensure the <a href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#synchronization-queue-transfers">Queue Family Ownership transfer</a>. This is what the <code>srcQueuefamilyindex</code> and <code>dstQueuefamilyIndex</code> is for.</p>
+<p>
+For this to work you need to have almost the identical <code>memoryBarriers</code> recorded in both previous queue  and new queue.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">//in queue 1
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdDraw();
+</span></span><span style="display:flex;"><span>vkCmdMemoryBarrier2(resource, srcQFI=0, dstQFI=1, OldLayout=Attachment, NewLayout=READ);
+</span></span><span style="display:flex;"><span>VkQueueSubmit(signal=my_semaphore);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//in queue 2, we inject the same barrier
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdMemoryBarrier2(resource, srcQFI=0, dstQFI=1, OldLayout=Attachment, NewLayout=READ);
+</span></span><span style="display:flex;"><span>vkCmdDraw();
+</span></span><span style="display:flex;"><span>VkQueueSubmit(wait=my_semaphore);</span></span></code></pre></div>
+</div>
+<p>
+The first barrier is called a <strong>ownership release</strong> operation. The second &#34;identical&#34; barrier is called <strong>ownership acquire</strong> operation, although it seems you applied image memory transition twice, it actually only applied once based on the <a href="https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#synchronization-queue-transfers">spec</a>.</p>
+<blockquote>
+<p>Although the image layout transition is submitted twice, it will only be executed once. A layout transition specified in this way happens-after the release operation and happens-before the acquire operation.</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-2">
+<h2 id="headline-7">
+Application designs
+</h2>
+<div id="outline-text-headline-7" class="outline-text-2">
+<p>So that&#39;s the API part of the story, the rest is up to how the application applies this in practice. (NOTE that this is mainly my design, your millage may vary). When it comes to synchronization, we mainly need to have answers to the following questions:</p>
+<ol>
+<li>When/Where to inject barriers?</li>
+<li>When/Where to inject semaphores?</li>
+<li>When to submit queue?</li>
+<li>How do I manage the src/dst access marks and stages.</li>
+</ol>
+<p>In my design, I took advantage the following feature (or guarantees) that Vulkan offers:</p>
+<ol>
+<li>barriers can be used across submissions.</li>
+<li>commands starts exactly the same order you submit.</li>
+<li>only use semaphore if you need resource on different queues.</li>
+<li>apply queue ownership transfer appropriately.</li>
+</ol>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+Global submission state
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<p>Because the feature 1 and 2, that I decided to have a global submission state for every command I record, to use them you need to submit you command to this submissions state with</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">dependency</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">timeline_t</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        vk::Semaphore          semaphore;
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold;text-decoration:underline">uint64_t</span>                wait_value;
+</span></span><span style="display:flex;"><span>        vk::PipelineStageFlags2 wait_stage;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    } timeline;
+</span></span><span style="display:flex;"><span>    <span style="color:#888;font-style:italic">// a list of records which is stored somewhere else
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>    std::span&lt;<span style="font-weight:bold;text-decoration:underline">const</span> access_record&gt; accesses;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">void</span> submmissions::add(vk::CommandBuffer cmd, vk::Queue queue, dependency <span style="font-weight:bold;text-decoration:underline">const</span>&amp; dep = {});</span></span></code></pre></div>
+</div>
+<p>
+So the render passes only cares about the command it uses and which queue it uses for this command, there is <strong>NO</strong> explicit submission when it comes to users.</p>
+<p>
+Then the <strong>question 3</strong> becomes apparent now, we <strong>only</strong> want to submit when the <code>vkCommandBuffer</code> is no longer on the current <code>VkQueue</code>. In the <code>submissions</code> state, we have a <strong>pending</strong> state which takes the <span style="text-decoration: underline;">accumulated</span> commands and its dependencies, I have a (timeline) semaphore in the dependency in case we need a <code>VkQueueSubmit</code>. The <strong>question 2</strong> is sort of answered as well, the semaphores is only injected when the <span style="text-decoration: underline;">queue switches</span>.</p>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
+access records
+</h3>
+<div id="outline-text-headline-9" class="outline-text-3">
+<p>The <code>access_record</code> in the <code>dependency</code> looks like the following</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">access_record</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">enum</span> <span style="color:#666;font-weight:bold;font-style:italic">pattern_t</span> { READ, WRITE };
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">using</span> resource_t = std::variant&lt;vk::Image, vk::Buffer&gt;;
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">key_t</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        pattern_t  pattern;
+</span></span><span style="display:flex;"><span>        resource_t resource;
+</span></span><span style="display:flex;"><span>    } key;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">dst_t</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        vk::PipelineStageFlagBits2 stage;
+</span></span><span style="display:flex;"><span>        vk::AccessFlags2           access;
+</span></span><span style="display:flex;"><span>        <span style="color:#888;font-style:italic">// image specific
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>        vk::ImageLayout           layout;
+</span></span><span style="display:flex;"><span>        vk::ImageSubresourceRange subresource;
+</span></span><span style="display:flex;"><span>    } dst;
+</span></span><span style="display:flex;"><span>};</span></span></code></pre></div>
+</div>
+<p>
+You have the READ/WRITE pattern, the resource it touches, and <code>dstStage/dstAccess</code> flags, you only specify the access of the <strong>current</strong> command (which is a local knowledge). And the </p>
+<p>
+Up to now we have answers to <strong>question 1</strong>: we inject barriers at every command buffer submitted (not to be confused with command itself) if you specify the <code>access_records</code>, this is often not a problem, because you often record multiple commands before you add to submission.</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vkCmdDraw(cmd1);
+</span></span><span style="display:flex;"><span>vkCmdDraw(cmd1);
+</span></span><span style="display:flex;"><span>submission::add(cmd1, queue1, dep={{DRAW, FRAGMENT}, {DRAW, VERTEX}});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vkCmdDispatch(cmd2);
+</span></span><span style="display:flex;"><span>vkCmdDispatch(cmd2);
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//still accumulating since on the same queue.
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>submission::add(cmd2, queue1, dep={READ, COMPUTE});</span></span></code></pre></div>
+</div>
+<p>
+The answer to <strong>question 4</strong> is ready now as well, since we have a global submission state, you are obviously able to find the previous <span style="text-decoration: underline;">source</span> access patterns.</p>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+management logic
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<p>Now we are done with interface, how do we handle the internals? It may become apparent to you already, since you have concrete answers to all the questions. The full function is probably a bit too much, but the pseudo code is actually quite simple:</p>
+<div class="src src-c++">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>submissions::add(vk::CommandBuffer cmd, vk::Queue queue, dependency <span style="font-weight:bold;text-decoration:underline">const</span>&amp; dep)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">if</span> (queue != prev_queue)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        flush(queue);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">for</span> (<span style="font-weight:bold;text-decoration:underline">auto</span> access : dep.accesses) {
+</span></span><span style="display:flex;"><span>	<span style="font-weight:bold;text-decoration:underline">auto</span> src_access = find_prev_access(access.key);
+</span></span><span style="display:flex;"><span>	<span style="font-weight:bold;text-decoration:underline">auto</span> dst_access = new_acess(access.dst, queue);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="font-weight:bold;text-decoration:underline">if</span> (require_barrier(src_access, dst_access)) {
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold;text-decoration:underline">if</span> (require_semaphore(src_access, dst_access)) {
+</span></span><span style="display:flex;"><span>		<span style="color:#888;font-style:italic">// semaphore implict gurantee.
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>                src_access.access = vk::AccessFlagBits2::eNone;
+</span></span><span style="display:flex;"><span>                src_access.stage  = vk::PipelineStageFlagBits2::eNone;
+</span></span><span style="display:flex;"><span>                <span style="font-weight:bold;text-decoration:underline">if</span> (require_queue_transfer(src_acess, dst_access)) {
+</span></span><span style="display:flex;"><span>                     src_acess = transfer_queue_access(src_acess, dst_access);
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>	    insert_barrier(cmd, src_access, dst_access);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+</div>
+<p>
+The algorithm is relatively simple, firstly we check if need to flush the queue (<code>VkQueueSubmit</code>), then we just loop over the <code>access_records</code> and check its previous access, only in this way we can find the <code>srcAccessMask/srcStageMask</code> we need. Then compare, there are 3 iterative more complex scenario. The best case is that we don&#39;t require any barriers, such as the case of READ_AFTER_READ, then nothing happens. Then if we require barrier, we further check if require semaphore and queue transfer and adapt the that scenario. The worst case is the requiring queue ownership transfer, that we have to do an additional submit inside <code>transfer_queue_access()</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-2">
+<h2 id="headline-11">
+Conclusions
+</h2>
+<div id="outline-text-headline-11" class="outline-text-2">
+<p>There you go, a complete solution towards Vulkan synchronization, you only requires the local knowledge of your access patterns. So with this you decouple each of the render pass you wrote and have them work modular. Hope you find it useful.</p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-2">
+<h2 id="headline-12">
+References
+</h2>
+<div id="outline-text-headline-12" class="outline-text-2">
+<ul>
+<li><a href="https://www.khronos.org/blog/understanding-vulkan-synchronization">Understanding Vulkan Synchronization - Khronos Blog - The Khronos Group Inc</a></li>
+<li><a href="https://themaister.net/blog/2019/08/14/yet-another-blog-explaining-vulkan-synchronization/">Yet another blog explaining Vulkan synchronization – Maister&#39;s Graphics Adven…</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+	      <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/vulkan-automated-synchronization/&amp;text=Automated%20Vulkan%20Synchronization" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/vulkan-automated-synchronization/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/vulkan-automated-synchronization/&amp;title=Automated%20Vulkan%20Synchronization" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/vulkan-automated-synchronization/&amp;title=Automated%20Vulkan%20Synchronization" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/vulkan-automated-synchronization/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="http://localhost:1313/tags/vulkan">Vulkan</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+	      
+
+
+	
+	
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/status-update-2025-02/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">ESPHome, emporia vue, winter, 2025</h2>
+              
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+    
+    
+    
+  </body>
+</html>

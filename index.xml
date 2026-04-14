@@ -6,8 +6,15 @@
     <description>Recent content on Insaturé</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 May 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building a quadrature encoder water meter with ESPHome and magnetometers</title>
+      <link>http://localhost:1313/posts/quadrature-meter/</link>
+      <pubDate>Mon, 13 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/quadrature-meter/</guid>
+      <description>&lt;p&gt;&#xA;Recently I have been spending time on a magnetometer based smart water meter for Home Assistant. The idea is simple: strap two magnetometer sensors (QMC5883L) onto a residential water meter, read the rotating magnetic field,&#xA;and count water flow. What actually happened was a 10 nights debugging odyssey that taught me about multi-pole magnets, quadrature encoding, and the joy of writing actual C++ for ESPHome.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;This project is a fork of &lt;a href=&#34;https://github.com/tronikos/esphome-magnetometer-water-gas-meter&#34;&gt;tronikos/esphome-magnetometer-water-gas-meter&lt;/a&gt;, which already does single-sensor flow counting with a calibration UI. I was using this initially on my meter, for what it advertises, it worked pretty well. But ever since I heard about the benefits of &lt;strong&gt;quadrature encoding&lt;/strong&gt; from &lt;a href=&#34;https://github.com/dnschneid/espleak&#34;&gt;espleak&lt;/a&gt;. I couldn&amp;#39;t help want to upgrade to it. It was scheduled since last September but procrastination beat me so hard on this one.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Automated Vulkan Synchronization</title>
       <link>http://localhost:1313/posts/vulkan-automated-synchronization/</link>

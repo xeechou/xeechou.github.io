@@ -97,7 +97,7 @@
 <nav class="pagination" role="pagination">
   <div class="inner">
     
-    <span class="pagination-info">Page 1 of 4</span>
+    <span class="pagination-info">Page 1 of 5</span>
     
       <a class="pagination-prev" href="/page/2/">
         <span class="pagination-label">Older Posts</span>
@@ -110,6 +110,38 @@
 
 </div>
 
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
+            <a href="/posts/quadrature-meter/">Building a quadrature encoder water meter with ESPHome and magnetometers</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/journal">journal</a>
+              
+              |
+            
+            <time datetime="2026-04-13">13 Apr 2026</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>
+Recently I have been spending time on a magnetometer based smart water meter for Home Assistant. The idea is simple: strap two magnetometer sensors (QMC5883L) onto a residential water meter, read the rotating magnetic field,
+and count water flow. What actually happened was a 10 nights debugging odyssey that taught me about multi-pole magnets, quadrature encoding, and the joy of writing actual C++ for ESPHome.</p>
+<p>
+This project is a fork of <a href="https://github.com/tronikos/esphome-magnetometer-water-gas-meter">tronikos/esphome-magnetometer-water-gas-meter</a>, which already does single-sensor flow counting with a calibration UI. I was using this initially on my meter, for what it advertises, it worked pretty well. But ever since I heard about the benefits of <strong>quadrature encoding</strong> from <a href="https://github.com/dnschneid/espleak">espleak</a>. I couldn&#39;t help want to upgrade to it. It was scheduled since last September but procrastination beat me so hard on this one.</p>
+      </section>
+    </div>
+  </article>
+  
 
 
   <article class="post">
@@ -422,41 +454,12 @@ For a long time, I have been maintaining my <a href="https://github.com/xeechou/
   
 
 
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/libdecor/">Wayland client side window decorations through libdecor</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
-              
-              |
-            
-            <time datetime="2023-08-17">17 Aug 2023</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.</p>
-<p>There are <strong>two</strong> ways right now to do the client decorations.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
 
 
 <nav class="pagination" role="pagination">
   <div class="inner">
     
-    <span class="pagination-info">Page 1 of 4</span>
+    <span class="pagination-info">Page 1 of 5</span>
     
       <a class="pagination-prev" href="/page/2/">
         <span class="pagination-label">Older Posts</span>

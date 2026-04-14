@@ -1,0 +1,499 @@
+
+<!doctype html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Building a quadrature encoder water meter with ESPHome and magnetometers</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
+    
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-emacs-config" role="presentation">
+          <a href="/emacs-config/">Emacs Config</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Building a quadrature encoder water meter with ESPHome and magnetometers</h1>
+    <span class="post-meta">
+      
+      <time datetime="2026-04-13">13 Apr 2026</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+	<section class="post-content">
+<p>
+Recently I have been spending time on a magnetometer based smart water meter for Home Assistant. The idea is simple: strap two magnetometer sensors (QMC5883L) onto a residential water meter, read the rotating magnetic field,
+and count water flow. What actually happened was a 10 nights debugging odyssey that taught me about multi-pole magnets, quadrature encoding, and the joy of writing actual C++ for ESPHome.</p>
+<p>
+This project is a fork of <a href="https://github.com/tronikos/esphome-magnetometer-water-gas-meter">tronikos/esphome-magnetometer-water-gas-meter</a>, which already does single-sensor flow counting with a calibration UI. I was using this initially on my meter, for what it advertises, it worked pretty well. But ever since I heard about the benefits of <strong>quadrature encoding</strong> from <a href="https://github.com/dnschneid/espleak">espleak</a>. I couldn&#39;t help want to upgrade to it. It was scheduled since last September but procrastination beat me so hard on this one.</p>
+<p>
+What benefits though compared to a single sensor? Keep reading.</p>
+<div id="outline-container-headline-1" class="outline-3">
+<h3 id="headline-1">
+How residential water meter works.
+</h3>
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>
+Understanding how meter works is very important, there is an excellent YouTube video about this:</p>
+<p width="450px"><div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/M9nVkSZ6_H4?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+    </div>
+</p>
+<p>
+Mine happened to be a Badger Meter as well. What matters here is that inside the chamber there is a <strong>magnet wheel</strong>, driven by the nutating disk beneath it. As the disk nutates, it spins the magnet wheel, which produces a multi-pole magnetic field. This rotating field is what causes the register mounted on top to advance its readings — essentially translating the mechanical motion of water flow into the numbers you see on your meter face.</p>
+<p>
+In principle, we use the magnetometer sensors (QMC5883L) that function the same as the register (the city gives to us), when we detect a magnetic field change similar to a sin wave, we count certain volume pass through the meter. That is the physics foundation of the project (also used by  <a href="https://github.com/tronikos/esphome-magnetometer-water-gas-meter">tronikos/esphome-magnetometer-water-gas-meter</a>).</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+How quadrature encoding improves for us?
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+As you can probably guess, with a single sensor, we can only count how many the pole change event happened, what quadrature encoder helps is that it can also give us the direction by using 2 sensors with phase shift, essentially 2 sensors will produce sin/cos waves where you can decode into direction. This will give bidirectional counting — knowing not just <em>that</em> water flows, but <em>which direction</em>. <em>Why</em> would you care directions? Isn&#39;t that you would only consume water from the city? That is true, you will see later why we need direction as well.</p>
+<p>
+Looks straightforward — so let’s get started.</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+ESPHome with Actual C++ code
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+both  <a href="https://github.com/tronikos/esphome-magnetometer-water-gas-meter">tronikos/esphome-magnetometer-water-gas-meter</a> and  <a href="https://github.com/dnschneid/espleak">espleak</a> just encoding the ESP32 C++ code in <code>YAML</code> config file directly. Well, I really do not like writing C++ source code in YAML. The tronikos project, like most ESPHome configs, puts all the logic inside <code class="verbatim">lambda:</code> blocks. This works, but you lose syntax highlighting, proper compilation errors, and any semblance of code organization once your logic exceeds 20 lines.</p>
+<p>
+ESPHome gives you two escape hatches here. The first is <code class="verbatim">includes:</code>, where you list <code class="verbatim">.h</code> and <code class="verbatim">.cpp</code> files that get copied into the platformio build:</p>
+<div class="src src-yaml">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>esphome:
+</span></span><span style="display:flex;"><span>  includes:
+</span></span><span style="display:flex;"><span>    - sensor_update.h
+</span></span><span style="display:flex;"><span>    - sensor_update.cpp</span></span></code></pre></div>
+</div>
+<p>
+This works great locally with <code class="verbatim">esphome compile</code>, but falls apart on Home Assistant&#39;s ESPHome builder because paths get expanded to absolute during the YAML fusion step. <code class="verbatim">/config/esphome/sensor_update.h</code> is where it ends up looking, and of course your files aren&#39;t there if you are using packages.</p>
+<p>
+The 2nd approach is <a href="https://esphome.io/components/external_components/">external components</a>, which is what I ended up using:</p>
+<pre class="example">
+components/
+  sensor_update/
+     __init__.py
+     sensor_update.cpp
+     sensor_update.h
+     sensor_update_component.h  # empty component
+</pre>
+<p>
+The trick is that platformio automatically compiles all C++ files under your component directory. The <code class="verbatim">sensor_update_component.h</code> is a dummy — ESPHome&#39;s component system requires it, but the actual logic lives in <code class="verbatim">sensor_update.cpp</code> and gets called from a thin lambda in the YAML. For deployment to Home Assistant, you switch the source from <code class="verbatim">type: local</code> to <code class="verbatim">type: git</code> and point it at your repo. Problem solved.</p>
+<div id="outline-container-quadrature-encoding-101" class="outline-4">
+<h4 id="quadrature-encoding-101">
+Quadrature encoding 101
+</h4>
+<div id="outline-text-quadrature-encoding-101" class="outline-text-4">
+<p>The quadrature encoder works by placing 2 QMC5883l sensors offset by 90 degrees, so that one produces sin(t) and the other cos(t). Each sensor&#39;s reading is thresholded with hysteresis to a boolean (high/low), and the two Boolean&#39;s are combined into a 2-bit state: <code class="verbatim">s0 + s1 &lt;&lt; 1</code>, giving states 0 through 3:</p>
+<pre class="example">
+ cw:  0 → 1 → 3 → 2 → 0
+ccw:  0 → 2 → 3 → 1 → 0
+</pre>
+<p>
+This is the standard Gray-code sequence from the <a href="https://cdn.sparkfun.com/datasheets/Robotics/How%20to%20use%20a%20quadrature%20encoder.pdf">SparkFun quadrature encoder guide</a>. Direction is looked up from a 4x4 table indexed by <code class="verbatim">qdec[prev * 4 + curr]</code>:</p>
+<div class="src src-cpp">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">const</span> <span style="font-weight:bold;text-decoration:underline">int</span> qdec[16] = {
+</span></span><span style="display:flex;"><span>   0,  1, -1,  2,
+</span></span><span style="display:flex;"><span>  -1,  0,  2,  1,
+</span></span><span style="display:flex;"><span>   1,  2,  0, -1,
+</span></span><span style="display:flex;"><span>   2, -1,  1,  0
+</span></span><span style="display:flex;"><span>};</span></span></code></pre></div>
+</div>
+<p>
+Where <code class="verbatim">0</code> means no transition, <code class="verbatim">1</code> is clockwise, <code class="verbatim">-1</code> counter-clockwise, and <code class="verbatim">2</code> would be an illegal double-transition, when this happens it means that both sensor changed the state between 2 samples, that sensor is updating way too fast it causes &#34;aliasing&#34;. </p>
+<p>
+However, the value <code class="verbatim">2</code> is actually unreachable for us, this is the specialty of a hardware quadrature encoder, where it can sample both sensors <span style="text-decoration: underline;">at the same time</span>. For us software based implementation, <code class="verbatim">sensor_update()</code> is called <span style="text-decoration: underline;">once per sensor reading</span> via <code class="verbatim">on_raw_value</code>, so only <em>one sensor</em> can cross a threshold per call. The other sensor&#39;s bit is unchanged, guaranteeing single-bit transitions.</p>
+<p>
+When <code class="verbatim">sensor_update(s, v)</code> fires, sensor <code class="verbatim">1-s</code> has <em>not</em> transitioned, so <code class="verbatim">q[1-s]</code> is simultaneously its previous and current state:</p>
+<div class="src src-cpp">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">int</span> curr = (q[sensor] &lt;&lt; sensor)  + (q[1-sensor] &lt;&lt; (1-sensor));
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">int</span> prev = (qlast &lt;&lt; sensor)      + (q[1-sensor] &lt;&lt; (1-sensor));
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">int</span> mod  = qdec[prev * 4 + curr];</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+Why direction matters
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<p>
+Does this mean the quadrature meter useless to us? Not really. As you may recall, as residential user, we would normally just consume, not producing water, so we should always get <code>1</code> during sampling. But in reality, negative direction can still happen for us during a <strong>pipe burst</strong> (which is second last thing you want to happen in your house), the magnet spin so fast that it will jump stats, for example, it will go from <code>0-&gt;1</code>, then skip <code>3</code> and <code>2</code> and goes directly to <code>1-&gt; 0</code>. Reflected on the sensor is that we have a negative direction.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
+<h3 id="headline-6">
+From analog signal to binary signal
+</h3>
+<div id="outline-text-headline-6" class="outline-text-3">
+<p>
+With that in mind, I started the experimentation setup, 3D printed a spinning wheel with 2 magnet attached to it and wiring up my ESP32 with QMC5883ls offset by 90 degrees and started debugging. The first thing I need to deal with is the <a href=":https://en.wikipedia.org/wiki/Hysteresis">hysteresis</a> sampling. Why? It would be nice if we get perfect sin/cos wave from the meter but in reality we get a very noisy signals, in the end we will want to get a somewhat clean box wave to represent 0 and 1s, which our software developers are familiar with. There are multiple way doing this, people in electrical engineering dealt with this long time ago through <a href="https://en.wikipedia.org/wiki/Schmitt_trigger">schmitt trigger</a> (which is quite elegant and efficient). Here we use tare + hysteresis to produce box waves.</p>
+<p>
+Without going too much into details, the logic is basically (But again, I would like to point out this potentially 8 CPU instructions can be implemented by a simple circuits).</p>
+<div class="src src-cpp">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">float</span> tare       = (tmax + tmin) / 2.0f;
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">float</span> hysteresis = (tmax - tmin) * 0.2f;
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">bool</span>  high       = signal &gt; tare + hysteresis;
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">bool</span>  low        = signal &lt; tare + hysteresis;</span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+Hysteresis side effects
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<p>
+The hysteresis thresholding has a surprising <em>inertia</em> effect worth noting. For a perfect sin/cos wave, you want the state to toggle at zero-crossings. But with hysteresis, the state only changes at <code class="verbatim">[tare - hysteresis, tare + hysteresis]</code>. If you are rotating in one direction, both sensors are lagging by <code class="verbatim">2 * hysteresis</code> — this is just a constant phase shift, no problem.</p>
+<p>
+But if you suddenly reverse direction, you feel the lag: the state has to travel back through the full hysteresis band before it flips. In practice this means a few quarter-rotations of &#34;dead zone&#34; on direction reversals. For a water meter this is fine — water doesn&#39;t usually reverse direction rapidly.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-3">
+<h3 id="headline-8">
+The 4-pole magnet surprise
+</h3>
+<div id="outline-text-headline-8" class="outline-text-3">
+<p>
+Once I did the experimentation on the test setup, confirm that I can get consistent direction reading when I rotate the magnets, time to move to the real thing.</p>
+<p>
+Here is where things got interesting. I mounted two QMC5883L sensors at 90 degrees physical separation on a Badger Model 25 water meter, ran some water, and got garbage. The state transitions were chattered — random CW/CCW with net zero movement. The serial log looked like this: </p>
+<pre class="example">
+sensor 0 at 755414, (49.59, -28.82, 77.47) =&gt; (0, 1 -&gt; 1)
+sensor 1 at 755626, (-12.05, -93.19, 17.02) =&gt; (1, 3 -&gt; 1)
+sensor 0 at 755633, (-3.40, -28.80, 77.44) =&gt; (3, 2 -&gt; 1)
+sensor 0 at 755925, (48.02, -29.42, 76.97) =&gt; (2, 3 -&gt; -1)
+sensor 1 at 755939, (-62.28, -93.16, 16.99) =&gt; (3, 1 -&gt; -1)
+sensor 0 at 756146, (0.64, -29.40, 76.94) =&gt; (1, 0 -&gt; -1)
+sensor 1 at 756165, (0.28, -93.14, 16.97) =&gt; (0, 2 -&gt; -1)
+sensor 1 at 756452, (-62.65, -93.11, 16.94) =&gt; (2, 0 -&gt; 1)
+sensor 0 at 756456, (49.22, -29.37, 76.91) =&gt; (0, 1 -&gt; 1)
+sensor 1 at 756665, (-13.34, -93.09, 16.92) =&gt; (1, 3 -&gt; 1)
+sensor 0 at 756677, (-3.04, -29.35, 76.89) =&gt; (3, 2 -&gt; 1)
+sensor 0 at 756963, (48.02, -29.33, 76.86) =&gt; (2, 3 -&gt; -1)
+</pre>
+<p>
+Directions flipping back and forth within milliseconds. Something was fundamentally wrong with the phase relationship.</p>
+<p>
+I added CSV logging to dump the raw field strength from both sensors, and the plot told me a very different story.</p>
+<figure>
+<p>
+<img src="/imgs/qd-strength-plot-bad.png" alt="/imgs/qd-strength-plot-bad.png" title="/imgs/qd-strength-plot-bad.png" /></p>
+<figcaption>
+magnet strength from 2 sensors are anti-phase…
+</figcaption>
+</figure>
+<p>
+When sensor 0 peaked, sensor 1 troughed, and vice versa. That is 180 degrees — anti-phase, not the 90 degrees needed for quadrature. Both sensors cross their thresholds at nearly the same time. Which one crosses &#34;first&#34; depends on noise and sampling jitter, so the decoder sees random CW/CCW. Initially I was still in doubt where is the bug in my code until I use an LEDs to help me confirm the behavior.</p>
+<p>
+The culprit: the meter has a <strong>4-pole magnet</strong> inside the register and my test setup uses only 2 magnets. Multi-pole magnets are common in residential water meters for higher pulse resolution and stronger near-field coupling. </p>
+<p>
+The solution is then moving the second sensor to approximately 45 degrees, finger crossed and turned on the water tap.</p>
+<figure>
+<img src="/imgs/qd-strength-plot-good.png" alt="/imgs/qd-strength-plot-good.png" title="/imgs/qd-strength-plot-good.png" /><figcaption>
+magnet strength from 2 sensors are proper phased
+</figcaption>
+</figure>
+<p>
+Ah ha, it is working in real-life!</p>
+<p>
+And then after is of course the boring software part of deal, creating template sensors in esphome, computing volumes based on rotations, etc. The state of the project is at <a href="https://github.com/xeechou/esphome-magnetometer-water-gas-meter">xeechou/esphome-magnetometer-water-gas-meter</a> on the <code class="verbatim">quadrature-meter</code> branch if you are interested.</p>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-3">
+<h3 id="headline-9">
+What I learned so far?
+</h3>
+<div id="outline-text-headline-9" class="outline-text-3">
+<p>
+Programming for micro-controllers is much more different than pure software development really. This is some C++ code running at 200kHz on a chip with only 4Mb memory, every-time we make changes in the code, we need to flash to the chip to test out. (Same story is  true for GPU shaders, but drivers insulate us too well for this).</p>
+<p>
+<strong>Debugging</strong> is very non-trivial either. You can&#39;t simply step through the code to figure out your mistakes, we need real world magnet field readings. Logging is not a reliable way either, the chips are very weak can easily throttled in this way.</p>
+<div id="outline-container-headline-10" class="outline-4">
+<h4 id="headline-10">
+Did AI help here?
+</h4>
+<div id="outline-text-headline-10" class="outline-text-4">
+<p>
+Yes, quite a lot actually. Pair programming with AI eased a lot of the boilerplate code, especially in the beginning. For side gigs like this project, without AI to increase the velocity, I might simply give up or procrastinate much longer.</p>
+<p>
+It is <strong>not</strong>, however, very good for debugging — though it does help to some extent. For this project specifically, the debugging was quite tricky. We needed a special setup, both in code and physically, to debug effectively. It wasn&#39;t simply a matter of run-and-log with a quick feedback loop back to the AI system.</p>
+<p>
+Note that if you yourself don&#39;t have the insight, AI can easily mislead you down the wrong path. I fell into this trap quite a few times during this project. Having a strong foundation and a proven setup is a necessity.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-11" class="outline-3">
+<h3 id="headline-11">
+future works
+</h3>
+<div id="outline-text-headline-11" class="outline-text-3">
+<p>This project is not complete either. The flow monitoring and leak trigger is not setup yet. There are also some unanswered question I have but it is to a state where I can leave it for running for a while. Have fun.</p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-2">
+<h2 id="headline-12">
+Reference
+</h2>
+<div id="outline-text-headline-12" class="outline-text-2">
+<ul>
+<li><a href="https://github.com/tronikos/esphome-magnetometer-water-gas-meter">tronikos/esphome-magnetometer-water-gas-meter</a> — the original single-sensor project this was forked from.</li>
+<li><a href="https://github.com/dnschneid/espleak">dnschneid/espleak</a> — flow monitoring and leak detection implementation that inspired the burstmon and upcoming flowmon features.</li>
+<li><a href="https://cdn.sparkfun.com/datasheets/Robotics/How%20to%20use%20a%20quadrature%20encoder.pdf">SparkFun:  How to use a quadrature encoder (PDF)</a> — the Gray-code lookup table reference.</li>
+</ul>
+</div>
+</div>
+</section>
+
+	      <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=http://localhost:1313/posts/quadrature-meter/&amp;text=Building%20a%20quadrature%20encoder%20water%20meter%20with%20ESPHome%20and%20magnetometers" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=http://localhost:1313/posts/quadrature-meter/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:1313/posts/quadrature-meter/&amp;title=Building%20a%20quadrature%20encoder%20water%20meter%20with%20ESPHome%20and%20magnetometers" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:1313/posts/quadrature-meter/&amp;title=Building%20a%20quadrature%20encoder%20water%20meter%20with%20ESPHome%20and%20magnetometers" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "http://localhost:1313/posts/quadrature-meter/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="http://localhost:1313/tags/journal">journal</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+	      
+
+
+	
+	
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/vulkan-automated-synchronization/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Automated Vulkan Synchronization</h2>
+              
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+    
+    
+    
+  </body>
+</html>

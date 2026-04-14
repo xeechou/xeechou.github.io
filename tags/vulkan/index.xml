@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vulkan on Insaturé</title>
+    <link>http://localhost:1313/tags/vulkan/</link>
+    <description>Recent content in Vulkan on Insaturé</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 May 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/vulkan/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automated Vulkan Synchronization</title>
+      <link>http://localhost:1313/posts/vulkan-automated-synchronization/</link>
+      <pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/vulkan-automated-synchronization/</guid>
+      <description>&lt;p&gt;&#xA;Recently I finally decided to solve the synchronization system in my Vulkan renderer. It is something that I really want to do for a long time, to me it should be part of the &lt;a href=&#34;https://gdcvault.com/play/1024612/FrameGraph-Extensible-Rendering-Architecture-in&#34;&gt;FrameGraph&lt;/a&gt; design in the application, where you &lt;strong&gt;declare&lt;/strong&gt; your individual render passes and the resources it uses (read/write). The synchronization system itself handles the resource transitions, where it should change layout from? Whether we need to setup a semaphore etc.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-	<meta name="generator" content="Hugo 0.140.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta name="generator" content="Hugo 0.152.2"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
+    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
     
     
       
@@ -83,7 +83,7 @@
     </h1>
     
     
-      <div class="blog-cover cover" style="background-image: url('http://localhost:1313/imgs/home-bg.jpg');"></div>
+      <div class="blog-cover cover" style="background-image: url('/imgs/home-bg.jpg');"></div>
     
 </header>
 
@@ -115,6 +115,87 @@
 
 </div>
 
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
+            <a href="/posts/jan-update-2021/">Jan 2021 Status Update</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/journal">Journal</a>
+              
+              |
+            
+            <time datetime="2021-01-24">24 Jan 2021</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>Folks, the Magical year of 2020 is behind us, and it wasn&rsquo;t a happy new chapter
+waiting us. Man, I still couldn&rsquo;t believe, once per 100 years, why it was us
+who have to face the coronavirus. Now I take a good look of my 2020, I went
+from trying to submit a xcbcommon handling patch to weston to writing a full
+wayland compositor from scratch. It was not my plan!!! Taiwins should have
+being a rather simple application on top of the libweston, the so called
+&ldquo;reference compositor &ldquo;, but libweston cannot change keyboard layout once
+launching, nor it can support cloning output, there are new bugs when you
+digging deep. The worst is that it breaks the library into different shared
+modules, and changes lib location every release. It was like it really does not
+want to link to it. The codebase was old and long, it was difficult to make a
+change and really difficult to get libweston taking a patch. Then there is the
+wlroots. If it was released half year earlier Taiwins would probably sit on top
+of that. But, screw it. I am doing it myself.</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
+            <a href="/posts/drm-backend-ii/">Working with libdrm, buffer allocation</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="http://localhost:1313/tags/linux">linux</a>
+              
+                
+                <a href="http://localhost:1313/tags/wayland">wayland</a>
+              
+              |
+            
+            <time datetime="2020-12-07">07 Dec 2020</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>In the <a href="%7Bfilename%7D/drm-backend.md">first blog of libdrm</a>, we went through the
+repainting loop using the libdrm. Now we move on to the topic of
+framebuffers. A framebuffer is a piece of memory (could be on main memory or on
+GPU) for repainting every frame. It is like a canvas, represents what you would
+finally see on screen. Framebuffer is already a familiar concept to rendering
+programmers, in <strong>OpenGL</strong>, We have <code>GL_FRAMEBUFFER_0</code> for presenting the
+surface, additional framebuffers for roles like G-Buffer and
+post-processing. In GPU programming, framebuffer is also a broader concept,
+&ldquo;abstraction of a collection of attachments&rdquo;, the underlining attachments
+corresponds to actual pieces of memory we talk about here.</p>
+      </section>
+    </div>
+  </article>
+  
 
 
   <article class="post">
@@ -423,83 +504,6 @@ scary recession will be waiting? This week the market has recovered a bit of its
 confidence somehow, despite the Covid-19 cases are surging. A friend used to
 tell me, it would be a point where many will be killed by the virus and people
 just don&rsquo;t care anymore, looks like the market is at that point.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/deffered_msaa/">Realistic Deferred MSAA implementation</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/graphics">graphics</a>
-              
-              |
-            
-            <time datetime="2018-12-03">03 Dec 2018</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>Deferred MSAA, always has been a good problem. In the spatial anti-aliasing
-domain, MSAA is still the swiss-army knife, handle almost all the case.</p>
-<p>Some other post-processing methods like nvidia&rsquo;s FXAA, AMDs MLAA, or DLAA. FXAA
-is rather pleasing in many cases as well, especially if
-you are a video game developer, as long as your rasterization implementation
-does not screwed up. But for the case like grass rendering, fur rendering, when
-you have many layers of thin line, FXAA will fail you. Just like the pixels
-annotated in the image below.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/the_wayland_project_2/">The wayland project II</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
-              
-                
-                <a href="http://localhost:1313/tags/journal">Journal</a>
-              
-              |
-            
-            <time datetime="2018-11-30">30 Nov 2018</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>The last <a href="%7Bfilename%7D/the_wayland_project.md">post</a> I laid out the story of me
-with wayland. Technology is fascinating isn&rsquo;t it? Every once a while, there are
-plenty of new projects that aim to start an revolution, getting people
-excited. Projects like <strong>systemd</strong>, <strong>Wayland</strong>, <strong>Vulkan</strong> make us think how
-come we did not think of those before, they seemed perfect at the
-moment. Technologies always work like a rush of hot wave, our sights are limited
-at the moment we are in, maybe 5 years from now, even <strong>vulkan</strong> is not sexy
-anymore. For ten years, community has been urging everyone to jump on the boat
-of wayland. Some major platform adopted it, just there is no money in it. Major
-platforms like <strong>GNOME</strong> and <strong>KDE</strong> are not even mature yet, KDE developers
-also worries about the future of the wayland, will it last 30 years like <strong>X
-window</strong>?</p>
       </section>
     </div>
   </article>

@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
+    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
     
     
       
@@ -72,7 +72,7 @@
   
     
       <span id="home-button" class="nav-button">
-        <a class="home-button" href="http://localhost:1313/" title="Home">
+        <a class="home-button" href="/" title="Home">
           <i class="icon-left-arrow"></i> Home
         </a>
       </span>
@@ -97,7 +97,7 @@
     </span>
 
     
-      <div class="post-cover cover" style="background-image: url('http://localhost:1313/imgs/post-bg.jpg');"></div>
+      <div class="post-cover cover" style="background-image: url('/imgs/post-bg.jpg');"></div>
     
   </div>
 </header>
@@ -173,22 +173,22 @@ My personal function defines
 File operations
 </h3>
 <div id="outline-text-headline-5" class="outline-text-3">
-<div class="src src-emacs-lisp emacs-lisp">
-<pre tabindex="0"><code class="language-emacs-lisp emacs-lisp" data-lang="emacs-lisp emacs-lisp">  (defun my/concat-path (&amp;rest parts)
-    (cl-reduce (lambda (a b) (expand-file-name b a)) parts))
-
-  (defun my/merge-list-to-list (dst-list src-list)
-    (dolist (item src-list) (add-to-list dst-list item)))
-
-  (defun my/filename ()
-    &#34;Copy the filename of the current buffer.&#34;
-    (interactive)
-    (kill-new (buffer-name (window-buffer (minibuffer-selected-window)))))
-
-  (defun my/full-path ()
-    &#34;Copy the full path of the current buffer.&#34;
-    (interactive)
-    (kill-new (buffer-file-name (window-buffer (minibuffer-selected-window)))))</code></pre>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (<span style="font-weight:bold;font-style:italic">defun</span> <span style="color:#666;font-weight:bold;font-style:italic">my/concat-path</span> (<span style="font-weight:bold;text-decoration:underline">&amp;rest</span> <span style="color:#666;font-weight:bold;font-style:italic">parts</span>)
+</span></span><span style="display:flex;"><span>    (<span style="color:#666;font-weight:bold;font-style:italic">cl-reduce</span> (<span style="font-weight:bold;font-style:italic">lambda</span> (<span style="color:#666;font-weight:bold;font-style:italic">a</span> <span style="color:#666;font-weight:bold;font-style:italic">b</span>) (<span style="color:#666;font-weight:bold;font-style:italic">expand-file-name</span> <span style="color:#666;font-weight:bold;font-style:italic">b</span> <span style="color:#666;font-weight:bold;font-style:italic">a</span>)) <span style="color:#666;font-weight:bold;font-style:italic">parts</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  (<span style="font-weight:bold;font-style:italic">defun</span> <span style="color:#666;font-weight:bold;font-style:italic">my/merge-list-to-list</span> (<span style="color:#666;font-weight:bold;font-style:italic">dst-list</span> <span style="color:#666;font-weight:bold;font-style:italic">src-list</span>)
+</span></span><span style="display:flex;"><span>    (<span style="font-weight:bold;font-style:italic">dolist</span> (<span style="color:#666;font-weight:bold;font-style:italic">item</span> <span style="color:#666;font-weight:bold;font-style:italic">src-list</span>) (<span style="color:#666;font-weight:bold;font-style:italic">add-to-list</span> <span style="color:#666;font-weight:bold;font-style:italic">dst-list</span> <span style="color:#666;font-weight:bold;font-style:italic">item</span>)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  (<span style="font-weight:bold;font-style:italic">defun</span> <span style="color:#666;font-weight:bold;font-style:italic">my/filename</span> ()
+</span></span><span style="display:flex;"><span>    <span style="color:#666;font-style:italic">&#34;Copy the filename of the current buffer.&#34;</span>
+</span></span><span style="display:flex;"><span>    (<span style="font-weight:bold;font-style:italic">interactive</span>)
+</span></span><span style="display:flex;"><span>    (<span style="color:#666;font-weight:bold;font-style:italic">kill-new</span> (<span style="color:#666;font-weight:bold;font-style:italic">buffer-name</span> (<span style="color:#666;font-weight:bold;font-style:italic">window-buffer</span> (<span style="color:#666;font-weight:bold;font-style:italic">minibuffer-selected-window</span>)))))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  (<span style="font-weight:bold;font-style:italic">defun</span> <span style="color:#666;font-weight:bold;font-style:italic">my/full-path</span> ()
+</span></span><span style="display:flex;"><span>    <span style="color:#666;font-style:italic">&#34;Copy the full path of the current buffer.&#34;</span>
+</span></span><span style="display:flex;"><span>    (<span style="font-weight:bold;font-style:italic">interactive</span>)
+</span></span><span style="display:flex;"><span>    (<span style="color:#666;font-weight:bold;font-style:italic">kill-new</span> (<span style="color:#666;font-weight:bold;font-style:italic">buffer-file-name</span> (<span style="color:#666;font-weight:bold;font-style:italic">window-buffer</span> (<span style="color:#666;font-weight:bold;font-style:italic">minibuffer-selected-window</span>)))))</span></span></code></pre></div>
 </div>
 </div>
 </div>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Journal on Insaturé</title>
-    <link>http://localhost:1313/categories/journal/</link>
+    <link>https://xeechou.net/categories/journal/</link>
     <description>Recent content in Journal on Insaturé</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 22 Jul 2018 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/journal/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://xeechou.net/categories/journal/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The wayland project</title>
-      <link>http://localhost:1313/posts/the_wayland_project/</link>
+      <link>https://xeechou.net/posts/the_wayland_project/</link>
       <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/the_wayland_project/</guid>
+      <guid>https://xeechou.net/posts/the_wayland_project/</guid>
       <description>&lt;p&gt;It was a good will.&lt;/p&gt;&#xA;&lt;p&gt;5 years ago, I read a blog about the future of linux desktop, I was using a&#xA;window manager called &lt;code&gt;Awesome&lt;/code&gt; (one of my friend introduced it to me, I was&#xA;enchanted by how he opened two terminals side-by-side, one for coding and one&#xA;for compiling). A voice about next generation desktop was just raised in the&#xA;linux community , a group of hackers demod the &lt;code&gt;weston&lt;/code&gt; project, where you can&#xA;rotate the application windows. They also pointed out the existing problems in&#xA;the x server architecture(basically it is too old, let us just replace it). It&#xA;is cumbersome, too many components, easily dead after package upgrade.&lt;/p&gt;</description>
     </item>
   </channel>

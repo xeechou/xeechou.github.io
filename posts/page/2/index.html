@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -125,7 +125,7 @@
         <span class="pagination-label">Newer Posts</span>
       </a>
     
-    <span class="pagination-info">Page 2 of 4</span>
+    <span class="pagination-info">Page 2 of 5</span>
     
       <a class="pagination-prev" href="/posts/page/3/">
         <span class="pagination-label">Older Posts</span>
@@ -144,6 +144,35 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/libdecor/">Wayland client side window decorations through libdecor</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="https://xeechou.net/tags/wayland">wayland</a>
+              
+              |
+            
+            <time datetime="2023-08-17">17 Aug 2023</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>I have been away from wayland system for a while because of work, but I still remember back in the day the pain to manage the window frame (as known as decorations) in wayland system. Surprisingly quite a lot of server work shifted to client side to manage, eg, you need to implement key repeat event in the client applications.</p>
+<p>There are <strong>two</strong> ways right now to do the client decorations.</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/moving-to-gpu-driven/">Moving towards GPU driven</a>
           </h2>
           <span class="post-meta">
@@ -151,7 +180,7 @@
             
               
                 
-                <a href="http://localhost:1313/tags/graphics">Graphics</a>
+                <a href="https://xeechou.net/tags/graphics">Graphics</a>
               
               |
             
@@ -179,7 +208,7 @@
             
               
                 
-                <a href="http://localhost:1313/tags/graphics">graphics</a>
+                <a href="https://xeechou.net/tags/graphics">graphics</a>
               
               |
             
@@ -210,7 +239,7 @@ The rendering framework focus on the render passes should provide a compact yet 
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -249,7 +278,7 @@ list. Obviously I will have to fix that.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -287,7 +316,7 @@ my old blog. Time for a summary.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -320,7 +349,7 @@ switching. Weekends are really no for staying at home confronting monitors.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -356,7 +385,7 @@ long, even now it is painful to do so. At least I get more time reading books?</
             
               
                 
-                <a href="http://localhost:1313/tags/emacs">emacs</a>
+                <a href="https://xeechou.net/tags/emacs">emacs</a>
               
               |
             
@@ -366,7 +395,7 @@ long, even now it is painful to do so. At least I get more time reading books?</
       </header>
 
       <section class="post-excerpt">
-        <p>In my previous <a href="http://localhost:1313/posts/back-with-org-mode/">post</a>, I&rsquo;ve somewhat found
+        <p>In my previous <a href="https://xeechou.net/posts/back-with-org-mode/">post</a>, I&rsquo;ve somewhat found
 a way to synchronize my org files. I was pretty happy, I was having just around
 six org pages, coping them to a <strong>webdav</strong> server was not a huge hustle :P,
 util I started to use <a href="https://www.orgroam.com/manual.html">org-roam</a>. Suddenly
@@ -392,7 +421,7 @@ have to solve problems you created yourself.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/programming">programming</a>
+                <a href="https://xeechou.net/tags/programming">programming</a>
               
               |
             
@@ -426,7 +455,7 @@ tangling with CSS.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -449,39 +478,6 @@ anymore, more often I need to track my TODOs from cellphone as well.</p>
   
 
 
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/xwayland-selection/">Xwayland Clipboard</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
-              
-              |
-            
-            <time datetime="2021-02-15">15 Feb 2021</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>I hate every single line of xwayland code I wrote, it is ugly, long and hard to
-maintain. Now I know very well why there is wayland in the first place, sadly a
-complete wayland compositor has to bring a piece of crap of X with it. I just
-finished the selection handling in xwayland by mimicing weston code. After
-finally understand that 1000 lines of confusing code, I just found out I can&rsquo;t
-do any better.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
 
 
 <nav class="pagination" role="pagination">
@@ -492,7 +488,7 @@ do any better.</p>
         <span class="pagination-label">Newer Posts</span>
       </a>
     
-    <span class="pagination-info">Page 2 of 4</span>
+    <span class="pagination-info">Page 2 of 5</span>
     
       <a class="pagination-prev" href="/posts/page/3/">
         <span class="pagination-label">Older Posts</span>

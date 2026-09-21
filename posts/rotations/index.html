@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
     <script>
   MathJax = {
     tex: {
@@ -148,50 +148,50 @@ complex than a 2D transform, so you could dicompose the rotation into 3 2D
 rotation matrices. Anyway, I feel that we cannot avoid the rotation table here,
 they are Bruce Banna in different forms of hulk(clear throat).</p>
 <table>
-  <thead>
-      <tr>
-          <th>Name</th>
-          <th style="text-align: center">representation</th>
-          <th style="text-align: center">N</th>
-          <th style="text-align: center">operations on vector</th>
-          <th style="text-align: center">combination</th>
-          <th style="text-align: center">interpolation</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>rotation vector</td>
-          <td style="text-align: center">$(w,\theta)$</td>
-          <td style="text-align: center">4</td>
-          <td style="text-align: center">Rodrigues&rsquo; rotation</td>
-          <td style="text-align: center">impossible</td>
-          <td style="text-align: center">hard</td>
-      </tr>
-      <tr>
-          <td>Matrix</td>
-          <td style="text-align: center">$M$</td>
-          <td style="text-align: center">9</td>
-          <td style="text-align: center">$M \cdot v$</td>
-          <td style="text-align: center">$M_1 \cdot M_2 \cdot v$</td>
-          <td style="text-align: center">hard</td>
-      </tr>
-      <tr>
-          <td>euler angles</td>
-          <td style="text-align: center">$(\phi,\theta,\psi)$</td>
-          <td style="text-align: center">3</td>
-          <td style="text-align: center">$\psi(\theta(\phi(v)))$</td>
-          <td style="text-align: center">cascade</td>
-          <td style="text-align: center">hard</td>
-      </tr>
-      <tr>
-          <td>quaternions</td>
-          <td style="text-align: center">$q=(w,x,y,z)$</td>
-          <td style="text-align: center">4</td>
-          <td style="text-align: center">$q\cdot v \cdot q^{-1}$</td>
-          <td style="text-align: center">$q_1 q v q^{-1} q_1^{-1}$</td>
-          <td style="text-align: center">slep</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>Name</th>
+					<th style="text-align: center">representation</th>
+					<th style="text-align: center">N</th>
+					<th style="text-align: center">operations on vector</th>
+					<th style="text-align: center">combination</th>
+					<th style="text-align: center">interpolation</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>rotation vector</td>
+					<td style="text-align: center">$(w,\theta)$</td>
+					<td style="text-align: center">4</td>
+					<td style="text-align: center">Rodrigues&rsquo; rotation</td>
+					<td style="text-align: center">impossible</td>
+					<td style="text-align: center">hard</td>
+			</tr>
+			<tr>
+					<td>Matrix</td>
+					<td style="text-align: center">$M$</td>
+					<td style="text-align: center">9</td>
+					<td style="text-align: center">$M \cdot v$</td>
+					<td style="text-align: center">$M_1 \cdot M_2 \cdot v$</td>
+					<td style="text-align: center">hard</td>
+			</tr>
+			<tr>
+					<td>euler angles</td>
+					<td style="text-align: center">$(\phi,\theta,\psi)$</td>
+					<td style="text-align: center">3</td>
+					<td style="text-align: center">$\psi(\theta(\phi(v)))$</td>
+					<td style="text-align: center">cascade</td>
+					<td style="text-align: center">hard</td>
+			</tr>
+			<tr>
+					<td>quaternions</td>
+					<td style="text-align: center">$q=(w,x,y,z)$</td>
+					<td style="text-align: center">4</td>
+					<td style="text-align: center">$q\cdot v \cdot q^{-1}$</td>
+					<td style="text-align: center">$q_1 q v q^{-1} q_1^{-1}$</td>
+					<td style="text-align: center">slep</td>
+			</tr>
+	</tbody>
 </table>
 <p>Let&rsquo;s play the role of doctor, dive into the head of rotation and see which
 causes him to turn into different &ldquo;hulks&rdquo;. The rotation matrix is the most
@@ -214,45 +214,45 @@ D_x &amp; D_y &amp; D_z &amp; 0 \\
 \end{bmatrix}
 $$</p>
 <table>
-  <thead>
-      <tr>
-          <th></th>
-          <th>rotation matrix</th>
-          <th>rotation vector</th>
-          <th>euler angle</th>
-          <th>quaternions</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>rotation matrix</td>
-          <td>x</td>
-          <td>decompose</td>
-          <td>solving equations</td>
-          <td>solving equation</td>
-      </tr>
-      <tr>
-          <td>rotation vector</td>
-          <td>$RR_{2D}R^{-1}$</td>
-          <td>x</td>
-          <td></td>
-          <td>$(w,1/2\theta)$</td>
-      </tr>
-      <tr>
-          <td>euler angle</td>
-          <td>$R_p R_y R_r$</td>
-          <td></td>
-          <td>x</td>
-          <td>x</td>
-      </tr>
-      <tr>
-          <td>quaternions</td>
-          <td>Matrix formula</td>
-          <td>$(w, 1/2\theta)$</td>
-          <td>x</td>
-          <td>x</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th></th>
+					<th>rotation matrix</th>
+					<th>rotation vector</th>
+					<th>euler angle</th>
+					<th>quaternions</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>rotation matrix</td>
+					<td>x</td>
+					<td>decompose</td>
+					<td>solving equations</td>
+					<td>solving equation</td>
+			</tr>
+			<tr>
+					<td>rotation vector</td>
+					<td>$RR_{2D}R^{-1}$</td>
+					<td>x</td>
+					<td></td>
+					<td>$(w,1/2\theta)$</td>
+			</tr>
+			<tr>
+					<td>euler angle</td>
+					<td>$R_p R_y R_r$</td>
+					<td></td>
+					<td>x</td>
+					<td>x</td>
+			</tr>
+			<tr>
+					<td>quaternions</td>
+					<td>Matrix formula</td>
+					<td>$(w, 1/2\theta)$</td>
+					<td>x</td>
+					<td>x</td>
+			</tr>
+	</tbody>
 </table>
 <p>So what is the relationship between rotation matrix and rotation vector?
 Remember that an axis-angle rotation is around an angle? So let us align our
@@ -396,8 +396,9 @@ though the rotation vector, which makes our lives easier.</p>
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	
       </section>
       
 
@@ -467,6 +468,8 @@ though the rotation vector, which makes our lives easier.</p>
     
     
     
+    
+
     
   </body>
 </html>

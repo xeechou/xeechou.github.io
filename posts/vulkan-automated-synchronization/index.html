@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
     
     
       
@@ -120,7 +120,7 @@ Barriers
 <div id="outline-text-headline-2" class="outline-text-3">
 <p>Barriers is the most lightweight synchronization mechanism you can use and it is probably the primary tool you should use. You inject them between your draw/dispatch/copy commands to ensure your cache flushed, image layout is in proper place etc.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">vkCmdPipelineBarrier2</span>(
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">vkCmdPipelineBarrier2</span>(
 </span></span><span style="display:flex;"><span>    VkCommandBuffer                             commandBuffer,
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">const</span> VkDependencyInfo*                     pDependencyInfo);
 </span></span><span style="display:flex;"><span>
@@ -139,7 +139,7 @@ Barriers
 <p>
 This requires <code>VK_KHR_synchronization2</code> which is in core Vulkan 1.3, however the concept is quite similar to Vulkan 1.0, with some minor difference. The meat here is that you need to record your <strong>buffer memory barrier</strong> and <strong>image memory barrier</strong> (You can choose either <code>VkMemoryBarrier2</code> or <code>VkBufferMemoryBarrier2</code> for buffers). They have something in common:</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkCOMMONMemoryBarrier2</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkCOMMONMemoryBarrier2</span> {
 </span></span><span style="display:flex;"><span>    VkStructureType          sType;
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">const</span> <span style="font-weight:bold;text-decoration:underline">void</span>*              pNext;
 </span></span><span style="display:flex;"><span>    VkPipelineStageFlags2    srcStageMask;
@@ -151,17 +151,17 @@ This requires <code>VK_KHR_synchronization2</code> which is in core Vulkan 1.3, 
 </span></span><span style="display:flex;"><span>};
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Then buffer has
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkBufferMemoryBarrier2</span> {
+</span></span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkBufferMemoryBarrier2</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#888;font-style:italic">// common stuff
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>    VkBuffer                 buffer;
+</span></span></span><span style="display:flex;"><span>    VkBuffer                 buffer;
 </span></span><span style="display:flex;"><span>    VkDeviceSize             offset;
 </span></span><span style="display:flex;"><span>    VkDeviceSize             size;	
 </span></span><span style="display:flex;"><span>};
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">// image has
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkImageMemoryBarrier2</span> {
+</span></span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkImageMemoryBarrier2</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#888;font-style:italic">//common stuff
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>    VkImage                    image;
+</span></span></span><span style="display:flex;"><span>    VkImage                    image;
 </span></span><span style="display:flex;"><span>    VkImageSubresourceRange    subresourceRange;	
 </span></span><span style="display:flex;"><span>};</span></span></code></pre></div>
 </div>
@@ -174,18 +174,18 @@ Barrier is for synchronizing within the queue.
 <div id="outline-text-headline-3" class="outline-text-4">
 <p>Initially I thought the barriers are for synchronization <span style="text-decoration: underline;">inside</span> the a single submission, that is actually not the case, you can use them across submissions. This is because <strong>Vulkan guarantees the commands starts exactly the same order you submitted</strong>, but they may finished in differently. </p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">//1st submission
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdDispatch();
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">//1st submission
+</span></span></span><span style="display:flex;"><span>vkCmdDispatch();
 </span></span><span style="display:flex;"><span>vkCmdDispatch();
 </span></span><span style="display:flex;"><span>vkCmdPipelineBarrier(srcStageMask = COMPUTE, dstStageMask = TRANSFER);
 </span></span><span style="display:flex;"><span>vkQueueSubmit();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//2nd submission
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdCopy();
+</span></span></span><span style="display:flex;"><span>vkCmdCopy();
 </span></span><span style="display:flex;"><span>VkQueueSubmit();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//3rd submission
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdPipelineBarrier(srcStageMask = TRANSFER, dstStageMask = DRAW);
+</span></span></span><span style="display:flex;"><span>vkCmdPipelineBarrier(srcStageMask = TRANSFER, dstStageMask = DRAW);
 </span></span><span style="display:flex;"><span>vkCmdDraw();</span></span></code></pre></div>
 </div>
 <p>
@@ -201,12 +201,12 @@ semaphores
 <div id="outline-text-headline-4" class="outline-text-3">
 <p>Semaphores are the primary GPU sync mechanism <strong>across queues</strong>, that is it most useful if decide to use multiple queues. The primary use case is that if use the same resource in different queue, you need to define their order of <strong>finish</strong> using semaphores.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">// queue 1
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdDispatch();
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">// queue 1
+</span></span></span><span style="display:flex;"><span>vkCmdDispatch();
 </span></span><span style="display:flex;"><span>vkQueueSubmit(signal = my_semaphore, wait = null);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">// queue 2
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdBeginRenderPass();
+</span></span></span><span style="display:flex;"><span>vkCmdBeginRenderPass();
 </span></span><span style="display:flex;"><span>vkCmdDraw()
 </span></span><span style="display:flex;"><span>vkCmdEndRenderPass();
 </span></span><span style="display:flex;"><span>vkQueueSubmit(wait = my_semaphore, pDstWaitStageMask = FRAGMENT_SHADER);</span></span></code></pre></div>
@@ -232,13 +232,13 @@ queue ownership transfer
 <p>
 For this to work you need to have almost the identical <code>memoryBarriers</code> recorded in both previous queue  and new queue.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">//in queue 1
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdDraw();
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">//in queue 1
+</span></span></span><span style="display:flex;"><span>vkCmdDraw();
 </span></span><span style="display:flex;"><span>vkCmdMemoryBarrier2(resource, srcQFI=0, dstQFI=1, OldLayout=Attachment, NewLayout=READ);
 </span></span><span style="display:flex;"><span>VkQueueSubmit(signal=my_semaphore);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//in queue 2, we inject the same barrier
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkCmdMemoryBarrier2(resource, srcQFI=0, dstQFI=1, OldLayout=Attachment, NewLayout=READ);
+</span></span></span><span style="display:flex;"><span>vkCmdMemoryBarrier2(resource, srcQFI=0, dstQFI=1, OldLayout=Attachment, NewLayout=READ);
 </span></span><span style="display:flex;"><span>vkCmdDraw();
 </span></span><span style="display:flex;"><span>VkQueueSubmit(wait=my_semaphore);</span></span></code></pre></div>
 </div>
@@ -277,7 +277,7 @@ Global submission state
 <div id="outline-text-headline-8" class="outline-text-3">
 <p>Because the feature 1 and 2, that I decided to have a global submission state for every command I record, to use them you need to submit you command to this submissions state with</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">dependency</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">dependency</span>
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">timeline_t</span>
 </span></span><span style="display:flex;"><span>    {
@@ -288,7 +288,7 @@ Global submission state
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    } timeline;
 </span></span><span style="display:flex;"><span>    <span style="color:#888;font-style:italic">// a list of records which is stored somewhere else
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>    std::span&lt;<span style="font-weight:bold;text-decoration:underline">const</span> access_record&gt; accesses;
+</span></span></span><span style="display:flex;"><span>    std::span&lt;<span style="font-weight:bold;text-decoration:underline">const</span> access_record&gt; accesses;
 </span></span><span style="display:flex;"><span>};
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">void</span> submmissions::add(vk::CommandBuffer cmd, vk::Queue queue, dependency <span style="font-weight:bold;text-decoration:underline">const</span>&amp; dep = {});</span></span></code></pre></div>
@@ -306,7 +306,7 @@ access records
 <div id="outline-text-headline-9" class="outline-text-3">
 <p>The <code>access_record</code> in the <code>dependency</code> looks like the following</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">access_record</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">access_record</span>
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">enum</span> <span style="color:#666;font-weight:bold;font-style:italic">pattern_t</span> { READ, WRITE };
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">using</span> resource_t = std::variant&lt;vk::Image, vk::Buffer&gt;;
@@ -321,7 +321,7 @@ access records
 </span></span><span style="display:flex;"><span>        vk::PipelineStageFlagBits2 stage;
 </span></span><span style="display:flex;"><span>        vk::AccessFlags2           access;
 </span></span><span style="display:flex;"><span>        <span style="color:#888;font-style:italic">// image specific
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>        vk::ImageLayout           layout;
+</span></span></span><span style="display:flex;"><span>        vk::ImageLayout           layout;
 </span></span><span style="display:flex;"><span>        vk::ImageSubresourceRange subresource;
 </span></span><span style="display:flex;"><span>    } dst;
 </span></span><span style="display:flex;"><span>};</span></span></code></pre></div>
@@ -331,14 +331,14 @@ You have the READ/WRITE pattern, the resource it touches, and <code>dstStage/dst
 <p>
 Up to now we have answers to <strong>question 1</strong>: we inject barriers at every command buffer submitted (not to be confused with command itself) if you specify the <code>access_records</code>, this is often not a problem, because you often record multiple commands before you add to submission.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vkCmdDraw(cmd1);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vkCmdDraw(cmd1);
 </span></span><span style="display:flex;"><span>vkCmdDraw(cmd1);
 </span></span><span style="display:flex;"><span>submission::add(cmd1, queue1, dep={{DRAW, FRAGMENT}, {DRAW, VERTEX}});
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>vkCmdDispatch(cmd2);
 </span></span><span style="display:flex;"><span>vkCmdDispatch(cmd2);
 </span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//still accumulating since on the same queue.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>submission::add(cmd2, queue1, dep={READ, COMPUTE});</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span>submission::add(cmd2, queue1, dep={READ, COMPUTE});</span></span></code></pre></div>
 </div>
 <p>
 The answer to <strong>question 4</strong> is ready now as well, since we have a global submission state, you are obviously able to find the previous <span style="text-decoration: underline;">source</span> access patterns.</p>
@@ -351,7 +351,7 @@ management logic
 <div id="outline-text-headline-10" class="outline-text-3">
 <p>Now we are done with interface, how do we handle the internals? It may become apparent to you already, since you have concrete answers to all the questions. The full function is probably a bit too much, but the pseudo code is actually quite simple:</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>submissions::add(vk::CommandBuffer cmd, vk::Queue queue, dependency <span style="font-weight:bold;text-decoration:underline">const</span>&amp; dep)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>submissions::add(vk::CommandBuffer cmd, vk::Queue queue, dependency <span style="font-weight:bold;text-decoration:underline">const</span>&amp; dep)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">if</span> (queue != prev_queue)
 </span></span><span style="display:flex;"><span>    {
@@ -365,7 +365,7 @@ management logic
 </span></span><span style="display:flex;"><span>	<span style="font-weight:bold;text-decoration:underline">if</span> (require_barrier(src_access, dst_access)) {
 </span></span><span style="display:flex;"><span>            <span style="font-weight:bold;text-decoration:underline">if</span> (require_semaphore(src_access, dst_access)) {
 </span></span><span style="display:flex;"><span>		<span style="color:#888;font-style:italic">// semaphore implict gurantee.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>                src_access.access = vk::AccessFlagBits2::eNone;
+</span></span></span><span style="display:flex;"><span>                src_access.access = vk::AccessFlagBits2::eNone;
 </span></span><span style="display:flex;"><span>                src_access.stage  = vk::PipelineStageFlagBits2::eNone;
 </span></span><span style="display:flex;"><span>                <span style="font-weight:bold;text-decoration:underline">if</span> (require_queue_transfer(src_acess, dst_access)) {
 </span></span><span style="display:flex;"><span>                     src_acess = transfer_queue_access(src_acess, dst_access);
@@ -496,8 +496,9 @@ References
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	
       </section>
       
 
@@ -567,6 +568,8 @@ References
     
     
     
+    
+
     
   </body>
 </html>

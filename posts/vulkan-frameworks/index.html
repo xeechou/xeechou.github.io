@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
     
     
       
@@ -118,19 +118,19 @@ TU-Wien&#39;s <a href="https://github.com/cg-tuwien/Auto-Vk-Toolkit">Auto Vk fra
 <div id="outline-text-headline-1" class="outline-text-3">
 <p>Preparing user with an application template, user need to fill up the `initialize()` and <code>update()</code> and <code>render()</code>. Let&#39;s see how it creates a render pass.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>mPipeline = avk::context().create_graphics_pipeline_for(
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>mPipeline = avk::context().create_graphics_pipeline_for(
 </span></span><span style="display:flex;"><span>	avk::vertex_shader(<span style="color:#666;font-style:italic">&#34;shaders/a_triangle.vert&#34;</span>),
 </span></span><span style="display:flex;"><span>	avk::fragment_shader(<span style="color:#666;font-style:italic">&#34;shaders/a_triangle.frag&#34;</span>),
 </span></span><span style="display:flex;"><span>	avk::cfg::front_face::define_front_faces_to_be_clockwise(),
 </span></span><span style="display:flex;"><span>	avk::cfg::viewport_depth_scissors_config::from_framebuffer(avk::context().main_window()-&gt;backbuffer_reference_at_index(0)),
 </span></span><span style="display:flex;"><span>	<span style="color:#888;font-style:italic">// Just use the main window&#39;s renderpass for this pipeline:
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>	avk::context().main_window()-&gt;renderpass()
+</span></span></span><span style="display:flex;"><span>	avk::context().main_window()-&gt;renderpass()
 </span></span><span style="display:flex;"><span>);</span></span></code></pre></div>
 </div>
 <p>
 So this API uses a fix set of parameters to set up a graphics pipeline, it takes the shaders, fixed functions and parameters and a render pass pointer. It is very close to Vulkan itself actually, you do have some syntax sugar to create Vulkan objects for you but you are exposed to them.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>avk::context().create_renderpass({
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>avk::context().create_renderpass({
 </span></span><span style="display:flex;"><span>				avk::attachment::declare(avk::format_from_window_color_buffer(avk::context().main_window()), avk::on_load::clear.from_previous_layout(avk::layout::undefined), avk::usage::color(0)     , avk::on_store::store),	 
 </span></span><span style="display:flex;"><span>				avk::attachment::declare(avk::format_from_window_depth_buffer(avk::context().main_window()), avk::on_load::clear.from_previous_layout(avk::layout::undefined), avk::usage::depth_stencil, avk::on_store::dont_care)
 </span></span><span style="display:flex;"><span>			}, avk::context().main_window()-&gt;renderpass_reference().subpass_dependencies()),</span></span></code></pre></div>
@@ -142,15 +142,15 @@ So expect to write good a few thousands of lines of code to get a complete pipel
 <p>
 But I really like some of its APIs though. The updater API is interesting.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">//hot updating the shaders
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>mUpdater-&gt;on(avk::shader_files_changed_event(mPipeline.as_reference()))
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#888;font-style:italic">//hot updating the shaders
+</span></span></span><span style="display:flex;"><span>mUpdater-&gt;on(avk::shader_files_changed_event(mPipeline.as_reference()))
 </span></span><span style="display:flex;"><span>	.update(mPipeline);
 </span></span><span style="display:flex;"><span>	
 </span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//swapchain update
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>mUpdater-&gt;on(
+</span></span></span><span style="display:flex;"><span>mUpdater-&gt;on(
 </span></span><span style="display:flex;"><span>	avk::swapchain_resized_event(avk::context().main_window()), <span style="color:#888;font-style:italic">// In the case of window resizes,
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>	avk::shader_files_changed_event(mPipeline.as_reference())   <span style="color:#888;font-style:italic">// or in the case of changes to the shader files (hot reloading), ...
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>)
+</span></span></span><span style="display:flex;"><span>	avk::shader_files_changed_event(mPipeline.as_reference())   <span style="color:#888;font-style:italic">// or in the case of changes to the shader files (hot reloading), ...
+</span></span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>.update(mPipeline); <span style="color:#888;font-style:italic">// ... it will recreate the pipeline.
 </span></span></span></code></pre></div>
 </div>
@@ -166,7 +166,7 @@ It has two methods, the <code>on()</code> which register a event, then the <code
 <p>
 The vkcv framework is another framework based on Vulkan-HPP. It&#39;s does not have a application framework, which means you can write everything in <code>main()</code>. The good part is that the <code>vkcv</code> framework has quite a few additional APIs to manage the <code>scene</code>, <code>camera</code> and so on. But anyway, lets look how the render pipeline is created</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vkcv::GraphicsPipelineHandle firstMeshPipeline = core.createGraphicsPipeline(
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vkcv::GraphicsPipelineHandle firstMeshPipeline = core.createGraphicsPipeline(
 </span></span><span style="display:flex;"><span>		vkcv::GraphicsPipelineConfig(
 </span></span><span style="display:flex;"><span>				firstMeshProgram,
 </span></span><span style="display:flex;"><span>				firstMeshPass,
@@ -180,13 +180,13 @@ It is interestingly the same actually. Taking number of parameters which were cr
 <p>
 The good part of the API I think is Vulkan feature request,</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>features.requireFeature&lt;vk::PhysicalDevice16BitStorageFeatures&gt;(
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>features.requireFeature&lt;vk::PhysicalDevice16BitStorageFeatures&gt;(
 </span></span><span style="display:flex;"><span>		[](vk::PhysicalDevice16BitStorageFeatures &amp;features) {
 </span></span><span style="display:flex;"><span>			features.setStorageBuffer16BitAccess(<span style="font-weight:bold;font-style:italic">true</span>);
 </span></span><span style="display:flex;"><span>		}
 </span></span><span style="display:flex;"><span>);
 </span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//then in the context
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>vkcv::Core core = vkcv::Core::create(
+</span></span></span><span style="display:flex;"><span>vkcv::Core core = vkcv::Core::create(
 </span></span><span style="display:flex;"><span>		applicationName,
 </span></span><span style="display:flex;"><span>		VK_MAKE_VERSION(0, 0, 1),
 </span></span><span style="display:flex;"><span>		{ vk::QueueFlagBits::eGraphics ,vk::QueueFlagBits::eCompute , vk::QueueFlagBits::eTransfer },
@@ -358,8 +358,9 @@ Comments
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	
       </section>
       
 
@@ -429,6 +430,8 @@ Comments
     
     
     
+    
+
     
   </body>
 </html>

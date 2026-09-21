@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
     
     
       
@@ -136,60 +136,60 @@ it gets mature. Maybe in the end I would have to write one myself.</p>
 Drew Devault claimed <strong>wlroots</strong> is a much better choice, I see them similar in
 many ways, in implementing many protocols.</p>
 <table>
-  <thead>
-      <tr>
-          <th>wayland types</th>
-          <th>libweston</th>
-          <th>wlroots</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>wl_output</td>
-          <td>weston_output</td>
-          <td>wlr_output</td>
-      </tr>
-      <tr>
-          <td>head</td>
-          <td>weston_head</td>
-          <td>wlr_output</td>
-      </tr>
-      <tr>
-          <td>wl_surface</td>
-          <td>weston_surface</td>
-          <td>wlr_surface</td>
-      </tr>
-      <tr>
-          <td>view</td>
-          <td>weston_view</td>
-          <td>wlr_surface_state</td>
-      </tr>
-      <tr>
-          <td>wl_seat</td>
-          <td>weston_seat</td>
-          <td>wlr_seat</td>
-      </tr>
-      <tr>
-          <td>compositor</td>
-          <td>internal</td>
-          <td>wlr_compositor</td>
-      </tr>
-      <tr>
-          <td>data_device</td>
-          <td>internal</td>
-          <td>wlr_data_device</td>
-      </tr>
-      <tr>
-          <td>input modifier</td>
-          <td>grab system</td>
-          <td>grab system</td>
-      </tr>
-      <tr>
-          <td>rendering</td>
-          <td>internal</td>
-          <td>wlr_output.frame</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>wayland types</th>
+					<th>libweston</th>
+					<th>wlroots</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>wl_output</td>
+					<td>weston_output</td>
+					<td>wlr_output</td>
+			</tr>
+			<tr>
+					<td>head</td>
+					<td>weston_head</td>
+					<td>wlr_output</td>
+			</tr>
+			<tr>
+					<td>wl_surface</td>
+					<td>weston_surface</td>
+					<td>wlr_surface</td>
+			</tr>
+			<tr>
+					<td>view</td>
+					<td>weston_view</td>
+					<td>wlr_surface_state</td>
+			</tr>
+			<tr>
+					<td>wl_seat</td>
+					<td>weston_seat</td>
+					<td>wlr_seat</td>
+			</tr>
+			<tr>
+					<td>compositor</td>
+					<td>internal</td>
+					<td>wlr_compositor</td>
+			</tr>
+			<tr>
+					<td>data_device</td>
+					<td>internal</td>
+					<td>wlr_data_device</td>
+			</tr>
+			<tr>
+					<td>input modifier</td>
+					<td>grab system</td>
+					<td>grab system</td>
+			</tr>
+			<tr>
+					<td>rendering</td>
+					<td>internal</td>
+					<td>wlr_output.frame</td>
+			</tr>
+	</tbody>
 </table>
 <p>Though many types in <strong>libweston</strong> you can find correspondence in <strong>wlroots</strong>,
 some of the implementation are also similar, eg, data-device, but you can also
@@ -347,8 +347,9 @@ and adding modification is difficult, though it is a more mature project.</p>
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	
       </section>
       
 
@@ -418,6 +419,8 @@ and adding modification is difficult, though it is a more mature project.</p>
     
     
     
+    
+
     
   </body>
 </html>

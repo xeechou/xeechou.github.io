@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
     
     
       
@@ -115,8 +115,8 @@ From our last <a href="https://xeechou.net/posts/ebus/">post</a> on an <a href="
 <p>
 For example, a keyboard event listener may looks like this:</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//the listener will override those methods
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">keyboard_input_listener</span> : <span style="font-weight:bold;text-decoration:underline">public</span> ebus_handler&lt;keyboard_events&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//the listener will override those methods
+</span></span></span><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">keyboard_input_listener</span> : <span style="font-weight:bold;text-decoration:underline">public</span> ebus_handler&lt;keyboard_events&gt;
 </span></span><span style="display:flex;"><span>  {
 </span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">on_enter</span>(keyboard_t* keyboard,
 </span></span><span style="display:flex;"><span>                                surface_t* surf, <span style="font-weight:bold;text-decoration:underline">uint32_t</span> key) <span style="font-weight:bold;text-decoration:underline">override</span>;
@@ -124,16 +124,16 @@ For example, a keyboard event listener may looks like this:</p>
 </span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">on_key</span>(keyboard_t* keyboard,
 </span></span><span style="display:flex;"><span>                              <span style="font-weight:bold;text-decoration:underline">uint32_t</span> key, <span style="font-weight:bold;text-decoration:underline">uint32_t</span> state) <span style="font-weight:bold;text-decoration:underline">override</span>;
 </span></span><span style="display:flex;"><span>          <span style="color:#888;font-style:italic">//other events ...
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  };
+</span></span></span><span style="display:flex;"><span>  };
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//then listen on the events.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  keyboard_input_listener listener;
+</span></span></span><span style="display:flex;"><span>  keyboard_input_listener listener;
 </span></span><span style="display:flex;"><span>  listener.connect();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//certain point a system will trigger events
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_enter, ...);
+</span></span></span><span style="display:flex;"><span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_enter, ...);
 </span></span><span style="display:flex;"><span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_key, ...);
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">///...
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_leave, ...);</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span>  ebus&lt;keyboard_events&gt;::event(&amp;keyboard_events::on_leave, ...);</span></span></code></pre></div>
 </div>
 <p>
 But actually the power of the eBus is far beyond this. On top of this system,  we can build other system as well. In this post, we are going to build a (async) task system.</p>
@@ -146,7 +146,7 @@ What exactly is a (async) task system
 <div id="outline-text-headline-2" class="outline-text-3">
 <p>Think of following code executes at run-time, line by line. (Well not exactly since both compiler and CPU will optimize for us). We <span style="text-decoration: underline;">start</span> by opening <code>test.txt</code> for reading. We <span style="text-decoration: underline;">read</span> it line by line then <span style="text-decoration: underline;">close</span> it, <span style="text-decoration: underline;">then</span> we open it again for <span style="text-decoration: underline;">appending</span> some random integers a thousand times to it and then we <span style="text-decoration: underline;">close</span> it.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">int</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>()
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">int</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>()
 </span></span><span style="display:flex;"><span>  {
 </span></span><span style="display:flex;"><span>          ifstream fr(<span style="color:#666;font-style:italic">&#34;test.txt&#34;</span>);
 </span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">if</span> (fr.is_open()) {
@@ -189,7 +189,7 @@ task system with <code>std::async</code>
 <div id="outline-text-headline-3" class="outline-text-3">
 <p>Before we implement such task interface in EBus, I need to mention that there is an <a href="https://en.cppreference.com/w/cpp/thread/async">std::async</a> interface for task scheduling. The <code>std::async(F&amp;&amp; f, Args&amp;&amp;, args...)</code> will return a <code>std::future</code>, when you try to get the result of <code>std::future</code>, you may be blocked until it is available.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">template</span>&lt;<span style="font-weight:bold;text-decoration:underline">typename</span> RandomIt&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">template</span>&lt;<span style="font-weight:bold;text-decoration:underline">typename</span> RandomIt&gt;
 </span></span><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">int</span> parallel_sum(RandomIt beg, RandomIt end)
 </span></span><span style="display:flex;"><span>  {
 </span></span><span style="display:flex;"><span>      <span style="font-weight:bold;text-decoration:underline">auto</span> len = end - beg;
@@ -198,12 +198,12 @@ task system with <code>std::async</code>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>      RandomIt mid = beg + len / 2;
 </span></span><span style="display:flex;"><span>      <span style="color:#888;font-style:italic">//the handle is return to you immediately, the actual sum is deferred.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>      std::future&lt;<span style="font-weight:bold;text-decoration:underline">int</span>&gt; handle = std::async(std::launch::async,
+</span></span></span><span style="display:flex;"><span>      std::future&lt;<span style="font-weight:bold;text-decoration:underline">int</span>&gt; handle = std::async(std::launch::async,
 </span></span><span style="display:flex;"><span>                                           parallel_sum&lt;RandomIt&gt;, mid, end);
 </span></span><span style="display:flex;"><span>      <span style="color:#888;font-style:italic">//you can continue do the other half of the work without being blocked by first half
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>      <span style="font-weight:bold;text-decoration:underline">int</span> sum  = parallel_sum&lt;RandomIt&gt;(beg, mid);
+</span></span></span><span style="display:flex;"><span>      <span style="font-weight:bold;text-decoration:underline">int</span> sum  = parallel_sum&lt;RandomIt&gt;(beg, mid);
 </span></span><span style="display:flex;"><span>      <span style="color:#888;font-style:italic">//the handle.get() is the wait you have to do
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>      <span style="font-weight:bold;text-decoration:underline">return</span> sum + handle.get();
+</span></span></span><span style="display:flex;"><span>      <span style="font-weight:bold;text-decoration:underline">return</span> sum + handle.get();
 </span></span><span style="display:flex;"><span>  }</span></span></code></pre></div>
 </div>
 <p>
@@ -230,46 +230,46 @@ The interface
 <div id="outline-text-headline-5" class="outline-text-4">
 <p>If you are convinced, then how do we implement something like <code>std::async</code> using <code>ebus</code> you may want to ask? Well, it is through the event dispatching interface we had before. </p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//broadcasting events.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  <span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">void</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//broadcasting events.
+</span></span></span><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">void</span>
 </span></span><span style="display:flex;"><span>  ebus&lt;interface&gt;::broadcast(function_t&amp;&amp; func, args_t&amp;&amp;... args);
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//dispatch a single event.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  <span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">void</span>
+</span></span></span><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">void</span>
 </span></span><span style="display:flex;"><span>  ebus&lt;interface&gt;::event(size_t id, function_t&amp;&amp; func, args_t&amp;&amp;... args);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//invoking a method without an instance and getting the result back
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  <span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">void</span>
+</span></span></span><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">void</span>
 </span></span><span style="display:flex;"><span>  ebus&lt;interface&gt;::invoke(result_t&amp; result, function_t&amp;&amp; func, args_t&amp;&amp;... args);</span></span></code></pre></div>
 </div>
 <p>
 The interface above allows us to call any methods without a class instance, as long as there is someone listen to it. Now imaging we can declare an task scheduler interface for <code>ebus</code>.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">task_scheduler_iface</span> : <span style="font-weight:bold;text-decoration:underline">public</span> ebus_iface&lt;ebus_type::GLOBAL&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">task_scheduler_iface</span> : <span style="font-weight:bold;text-decoration:underline">public</span> ebus_iface&lt;ebus_type::GLOBAL&gt;
 </span></span><span style="display:flex;"><span>  {
 </span></span><span style="display:flex;"><span>          <span style="color:#888;font-style:italic">//the listener need to implement add task asynchronously
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>          <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">m_add_task</span>(task_base::ptr task) = 0;
+</span></span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">m_add_task</span>(task_base::ptr task) = 0;
 </span></span><span style="display:flex;"><span>          <span style="color:#888;font-style:italic">//the convenience static method for ease of use
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>          <span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">void</span>  <span style="color:#666;font-weight:bold;font-style:italic">add_task</span>(task_base::ptr);
+</span></span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">void</span>  <span style="color:#666;font-weight:bold;font-style:italic">add_task</span>(task_base::ptr);
 </span></span><span style="display:flex;"><span>  };</span></span></code></pre></div>
 </div>
 <p>
 Under the hood, it is really as simple as dispatching the event.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">using</span> task_scheduler_bus = ebus&lt;task_scheduler_iface&gt;;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">using</span> task_scheduler_bus = ebus&lt;task_scheduler_iface&gt;;
 </span></span><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">void</span>
 </span></span><span style="display:flex;"><span>  task_scheduler_iface::add_task(task_base::ptr task)
 </span></span><span style="display:flex;"><span>  {	
 </span></span><span style="display:flex;"><span>      <span style="color:#888;font-style:italic">//The task scheduling is implemented as an broadcasting event.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>      task_scheduler_bus::broadcast(&amp;task_scheduler_iface::m_add_task, std::ref(task));
+</span></span></span><span style="display:flex;"><span>      task_scheduler_bus::broadcast(&amp;task_scheduler_iface::m_add_task, std::ref(task));
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//the user would simply call
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  task_scheduler_iface::add_task(task_base::ptr(task));</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span>  task_scheduler_iface::add_task(task_base::ptr(task));</span></span></code></pre></div>
 </div>
 <p>
 I choose to declare a <code>task_base</code> object, which is a class with pure virtual functions, you will see why a <code>task_base</code> interface is really useful compared to a single <code>std::function</code> in the next post.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">task_base</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">task_base</span>
 </span></span><span style="display:flex;"><span>  {
 </span></span><span style="display:flex;"><span>      <span style="font-weight:bold;text-decoration:underline">using</span> ptr     = INTRUSIVE_NS::intrusive_ptr&lt;task_base&gt;;
 </span></span><span style="display:flex;"><span>      <span style="font-weight:bold;text-decoration:underline">using</span> exec_fn = std::function&lt;<span style="font-weight:bold;text-decoration:underline">bool</span>(<span style="font-weight:bold;text-decoration:underline">void</span>)&gt;;
@@ -283,16 +283,16 @@ I choose to declare a <code>task_base</code> object, which is a class with pure 
 </span></span><span style="display:flex;"><span>      <span style="font-weight:bold;text-decoration:underline">bool</span> <span style="color:#666;font-weight:bold;font-style:italic">exec</span>() { <span style="font-weight:bold;text-decoration:underline">return</span> m_function(); }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>      <span style="color:#888;font-style:italic">// this should defines a done event for the task, the subclass
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>      <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">task_done</span>() = 0;
+</span></span></span><span style="display:flex;"><span>      <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">task_done</span>() = 0;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>      <span style="color:#888;font-style:italic">//////////////////////////////////////////////////////////////////////////
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>      <span style="color:#888;font-style:italic">// for intrusive_ptr support
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>      <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">add_ref</span>() = 0; <span style="color:#888;font-style:italic">// a default impl is ++ref_count
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>      <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">release</span>() = 0; <span style="color:#888;font-style:italic">// a default impl is delete if &lt;= 0
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>      <span style="color:#888;font-style:italic">//////////////////////////////////////////////////////////////////////////
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>
+</span></span></span><span style="display:flex;"><span>      <span style="color:#888;font-style:italic">// for intrusive_ptr support
+</span></span></span><span style="display:flex;"><span>      <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">add_ref</span>() = 0; <span style="color:#888;font-style:italic">// a default impl is ++ref_count
+</span></span></span><span style="display:flex;"><span>      <span style="font-weight:bold;text-decoration:underline">virtual</span> <span style="font-weight:bold;text-decoration:underline">void</span> <span style="color:#666;font-weight:bold;font-style:italic">release</span>() = 0; <span style="color:#888;font-style:italic">// a default impl is delete if &lt;= 0
+</span></span></span><span style="display:flex;"><span>      <span style="color:#888;font-style:italic">//////////////////////////////////////////////////////////////////////////
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>      exec_fn m_function; <span style="color:#888;font-style:italic">// return true if success.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  };</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span>  };</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -303,7 +303,7 @@ Implementing async task scheduler
 <div id="outline-text-headline-6" class="outline-text-4">
 <p>At the end of day, someone has to listen to the interface and do the actual work, scheduling. But because the decoupling of interface and implementation, you can actually implement one yourself to your liking. The <code>ebus</code> provides an standard implementation here called <a href="https://github.com/xeechou/ebus/blob/main/src/task/task_scheduler.cc#L132">default_task_scheduler</a>.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">class</span> <span style="color:#666;font-weight:bold;font-style:italic">default_task_scheduler</span> : <span style="font-weight:bold;text-decoration:underline">public</span> ebus_handler&lt;task_scheduler_iface&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">class</span> <span style="color:#666;font-weight:bold;font-style:italic">default_task_scheduler</span> : <span style="font-weight:bold;text-decoration:underline">public</span> ebus_handler&lt;task_scheduler_iface&gt;
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">using</span> handler_t = ebus_handler&lt;task_scheduler_iface&gt;;
 </span></span><span style="display:flex;"><span>
@@ -427,8 +427,9 @@ Closing remarks
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	
       </section>
       
 
@@ -498,6 +499,8 @@ Closing remarks
     
     
     
+    
+
     
   </body>
 </html>

@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
     
     
       
@@ -120,8 +120,8 @@ How residential water meter works.
 <p>
 Understanding how meter works is very important, there is an excellent YouTube video about this:</p>
 <p width="450px"><div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/M9nVkSZ6_H4?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
-    </div>
+			<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/M9nVkSZ6_H4?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+		</div>
 </p>
 <p>
 Mine happened to be a Badger Meter as well. What matters here is that inside the chamber there is a <strong>magnet wheel</strong>, driven by the nutating disk beneath it. As the disk nutates, it spins the magnet wheel, which produces a multi-pole magnetic field. This rotating field is what causes the register mounted on top to advance its readings — essentially translating the mechanical motion of water flow into the numbers you see on your meter face.</p>
@@ -150,7 +150,7 @@ both  <a href="https://github.com/tronikos/esphome-magnetometer-water-gas-meter"
 <p>
 ESPHome gives you two escape hatches here. The first is <code class="verbatim">includes:</code>, where you list <code class="verbatim">.h</code> and <code class="verbatim">.cpp</code> files that get copied into the platformio build:</p>
 <div class="src src-yaml">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>esphome:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>esphome:
 </span></span><span style="display:flex;"><span>  includes:
 </span></span><span style="display:flex;"><span>    - sensor_update.h
 </span></span><span style="display:flex;"><span>    - sensor_update.cpp</span></span></code></pre></div>
@@ -182,7 +182,7 @@ ccw:  0 → 2 → 3 → 1 → 0
 <p>
 This is the standard Gray-code sequence from the <a href="https://cdn.sparkfun.com/datasheets/Robotics/How%20to%20use%20a%20quadrature%20encoder.pdf">SparkFun quadrature encoder guide</a>. Direction is looked up from a 4x4 table indexed by <code class="verbatim">qdec[prev * 4 + curr]</code>:</p>
 <div class="src src-cpp">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">const</span> <span style="font-weight:bold;text-decoration:underline">int</span> qdec[16] = {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">static</span> <span style="font-weight:bold;text-decoration:underline">const</span> <span style="font-weight:bold;text-decoration:underline">int</span> qdec[16] = {
 </span></span><span style="display:flex;"><span>   0,  1, -1,  2,
 </span></span><span style="display:flex;"><span>  -1,  0,  2,  1,
 </span></span><span style="display:flex;"><span>   1,  2,  0, -1,
@@ -196,7 +196,7 @@ However, the value <code class="verbatim">2</code> is actually unreachable for u
 <p>
 When <code class="verbatim">sensor_update(s, v)</code> fires, sensor <code class="verbatim">1-s</code> has <em>not</em> transitioned, so <code class="verbatim">q[1-s]</code> is simultaneously its previous and current state:</p>
 <div class="src src-cpp">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">int</span> curr = (q[sensor] &lt;&lt; sensor)  + (q[1-sensor] &lt;&lt; (1-sensor));
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">int</span> curr = (q[sensor] &lt;&lt; sensor)  + (q[1-sensor] &lt;&lt; (1-sensor));
 </span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">int</span> prev = (qlast &lt;&lt; sensor)      + (q[1-sensor] &lt;&lt; (1-sensor));
 </span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">int</span> mod  = qdec[prev * 4 + curr];</span></span></code></pre></div>
 </div>
@@ -223,7 +223,7 @@ With that in mind, I started the experimentation setup, 3D printed a spinning wh
 <p>
 Without going too much into details, the logic is basically (But again, I would like to point out this potentially 8 CPU instructions can be implemented by a simple circuits).</p>
 <div class="src src-cpp">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">float</span> tare       = (tmax + tmin) / 2.0f;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">float</span> tare       = (tmax + tmin) / 2.0f;
 </span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">float</span> hysteresis = (tmax - tmin) * 0.2f;
 </span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">bool</span>  high       = signal &gt; tare + hysteresis;
 </span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">bool</span>  low        = signal &lt; tare + hysteresis;</span></span></code></pre></div>
@@ -431,8 +431,9 @@ Reference
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	
       </section>
       
 
@@ -502,6 +503,8 @@ Reference
     
     
     
+    
+
     
   </body>
 </html>

@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
     
     
       
@@ -142,12 +142,12 @@
         <p>
 customizing HideShow mode on Emacs is done by <a href="http://doc.endlessparentheses.com/Var/hs-special-modes-alist.html">hs-special-modes-alist</a>. There are 4 parts (actually 5, but we care mostly about the 3) of the equation. You can customize it for your mode with a list like this</p>
 <div class="src src-emacs-lisp">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (<span style="color:#666;font-weight:bold;font-style:italic">MODE</span> <span style="color:#666;font-weight:bold;font-style:italic">START</span> <span style="color:#666;font-weight:bold;font-style:italic">END</span> <span style="color:#666;font-weight:bold;font-style:italic">COMMENT-START</span> <span style="color:#666;font-weight:bold;font-style:italic">FORWARD-SEXP-FUNC</span> <span style="color:#666;font-weight:bold;font-style:italic">ADJUST-BEG-FUNC</span>)</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (<span style="color:#666;font-weight:bold;font-style:italic">MODE</span> <span style="color:#666;font-weight:bold;font-style:italic">START</span> <span style="color:#666;font-weight:bold;font-style:italic">END</span> <span style="color:#666;font-weight:bold;font-style:italic">COMMENT-START</span> <span style="color:#666;font-weight:bold;font-style:italic">FORWARD-SEXP-FUNC</span> <span style="color:#666;font-weight:bold;font-style:italic">ADJUST-BEG-FUNC</span>)</span></span></code></pre></div>
 </div>
 <p>
 For example, the default definition of the <code>hs-special-modes-alist</code> looks like this:</p>
 <div class="src src-emacs-lisp">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (<span style="font-weight:bold;font-style:italic">defvar</span> <span style="color:#666;font-weight:bold;font-style:italic">hs-special-modes-alist</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>  (<span style="font-weight:bold;font-style:italic">defvar</span> <span style="color:#666;font-weight:bold;font-style:italic">hs-special-modes-alist</span>
 </span></span><span style="display:flex;"><span>    (<span style="color:#666;font-weight:bold;font-style:italic">mapcar</span> <span style="color:#666;font-weight:bold;font-style:italic">#&#39;purecopy</span>
 </span></span><span style="display:flex;"><span>            &#39;((<span style="color:#666;font-weight:bold;font-style:italic">c-mode</span> <span style="color:#666;font-style:italic">&#34;{&#34;</span> <span style="color:#666;font-style:italic">&#34;}&#34;</span> <span style="color:#666;font-style:italic">&#34;/[*/]&#34;</span> <span style="color:#666;font-weight:bold;font-style:italic">nil</span> <span style="color:#666;font-weight:bold;font-style:italic">nil</span>)
 </span></span><span style="display:flex;"><span>              (<span style="color:#666;font-weight:bold;font-style:italic">c-ts-mode</span> <span style="color:#666;font-style:italic">&#34;{&#34;</span> <span style="color:#666;font-style:italic">&#34;}&#34;</span> <span style="color:#666;font-style:italic">&#34;/[*/]&#34;</span> <span style="color:#666;font-weight:bold;font-style:italic">nil</span> <span style="color:#666;font-weight:bold;font-style:italic">nil</span>)
@@ -296,6 +296,8 @@ have to solve problems you created yourself.</p>
     
     
     
+    
+
     
   </body>
 </html>

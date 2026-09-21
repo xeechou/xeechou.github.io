@@ -2,25 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://xeechou.net/posts/data-oriented-hydra/</loc>
+    <lastmod>2026-09-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://xeechou.net/tags/graphics/</loc>
+    <lastmod>2026-09-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://xeechou.net/</loc>
+    <lastmod>2026-09-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://xeechou.net/tags/</loc>
+    <lastmod>2026-09-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://xeechou.net/tags/usd/</loc>
+    <lastmod>2026-09-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://xeechou.net/tags/vulkan/</loc>
+    <lastmod>2026-09-21T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://xeechou.net/posts/thoughts-on-ai/</loc>
     <lastmod>2026-05-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://xeechou.net/</loc>
-    <lastmod>2026-05-29T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://xeechou.net/tags/journal/</loc>
-    <lastmod>2026-05-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://xeechou.net/tags/</loc>
     <lastmod>2026-05-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://xeechou.net/posts/quadrature-meter/</loc>
     <lastmod>2026-04-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://xeechou.net/posts/vulkan-automated-synchronization/</loc>
-    <lastmod>2025-05-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://xeechou.net/tags/vulkan/</loc>
     <lastmod>2025-05-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://xeechou.net/posts/status-update-2025-02/</loc>
@@ -37,9 +46,6 @@
   </url><url>
     <loc>https://xeechou.net/posts/ebus/</loc>
     <lastmod>2024-08-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://xeechou.net/tags/graphics/</loc>
-    <lastmod>2024-06-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://xeechou.net/posts/modular-vulkan-feature-manager/</loc>
     <lastmod>2024-06-12T00:00:00+00:00</lastmod>

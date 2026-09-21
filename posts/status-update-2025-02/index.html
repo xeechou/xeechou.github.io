@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
     
     
       
@@ -134,7 +134,7 @@ Step 1: creating a ROM on ESPhome
 <div id="outline-text-headline-2" class="outline-text-3">
 <p>ESPHome guys made it really easy to create a firmware, and you don&#39;t need to get every right the first time. Soon as you got any EspHome flashed in, the following updates can happen wirelessly. Only thing needed at the moment is:</p>
 <div class="src src-yaml">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>esphome:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>esphome:
 </span></span><span style="display:flex;"><span>  name: ${name}
 </span></span><span style="display:flex;"><span>  area: ${area}
 </span></span><span style="display:flex;"><span>  friendly_name: ${friendly_name}
@@ -186,7 +186,7 @@ Step 3: flash the firmware
 <div id="outline-text-headline-4" class="outline-text-3">
 <p>With some patience and luck, when you plug the TTL adapter to your computer, the LEDs on the Emporia board may start flashing and if you run the <code>esptool.py flash_id</code>. You may get some output like this:</p>
 <div class="src src-text">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>#this is the output from another device, you may have something on /dev/ttyUSB0
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>#this is the output from another device, you may have something on /dev/ttyUSB0
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Serial port /dev/ttyACM0  
 </span></span><span style="display:flex;"><span>Connecting...
@@ -208,7 +208,7 @@ Step 3: flash the firmware
 <p>
 Make a backup if you want, assuming the needles stay in place for a while, then you want to flash the firmware on the ESP32 chip:</p>
 <div class="src src-bash">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size detect 0x0 emporia_vue.bin</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size detect 0x0 emporia_vue.bin</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -345,8 +345,9 @@ Reference
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	
       </section>
       
 
@@ -416,6 +417,8 @@ Reference
     
     
     
+    
+
     
   </body>
 </html>

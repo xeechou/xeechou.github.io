@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     
-    <link rel="stylesheet" href="/css/style.min.7cc29e961aab0d10b918ee1796ba3e8d6992f9644043d837726eea474ee98529.css" integrity="sha256-fMKelhqrDRC5GO4Xlro&#43;jWmS&#43;WRAQ9g3cm7qR07phSk=" />
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
     
     
       
@@ -115,7 +115,7 @@ Root Issue: hard-coding enabled features
 <p>
 When creating an Vulkan device, you have a lot of options which extensions you want to enable, which feature you want to enable. This is done by inserting <code>features</code> into the <code>pNext</code> chain and extensions into <code>ppEnabledExtenionNames</code>.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkDeviceCreateInfo</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkDeviceCreateInfo</span> {
 </span></span><span style="display:flex;"><span>    VkStructureType                    sType;
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">const</span> <span style="font-weight:bold;text-decoration:underline">void</span>*                        pNext;
 </span></span><span style="display:flex;"><span>    VkDeviceCreateFlags                flags;
@@ -143,23 +143,23 @@ Abstracting an interface of Vulkan features
 <p>
 In the end, we need to chain those features together.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  VkDeviceCreateInfo info{};
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  VkDeviceCreateInfo info{};
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//some info setup code.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  VkPhysicalDeviceFeatures2 feats{};
 </span></span><span style="display:flex;"><span>  feats.features.somefatures0 = VK_TRUE;
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//enabling other features
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  info.pNext = &amp;feats;
+</span></span></span><span style="display:flex;"><span>  info.pNext = &amp;feats;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//Second feature struct
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  VkPhysicalDeviceVulkan11Features feats11 {};
+</span></span></span><span style="display:flex;"><span>  VkPhysicalDeviceVulkan11Features feats11 {};
 </span></span><span style="display:flex;"><span>  feats.pNext = &amp;feats11;
 </span></span><span style="display:flex;"><span>  feats11.somefeatures0 = VK_TRUE;
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//enabling other features.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//this goes on until your have chain all the feature structures.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  VkPhysicalDeviceSomeFeatures featsN {};
+</span></span></span><span style="display:flex;"><span>  VkPhysicalDeviceSomeFeatures featsN {};
 </span></span><span style="display:flex;"><span>  featsN_1.pNext = &amp;featsN;
 </span></span><span style="display:flex;"><span>  featsN.pNext = <span style="font-weight:bold;text-decoration:underline">nullptr</span>; <span style="color:#888;font-style:italic">//the last one.
 </span></span></span></code></pre></div>
@@ -175,7 +175,7 @@ Taking advantage of <code>T::*</code> type in C++
 <div id="outline-text-headline-3" class="outline-text-3">
 <p>The issue here is there is too many <code>VkPhysicalDeviceSomeFeatures</code> types in Vulkan. Creating an interface contains all those types would be insane, and I have only a few hours. However all those  <code>VkPhysicalDeviceSomeFeatures</code> looks similar:</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkPhysicalDeviceFeatures</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">typedef</span> <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">VkPhysicalDeviceFeatures</span> {
 </span></span><span style="display:flex;"><span>      VkBool32    robustBufferAccess;
 </span></span><span style="display:flex;"><span>      VkBool32    fullDrawIndexUint32;
 </span></span><span style="display:flex;"><span>      VkBool32    imageCubeArray;
@@ -184,18 +184,18 @@ Taking advantage of <code>T::*</code> type in C++
 </span></span><span style="display:flex;"><span>      VkBool32    tessellationShader;
 </span></span><span style="display:flex;"><span>      VkBool32    sampleRateShading;
 </span></span><span style="display:flex;"><span>      <span style="color:#888;font-style:italic">//...
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  };</span></span></code></pre></div>
+</span></span></span><span style="display:flex;"><span>  };</span></span></code></pre></div>
 </div>
 <p>
 They are merely just list of <code>VkBool32</code>. After experimenting a bit. I found that I can simply write a templated function to enable one feature using <code>T::*</code> pointer.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">template</span>&lt;FEAT&gt; <span style="color:#888;font-style:italic">//FEAT is a type like VkPhysicalDeviceFeatures
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  feature&lt;FEAT&gt;&amp; feature::require(vk::Bool32 FEATS::*feat)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">template</span>&lt;FEAT&gt; <span style="color:#888;font-style:italic">//FEAT is a type like VkPhysicalDeviceFeatures
+</span></span></span><span style="display:flex;"><span>  feature&lt;FEAT&gt;&amp; feature::require(vk::Bool32 FEATS::*feat)
 </span></span><span style="display:flex;"><span>  {
 </span></span><span style="display:flex;"><span>          <span style="color:#888;font-style:italic">//for enabling the feature
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>          m_feats.*feat = <span style="font-weight:bold;font-style:italic">true</span>;
+</span></span></span><span style="display:flex;"><span>          m_feats.*feat = <span style="font-weight:bold;font-style:italic">true</span>;
 </span></span><span style="display:flex;"><span>          <span style="color:#888;font-style:italic">//for query the feature.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>          m_requests.emplace_back([feat](FEATS&amp; feats) -&gt; <span style="font-weight:bold;text-decoration:underline">bool</span>
+</span></span></span><span style="display:flex;"><span>          m_requests.emplace_back([feat](FEATS&amp; feats) -&gt; <span style="font-weight:bold;text-decoration:underline">bool</span>
 </span></span><span style="display:flex;"><span>          { <span style="font-weight:bold;text-decoration:underline">return</span> feats.*feat == <span style="font-weight:bold;font-style:italic">true</span>; });
 </span></span><span style="display:flex;"><span>  
 </span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">return</span> *<span style="font-weight:bold;text-decoration:underline">this</span>;
@@ -204,17 +204,17 @@ They are merely just list of <code>VkBool32</code>. After experimenting a bit. I
 <p>
 The feature class is something like this.</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>   <span style="color:#888;font-style:italic">//FEATS is some type like VkPhysicalDeviceFeatures
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  <span style="font-weight:bold;text-decoration:underline">template</span> &lt;<span style="font-weight:bold;text-decoration:underline">typename</span> FEATS&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>   <span style="color:#888;font-style:italic">//FEATS is some type like VkPhysicalDeviceFeatures
+</span></span></span><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">template</span> &lt;<span style="font-weight:bold;text-decoration:underline">typename</span> FEATS&gt;
 </span></span><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">struct</span> <span style="color:#666;font-weight:bold;font-style:italic">feature</span>
 </span></span><span style="display:flex;"><span>  {
 </span></span><span style="display:flex;"><span>          <span style="color:#888;font-style:italic">//actual features stores here
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>          FEATS                                    m_feats;
+</span></span></span><span style="display:flex;"><span>          FEATS                                    m_feats;
 </span></span><span style="display:flex;"><span>          <span style="color:#888;font-style:italic">//query fucntions
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>          std::vector&lt;std::function&lt;<span style="font-weight:bold;text-decoration:underline">bool</span>(FEATS&amp;)&gt;&gt; m_requests;
+</span></span></span><span style="display:flex;"><span>          std::vector&lt;std::function&lt;<span style="font-weight:bold;text-decoration:underline">bool</span>(FEATS&amp;)&gt;&gt; m_requests;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>          <span style="color:#888;font-style:italic">//for chaining the features together.
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>          <span style="font-weight:bold;text-decoration:underline">void</span>** <span style="color:#666;font-weight:bold;font-style:italic">pnext</span>() <span style="font-weight:bold;text-decoration:underline">override</span> { <span style="font-weight:bold;text-decoration:underline">return</span> &amp;m_feats.pNext; }
+</span></span></span><span style="display:flex;"><span>          <span style="font-weight:bold;text-decoration:underline">void</span>** <span style="color:#666;font-weight:bold;font-style:italic">pnext</span>() <span style="font-weight:bold;text-decoration:underline">override</span> { <span style="font-weight:bold;text-decoration:underline">return</span> &amp;m_feats.pNext; }
 </span></span><span style="display:flex;"><span>  };</span></span></code></pre></div>
 </div>
 <p>
@@ -229,7 +229,7 @@ Feature Manager class
 <p>
 On top of this I need a manager interface to manage all the features together. I choose to implement like this</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">class</span> <span style="color:#666;font-weight:bold;font-style:italic">feature_descriptor</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">class</span> <span style="color:#666;font-weight:bold;font-style:italic">feature_descriptor</span>
 </span></span><span style="display:flex;"><span>  {
 </span></span><span style="display:flex;"><span>  <span style="font-weight:bold;text-decoration:underline">public</span>:
 </span></span><span style="display:flex;"><span>          feature_descriptor() <span style="font-weight:bold;text-decoration:underline">noexcept</span>;
@@ -242,21 +242,21 @@ On top of this I need a manager interface to manage all the features together. I
 </span></span><span style="display:flex;"><span>                  std::unique_ptr&lt;feature&lt;FEATS&gt;&gt; feats =
 </span></span><span style="display:flex;"><span>                          std::make_unique&lt;feature&lt;FEATS&gt;&gt;();
 </span></span><span style="display:flex;"><span>                  <span style="color:#888;font-style:italic">//code to please inside feature_descriptor
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>                  <span style="color:#888;font-style:italic">//...
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>                  <span style="font-weight:bold;text-decoration:underline">return</span> *<span style="font-weight:bold;text-decoration:underline">static_cast</span>&lt;feature&lt;FEATS&gt;*&gt;(feats);
+</span></span></span><span style="display:flex;"><span>                  <span style="color:#888;font-style:italic">//...
+</span></span></span><span style="display:flex;"><span>                  <span style="font-weight:bold;text-decoration:underline">return</span> *<span style="font-weight:bold;text-decoration:underline">static_cast</span>&lt;feature&lt;FEATS&gt;*&gt;(feats);
 </span></span><span style="display:flex;"><span>          }
 </span></span><span style="display:flex;"><span>  };</span></span></code></pre></div>
 </div>
 <p>
 In this way I can request a feature pack such as <code>vk::PhysicalDeviceVulkan12Features</code> and enable each feature like this:</p>
 <div class="src src-c++">
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//enabling Vulkan 1.2 features
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  desc.require_feature&lt;vk::PhysicalDeviceVulkan12Features&gt;()
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//enabling Vulkan 1.2 features
+</span></span></span><span style="display:flex;"><span>  desc.require_feature&lt;vk::PhysicalDeviceVulkan12Features&gt;()
 </span></span><span style="display:flex;"><span>      .require(&amp;vk::PhysicalDeviceVulkan12Features::timelineSemaphore)
 </span></span><span style="display:flex;"><span>      .require(&amp;vk::PhysicalDeviceVulkan12Features::bufferDeviceAddress);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#888;font-style:italic">//enabling Vulkan 1.3 features
-</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>  desc.require_feature&lt;vk::PhysicalDeviceVulkan13Features&gt;()
+</span></span></span><span style="display:flex;"><span>  desc.require_feature&lt;vk::PhysicalDeviceVulkan13Features&gt;()
 </span></span><span style="display:flex;"><span>      .require(&amp;vk::PhysicalDeviceVulkan13Features::dynamicRendering);</span></span></code></pre></div>
 </div>
 <p>
@@ -358,8 +358,9 @@ Much easier right 😄?</p>
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	
       </section>
       
 
@@ -429,6 +430,8 @@ Much easier right 😄?</p>
     
     
     
+    
+
     
   </body>
 </html>

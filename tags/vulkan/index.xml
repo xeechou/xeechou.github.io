@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Vulkan on Insaturé</title>
-    <link>https://xeechou.net/tags/vulkan/</link>
-    <description>Recent content in Vulkan on Insaturé</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 09 May 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://xeechou.net/tags/vulkan/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Automated Vulkan Synchronization</title>
-      <link>https://xeechou.net/posts/vulkan-automated-synchronization/</link>
-      <pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate>
-      <guid>https://xeechou.net/posts/vulkan-automated-synchronization/</guid>
-      <description>&lt;p&gt;&#xA;Recently I finally decided to solve the synchronization system in my Vulkan renderer. It is something that I really want to do for a long time, to me it should be part of the &lt;a href=&#34;https://gdcvault.com/play/1024612/FrameGraph-Extensible-Rendering-Architecture-in&#34;&gt;FrameGraph&lt;/a&gt; design in the application, where you &lt;strong&gt;declare&lt;/strong&gt; your individual render passes and the resources it uses (read/write). The synchronization system itself handles the resource transitions, where it should change layout from? Whether we need to setup a semaphore etc.&lt;/p&gt;</description>
-    </item>
-  </channel>
+	<channel>
+		<title>Vulkan on Insaturé</title>
+		<link>https://xeechou.net/tags/vulkan/</link>
+		<description>Recent content in Vulkan on Insaturé</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 21 Sep 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://xeechou.net/tags/vulkan/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Data-oriented workflow with OpenUSD Hydra</title>
+				<link>https://xeechou.net/posts/data-oriented-hydra/</link>
+				<pubDate>Mon, 21 Sep 2026 00:00:00 +0000</pubDate>
+				<guid>https://xeechou.net/posts/data-oriented-hydra/</guid>
+				<description>&lt;p&gt;&#xA;Fancy rendering techniques dominates the content of computer graphics blogs. Today, though, I am not going to talk about the drawing itself, but about the &amp;#34;boring&amp;#34; part: the &lt;strong&gt;bridge&lt;/strong&gt; that turns assets: (in my case USD hydra) per-prim scene graph into the flat, GPU-ready arrays my batches want. For the past year that bridge was the ugliest code in the project – three overlapping bookkeeping mechanisms, data processed one prim at a time, and a lock around almost every access.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Automated Vulkan Synchronization</title>
+				<link>https://xeechou.net/posts/vulkan-automated-synchronization/</link>
+				<pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate>
+				<guid>https://xeechou.net/posts/vulkan-automated-synchronization/</guid>
+				<description>&lt;p&gt;&#xA;Recently I finally decided to solve the synchronization system in my Vulkan renderer. It is something that I really want to do for a long time, to me it should be part of the &lt;a href=&#34;https://gdcvault.com/play/1024612/FrameGraph-Extensible-Rendering-Architecture-in&#34;&gt;FrameGraph&lt;/a&gt; design in the application, where you &lt;strong&gt;declare&lt;/strong&gt; your individual render passes and the resources it uses (read/write). The synchronization system itself handles the resource transitions, where it should change layout from? Whether we need to setup a semaphore etc.&lt;/p&gt;</description>
+			</item>
+	</channel>
 </rss>

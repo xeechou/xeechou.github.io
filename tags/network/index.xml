@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Network on Insaturé</title>
+		<link>https://xeechou.net/tags/network/</link>
+		<description>Recent content in Network on Insaturé</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Sat, 26 Sep 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://xeechou.net/tags/network/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Running Nextcloud &#43; Collabora on TrueNAS SCALE with Nginx Proxy Manager</title>
+				<link>https://xeechou.net/posts/nextcloud-setup/</link>
+				<pubDate>Sat, 26 Sep 2026 00:00:00 +0000</pubDate>
+				<guid>https://xeechou.net/posts/nextcloud-setup/</guid>
+				<description>&lt;p&gt;&#xA;For a while, I have been having trouble setting up Nextcloud services in my TrueNAS box, the difficulty being that unlike most TrueNAS SCALE apps, Nextcloud often requires additional apps to provide additional services (in this case, an office suite by Collabora). Managing the routing between different apps and accessing them through a reverse proxy (Nginx Proxy Manager) has been quite confusing for me. I need to make this work with the &lt;em&gt;least&lt;/em&gt; amount of hacks possible, as I am neither an expert in Docker deployment nor do I have time to debug errors on every update. Interestingly, compared to programming, when it comes to TrueNAS setup (and my home network setups), I am exactly the opposite of a hacker 😬. I do not want to tinker with them at all. I&amp;#39;d much prefer to set it up once and have it run for years (auto-update of course).&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

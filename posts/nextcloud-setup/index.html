@@ -1,0 +1,788 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Running Nextcloud &#43; Collabora on TrueNAS SCALE with Nginx Proxy Manager</title>
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <link rel="stylesheet" href="/css/style.min.ce29cd890387a95acecacde4c07420a4b0e2304b69c6e2ee0ab55af1637a62cd.css" integrity="sha256-zinNiQOHqVrOys3kwHQgpLDiMEtpxuLuCrVa8WN6Ys0=" />
+    
+    
+      
+    
+    
+    
+    <script src="/js/qrcode.min.js"></script>
+
+  </head>
+  <body class="post-template">
+    
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+      
+      
+        <li class="nav-about-me" role="presentation">
+          <a href="/about/">About Me</a>
+        </li>
+      
+        <li class="nav-emacs-config" role="presentation">
+          <a href="/emacs-config/">Emacs Config</a>
+        </li>
+      
+        <li class="nav-rss" role="presentation">
+          <a href="/index.xml">RSS</a>
+        </li>
+      
+        <li class="nav-scripts" role="presentation">
+          <a href="/gmscripts/">Scripts</a>
+        </li>
+      
+      
+      
+    </ul>
+  </div>
+</nav>
+
+
+    <section id="wrapper">
+      <a class="hidden-close"></a>
+
+      
+
+<div class="progress-container">
+  <span class="progress-bar"></span>
+</div>
+
+
+
+<header id="post-header" class="has-cover">
+  <div class="inner">
+    
+<nav id="navigation">
+  
+    
+      <span id="home-button" class="nav-button">
+        <a class="home-button" href="/" title="Home">
+          <i class="icon-left-arrow"></i> Home
+        </a>
+      </span>
+    
+  
+  
+  <span id="menu-button" class="nav-button">
+    <a class="menu-button">
+      <i class="icon-menu"></i>
+      Menu
+    </a>
+  </span>
+  
+</nav>
+
+    <h1 class="post-title">Running Nextcloud &#43; Collabora on TrueNAS SCALE with Nginx Proxy Manager</h1>
+    <span class="post-meta">
+      
+      <time datetime="2026-09-26">26 Sep 2026</time>
+    </span>
+
+    
+      <div class="post-cover cover" style="background-image: url('/imgs/post-bg.jpg');"></div>
+    
+  </div>
+</header>
+
+
+<main class="content" role="main">
+  <article class="post">
+    <div class="inner">
+	<section class="post-content">
+<p>
+For a while, I have been having trouble setting up Nextcloud services in my TrueNAS box, the difficulty being that unlike most TrueNAS SCALE apps, Nextcloud often requires additional apps to provide additional services (in this case, an office suite by Collabora). Managing the routing between different apps and accessing them through a reverse proxy (Nginx Proxy Manager) has been quite confusing for me. I need to make this work with the <em>least</em> amount of hacks possible, as I am neither an expert in Docker deployment nor do I have time to debug errors on every update. Interestingly, compared to programming, when it comes to TrueNAS setup (and my home network setups), I am exactly the opposite of a hacker 😬. I do not want to tinker with them at all. I&#39;d much prefer to set it up once and have it run for years (auto-update of course).</p>
+<p>
+So there you go: this blog documents the trials and errors of setting up <strong>Nextcloud + Collabora CODE on TrueNAS SCALE</strong>, using <strong>Nginx Proxy Manager (NPM)</strong> as the reverse proxy.</p>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+Background
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>
+I&#39;ve been using TrueNAS SCALE since 2022. Watching it spin off from TrueNAS CORE has been quite a journey and a great technology investment. Hail ZFS! A NAS system combining the power of Docker containers brings so many possibilities. I&#39;ve been using it to run my own DNS server for blocking ads; <a href="https://github.com/paperless-ngx/paperless-ngx">paperless-ngx</a> for scanning documents into digital copies; the <a href="https://www.kavitareader.com/">Kavita</a> ebook reader that is always online; <a href="https://audiobookshelf.org/">Audiobookshelf</a> that helps with downloading podcasts through <a href="https://github.com/alexta69/metube">metube</a>, … The beauty is that all the data is centralized in one place, always online and private.</p>
+<p>
+Most of them are quite easy to set up — they are self-contained apps; since <strong>TrueNAS SCALE Electric Eel (24.10)</strong> they are basically managed Docker Compose YAML files. This all works fine if all you need is inside a single app. Well, not the case anymore for Nextcloud. Surprisingly there isn&#39;t a blog post about this at all.</p>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+Office as a Service.
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+Nextcloud is a file sync and share platform; it cannot render a <code class="verbatim">docx</code>. Editing is <strong>delegated</strong> to a separate office engine — Collabora Online (LibreOffice) — which runs as its own service, on its own hostname, reached over the network like anything else.</p>
+<p>
+The two roles:</p>
+<ul>
+<li><strong>Nextcloud — the WOPI host.</strong> Owns the files, permissions, and sharing. Exposes endpoints (<code class="verbatim">/index.php/apps/richdocuments/wopi/</code>) to ask about and fetch files. The <code class="verbatim">richdocuments</code> app is the integration point; it holds no editor, it just advertises Collabora and serves these endpoints.</li>
+<li><strong>Collabora — the WOPI client.</strong> Owns rendering/editing. Knows nothing about users or storage — it <strong>asks Nextcloud</strong> for file bytes over WOPI.</li>
+</ul>
+<p>They speak <strong>WOPI</strong>, a small REST protocol: <code class="verbatim">CheckFileInfo</code> (metadata + permissions), <code class="verbatim">GetFile</code>, <code class="verbatim">PutFile</code>, and locking calls. Collabora needs only a URL and a token, never credentials or storage access — which is why the editor can run as a separate, untrusted service, and why any WOPI host can pair with any WOPI client.</p>
+<p>
+<style>.mermaid svg{display:block;margin-left:auto;margin-right:auto}</style><pre class="mermaid">%%{init: {&#34;themeVariables&#34;: {&#34;fontSize&#34;: &#34;13px&#34;}}}%%
+flowchart TB
+    B[&#34;Browser&#34;]
+    NC[&#34;Nextcloud&lt;br/&gt;WOPI host&#34;]
+    CO[&#34;Collabora&lt;br/&gt;WOPI client&#34;]
+
+    B -- &#34;loads editor&#34; --&gt; CO
+    B -- &#34;opens / auth&#34; --&gt; NC
+    NC -- &#34;editor config + token&#34; --&gt; B
+    CO -- &#34;WOPI / loads file&#34; --&gt; NC</pre>
+</p>
+<p>
+Trust is carried by three settings: Collabora&#39;s <code class="verbatim">aliasgroup1</code> (which host it serves), Nextcloud&#39;s <code class="verbatim">wopi_allowlist</code> (which source it accepts WOPI from), and matching URLs/protocol on both sides (<code class="verbatim">overwriteprotocol</code>).</p>
+<p>
+Because the browser loads the editor <strong>directly</strong> from Collabora, and Collabora calls back to Nextcloud <strong>server-to-server</strong>, the two must each be reachable, we will see how to archive this in later sections.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+Prior art
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<p>
+This is not the first attempt. An earlier setup (2024) ran Nextcloud and <strong>OnlyOffice</strong> in a single Docker Compose file following <a href="https://thomaswildetech.com/blog/2025/05/01/setting-up-nextcloud-with-docker-compose/">Thomas Wilde&#39;s blog</a>. It worked for a while — routing between Nextcloud, Collabora, and OnlyOffice was fully connected, and it was fully compatible with my reverse proxy as well. The problem was that I now had to maintain their upgrades myself. Boy oh boy, did I underestimate the upgrade bugs 😱 such as <a href="https://github.com/CollaboraOnline/online/issues/11280">this</a> and <a href="https://github.com/CollaboraOnline/online/issues/11279">this</a>. The workaround was pinning the Nextcloud and Collabora images (<code>nextcloud:31.0.9</code> and <code>collabora/code:24.04.12.3.1</code>) for months. Well, not the situation I was hoping for.</p>
+<p>
+Speaking about traffic routing, the workaround was being able to manually specify DNS servers in <code>docker-compose.yaml</code>: pointing the containers at the LAN DNS servers (<code class="verbatim">dns:</code>) and pinning each other&#39;s public hostnames to the host IP (<code class="verbatim">extra_hosts:</code>), so traffic left the Docker network and came back through NPM. It avoided bundling an extra nginx proxy, but made container networking depend on hand-maintained DNS entries. The setup also carried <code class="verbatim">overwriteprotocol=https</code> and <code class="verbatim">trusted_proxies</code> in <code class="verbatim">config.php</code>, which is required in the new setup as well.</p>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+Wiring NPM (needed in both setups)
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>
+In the old setup as much as in the new one, NPM needs two Proxy Hosts, both terminating TLS:</p>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+Nextcloud
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<pre class="example">
+Domain Names:         nextcloud.example.com
+Scheme:               http
+Forward Hostname/IP:  &lt;Nextcloud reachable address&gt;
+Forward Port:         &lt;Nextcloud published port&gt;
+</pre>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+Collabora
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<pre class="example">
+Domain Names:         collabora.example.com
+Scheme:               http
+Forward Hostname/IP:  &lt;Collabora reachable address&gt;
+Forward Port:         9980
+</pre>
+<p>
+Enable <strong>Websockets Support</strong> on the Collabora proxy host — the editor&#39;s browser connection depends on it. (And don&#39;t blame WebSockets first when the Collabora logs show a WOPI <code class="verbatim">Moved Permanently</code> or <code class="verbatim">403</code> error; fix the backend request first.)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-2">
+<h2 id="headline-7">
+Second Attempt: Why Not a Shared Docker Network?
+</h2>
+<div id="outline-text-headline-7" class="outline-text-2">
+<p>
+The obvious next step was a shared Docker network: <code class="verbatim">docker network create nextcloud</code>, have both containers join it, and let Nextcloud talk to Collabora directly at <code class="verbatim">http://collabora:9980</code>. TrueNAS Apps actually support this — App containers can be attached to a predefined Docker network straight from the App configuration, no manual <code class="verbatim">docker network connect</code> required.</p>
+<p>
+I did not continue down this path for one reason: NPM. The reverse proxy would have to be hacked into the same network as well, and its proxy hosts rewritten to forward to the container aliases — <code class="verbatim">nextcloud.example.com</code> and <code class="verbatim">collabora.example.com</code> resolving to container names instead of published host ports. That puts the LAN DNS records, the container DNS, and the proxy aliases in three places that all have to agree, for what should be a single routing decision. Since both services are already reachable by hostname through NPM, there was no compelling reason to introduce that coupling.</p>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-2">
+<h2 id="headline-8">
+Final Architecture
+</h2>
+<div id="outline-text-headline-8" class="outline-text-2">
+<p>
+The new setup keeps the good idea — <strong>route everything through the reverse proxy by public hostname</strong> — and drops the rest: the office stack moves into TrueNAS Apps so the platform owns the upgrades, and LAN DNS + NPM replaces the docker-DNS plumbing. The final architecture is intentionally simple:</p>
+<p>
+<pre class="mermaid">%%{init: {&#34;themeVariables&#34;: {&#34;fontSize&#34;: &#34;13px&#34;}}}%%
+flowchart TB
+    WC[&#34;nextcloud.example.com&#34;]
+    CC[&#34;collabora.example.com&#34;]
+    NPM[&#34;&lt;b&gt;Nginx Proxy Manager&lt;/b&gt;&lt;br/&gt;192.168.100.10&#34;]
+    NC[&#34;Nextcloud&lt;br/&gt;container&#34;]
+    CO[&#34;Collabora&lt;br/&gt;CODE container&#34;]
+
+    WC -- HTTPS --&gt; NPM
+    CC -- HTTPS --&gt; NPM
+    NPM --&gt; NC
+    NPM --&gt; CO</pre>
+</p>
+<p>
+The key decision, inherited from the old setup and kept deliberately:</p>
+<blockquote>
+<p><strong>Nextcloud and Collabora do not need to share a Docker network.</strong></p>
+</blockquote>
+<p>
+Both services are reached through their normal public hostnames, and Collabora calls back to Nextcloud over the same DNS → NPM path that every other client uses:</p>
+<pre class="example">
+https://nextcloud.example.com
+https://collabora.example.com
+</pre>
+<p>
+On the LAN, the custom DNS server points both hostnames at NPM&#39;s physical address:</p>
+<pre class="example">
+nextcloud.example.com    → 192.168.100.10
+collabora.example.com    → 192.168.100.10
+</pre>
+<p>
+Containers live in a second DNS world: Docker&#39;s embedded resolver (<code class="verbatim">nameserver 127.0.0.11</code> in <code class="verbatim">/etc/resolv.conf</code>) forwards to whatever upstreams the container was given, in this case the truenas. The check that matters is inside: the containers:</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>getent hosts nextcloud.example.com
+</span></span><span style="display:flex;"><span>getent hosts collabora.example.com</span></span></code></pre></div>
+</div>
+<p>
+Both should resolve to NPM. As the TrueNAS docs put it:</p>
+<blockquote>
+<p>By default, containers use the DNS settings from the host system. You can change the DNS policy and define separate nameservers and search domains.</p>
+</blockquote>
+<p>
+(<a href="https://www.truenas.com/docs/scale/26/apps/installcustomappscreens/">TrueNAS custom App screens</a>) — which is exactly the knob that made the old setup&#39;s <code class="verbatim">dns:</code> entries necessary, and what makes this setup possible, (hopefully ixsystems never changes this,  also I heard Truenas 26 offers customized per-app DNS nameserver configurations).</p>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-2">
+<h2 id="headline-9">
+New setup
+</h2>
+<div id="outline-text-headline-9" class="outline-text-2">
+<p>
+The configuration that makes the final architecture work, in the order I would apply it.</p>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+Verify Each Hop
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<p>
+Before touching any Nextcloud or Collabora settings, confirm the plumbing hop by hop.</p>
+<div id="outline-container-headline-11" class="outline-4">
+<h4 id="headline-11">
+DNS
+</h4>
+<div id="outline-text-headline-11" class="outline-text-4">
+<p>
+From a normal LAN machine:</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>getent hosts nextcloud.example.com
+</span></span><span style="display:flex;"><span>getent hosts collabora.example.com</span></span></code></pre></div>
+</div>
+<p>
+Both should resolve to NPM&#39;s physical address (<code class="verbatim">192.168.100.10</code>).</p>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-4">
+<h4 id="headline-12">
+Nextcloud through NPM
+</h4>
+<div id="outline-text-headline-12" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -vk https://nextcloud.example.com/status.php</span></span></code></pre></div>
+</div>
+<p>
+An HTTP 200 with Nextcloud&#39;s status JSON means the client → DNS → NPM → Nextcloud path works, with Collabora not involved at all.</p>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-4">
+<h4 id="headline-13">
+Collabora discovery
+</h4>
+<div id="outline-text-headline-13" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -vk https://collabora.example.com/hosting/discovery</span></span></code></pre></div>
+</div>
+<p>
+Collabora answers with XML describing the office formats it supports. Anything unexpected here means the reverse-proxy configuration is wrong — fix it before debugging WOPI, because everything downstream depends on it.</p>
+<p>
+Nextcloud&#39;s <code class="verbatim">richdocuments</code> app also ships a bundled CODE installation, but it proved not usable for daily driving — its <code class="verbatim">proxy.php</code> endpoints kept returning 404s — so a dedicated external Collabora CODE container took over the editor role. The <code class="verbatim">richdocuments</code> app stays enabled, since it remains the integration point, but the office server it talks to is external.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+Collabora Alias Configuration
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<p>
+Collabora was configured with:</p>
+<pre class="example">
+aliasgroup1=https://nextcloud.example.com:443
+</pre>
+<p>
+This is important because Collabora needs to know the Nextcloud/WOPI host it is allowed to communicate with.</p>
+<p>
+The HTTPS URL is intentional.</p>
+<p>
+Do not change this to an HTTP URL merely because NPM forwards HTTP internally.</p>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-3">
+<h3 id="headline-15">
+The WOPI Allowlist
+</h3>
+<div id="outline-text-headline-15" class="outline-text-3">
+<p>
+The one <code class="verbatim">richdocuments</code> setting with no intuitive counterpart in the UI. On the Collabora side its absence manifests as:</p>
+<pre class="example">
+WOPI::CheckFileInfo returned 403 (Forbidden)
+</pre>
+<p>
+which looks like a networking or NPM problem but isn&#39;t — the request is <strong>arriving</strong>, Nextcloud is refusing it. Nextcloud&#39;s log says why:</p>
+<pre class="example">
+WOPI request denied from 172.20.1.1
+</pre>
+<p>
+That line is the most valuable debugging artifact in the whole setup: it reveals the address Collabora&#39;s WOPI requests <strong>actually</strong> come from — neither the host&#39;s nor the browser&#39;s. The allowlist must include that source network:</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>php occ config:app:set richdocuments <span style="color:#666;font-style:italic">\
+</span></span></span><span style="display:flex;"><span>    wopi_allowlist <span style="color:#666;font-style:italic">\
+</span></span></span><span style="display:flex;"><span>    --value=<span style="color:#666;font-style:italic">&#34;172.20.0.0/16&#34;</span>
+</span></span><span style="display:flex;"><span>php occ config:app:get richdocuments wopi_allowlist</span></span></code></pre></div>
+</div>
+<blockquote>
+<p>Always take the source address from the Nextcloud WOPI log. Never infer it from the host or the browser.</p>
+</blockquote>
+<p>
+The denial message helpfully prints both the source address and the configured ranges verbatim — read it before touching anything else.</p>
+</div>
+</div>
+<div id="outline-container-headline-16" class="outline-3">
+<h3 id="headline-16">
+Nextcloud Configuration
+</h3>
+<div id="outline-text-headline-16" class="outline-text-3">
+<p>
+<code class="verbatim">php occ config:system:set</code> writes to Nextcloud&#39;s persistent <code class="verbatim">config.php</code>, so it survives container restarts. But for a reproducible App configuration, prefer the environment variable:</p>
+<div class="src src-yaml">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>environment:
+</span></span><span style="display:flex;"><span>  - OVERWRITECLIURL=https://nextcloud.example.com
+</span></span><span style="display:flex;"><span>  - OVERWRITEPROTOCOL=https</span></span></code></pre></div>
+</div>
+<p>
+<code class="verbatim">OVERWRITEPROTOCOL</code> was the setting that actually solved the <code class="verbatim">Moved Permanently</code> problem; <code class="verbatim">OVERWRITECLIURL</code> keeps CLI- and background-generated URLs consistent with the public HTTPS URL.</p>
+<p>
+One TrueNAS-specific trap: the App template already defines some variables. Adding</p>
+<div class="src src-yaml">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>NEXTCLOUD_TRUSTED_DOMAINS=${THE_DOMAIN}</span></span></code></pre></div>
+</div>
+<p>
+fails template rendering with:</p>
+<pre class="example">
+Environment variable [NEXTCLOUD_TRUSTED_DOMAINS]
+is already defined from the application developer.
+</pre>
+<p>
+This is TrueNAS&#39;s App framework, not Docker. Configure <code class="verbatim">NEXTCLOUD_TRUSTED_DOMAINS</code> through the App&#39;s own field instead; <code class="verbatim">OVERWRITEPROTOCOL</code> can be added freely if the template doesn&#39;t already define it.</p>
+<p>
+Finally, a setting that is easy to confuse with <code class="verbatim">overwriteprotocol</code>: <code class="verbatim">trusted_proxies</code> tells Nextcloud which reverse proxies it may trust for headers like <code class="verbatim">X-Forwarded-Proto</code>:</p>
+<div class="src src-php">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#666;font-style:italic">&#39;trusted_proxies&#39;</span> =&gt; [
+</span></span><span style="display:flex;"><span>    <span style="color:#666;font-style:italic">&#39;192.168.100.10&#39;</span>,
+</span></span><span style="display:flex;"><span>],</span></span></code></pre></div>
+</div>
+<p>
+Note the address: this should be where <strong>NPM</strong> connects from — not the WOPI source address (<code class="verbatim">172.20.1.1</code>) that shows up in the logs (see <a href="*The WOPI Allowlist">The WOPI Allowlist</a>). The two serve different purposes. For this setup, <code class="verbatim">overwriteprotocol=https</code> alone was sufficient.</p>
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
+The Moved Permanently Detour
+</h4>
+<div id="outline-text-headline-17" class="outline-text-4">
+<p>
+Why <code class="verbatim">OVERWRITEPROTOCOL</code> is needed at all: after the allowlist fix, Collabora reported:</p>
+<pre class="example">
+Failed to get settings json from
+[http://nextcloud.example.com/index.php/apps/richdocuments/wopi/settings?...]
+with status[Moved Permanently]
+</pre>
+<p>
+The key clue is the scheme: Collabora was fetching an <code class="verbatim">http://</code> URL, and NPM redirects HTTP to HTTPS — so instead of the expected JSON, the WOPI settings request received a 301. My first instinct was to blame <code class="verbatim">aliasgroup1</code>, but it was already <code class="verbatim">https://nextcloud.example.com:443</code>; the alias and the URL used for this particular request simply travel different configuration paths. The real question was: <strong>how does Nextcloud decide which protocol to put in the URLs it generates?</strong></p>
+<p>
+The answer is <code class="verbatim">overwriteprotocol</code>. HTTPS terminates at NPM, and NPM forwards plain HTTP to Nextcloud — from the PHP process&#39;s point of view, the connection <strong>is</strong> HTTP, so without help it generates <code class="verbatim">http://nextcloud.example.com/...</code> URLs even though every user-facing URL is HTTPS. <code class="verbatim">overwriteprotocol=https</code> tells it:</p>
+<blockquote>
+<p>The externally visible protocol for this installation is HTTPS.</p>
+</blockquote>
+<p>
+Now Nextcloud hands Collabora <code class="verbatim">https://</code> URLs, which sail through NPM without hitting the redirect.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-3">
+<h3 id="headline-18">
+Commands Worth Keeping
+</h3>
+<div id="outline-text-headline-18" class="outline-text-3">
+<div id="outline-container-headline-19" class="outline-4">
+<h4 id="headline-19">
+Check Nextcloud protocol
+</h4>
+<div id="outline-text-headline-19" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>php occ config:system:get overwriteprotocol</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-4">
+<h4 id="headline-20">
+Set Nextcloud protocol
+</h4>
+<div id="outline-text-headline-20" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>php occ config:system:set overwriteprotocol --value=https</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-21" class="outline-4">
+<h4 id="headline-21">
+Check WOPI allowlist
+</h4>
+<div id="outline-text-headline-21" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>php occ config:app:get richdocuments wopi_allowlist</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-4">
+<h4 id="headline-22">
+Set WOPI allowlist
+</h4>
+<div id="outline-text-headline-22" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>php occ config:app:set richdocuments <span style="color:#666;font-style:italic">\
+</span></span></span><span style="display:flex;"><span>    wopi_allowlist <span style="color:#666;font-style:italic">\
+</span></span></span><span style="display:flex;"><span>    --value=<span style="color:#666;font-style:italic">&#34;172.20.0.0/16&#34;</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-23" class="outline-4">
+<h4 id="headline-23">
+Check DNS
+</h4>
+<div id="outline-text-headline-23" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>getent hosts nextcloud.example.com
+</span></span><span style="display:flex;"><span>getent hosts collabora.example.com</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-4">
+<h4 id="headline-24">
+Check Nextcloud through NPM
+</h4>
+<div id="outline-text-headline-24" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -vk https://nextcloud.example.com/status.php</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-25" class="outline-4">
+<h4 id="headline-25">
+Check Collabora through NPM
+</h4>
+<div id="outline-text-headline-25" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -vk https://collabora.example.com/hosting/discovery</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-26" class="outline-4">
+<h4 id="headline-26">
+Inspect Docker DNS
+</h4>
+<div id="outline-text-headline-26" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker info | grep -i dns</span></span></code></pre></div>
+</div>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /etc/resolv.conf</span></span></code></pre></div>
+</div>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker inspect &lt;container&gt; <span style="color:#666;font-style:italic">\
+</span></span></span><span style="display:flex;"><span>    --format <span style="color:#666;font-style:italic">&#39;{{json .HostConfig.Dns}}&#39;</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-27" class="outline-4">
+<h4 id="headline-27">
+Inspect containers
+</h4>
+<div id="outline-text-headline-27" class="outline-text-4">
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker ps --format <span style="color:#666;font-style:italic">&#39;table {{.Names}}\t{{.Image}}&#39;</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-28" class="outline-2">
+<h2 id="headline-28">
+Lessons Learned
+</h2>
+<div id="outline-text-headline-28" class="outline-text-2">
+<p>
+Several things were initially tempting but turned out to be unnecessary or misleading:</p>
+<ol>
+<li><strong>A shared Docker network is not required.</strong>
+Nextcloud and Collabora can communicate through their normal HTTPS hostnames and NPM.</li>
+<li><strong>The physical LAN DNS record does not need to point into the Docker network.</strong>
+It can correctly point to NPM.</li>
+<li><strong>Read the log before touching anything else.</strong>
+The WOPI denial message states both the source address and the configured ranges verbatim.</li>
+<li><strong><code class="verbatim">aliasgroup1=https://...</code> does not by itself guarantee that every URL generated by the Nextcloud/Collabora integration will use HTTPS.</strong></li>
+<li><strong>TrueNAS App environment variables may already be owned by the App template.</strong>
+Don&#39;t duplicate variables such as <code class="verbatim">NEXTCLOUD_TRUSTED_DOMAINS</code> when the App already defines them.</li>
+<li><strong>NPM&#39;s HTTP→HTTPS redirect can break backend WOPI requests.</strong>
+If Collabora receives a URL beginning with <code class="verbatim">http://</code>, it may get a <code class="verbatim">Moved Permanently</code> response instead of the expected WOPI data.</li>
+</ol>
+<div id="outline-container-headline-29" class="outline-3">
+<h3 id="headline-29">
+Errors
+</h3>
+<div id="outline-text-headline-29" class="outline-text-3">
+<p>
+The error messages map cleanly to layers, which is what kept all of this tractable:</p>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Layer to investigate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="verbatim">Could not resolve host</code></td>
+<td>DNS / container networking</td>
+</tr>
+<tr>
+<td><code class="verbatim">WOPI::CheckFileInfo returned 403</code></td>
+<td><code class="verbatim">richdocuments</code> WOPI allowlist</td>
+</tr>
+<tr>
+<td><code class="verbatim">status[Moved Permanently]</code></td>
+<td>HTTP → HTTPS redirect</td>
+</tr>
+<tr>
+<td><code class="verbatim">socket connection closed unexpectedly</code></td>
+<td>WebSocket / Collabora reverse proxy</td>
+</tr>
+</tbody>
+</table>
+<p>
+Fix one layer, re-test, move on — with HTTPS as the canonical external protocol throughout the Nextcloud ↔ Collabora integration.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-30" class="outline-2">
+<h2 id="headline-30">
+References
+</h2>
+<div id="outline-text-headline-30" class="outline-text-2">
+<ul>
+<li><a href="https://thomaswildetech.com/blog/2025/05/01/setting-up-nextcloud-with-docker-compose/">Setting up Nextcloud With Docker Compose — Thomas Wilde Tech</a></li>
+<li><a href="https://github.com/CollaboraOnline/online/issues/11280">CollaboraOnline/online#11280</a></li>
+<li><a href="https://github.com/CollaboraOnline/online/issues/11279">CollaboraOnline/online#11279</a></li>
+<li><a href="https://github.com/ONLYOFFICE/Docker-DocumentServer/issues/352">ONLYOFFICE/Docker-DocumentServer#352 — Excessive processes and memory usage</a></li>
+<li><a href="https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/reverse_proxy_configuration.html">Nextcloud admin manual — Reverse proxy configuration (<code class="verbatim">overwriteprotocol</code>, <code class="verbatim">trusted_proxies</code>)</a></li>
+<li><a href="https://github.com/nextcloud/richdocuments">nextcloud/richdocuments — the Nextcloud ↔ Collabora integration app</a></li>
+<li><a href="https://hub.docker.com/r/collabora/code">Collabora Online (CODE) Docker image</a></li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-365/cloud-storage/partner-rest-apis/wopi-rest-api">WOPI REST API reference</a></li>
+<li><a href="https://nginxproxymanager.com/">Nginx Proxy Manager</a></li>
+<li><a href="https://www.truenas.com/docs/scale/26/apps/installcustomappscreens/">TrueNAS SCALE — custom App installation screens (DNS policy quote)</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+	      <section class="post-info">
+	
+
+
+<div class="post-share">
+
+  
+  <a class="twitter" href="https://twitter.com/share?url=https://xeechou.net/posts/nextcloud-setup/&amp;text=Running%20Nextcloud%20&#43;%20Collabora%20on%20TrueNAS%20SCALE%20with%20Nginx%20Proxy%20Manager" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="icon-twitter"></i><span class="hidden">Twitter</span>
+  </a>
+
+  
+  <a class="facebook" href="https://www.facebook.com/sharer.php?u=https://xeechou.net/posts/nextcloud-setup/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="icon-facebook"></i><span class="hidden">Facebook</span>
+  </a>
+
+  
+  <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xeechou.net/posts/nextcloud-setup/&amp;title=Running%20Nextcloud%20&#43;%20Collabora%20on%20TrueNAS%20SCALE%20with%20Nginx%20Proxy%20Manager" onclick="window.open(this.href, 'linkedin-share', 'width=490,height=530');return false;">
+    <i class="icon-linkedin"></i><span class="hidden">linkedin</span>
+  </a>
+
+  
+  <a class="reddit" href="http://www.reddit.com/submit?url=https://xeechou.net/posts/nextcloud-setup/&amp;title=Running%20Nextcloud%20&#43;%20Collabora%20on%20TrueNAS%20SCALE%20with%20Nginx%20Proxy%20Manager" onclick="window.open(this.href, 'reddit-share', width=580,height=500);return false;">
+    <i class="icon-reddit-alien"></i><span class="hidden">reddit</span>
+  </a>
+
+  <a class="wechat" id="wechat-share-btn">
+    <i class="icon-wechat" id="wechat-share-icon"></i>
+    <div id="wechat-share-modal" class="modal">
+      <div class="modal-content">
+	<div id="wechat-share"></div>
+      </div>
+    </div>
+  </a>
+
+
+  <script type="text/javascript">
+    var modal = document.getElementById("wechat-share-modal");
+    var btn   = document.getElementById("wechat-share-btn");
+    var icon  = document.getElementById("wechat-share-icon");
+    var span  = document.getElementById("wechat-share-close");
+
+    
+    window.onclick = function(event) {
+      if (event.target == icon || event.target == btn)
+	modal.style.display = "block";
+      else if (modal.style.display == "block") {
+	modal.style.display = "none";
+      }
+    };
+
+    
+    new QRCode(document.getElementById("wechat-share"), "https://xeechou.net/posts/nextcloud-setup/");
+  </script>
+
+  <div class="clear"></div>
+</div>
+
+        <aside class="post-tags">
+          
+            
+            <a href="https://xeechou.net/tags/network">network</a>
+          
+        </aside>
+
+        <div class="clear"></div>
+      </section>
+
+
+	      
+
+
+	
+	
+      <section class="post-comments activated">
+        <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "insature" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	
+      </section>
+      
+
+            <aside class="post-nav">
+        
+        
+          <a class="post-nav-prev" href="/posts/data-oriented-hydra/">
+            <section class="post-nav-teaser">
+              <i class="icon-right-arrow"></i>
+              <h2 class="post-nav-title">Data-oriented workflow with OpenUSD Hydra</h2>
+              
+            </section>
+          </a>
+        
+
+          
+
+        <div class="clear"></div>
+      </aside>
+
+
+    </div>
+  </article>
+</main>
+
+
+
+            <footer id="footer">
+        <div class="inner">
+          <section class="credits">
+            <span class="credits-theme">
+              
+              
+              Theme <a href="https://github.com/zutrinken/attila">Attila</a> by <a href="https://zutrinken.com" rel="nofollow">zutrinken</a>
+              |
+              
+              
+              Theme <a href="https://github.com/xeechou/hugo-theme-attila">hugo-theme-attila</a> by <a href="https://xeechou.net" rel="nofollow">xeechou</a>
+            </span>
+            <span class="credits-software">
+              
+              Published with <a href="https://gohugo.io">Hugo</a>
+            </span>
+          </section>
+        </div>
+      </footer>
+
+    </section>
+
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/script.js"></script>
+
+    
+    
+    
+    
+
+    
+    <script type="module">
+     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+     mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+  </body>
+</html>

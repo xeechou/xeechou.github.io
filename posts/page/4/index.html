@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -144,6 +144,43 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/data-device/">wl_data_device</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="https://xeechou.net/tags/wayland">wayland</a>
+              
+              |
+            
+            <time datetime="2020-06-12">12 Jun 2020</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p><code>wl_data_device</code> interface in the base wayland protocol is the most complex one,
+in my opinion, <em>wayland.xml</em> explains it fairly well, but every pieces are
+scattered in the file, here I serialize it together, give you quick run through.</p>
+<p>In brief, data device in wayland consists of four interfaces: The first is
+<code>wl_data_device_manager</code>, it is the global. The second is <code>wl_data_device</code>,
+can be created from <code>wl_data_device_manager</code> for a given seat, it is used to
+set selection(ctrl-c ctrl-v) and drag-n-drop. The 3rd is <code>wl_data_source</code>,
+also created from <code>wl_data_device_manager</code>, this source will be either a
+selection source or drag-n-drop source. The last is <code>wl_data_offer</code>, which is
+used for copying data from <code>wl_data_source</code>.</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/may-update/">May 2020 Status Update</a>
           </h2>
           <span class="post-meta">
@@ -151,7 +188,7 @@
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -186,7 +223,7 @@ now, it is hard to recall much in detail. yeah, that is life in quarantine,
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -227,7 +264,7 @@ just don&rsquo;t care anymore, looks like the market is at that point.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/graphics">graphics</a>
+                <a href="https://xeechou.net/tags/graphics">graphics</a>
               
               |
             
@@ -262,10 +299,10 @@ annotated in the image below.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
+                <a href="https://xeechou.net/tags/wayland">wayland</a>
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -304,10 +341,10 @@ window</strong>?</p>
             
               
                 
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
+                <a href="https://xeechou.net/tags/wayland">wayland</a>
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -343,7 +380,7 @@ is cumbersome, too many components, easily dead after package upgrade.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/graphics">graphics</a>
+                <a href="https://xeechou.net/tags/graphics">graphics</a>
               
               |
             
@@ -379,7 +416,7 @@ for my future-self (or I can just travel through time to ask myself now).</p>
             
               
                 
-                <a href="http://localhost:1313/tags/graphics">graphics</a>
+                <a href="https://xeechou.net/tags/graphics">graphics</a>
               
               |
             
@@ -419,10 +456,10 @@ and there are a few others.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/programming">programming</a>
+                <a href="https://xeechou.net/tags/programming">programming</a>
               
                 
-                <a href="http://localhost:1313/tags/c/c&#43;&#43;">C/C&#43;&#43;</a>
+                <a href="https://xeechou.net/tags/c/c&#43;&#43;">C/C&#43;&#43;</a>
               
               |
             
@@ -455,7 +492,7 @@ from that.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/vision">Vision</a>
+                <a href="https://xeechou.net/tags/vision">Vision</a>
               
               |
             
@@ -473,51 +510,6 @@ in the end, a UV plane.</p>
 <p>The Model matrix is simple and easy to understand, simply the translation, scale
 and rotation, but View matrix and Camera matrix are not obvious(although you can
 get it for free by single call from <code>glm::lookAt()</code> and <code>glm::perspective()</code>).</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/double_pointer_in_c/">Everything you do I can do it with a double pointer in C</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/programming">programming</a>
-              
-                
-                <a href="http://localhost:1313/tags/c/c&#43;&#43;">C/C&#43;&#43;</a>
-              
-              |
-            
-            <time datetime="2016-08-21">21 Aug 2016</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p>It is 2016, low level coding is not needed anymore. We have programming
-languages like <code>javascript</code> and python. When people code everything with a class
-and related methods. But do you remember we have a programming language called
-C? When we had no class, templates, operator-override or implicit constructor at
-esthat time. You actually know what are doing with C, no magic!</p>
-<p>I claim no expert to programming, since I only have a four-year-old programming
-life. But even you are inexperienced like me, you should still be able to code
-some thing in C. IT IS fatigue to code in C, you have no standard containers to
-rely on, you spend 10 hours to build a perfect <code>deque</code> data type which works on
-amortized O(1) complexity and has no memory leaks before you are able to work on
-your project. Awesome!!! But why? Why try to build a huge robust data structure
-in a non-OOP language? Instead of trying simulate constructors and destructors,
-you could always use a double pointer to do the job. Have you ever seen Linus
-Torvalds&rsquo;s double pointer code? It removes on special case where you would make
-mistakes.</p>
       </section>
     </div>
   </article>

@@ -1,7 +1,7 @@
 
 <!doctype html>
 <html lang="en">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -144,6 +144,40 @@
     <div class="inner">
       <header class="post-header">
           <h2 class="post-title">
+            <a href="/posts/sphinx-website/">The sphinx website for your project</a>
+          </h2>
+          <span class="post-meta">
+            
+            
+              
+                
+                <a href="https://xeechou.net/tags/programming">programming</a>
+              
+              |
+            
+            <time datetime="2021-04-28">28 Apr 2021</time>
+          </span>
+          <div class="clear"></div>
+      </header>
+
+      <section class="post-excerpt">
+        <p>Static site generator, I love and hate them at the sametime. They really render
+your markdowns into a beautiful website without need of knowing web
+technologies. Then there are the constant hustles once you try to customize it,
+change a theme, adding different functionalities or upgrade. It is YOUR
+website, you want it look different than others, right. At some point, whether
+you like it or not, the SSG users will take the role of website designers by
+tangling with CSS.</p>
+      </section>
+    </div>
+  </article>
+  
+
+
+  <article class="post">
+    <div class="inner">
+      <header class="post-header">
+          <h2 class="post-title">
             <a href="/posts/back-with-org-mode/">Back with Org Mode</a>
           </h2>
           <span class="post-meta">
@@ -151,7 +185,7 @@
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -185,7 +219,7 @@ anymore, more often I need to track my TODOs from cellphone as well.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
+                <a href="https://xeechou.net/tags/wayland">wayland</a>
               
               |
             
@@ -218,7 +252,7 @@ do any better.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -259,10 +293,10 @@ of that. But, screw it. I am doing it myself.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/linux">linux</a>
+                <a href="https://xeechou.net/tags/linux">linux</a>
               
                 
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
+                <a href="https://xeechou.net/tags/wayland">wayland</a>
               
               |
             
@@ -299,7 +333,7 @@ corresponds to actual pieces of memory we talk about here.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/linux">linux</a>
+                <a href="https://xeechou.net/tags/linux">linux</a>
               
               |
             
@@ -343,7 +377,7 @@ should anything goes wrong, you probably end up with a black screen.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -379,7 +413,7 @@ attack. I had to work <strong>a lot</strong> to stay healthy.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -412,7 +446,7 @@ implement a wayland protocol.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/journal">Journal</a>
+                <a href="https://xeechou.net/tags/journal">Journal</a>
               
               |
             
@@ -455,7 +489,7 @@ possible to finish with only two hands.</p>
             
               
                 
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
+                <a href="https://xeechou.net/tags/wayland">wayland</a>
               
               |
             
@@ -481,43 +515,6 @@ itself. It was a good attempt, although I doubt their true intention was to
 creating a reusable compositing library. Nonetheless, to some extent, it helped
 the birth of the third library by Drew Devault, the
 <a href="https://github.com/swaywm/wlroots">wlroots</a>.</p>
-      </section>
-    </div>
-  </article>
-  
-
-
-  <article class="post">
-    <div class="inner">
-      <header class="post-header">
-          <h2 class="post-title">
-            <a href="/posts/data-device/">wl_data_device</a>
-          </h2>
-          <span class="post-meta">
-            
-            
-              
-                
-                <a href="http://localhost:1313/tags/wayland">wayland</a>
-              
-              |
-            
-            <time datetime="2020-06-12">12 Jun 2020</time>
-          </span>
-          <div class="clear"></div>
-      </header>
-
-      <section class="post-excerpt">
-        <p><code>wl_data_device</code> interface in the base wayland protocol is the most complex one,
-in my opinion, <em>wayland.xml</em> explains it fairly well, but every pieces are
-scattered in the file, here I serialize it together, give you quick run through.</p>
-<p>In brief, data device in wayland consists of four interfaces: The first is
-<code>wl_data_device_manager</code>, it is the global. The second is <code>wl_data_device</code>,
-can be created from <code>wl_data_device_manager</code> for a given seat, it is used to
-set selection(ctrl-c ctrl-v) and drag-n-drop. The 3rd is <code>wl_data_source</code>,
-also created from <code>wl_data_device_manager</code>, this source will be either a
-selection source or drag-n-drop source. The last is <code>wl_data_offer</code>, which is
-used for copying data from <code>wl_data_source</code>.</p>
       </section>
     </div>
   </article>
